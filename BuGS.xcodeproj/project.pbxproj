@@ -63,6 +63,8 @@
 		9D1716A42491C49300C83148 /* system601.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601.2mg; sourceTree = "<group>"; };
 		9D1716A62491C49300C83148 /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = tail.mk; sourceTree = "<group>"; };
 		9D1716A92491C49300C83148 /* BuGS.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = BuGS.xcscheme; path = ../../BuGS.xcodeproj/xcshareddata/xcschemes/BuGS.xcscheme; sourceTree = "<group>"; };
+		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
+		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,8 @@
 			children = (
 				9D17168E2491C49300C83148 /* main.c */,
 				9D1716902491C49300C83148 /* main.h */,
+				9D8FFC602491CA28005C9327 /* game.s */,
+				9D8FFC612491CAF0005C9327 /* game.h */,
 				9D1716912491C49300C83148 /* main.rez */,
 				9D1716932491C49300C83148 /* Makefile */,
 				9D1716952491C49300C83148 /* make */,

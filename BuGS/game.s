@@ -11,12 +11,16 @@
         keep game
 
 game    start
-        jsl clearScreen
+        jsl setupScreen
+        
+        lda #0
+        jsl setColour
+        
         jsl waitForKey
         rtl
         
         
-clearScreen entry
+setupScreen entry
         short i,m
         lda $e0c035     ; Enable shadowing of SHR
         and #$f7
@@ -35,9 +39,9 @@ clearScreen entry
         sta $e1c068
         ldx #$0000
         
-        lda #$9cfe
+        lda #$9dfe
         tcs
-        ldy #$7d00
+        ldy #$7e00
 nextWord anop
         phx
         dey
@@ -51,6 +55,8 @@ nextWord anop
         tcs
         pld
         cli
+        
+        
         rtl
         
 

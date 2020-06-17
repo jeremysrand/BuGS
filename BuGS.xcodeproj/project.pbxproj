@@ -66,6 +66,8 @@
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3C24994B1600348F45 /* sprites.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = sprites.s; sourceTree = "<group>"; };
 		9D62AF3E2499660100348F45 /* local.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = local.macros; sourceTree = "<group>"; };
+		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
 		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +86,8 @@
 		9D17167D2491C49300C83148 = {
 			isa = PBXGroup;
 			children = (
+				9D62AF3F2499CD1E00348F45 /* LICENSE */,
+				9D62AF402499CD3A00348F45 /* README.md */,
 				9D17168D2491C49300C83148 /* BuGS */,
 				9D1716852491C49300C83148 /* Products */,
 			);

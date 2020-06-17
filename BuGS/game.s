@@ -106,6 +106,18 @@ game    start
         ldx #$2a4b
         jsl letterV
         
+        ldx #$2a53
+        jsl letterW
+        
+        ldx #$2a5b
+        jsl letterX
+        
+        ldx #$2a63
+        jsl letterY
+        
+        ldx #$2a6b
+        jsl letterZ
+        
         jsl waitForKey
         rtl
         

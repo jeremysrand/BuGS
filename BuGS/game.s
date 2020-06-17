@@ -16,6 +16,96 @@ game    start
         lda #0
         jsl setColour
         
+        ldx #$2003
+        jsl mushroom1
+        
+        ldx #$200b
+        jsl mushroom2
+        
+        ldx #$2013
+        jsl mushroom3
+        
+        ldx #$201b
+        jsl mushroom4
+        
+        ldx #$2023
+        jsl poisonedMushroom1
+        
+        ldx #$202b
+        jsl poisonedMushroom2
+        
+        ldx #$2033
+        jsl poisonedMushroom3
+        
+        ldx #$203b
+        jsl poisonedMushroom4
+        
+        ldx #$2043
+        jsl letterA
+        
+        ldx #$204b
+        jsl letterB
+        
+        ldx #$2053
+        jsl letterC
+        
+        ldx #$205b
+        jsl letterD
+        
+        ldx #$2063
+        jsl letterE
+        
+        ldx #$206b
+        jsl letterF
+        
+        ldx #$2073
+        jsl letterG
+        
+        ldx #$207b
+        jsl letterH
+        
+        ldx #$2083
+        jsl letterI
+        
+        ldx #$208b
+        jsl letterJ
+        
+        ldx #$2093
+        jsl letterK
+        
+        ldx #$209b
+        jsl letterL
+        
+        ldx #$2a03
+        jsl letterM
+        
+        ldx #$2a0b
+        jsl letterN
+        
+        ldx #$2a13
+        jsl letterO
+        
+        ldx #$2a1b
+        jsl letterP
+        
+        ldx #$2a23
+        jsl letterQ
+        
+        ldx #$2a2b
+        jsl letterR
+        
+        ldx #$2a33
+        jsl letterS
+        
+        ldx #$2a3b
+        jsl letterT
+        
+        ldx #$2a43
+        jsl letterU
+        
+        ldx #$2a4b
+        jsl letterV
+        
         jsl waitForKey
         rtl
         
@@ -55,7 +145,6 @@ nextWord anop
         tcs
         pld
         cli
-        
         
         rtl
         

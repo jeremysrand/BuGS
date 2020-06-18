@@ -33,19 +33,19 @@ loop    lda colour1,y
         
 colour1 anop
         dc i2'$0000'        ; Black
-        dc i2'$00f0'        ; Green
+        dc i2'$00f0'        ; Green         ; Mushrooms ($1 to $3)
         dc i2'$0f00'        ; Red
         dc i2'$0ffc'        ; Off-white
-        dc i2'$00f0'        ; Green
+        dc i2'$00f0'        ; Green         ; Centipedes ($4 to $6)
         dc i2'$0f00'        ; Red
         dc i2'$0ffc'        ; Off-white
-        dc i2'$00f0'        ; Green
+        dc i2'$00f0'        ; Green         ; Spiders ($7 to $9)
         dc i2'$0f00'        ; Red
         dc i2'$0ffc'        ; Off-white
-        dc i2'$00f0'        ; Green
+        dc i2'$00f0'        ; Green         ; Fleas ($a to $c)
         dc i2'$0f00'        ; Red
         dc i2'$0ffc'        ; Off-white
-        dc i2'$00f0'        ; Green
+        dc i2'$00f0'        ; Green         ; Scorpions ($d to $f)
         dc i2'$0f00'        ; Red
         dc i2'$0ffc'        ; Off-white
         

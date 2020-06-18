@@ -118,6 +118,63 @@ game    start
         ldx #$2a6b
         jsl letterZ
         
+        ldx #$2a73
+        jsl symbolC
+        
+        ldx #$2a7b
+        jsl symbolP
+        
+        ldx #$2a83
+        jsl symbolDot
+        
+        ldx #$2a8b
+        jsl symbolColon
+        
+        ldx #$2a93
+        jsl solid0
+        
+        ldx #$2a9b
+        jsl solid1
+        
+        ldx #$3403
+        jsl solid2
+        
+        ldx #$340b
+        jsl solid3
+        
+        ldx #$3413
+        jsl number0
+        
+        ldx #$341b
+        jsl number1
+        
+        ldx #$3423
+        jsl number2
+        
+        ldx #$342b
+        jsl number3
+        
+        ldx #$3433
+        jsl number4
+        
+        ldx #$343b
+        jsl number5
+        
+        ldx #$3443
+        jsl number6
+        
+        ldx #$344b
+        jsl number7
+        
+        ldx #$3453
+        jsl number8
+        
+        ldx #$345b
+        jsl number9
+        
+        ldx #$3463
+        jsl flea1
+        
         jsl waitForKey
         rtl
         

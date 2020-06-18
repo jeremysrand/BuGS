@@ -2264,6 +2264,1287 @@ letterZ entry
         _spriteFooter
 
 
+symbolC entry
+        _spriteHeader
+        
+; Colours #$1100 - Black, Black, Green, Green (x2)
+;         #$0011 - Green, Green, Black, Black (x2)
+;         #$0201 - Black, Green, Black, Red (x2)
+;         #$1020 - Red, Black, Green, Black (x2)
+;         #$2010 - Green, Black, Red, Black (x4)
+;         #$0102 - Black, Red, Black, Green (x2)
+;         #$0100 - Black, Black, Black, Green (x2)
+;
+        lda #$1100
+        tcd             ; Black, Black, Green, Green
+        txa
+        tcs
+        ldx #$2010      ; Green, Black, Red, Black
+        ldy #$0011      ; Green, Green, Black, Black
+        clc
+        
+        phy
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $1020
+        pea $0201
+        
+        adc #$00a0
+        tcs
+        
+        pea $0102
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0100
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0100
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0102
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $1020
+        pea $0201
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phd
+        
+        _spriteFooter
+
+
+symbolP entry
+        _spriteHeader
+        
+; Colours #$1100 - Black, Black, Green, Green (x2)
+;         #$0011 - Green, Green, Black, Black (x2)
+;         #$0201 - Black, Green, Black, Red (x1)
+;         #$1020 - Red, Black, Green, Black (x1)
+;         #$2010 - Green, Black, Red, Black (x3)
+;         #$0102 - Black, Red, Black, Green (x2)
+;         #$2210 - Green, Black, Red, Red (x1)
+;         #$0120 - Red, Black, Black, Green (x1)
+;         #$0100 - Black, Black, Black, Green (x1)
+;         #$2001 - Black, Green, Red, Black (x1)
+;         #$1000 - Black, Black, Green, Black (x1)
+;
+        lda #$1100
+        tcd             ; Black, Black, Green, Green
+        txa
+        tcs
+        ldx #$2010      ; Green, Black, Red, Black
+        ldy #$0011      ; Green, Green, Black, Black
+        clc
+        
+        phy
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $1020
+        pea $0201
+        
+        adc #$00a0
+        tcs
+        
+        pea $0102
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0102
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0120
+        pea $2210
+        
+        adc #$00a0
+        tcs
+        
+        pea $0100
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $1000
+        pea $2001
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phd
+        
+        _spriteFooter
+
+
+symbolDot entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x15)
+;         #$0030 - Off-white, Black, Black, Black (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $0030
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+        
+
+symbolColon entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x8)
+;         #$0020 - Red, Black, Black, Black (x4)
+;         #$0200 - Black, Black, Black, Red (x4)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0020      ; Red, Black, Black, Black
+        ldy #$0200      ; Black, Black, Black, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+        
+
+solid0  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x16)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+        
+
+solid1  entry
+        _spriteHeader
+        
+; Colours #$1111 - Green, Green, Green, Green  (x16)
+;
+        lda #$1111
+        tcd             ; Green, Green, Green, Green
+        txa
+        tcs
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+
+
+solid2  entry
+        _spriteHeader
+        
+; Colours #$2222 - Red, Red, Red, Red (x16)
+;
+        lda #$2222
+        tcd             ; Red, Red, Red, Red
+        txa
+        tcs
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+
+
+solid3  entry
+        _spriteHeader
+        
+; Colours #$3333 - Off-white, Off-white,  Off-white,  Off-white (x16)
+;
+        lda #$3333
+        tcd             ; Off-white, Off-white,  Off-white,  Off-white
+        txa
+        tcs
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phd
+        
+        _spriteFooter
+
+
+number0  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x2)
+;         #$0020 - Red, Black, Black, Black (x2)
+;         #$2200 - Black, Black, Red, Red (x2)
+;         #$0022 - Red, Red, Black, Black (x4)
+;         #$2002 - Black, Red, Red, Black (x4)
+;         #$0002 - Black, Red, Black, Black (x2)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2002      ; Black, Red, Red, Black
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        pea $2200
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $0002
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0002
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        pea $2200
+        
+        _spriteFooter
+
+
+number1  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x8)
+;         #$2200 - Black, Black, Red, Red (x5)
+;         #$0022 - Red, Red, Black, Black (x1)
+;         #$2202 - Black, Red, Red, Red (x1)
+;         #$2222 - Red, Red, Red, Red (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$2200      ; Black, Black, Red, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        pea $2202
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0022
+        pea $2222
+        
+        _spriteFooter
+
+
+number2  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$2202 - Black, Red, Red, Red (x2)
+;         #$0022 - Red, Red, Black, Black (x3)
+;         #$2002 - Black, Red, Red, Black (x1)
+;         #$2022 - Red, Red, Red, Black (x3)
+;         #$2200 - Black, Black, Red, Red (x1)
+;         #$0020 - Red, Black, Black, Black (x1)
+;         #$2222 - Red, Red, Red, Red (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2022      ; Red, Red, Red, Black
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2202
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2200
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        pea $2202
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        pea $2222
+        
+        _spriteFooter
+
+
+number3  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$2202 - Black, Red, Red, Red (x2)
+;         #$2022 - Red, Red, Red, Black (x1)
+;         #$0022 - Red, Red, Black, Black (x4)
+;         #$0020 - Red, Black, Black, Black (x1)
+;         #$0200 - Black, Black, Black, Red (x1)
+;         #$2200 - Black, Black, Red, Red (x1)
+;         #$2002 - Black, Red, Red, Black (x2)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2202      ; Black, Red, Red, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $2022
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        pea $0200
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2200
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        _spriteFooter
+
+
+number4  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$0022 - Red, Red, Black, Black (x7)
+;         #$0200 - Black, Black, Black, Red (x1)
+;         #$2200 - Black, Black, Red, Red (x1)
+;         #$2002 - Black, Red, Red, Black (x1)
+;         #$2222 - Red, Red, Red, Red (x1)
+;         #$2022 - Red, Red, Red, Black (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $0200
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2200
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2002
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $2022
+        pea $2222
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phd
+        
+        _spriteFooter
+
+
+number5  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x5)
+;         #$0022 - Red, Red, Black, Black (x5)
+;         #$2222 - Red, Red, Red, Red (x2)
+;         #$2002 - Black, Red, Red, Black (x3)
+;         #$2202 - Black, Red, Red, Red (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2002      ; Black, Red, Red, Black
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2222
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2222
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2202
+        
+        _spriteFooter
+
+
+number6  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$0022 - Red, Red, Black, Black (x6)
+;         #$2200 - Black, Black, Red, Red (x1)
+;         #$2002 - Black, Red, Red, Black (x3)
+;         #$2222 - Red, Red, Red, Red (x1)
+;         #$2202 - Black, Red, Red, Red (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2002      ; Black, Red, Red, Black
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2200
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2222
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phy
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        pea $2202
+        
+        _spriteFooter
+
+
+number7  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x6)
+;         #$2222 - Red, Red, Red, Red (x1)
+;         #$2022 - Red, Red, Red, Black (x1)
+;         #$2002 - Black, Red, Red, Black (x1)
+;         #$0022 - Red, Red, Black, Black (x2)
+;         #$0020 - Red, Black, Black, Black (x1)
+;         #$0200 - Black, Black, Black, Red (x1)
+;         #$2200 - Black, Black, Red, Red (x3)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2200      ; Black, Black, Red, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $2022
+        pea $2222
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        pea $0200
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        phd
+        phy
+        
+        _spriteFooter
+
+
+number8  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x2)
+;         #$0020 - Red, Black, Black, Black (x3)
+;         #$2202 - Black, Red, Red, Red (x3)
+;         #$0002 - Black, Red, Black, Black (x2)
+;         #$0022 - Red, Red, Black, Black (x2)
+;         #$2022 - Red, Red, Red, Black (x2)
+;         #$2002 - Black, Red, Red, Black (x1)
+;         #$0220 - Red, Black, Black, Red (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0020      ; Red, Black, Black, Black
+        ldy #$2202      ; Black, Red, Red, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        pea $0002
+        pea $0022
+        
+        adc #$00a0
+        tcs
+        
+        pea $0002
+        pea $2022
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        pea $2022
+        pea $0220
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $0022
+        phy
+        
+        _spriteFooter
+
+
+number9  entry
+        _spriteHeader
+        
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$0022 - Red, Red, Black, Black (x4)
+;         #$2202 - Black, Red, Red, Red (x3)
+;         #$2002 - Black, Red, Red, Black (x3)
+;         #$2022 - Red, Red, Red, Black (x1)
+;         #$0020 - Red, Black, Black, Black (x1)
+;
+        lda #$0000
+        tcd             ; Black, Black, Black, Black
+        txa
+        tcs
+        ldx #$0022      ; Red, Red, Black, Black
+        ldy #$2202      ; Black, Red, Red, Red
+        clc
+        
+        phd
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phx
+        
+        adc #$00a0
+        tcs
+        
+        pea $2022
+        phy
+        
+        adc #$00a0
+        tcs
+        
+        pea $2002
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        phx
+        phd
+        
+        adc #$00a0
+        tcs
+        
+        pea $0020
+        phy
+        
+        _spriteFooter
+
+
+flea1  entry
+        _spriteHeader
+ 
+; $a - Green
+; $b - Red
+; $c - Off-white
+;
+; ....|..OO|O...
+; ....|.ROO|OO..
+; ....|RROO|OOO.
+; ...O|OOOO|OOOO
+; ...O|OOG.|GOOO
+; ....|..G.|G.OO
+; ....|..G.|G.G.
+; ....|.G.G|...G
+;
+        lda #$cccc
+        tcd             ; Off-white, Off-white, Off-white, Off-white
+        dex
+        dex
+        dex
+        dex
+        txa
+        tcs
+        clc
+        
+        lda $1,s
+        and #$00ff
+        ora #$cc00
+        sta $1,s
+        
+        lda $3,s
+        and #$ff0f
+        ora #$00c0
+        sta $3,s
+        
+        lda $a1,s
+        and #$00f0
+        ora #$cc0b
+        sta $a1,s
+        
+        lda $a3,s
+        and #$ff00
+        ora #$00cc
+        sta $a3,s
+        
+        tsc
+        adc #$0142
+        tcs
+        
+        pea $ccbb
+        lda $3,s
+        and #$0f00
+        ora #$c0cc
+        sta $3,s
+        
+        lda $9f,s
+        and #$f0ff
+        ora #$0c00
+        sta $9f,s
+        
+        tsc
+        adc #$00A4
+        tcs
+        phd
+        phd
+        
+        lda $9f,s
+        and #$f0ff
+        ora #$0c00
+        sta $9f,s
+        
+        lda $a1,s
+        and #$0f00
+        ora #$a0cc
+        sta $a1,s
+        
+        tsc
+        adc #$00A4
+        tcs
+        pea $ccac
+        
+        lda $9f,s
+        and #$0fff
+        ora #$a000
+        sta $9f,s
+        
+        lda $a1,s
+        and #$000f
+        ora #$cca0
+        sta $a1,s
+        
+        tsc
+        adc #$013e
+        tcs
+        
+        lda $1,s
+        and #$0fff
+        ora #$a000
+        sta $1,s
+        
+        lda $3,s
+        and #$0f0f
+        ora #$a0a0
+        sta $3,s
+        
+        lda $a1,s
+        and #$f0f0
+        ora #$0a0a
+        sta $a1,s
+        
+        lda $a3,s
+        and #$f0ff
+        ora #$0a00
+        sta $a3,s
+        
+        _spriteFooter
+        
+
 backupStack dc i2'0'
 
         end

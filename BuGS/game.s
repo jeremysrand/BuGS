@@ -6,6 +6,17 @@
 ;Copyright © 2020 Jeremy Rand. All rights reserved.
 ;
 
+;
+; The actual game is a 30x30 grid of 8x8 tiles.
+; The GS can do 30 wide with 10 tiles to spare.
+; The GS can only do 25 tiles tall though.  So,
+; the screen will be 30 wide pushed to the right-
+; most side.  The left side will have the score,
+; count of lives and the high score.  Rather than
+; having them at the top, running that info on
+; the side will give us more vertical height for
+; more on-screen action.
+
         case on
         mcopy game.macros
         keep game
@@ -13,7 +24,7 @@
 game    start
         jsl setupScreen
         
-        lda #0
+        lda colourPalette
         jsl setColour
         
         ldx #$2003
@@ -175,6 +186,24 @@ game    start
         ldx #$3463
         jsl flea1
         
+        ldx #$346b
+        jsl flea2
+        
+        ldx #$3473
+        jsl flea3
+        
+        ldx #$347b
+        jsl flea4
+        
+        ldx #$3483
+        jsl score300
+        
+        ldx #$348b
+        jsl score600
+        
+        ldx #$3493
+        jsl score900
+        
         jsl waitForKey
         rtl
         
@@ -219,14 +248,30 @@ nextWord anop
         
 
 waitForKey entry
-        short i,m
-loop    anop
+loop2   short i,m
+loop1   anop
         lda $e0c000
-        bpl loop
+        bpl loop1
         sta $e0c010
         long i,m
-        rtl
+        and #$007f
+        cmp #$0051
+        beq quit
+        cmp #$0071
+        beq quit
+        cmp #$001b
+        beq quit
+        lda colourPalette
+        inc a
+        cmp #$000e
+        blt skip
+        lda #$0000
+skip    sta colourPalette
+        jsl setColour
+        bra loop2
+quit    rtl
         
 backupStack dc i2'0'
+colourPalette dc i2'0'
 
         end

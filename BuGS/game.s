@@ -210,6 +210,12 @@ game    start
         ldx #$3e1b
         jsl scorpion1s
         
+        ldx #$3e2b
+        jsl scorpion2
+        
+        ldx #$3e3b
+        jsl scorpion2s
+        
         jsl waitForKey
         rtl
         

@@ -56,7 +56,9 @@ int main(void)
     TOOLFAIL("Unable to start tools");
     
     CompactMem();
-    NewHandle(0x8000, userid, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x012000);
+    /* Allocate $1000 extra before the SHR screen so I can write sprites above the start of the
+       screen without overwriting memory I do not own. */
+    NewHandle(0x9000, userid, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x011000);
     TOOLFAIL("Unable to allocate SHR screen");
     
     game();

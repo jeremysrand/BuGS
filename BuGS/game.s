@@ -204,6 +204,12 @@ game    start
         ldx #$3493
         jsl score900
         
+        ldx #$3e0b
+        jsl scorpion1
+        
+        ldx #$3e1b
+        jsl scorpion1s
+        
         jsl waitForKey
         rtl
         

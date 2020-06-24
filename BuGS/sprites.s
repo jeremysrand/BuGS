@@ -4937,7 +4937,702 @@ scorpion2s entry
        
        _spriteFooter
 
-   
+
+scorpion3 entry
+        _spriteHeader
+ 
+; $d - Green
+; $e - Red
+; $f - Off-white
+;
+; O.O.|ROR.|O.O.|....
+; .O.R|RORR|.O..|....
+; .OO.|OOO.|OO..|..OO
+; ..OO|OOOO|O...|.O.O
+; ....|OOO.|....|OO.O
+; ....|OOO.|..OO|O..O
+; ....|OOOO|OOOO|..O.
+; ....|.OOO|OOO.|....
+;
+        
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        txa
+        tcs
+        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$eeef          ; Red, Off-white, Red, Red
+        clc
+        
+        lda $1,s
+        and #$0f0f
+        ora #$f0f0
+        sta $1,s
+        
+        lda $3,s
+        and #$0f00
+        ora #$e0ef
+        sta $3,s
+        
+        lda $5,s
+        and #$0f0f
+        ora #$f0f0
+        sta $5,s
+        
+        lda $a1,s
+        and #$f0f0
+        ora #$0e0f
+        sta $a1,s
+        
+        tsc
+        adc #$a4
+        tcs
+        
+        phx
+        
+        lda $3,s
+        and #$fff0
+        ora #$000f
+        sta $3,s
+        
+        lda $9f,s
+        and #$0ff0
+        ora #$f00f
+        sta $9f,s
+        
+        lda $a1,s
+        and #$0f00
+        ora #$f0ff
+        sta $a1,s
+        
+        lda $a3,s
+        and #$ff00
+        ora #$00ff
+        sta $a3,s
+        
+        lda $a5,s
+        and #$00ff
+        ora #$ff00
+        sta $a5,s
+        
+        tsc
+        adc #$142
+        tcs
+        
+        phy
+        
+        tsc
+        dec a
+        dec a
+        tcs
+        
+        lda $1,s
+        and #$00ff
+        ora #$ff00
+        sta $1,s
+        
+        lda $5,s
+        and #$ff0f
+        ora #$00f0
+        sta $5,s
+        
+        lda $7,s
+        and #$f0f0
+        ora #$0f0f
+        sta $7,s
+        
+        lda $a3,s
+        and #$0f00
+        ora #$f0ff
+        sta $a3,s
+        
+        lda $a7,s
+        and #$f000
+        ora #$0fff
+        sta $a7,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $3,s
+        and #$0f00
+        ora #$f0ff
+        sta $3,s
+        
+        lda $5,s
+        and #$00ff
+        ora #$ff00
+        sta $5,s
+        
+        lda $7,s
+        and #$f00f
+        ora #$0ff0
+        sta $7,s
+        
+        lda $a7,s
+        and #$0fff
+        ora #$f000
+        sta $a7,s
+        
+        tsc
+        adc #$a6
+        tcs
+        
+        phy
+        phy
+        
+        lda $a1,s
+        and #$00f0
+        ora #$ff0f
+        sta $a1,s
+        
+        lda $a3,s
+        and #$0f00
+        ora #$f0ff
+        sta $a3,s
+        
+        _spriteFooter
+
+
+scorpion3s entry
+       _spriteHeader
+
+; $d - Green
+; $e - Red
+; $f - Off-white
+;
+; ...O|.O.R|OR.O|.O..|....
+; ....|O.RR|ORR.|O...|....
+; ....|OO.O|OO.O|O...|.OO.
+; ....|.OOO|OOOO|....|O.O.
+; ....|...O|OO..|...O|O.O.
+; ....|...O|OO..|.OOO|..O.
+; ....|...O|OOOO|OOO.|.O..
+; ....|....|OOOO|OO..|....
+;
+        
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       txa
+       tcs
+       ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+       clc
+        
+       lda $1,s
+       and #$f0ff
+       ora #$0f00
+       sta $1,s
+       
+       lda $3,s
+       and #$f0f0
+       ora #$0e0f
+       sta $3,s
+        
+       lda $5,s
+       and #$f000
+       ora #$0ffe
+       sta $5,s
+        
+       lda $7,s
+       and #$fff0
+       ora #$000f
+       sta $7,s
+       
+       lda $a3,s
+       and #$000f
+       ora #$eef0
+       sta $a3,s
+       
+       lda $a5,s
+       and #$0f0
+       ora #$e0fe
+       sta $a5,s
+       
+       lda $a7,s
+       and #$ff0f
+       ora #$00f0
+       sta $a7,s
+    
+       tsc
+       adc #$142
+       tcs
+        
+       lda $1,s
+       and #$f000
+       ora #$0fff
+       sta $1,s
+       
+       lda $3,s
+       and #$f000
+       ora #$0fff
+       sta $3,s
+        
+       lda $5,s
+       and #$ff0f
+       ora #$00f0
+       sta $5,s
+        
+       lda $7,s
+       and #$0ff0
+       ora #$f00f
+       sta $7,s
+       
+       lda $a1,s
+       and #$00f0
+       ora #$ff0f
+       sta $a1,s
+       
+       lda $a7,s
+       and #$0f0f
+       ora #$f0f0
+       sta $a7,s
+       
+       tsc
+       adc #$a4
+       tcs
+       
+       phy
+       
+       lda $9f,s
+       and #$f0ff
+       ora #$0f00
+       sta $9f,s
+       
+       lda $a1,s
+       and #$ff00
+       ora #$00ff
+       sta $a1,s
+       
+       lda $a3,s
+       and #$f0ff
+       ora #$0f00
+       sta $a3,s
+       
+       lda $a5,s
+       and #$0f0f
+       ora #$f0f0
+       sta $a5,s
+       
+       tsc
+       adc #$13e
+       tcs
+       
+       lda $1,s
+       and #$f0ff
+       ora #$0f00
+       sta $1,s
+       
+       lda $3,s
+       and #$ff00
+       ora #$00ff
+       sta $3,s
+       
+       lda $5,s
+       and #$00f0
+       ora #$ff0f
+       sta $5,s
+       
+       lda $7,s
+       and #$0fff
+       ora #$f000
+       sta $7,s
+       
+       lda $a1,s
+       and #$f0ff
+       ora #$0f00
+       sta $a1,s
+       
+       lda $a5,s
+       and #$0f00
+       ora #$f0ff
+       sta $a5,s
+       
+       lda $a7,s
+       and #$fff0
+       ora #$000f
+       sta $a7,s
+       
+       tsc
+       adc #$a4
+       tcs
+       
+       phy
+       
+       lda $a3,s
+       and #$ff00
+       ora #$00ff
+       sta $a3,s
+       
+       tsc
+       adc #$a2
+       tcs
+       
+       phy
+       
+       _spriteFooter
+
+
+scorpion4 entry
+        _spriteHeader
+ 
+; $d - Green
+; $e - Red
+; $f - Off-white
+;
+; O.O.|ROR.|O.O.|....
+; .O.R|RORR|.O..|O...
+; .OO.|OOO.|OO.O|.OO.
+; ..OO|OOOO|O..O|..OO
+; ....|OOO.|....|O..O
+; ....|OOO.|....|...O
+; ....|OOOO|OOOO|OOOO
+; ....|.OOO|OOOO|OOO.
+;
+        
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        txa
+        tcs
+        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$eeef          ; Red, Off-white, Red, Red
+        clc
+        
+        lda $1,s
+        and #$0f0f
+        ora #$f0f0
+        sta $1,s
+        
+        lda $3,s
+        and #$0f00
+        ora #$e0ef
+        sta $3,s
+        
+        lda $5,s
+        and #$0f0f
+        ora #$f0f0
+        sta $5,s
+        
+        lda $a1,s
+        and #$f0f0
+        ora #$0e0f
+        sta $a1,s
+        
+        tsc
+        adc #$a4
+        tcs
+        
+        phx
+        
+        lda $3,s
+        and #$fff0
+        ora #$000f
+        sta $3,s
+        
+        lda $5,s
+        and #$ff0f
+        ora #$00f0
+        sta $5,s
+        
+        lda $9f,s
+        and #$0ff0
+        ora #$f00f
+        sta $9f,s
+        
+        lda $a1,s
+        and #$0f00
+        ora #$f0ff
+        sta $a1,s
+        
+        lda $a3,s
+        and #$f000
+        ora #$0fff
+        sta $a3,s
+        
+        lda $a5,s
+        and #$0ff0
+        ora #$f00f
+        sta $a5,s
+        
+        tsc
+        adc #$142
+        tcs
+        
+        phy
+        
+        tsc
+        dec a
+        dec a
+        tcs
+        
+        lda $1,s
+        and #$00ff
+        ora #$ff00
+        sta $1,s
+        
+        lda $5,s
+        and #$f00f
+        ora #$0ff0
+        sta $5,s
+        
+        lda $7,s
+        and #$00ff
+        ora #$ff00
+        sta $7,s
+        
+        lda $a3,s
+        and #$0f00
+        ora #$f0ff
+        sta $a3,s
+        
+        lda $a7,s
+        and #$f00f
+        ora #$0ff0
+        sta $a7,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $3,s
+        and #$0f00
+        ora #$f0ff
+        sta $3,s
+        
+        lda $7,s
+        and #$f0ff
+        ora #$0f00
+        sta $7,s
+        
+        tsc
+        adc #$a8
+        tcs
+        
+        phy
+        phy
+        phy
+        
+        lda $a1,s
+        and #$00f0
+        ora #$ff0f
+        sta $a1,s
+        
+        lda $a5,s
+        and #$0f00
+        ora #$f0ff
+        sta $a5,s
+        
+        tsc
+        adc #$a4
+        tcs
+        
+        phy
+        
+        _spriteFooter
+
+
+scorpion4s entry
+       _spriteHeader
+
+; $d - Green
+; $e - Red
+; $f - Off-white
+;
+; ...O|.O.R|OR.O|.O..|....
+; ....|O.RR|ORR.|O..O|....
+; ....|OO.O|OO.O|O.O.|OO..
+; ....|.OOO|OOOO|..O.|.OO.
+; ....|...O|OO..|...O|..O.
+; ....|...O|OO..|....|..O.
+; ....|...O|OOOO|OOOO|OOO.
+; ....|....|OOOO|OOOO|OO..
+;
+        
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       dex
+       txa
+       tcs
+       ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+       clc
+        
+       lda $1,s
+       and #$f0ff
+       ora #$0f00
+       sta $1,s
+       
+       lda $3,s
+       and #$f0f0
+       ora #$0e0f
+       sta $3,s
+        
+       lda $5,s
+       and #$f000
+       ora #$0ffe
+       sta $5,s
+        
+       lda $7,s
+       and #$fff0
+       ora #$000f
+       sta $7,s
+       
+       lda $a3,s
+       and #$000f
+       ora #$eef0
+       sta $a3,s
+       
+       lda $a5,s
+       and #$0f0
+       ora #$e0fe
+       sta $a5,s
+       
+       lda $a7,s
+       and #$f00f
+       ora #$0ff0
+       sta $a7,s
+    
+       tsc
+       adc #$142
+       tcs
+        
+       lda $1,s
+       and #$f000
+       ora #$0fff
+       sta $1,s
+       
+       lda $3,s
+       and #$f000
+       ora #$0fff
+       sta $3,s
+        
+       lda $5,s
+       and #$0f0f
+       ora #$f0f0
+       sta $5,s
+        
+       lda $7,s
+       and #$ff00
+       ora #$00ff
+       sta $7,s
+       
+       lda $a1,s
+       and #$00f0
+       ora #$ff0f
+       sta $a1,s
+       
+       lda $a5,s
+       and #$0fff
+       ora #$f000
+       sta $a5,s
+       
+       lda $a7,s
+       and #$0ff0
+       ora #$f00f
+       sta $a7,s
+       
+       tsc
+       adc #$a4
+       tcs
+       
+       phy
+       
+       lda $9f,s
+       and #$f0ff
+       ora #$0f00
+       sta $9f,s
+       
+       lda $a1,s
+       and #$ff00
+       ora #$00ff
+       sta $a1,s
+       
+       lda $a3,s
+       and #$f0ff
+       ora #$0f00
+       sta $a3,s
+       
+       lda $a5,s
+       and #$0fff
+       ora #$f000
+       sta $a5,s
+       
+       tsc
+       adc #$13e
+       tcs
+       
+       lda $1,s
+       and #$f0ff
+       ora #$0f00
+       sta $1,s
+       
+       lda $3,s
+       and #$ff00
+       ora #$00ff
+       sta $3,s
+       
+       lda $7,s
+       and #$0fff
+       ora #$f000
+       sta $7,s
+       
+       lda $a1,s
+       and #$f0ff
+       ora #$0f00
+       sta $a1,s
+       
+       lda $a7,s
+       and #$0f00
+       ora #$f0ff
+       sta $a7,s
+       
+       tsc
+       adc #$a6
+       tcs
+       
+       phy
+       phy
+       
+       tsc
+       adc #$a4
+       tcs
+       
+       phy
+       phy
+       
+       lda $5,s
+       and #$ff00
+       ora #$00ff
+       sta $5,s
+       
+       _spriteFooter
+
+
 backupStack dc i2'0'
 
         end

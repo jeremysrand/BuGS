@@ -216,6 +216,18 @@ game    start
         ldx #$3e3b
         jsl scorpion2s
         
+        ldx #$3e4b
+        jsl scorpion3
+        
+        ldx #$3e5b
+        jsl scorpion3s
+        
+        ldx #$3e6b
+        jsl scorpion4
+        
+        ldx #$3e7b
+        jsl scorpion4s
+        
         jsl waitForKey
         rtl
         

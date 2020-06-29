@@ -3429,9 +3429,9 @@ number9  entry
 flea1  entry
         _spriteHeader
  
-; $a - Green
-; $b - Red
-; $c - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|..OO|O...
 ; ....|.ROO|OO..
@@ -3442,7 +3442,7 @@ flea1  entry
 ; ....|..G.|G.G.
 ; ....|.G.G|...G
 ;
-        lda #$cccc
+        lda #$8888
         tcd             ; Off-white, Off-white, Off-white, Off-white
         dex
         dex
@@ -3454,37 +3454,37 @@ flea1  entry
         
         lda $1,s
         and #$00ff
-        ora #$cc00
+        ora #$8800
         sta $1,s
         
         lda $3,s
         and #$ff0f
-        ora #$00c0
+        ora #$0080
         sta $3,s
         
         lda $a1,s
         and #$00f0
-        ora #$cc0b
+        ora #$8804
         sta $a1,s
         
         lda $a3,s
         and #$ff00
-        ora #$00cc
+        ora #$0088
         sta $a3,s
         
         tsc
         adc #$0142
         tcs
         
-        pea $ccbb
+        pea $8844
         lda $3,s
         and #$0f00
-        ora #$c0cc
+        ora #$8088
         sta $3,s
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         tsc
@@ -3495,27 +3495,26 @@ flea1  entry
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         lda $a1,s
         and #$0f00
-        ora #$a0cc
+        ora #$c088
         sta $a1,s
         
         tsc
         adc #$00a4
         tcs
-        pea $ccac
+        pea $88c8
         
         lda $9f,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $9f,s
         
         lda $a1,s
         and #$000f
-        ora #$cca0
+        ora #$88c0
         sta $a1,s
         
         tsc
@@ -3523,23 +3522,19 @@ flea1  entry
         tcs
         
         lda $1,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $1,s
         
         lda $3,s
-        and #$0f0f
-        ora #$a0a0
+        ora #$c0c0
         sta $3,s
         
         lda $a1,s
-        and #$f0f0
-        ora #$0a0a
+        ora #$0c0c
         sta $a1,s
         
         lda $a3,s
-        and #$f0ff
-        ora #$0a00
+        ora #$0c00
         sta $a3,s
         
         _spriteFooter
@@ -3548,9 +3543,9 @@ flea1  entry
 flea2  entry
         _spriteHeader
  
-; $a - Green
-; $b - Red
-; $c - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|..OO|O...
 ; ....|.ROO|OO..
@@ -3561,7 +3556,7 @@ flea2  entry
 ; ....|.G..|G..G
 ; ....|.G.G|..G.
 ;
-        lda #$cccc
+        lda #$8888
         tcd             ; Off-white, Off-white, Off-white, Off-white
         dex
         dex
@@ -3573,37 +3568,37 @@ flea2  entry
         
         lda $1,s
         and #$00ff
-        ora #$cc00
+        ora #$8800
         sta $1,s
         
         lda $3,s
         and #$ff0f
-        ora #$00c0
+        ora #$0080
         sta $3,s
         
         lda $a1,s
         and #$00f0
-        ora #$cc0b
+        ora #$8804
         sta $a1,s
         
         lda $a3,s
         and #$ff00
-        ora #$00cc
+        ora #$0088
         sta $a3,s
         
         tsc
         adc #$0142
         tcs
         
-        pea $ccbb
+        pea $8844
         lda $3,s
         and #$0f00
-        ora #$c0cc
+        ora #$8088
         sta $3,s
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         tsc
@@ -3614,17 +3609,17 @@ flea2  entry
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         lda $a1,s
         and #$f000
-        ora #$0acc
+        ora #$0c88
         sta $a1,s
         
         lda $a3,s
         and #$00f0
-        ora #$cc0c
+        ora #$8808
         sta $a3,s
         
         tsc
@@ -3632,13 +3627,12 @@ flea2  entry
         tcs
         
         lda $1,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$cc0a
+        ora #$880c
         sta $3,s
         
         tsc
@@ -3646,23 +3640,19 @@ flea2  entry
         tcs
         
         lda $1,s
-        and #$fff0
-        ora #$000a
+        ora #$000c
         sta $1,s
         
         lda $3,s
-        and #$f00f
-        ora #$0aa0
+        ora #$0cc0
         sta $3,s
         
         lda $a1,s
-        and #$f0f0
-        ora #$0a0a
+        ora #$0c0c
         sta $a1,s
         
         lda $a3,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $a3,s
         
         _spriteFooter
@@ -3671,9 +3661,9 @@ flea2  entry
 flea3  entry
         _spriteHeader
  
-; $a - Green
-; $b - Red
-; $c - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|..OO|O...
 ; ....|.ROO|OO..
@@ -3684,7 +3674,7 @@ flea3  entry
 ; ....|..G.|.G.G
 ; ....|...G|..G.
 ;
-        lda #$cccc
+        lda #$8888
         tcd             ; Off-white, Off-white, Off-white, Off-white
         dex
         dex
@@ -3696,37 +3686,37 @@ flea3  entry
         
         lda $1,s
         and #$00ff
-        ora #$cc00
+        ora #$8800
         sta $1,s
         
         lda $3,s
         and #$ff0f
-        ora #$00c0
+        ora #$0080
         sta $3,s
         
         lda $a1,s
         and #$00f0
-        ora #$cc0b
+        ora #$8804
         sta $a1,s
         
         lda $a3,s
         and #$ff00
-        ora #$00cc
+        ora #$0088
         sta $a3,s
         
         tsc
         adc #$0142
         tcs
         
-        pea $ccbb
+        pea $8844
         lda $3,s
         and #$0f00
-        ora #$c0cc
+        ora #$8088
         sta $3,s
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         tsc
@@ -3737,17 +3727,17 @@ flea3  entry
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         lda $a1,s
         and #$f000
-        ora #$0acc
+        ora #$0c88
         sta $a1,s
         
         lda $a3,s
         and #$00f0
-        ora #$cc0c
+        ora #$8808
         sta $a3,s
         
         tsc
@@ -3755,13 +3745,12 @@ flea3  entry
         tcs
         
         lda $1,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $1,s
         
         lda $3,s
         and #$000f
-        ora #$cca0
+        ora #$88c0
         sta $3,s
         
         tsc
@@ -3769,23 +3758,19 @@ flea3  entry
         tcs
         
         lda $1,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $1,s
         
         lda $3,s
-        and #$f0f0
-        ora #$0a0a
+        ora #$0c0c
         sta $3,s
         
         lda $a1,s
-        and #$f0ff
-        ora #$0a00
+        ora #$0c00
         sta $a1,s
         
         lda $a3,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $a3,s
         
         _spriteFooter
@@ -3794,9 +3779,9 @@ flea3  entry
 flea4  entry
         _spriteHeader
  
-; $a - Green
-; $b - Red
-; $c - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|..OO|O...
 ; ....|.ROO|OO..
@@ -3807,7 +3792,7 @@ flea4  entry
 ; ....|..G.|.G.G
 ; ....|...G|.G.G
 ;
-        lda #$cccc
+        lda #$8888
         tcd             ; Off-white, Off-white, Off-white, Off-white
         dex
         dex
@@ -3819,37 +3804,37 @@ flea4  entry
         
         lda $1,s
         and #$00ff
-        ora #$cc00
+        ora #$8800
         sta $1,s
         
         lda $3,s
         and #$ff0f
-        ora #$00c0
+        ora #$0080
         sta $3,s
         
         lda $a1,s
         and #$00f0
-        ora #$cc0b
+        ora #$8804
         sta $a1,s
         
         lda $a3,s
         and #$ff00
-        ora #$00cc
+        ora #$0088
         sta $a3,s
         
         tsc
         adc #$0142
         tcs
         
-        pea $ccbb
+        pea $8844
         lda $3,s
         and #$0f00
-        ora #$c0cc
+        ora #$8088
         sta $3,s
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         tsc
@@ -3860,27 +3845,26 @@ flea4  entry
         
         lda $9f,s
         and #$f0ff
-        ora #$0c00
+        ora #$0800
         sta $9f,s
         
         lda $a1,s
         and #$0f00
-        ora #$a0cc
+        ora #$c088
         sta $a1,s
         
         tsc
         adc #$00a4
         tcs
-        pea $ccac
+        pea $88c8
         
         lda $9f,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $9f,s
         
         lda $a1,s
         and #$000f
-        ora #$cca0
+        ora #$88c0
         sta $a1,s
         
         tsc
@@ -3888,23 +3872,19 @@ flea4  entry
         tcs
         
         lda $1,s
-        and #$0fff
-        ora #$a000
+        ora #$c000
         sta $1,s
         
         lda $3,s
-        and #$f0f0
-        ora #$0a0a
+        ora #$0c0c
         sta $3,s
         
         lda $a1,s
-        and #$f0ff
-        ora #$0a00
+        ora #$0c00
         sta $a1,s
         
         lda $a3,s
-        and #$f0f0
-        ora #$0a0a
+        ora #$0c0c
         sta $a3,s
         
         _spriteFooter
@@ -3913,9 +3893,9 @@ flea4  entry
 score300 entry
         _spriteHeader
  
-; $7 - Green
-; $8 - Red
-; $9 - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....
@@ -3934,32 +3914,32 @@ score300 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         lda $a1,s
         and #$f0ff
-        ora #$0900
+        ora #$0800
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -3968,32 +3948,32 @@ score300 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $3,s
         
         lda $5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $5,s
         
         lda $a1,s
         and #$f0ff
-        ora #$0900
+        ora #$0800
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -4002,17 +3982,17 @@ score300 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         _spriteFooter
@@ -4021,9 +4001,9 @@ score300 entry
 score600 entry
         _spriteHeader
  
-; $7 - Green
-; $8 - Red
-; $9 - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....
@@ -4042,32 +4022,32 @@ score600 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         lda $a1,s
         and #$fff0
-        ora #$0009
+        ora #$0008
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -4076,32 +4056,32 @@ score600 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $3,s
         
         lda $5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $5,s
         
         lda $a1,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -4110,17 +4090,17 @@ score600 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         _spriteFooter
@@ -4129,9 +4109,9 @@ score600 entry
 score900 entry
         _spriteHeader
  
-; $7 - Green
-; $8 - Red
-; $9 - Off-white
+; $7 c - Green
+; $8 4 - Red
+; $9 8 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....
@@ -4150,32 +4130,32 @@ score900 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         lda $a1,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -4184,32 +4164,32 @@ score900 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $3,s
         
         lda $5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $5,s
         
         lda $a1,s
         and #$f0ff
-        ora #$0900
+        ora #$0800
         sta $a1,s
         
         lda $a3,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a3,s
         
         lda $a5,s
         and #$f0f0
-        ora #$0909
+        ora #$0808
         sta $a5,s
         
         tsc
@@ -4218,17 +4198,17 @@ score900 entry
         
         lda $1,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$00f0
-        ora #$9909
+        ora #$8808
         sta $5,s
         
         _spriteFooter
@@ -4261,33 +4241,33 @@ scorpion1 entry
         dex
         txa
         tcs
-        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-        ldx #$feee          ; Red, Red, Off-white, Red
+        ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$8444          ; Red, Red, Off-white, Red
         clc
         
         lda $1,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$fe0e
+        ora #$8404
         sta $3,s
         
         lda $5,s
         and #$0fff
-        ora #$f000
+        ora #$8000
         sta $5,s
         
         lda $7,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $7,s
         
         lda $a1,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $a1,s
         
         tsc
@@ -4298,27 +4278,27 @@ scorpion1 entry
         
         lda $3,s
         and #$f00f
-        ora #$0fe0
+        ora #$0840
         sta $3,s
         
         lda $9f,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $9f,s
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a3,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $a3,s
         
         lda $a5,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a5,s
         
         tsc
@@ -4334,32 +4314,32 @@ scorpion1 entry
         
         lda $1,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $1,s
         
         lda $5,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $5,s
         
         lda $7,s
         and #$f0f0
-        ora #$0f0f
+        ora #$0808
         sta $7,s
         
         lda $a3,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a3,s
         
         lda $a5,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $a5,s
         
         lda $a7,s
         and #$f0ff
-        ora #$0f00
+        ora #$0800
         sta $a7,s
         
         tsc
@@ -4368,22 +4348,22 @@ scorpion1 entry
         
         lda $3,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $5,s
         
         lda $7,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $7,s
         
         lda $a3,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a3,s
         
         tsc
@@ -4395,12 +4375,12 @@ scorpion1 entry
         
         lda $9f,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $9f,s
         
         lda $a3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a3,s
         
         
@@ -4416,9 +4396,9 @@ scorpion1 entry
 scorpion1s entry
         _spriteHeader
  
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ...O|.O..|ROR.|.O.O|....
 ; ....|O..R|RORR|..O.|....
@@ -4442,38 +4422,38 @@ scorpion1s entry
         dex
         txa
         tcs
-        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-        ldx #$eeef          ; Red, Off-white, Red, Red
+        ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$4448          ; Red, Off-white, Red, Red
         clc
         
         lda $1,s
         and #$f0ff
-        ora #$0f00
+        ora #$0800
         sta $1,s
         
         lda $3,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $3,s
         
         lda $5,s
         and #$0f00
-        ora #$e0ef
+        ora #$4048
         sta $5,s
         
         lda $7,s
         and #$f0f0
-        ora #$0f0f
+        ora #$0808
         sta $7,s
         
         lda $a3,s
         and #$f00f
-        ora #$0ef0
+        ora #$0480
         sta $a3,s
         
         lda $a7,s
         and #$0fff
-        ora #$f000
+        ora #$8000
         sta $a7,s
         
         tsc
@@ -4484,22 +4464,22 @@ scorpion1s entry
         
         lda $9f,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $9f,s
         
         lda $a1,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a1,s
         
         lda $a3,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $a3,s
         
         lda $a5,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a5,s
         
         tsc
@@ -4515,22 +4495,22 @@ scorpion1s entry
         
         lda $1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $1,s
         
         lda $5,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $5,s
         
         lda $7,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $7,s
         
         lda $a7,s
         and #$0fff
-        ora #$f000
+        ora #$8000
         sta $a7,s
         
         tsc
@@ -4541,7 +4521,7 @@ scorpion1s entry
         
         lda $a5,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $a5,s
         
         tsc
@@ -4552,7 +4532,7 @@ scorpion1s entry
         
         lda $a5,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a5,s
         
         tsc
@@ -4564,12 +4544,12 @@ scorpion1s entry
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a5,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $a5,s
         
         tsc
@@ -4584,9 +4564,9 @@ scorpion1s entry
 scorpion2 entry
         _spriteHeader
  
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; O.O.|.ROR|..O.|O...
 ; .O..|RROR|R..O|....
@@ -4608,33 +4588,33 @@ scorpion2 entry
         dex
         txa
         tcs
-        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-        ldx #$feee          ; Red, Red, Off-white, Red
+        ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$8444          ; Red, Red, Off-white, Red
         clc
         
         lda $1,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$fe0e
+        ora #$8404
         sta $3,s
         
         lda $5,s
         and #$0fff
-        ora #$f000
+        ora #$8000
         sta $5,s
         
         lda $7,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $7,s
         
         lda $a1,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $a1,s
         
         tsc
@@ -4645,27 +4625,27 @@ scorpion2 entry
         
         lda $3,s
         and #$f00f
-        ora #$0fe0
+        ora #$0840
         sta $3,s
         
         lda $9f,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $9f,s
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a3,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $a3,s
         
         lda $a5,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a5,s
         
         tsc
@@ -4674,37 +4654,37 @@ scorpion2 entry
         
         lda $1,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $1,s
         
         lda $3,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $3,s
         
         lda $5,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $5,s
         
         lda $7,s
         and #$f0f0
-        ora #$0f0f
+        ora #$0808
         sta $7,s
         
         lda $a1,s
         and #$f0ff
-        ora #$0f00
+        ora #$0800
         sta $a1,s
         
         lda $a5,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $a5,s
         
         lda $a7,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $a7,s
         
         tsc
@@ -4715,12 +4695,12 @@ scorpion2 entry
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a5,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $a5,s
         
         tsc
@@ -4736,22 +4716,22 @@ scorpion2 entry
         
         lda $1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $1,s
         
         lda $5,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $5,s
         
         lda $a1,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $a1,s
         
         lda $a5,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $a5,s
         
         tsc
@@ -4766,9 +4746,9 @@ scorpion2 entry
 scorpion2s entry
        _spriteHeader
  
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ...O|.O..|ROR.|.O.O|....
 ; ....|O..R|RORR|..O.|....
@@ -4792,38 +4772,38 @@ scorpion2s entry
        dex
        txa
        tcs
-       ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-       ldx #$eeef          ; Red, Off-white, Red, Red
+       ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+       ldx #$4448          ; Red, Off-white, Red, Red
        clc
         
        lda $1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $1,s
        
        lda $3,s
        and #$fff0
-       ora #$000f
+       ora #$0008
        sta $3,s
         
        lda $5,s
        and #$0f00
-       ora #$e0ef
+       ora #$4048
        sta $5,s
         
        lda $7,s
        and #$f0f0
-       ora #$0f0f
+       ora #$0808
        sta $7,s
        
        lda $a3,s
        and #$f00f
-       ora #$0ef0
+       ora #$0480
        sta $a3,s
        
        lda $a7,s
        and #$0fff
-       ora #$f000
+       ora #$8000
        sta $a7,s
        
        tsc
@@ -4834,22 +4814,22 @@ scorpion2s entry
        
        lda $9f,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $9f,s
        
        lda $a1,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $a1,s
        
        lda $a3,s
        and #$0ff0
-       ora #$f00f
+       ora #$8008
        sta $a3,s
        
        lda $a5,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $a5,s
        
        tsc
@@ -4858,37 +4838,37 @@ scorpion2s entry
        
        lda $1,s
        and #$0ff0
-       ora #$f00f
+       ora #$8008
        sta $1,s
        
        lda $3,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $3,s
        
        lda $5,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $5,s
        
        lda $7,s
        and #$0f0f
-       ora #$f0f0
+       ora #$8080
        sta $7,s
        
        lda $a1,s
        and #$00ff
-       ora #$ff00
+       ora #$8800
        sta $a1,s
        
        lda $a5,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $a5,s
        
        lda $a7,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $a7,s
        
        tsc
@@ -4899,17 +4879,17 @@ scorpion2s entry
        
        lda $a1,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $a1,s
        
        lda $a3,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $a3,s
        
        lda $a5,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $a5,s
        
        tsc
@@ -4921,12 +4901,12 @@ scorpion2s entry
        
        lda $5,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $5,s
        
        lda $a1,s
        and #$00f0
-       ora #$ff0f
+       ora #$8808
        sta $a1,s
        
        tsc
@@ -4941,9 +4921,9 @@ scorpion2s entry
 scorpion3 entry
         _spriteHeader
  
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; O.O.|ROR.|O.O.|....
 ; .O.R|RORR|.O..|....
@@ -4965,28 +4945,28 @@ scorpion3 entry
         dex
         txa
         tcs
-        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-        ldx #$eeef          ; Red, Off-white, Red, Red
+        ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$4448          ; Red, Off-white, Red, Red
         clc
         
         lda $1,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $1,s
         
         lda $3,s
         and #$0f00
-        ora #$e0ef
+        ora #$4048
         sta $3,s
         
         lda $5,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $5,s
         
         lda $a1,s
         and #$f0f0
-        ora #$0e0f
+        ora #$0408
         sta $a1,s
         
         tsc
@@ -4997,27 +4977,27 @@ scorpion3 entry
         
         lda $3,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $3,s
         
         lda $9f,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $9f,s
         
         lda $a1,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a1,s
         
         lda $a3,s
         and #$ff00
-        ora #$00ff
+        ora #$0088
         sta $a3,s
         
         lda $a5,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $a5,s
         
         tsc
@@ -5033,27 +5013,27 @@ scorpion3 entry
         
         lda $1,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $1,s
         
         lda $5,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $5,s
         
         lda $7,s
         and #$f0f0
-        ora #$0f0f
+        ora #$0808
         sta $7,s
         
         lda $a3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a3,s
         
         lda $a7,s
         and #$f000
-        ora #$0fff
+        ora #$0888
         sta $a7,s
         
         tsc
@@ -5062,22 +5042,22 @@ scorpion3 entry
         
         lda $3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $3,s
         
         lda $5,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $5,s
         
         lda $7,s
         and #$f00f
-        ora #$0ff0
+        ora #$0880
         sta $7,s
         
         lda $a7,s
         and #$0fff
-        ora #$f000
+        ora #$8000
         sta $a7,s
         
         tsc
@@ -5089,12 +5069,12 @@ scorpion3 entry
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a3,s
         
         _spriteFooter
@@ -5103,9 +5083,9 @@ scorpion3 entry
 scorpion3s entry
        _spriteHeader
 
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; ...O|.O.R|OR.O|.O..|....
 ; ....|O.RR|ORR.|O...|....
@@ -5129,42 +5109,42 @@ scorpion3s entry
        dex
        txa
        tcs
-       ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+       ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
        clc
         
        lda $1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $1,s
        
        lda $3,s
        and #$f0f0
-       ora #$0e0f
+       ora #$0408
        sta $3,s
         
        lda $5,s
        and #$f000
-       ora #$0ffe
+       ora #$0884
        sta $5,s
         
        lda $7,s
        and #$fff0
-       ora #$000f
+       ora #$0008
        sta $7,s
        
        lda $a3,s
        and #$000f
-       ora #$eef0
+       ora #$4480
        sta $a3,s
        
        lda $a5,s
        and #$0f0
-       ora #$e0fe
+       ora #$4084
        sta $a5,s
        
        lda $a7,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $a7,s
     
        tsc
@@ -5173,32 +5153,32 @@ scorpion3s entry
         
        lda $1,s
        and #$f000
-       ora #$0fff
+       ora #$0888
        sta $1,s
        
        lda $3,s
        and #$f000
-       ora #$0fff
+       ora #$0888
        sta $3,s
         
        lda $5,s
        and #$ff0f
-       ora #$00f0
+       ora #$0080
        sta $5,s
         
        lda $7,s
        and #$0ff0
-       ora #$f00f
+       ora #$8008
        sta $7,s
        
        lda $a1,s
        and #$00f0
-       ora #$ff0f
+       ora #$8808
        sta $a1,s
        
        lda $a7,s
        and #$0f0f
-       ora #$f0f0
+       ora #$8080
        sta $a7,s
        
        tsc
@@ -5209,22 +5189,22 @@ scorpion3s entry
        
        lda $9f,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $9f,s
        
        lda $a1,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $a1,s
        
        lda $a3,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $a3,s
        
        lda $a5,s
        and #$0f0f
-       ora #$f0f0
+       ora #$8080
        sta $a5,s
        
        tsc
@@ -5233,37 +5213,37 @@ scorpion3s entry
        
        lda $1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $1,s
        
        lda $3,s
        and #$ff00
-       ora #$00ff
+       ora #$088
        sta $3,s
        
        lda $5,s
        and #$00f0
-       ora #$ff0f
+       ora #$8808
        sta $5,s
        
        lda $7,s
        and #$0fff
-       ora #$f000
+       ora #$8000
        sta $7,s
        
        lda $a1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $a1,s
        
        lda $a5,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $a5,s
        
        lda $a7,s
        and #$fff0
-       ora #$000f
+       ora #$0008
        sta $a7,s
        
        tsc
@@ -5274,7 +5254,7 @@ scorpion3s entry
        
        lda $a3,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $a3,s
        
        tsc
@@ -5289,9 +5269,9 @@ scorpion3s entry
 scorpion4 entry
         _spriteHeader
  
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $c - Green
+; $4 - Red
+; $8 - Off-white
 ;
 ; O.O.|ROR.|O.O.|....
 ; .O.R|RORR|.O..|O...
@@ -5313,28 +5293,28 @@ scorpion4 entry
         dex
         txa
         tcs
-        ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
-        ldx #$eeef          ; Red, Off-white, Red, Red
+        ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
+        ldx #$4448          ; Red, Off-white, Red, Red
         clc
         
         lda $1,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $1,s
         
         lda $3,s
         and #$0f00
-        ora #$e0ef
+        ora #$4048
         sta $3,s
         
         lda $5,s
         and #$0f0f
-        ora #$f0f0
+        ora #$8080
         sta $5,s
         
         lda $a1,s
         and #$f0f0
-        ora #$0e0f
+        ora #$0408
         sta $a1,s
         
         tsc
@@ -5345,32 +5325,32 @@ scorpion4 entry
         
         lda $3,s
         and #$fff0
-        ora #$000f
+        ora #$0008
         sta $3,s
         
         lda $5,s
         and #$ff0f
-        ora #$00f0
+        ora #$0080
         sta $5,s
         
         lda $9f,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $9f,s
         
         lda $a1,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a1,s
         
         lda $a3,s
         and #$f000
-        ora #$0fff
+        ora #$0888
         sta $a3,s
         
         lda $a5,s
         and #$0ff0
-        ora #$f00f
+        ora #$8008
         sta $a5,s
         
         tsc
@@ -5386,27 +5366,27 @@ scorpion4 entry
         
         lda $1,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $1,s
         
         lda $5,s
         and #$f00f
-        ora #$0ff0
+        ora #$0880
         sta $5,s
         
         lda $7,s
         and #$00ff
-        ora #$ff00
+        ora #$8800
         sta $7,s
         
         lda $a3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a3,s
         
         lda $a7,s
         and #$f00f
-        ora #$0ff0
+        ora #$0880
         sta $a7,s
         
         tsc
@@ -5415,12 +5395,12 @@ scorpion4 entry
         
         lda $3,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $3,s
         
         lda $7,s
         and #$f0ff
-        ora #$0f00
+        ora #$0800
         sta $7,s
         
         tsc
@@ -5433,12 +5413,12 @@ scorpion4 entry
         
         lda $a1,s
         and #$00f0
-        ora #$ff0f
+        ora #$8808
         sta $a1,s
         
         lda $a5,s
         and #$0f00
-        ora #$f0ff
+        ora #$8088
         sta $a5,s
         
         tsc
@@ -5453,9 +5433,9 @@ scorpion4 entry
 scorpion4s entry
        _spriteHeader
 
-; $d - Green
-; $e - Red
-; $f - Off-white
+; $d c - Green
+; $e 4 - Red
+; $f 8 - Off-white
 ;
 ; ...O|.O.R|OR.O|.O..|....
 ; ....|O.RR|ORR.|O..O|....
@@ -5479,42 +5459,42 @@ scorpion4s entry
        dex
        txa
        tcs
-       ldy #$ffff          ; Off-white, Off-white, Off-white, Off-white
+       ldy #$8888          ; Off-white, Off-white, Off-white, Off-white
        clc
         
        lda $1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $1,s
        
        lda $3,s
        and #$f0f0
-       ora #$0e0f
+       ora #$0408
        sta $3,s
         
        lda $5,s
        and #$f000
-       ora #$0ffe
+       ora #$0884
        sta $5,s
         
        lda $7,s
        and #$fff0
-       ora #$000f
+       ora #$0008
        sta $7,s
        
        lda $a3,s
        and #$000f
-       ora #$eef0
+       ora #$4480
        sta $a3,s
        
        lda $a5,s
        and #$0f0
-       ora #$e0fe
+       ora #$4084
        sta $a5,s
        
        lda $a7,s
        and #$f00f
-       ora #$0ff0
+       ora #$0880
        sta $a7,s
     
        tsc
@@ -5523,37 +5503,37 @@ scorpion4s entry
         
        lda $1,s
        and #$f000
-       ora #$0fff
+       ora #$0888
        sta $1,s
        
        lda $3,s
        and #$f000
-       ora #$0fff
+       ora #$0888
        sta $3,s
         
        lda $5,s
        and #$0f0f
-       ora #$f0f0
+       ora #$8080
        sta $5,s
         
        lda $7,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $7,s
        
        lda $a1,s
        and #$00f0
-       ora #$ff0f
+       ora #$8808
        sta $a1,s
        
        lda $a5,s
        and #$0fff
-       ora #$f000
+       ora #$8000
        sta $a5,s
        
        lda $a7,s
        and #$0ff0
-       ora #$f00f
+       ora #$8008
        sta $a7,s
        
        tsc
@@ -5564,22 +5544,22 @@ scorpion4s entry
        
        lda $9f,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $9f,s
        
        lda $a1,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $a1,s
        
        lda $a3,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $a3,s
        
        lda $a5,s
        and #$0fff
-       ora #$f000
+       ora #$8000
        sta $a5,s
        
        tsc
@@ -5588,27 +5568,27 @@ scorpion4s entry
        
        lda $1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $1,s
        
        lda $3,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $3,s
        
        lda $7,s
        and #$0fff
-       ora #$f000
+       ora #$8000
        sta $7,s
        
        lda $a1,s
        and #$f0ff
-       ora #$0f00
+       ora #$0800
        sta $a1,s
        
        lda $a7,s
        and #$0f00
-       ora #$f0ff
+       ora #$8088
        sta $a7,s
        
        tsc
@@ -5627,7 +5607,7 @@ scorpion4s entry
        
        lda $5,s
        and #$ff00
-       ora #$00ff
+       ora #$0088
        sta $5,s
        
        _spriteFooter

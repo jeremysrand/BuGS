@@ -205,28 +205,52 @@ game    start
         jsl score900
         
         ldx #$3e0b
-        jsl scorpion1
+        jsl left_scorpion1
         
         ldx #$3e1b
-        jsl scorpion1s
+        jsl left_scorpion1s
         
         ldx #$3e2b
-        jsl scorpion2
+        jsl left_scorpion2
         
         ldx #$3e3b
-        jsl scorpion2s
+        jsl left_scorpion2s
         
         ldx #$3e4b
-        jsl scorpion3
+        jsl left_scorpion3
         
         ldx #$3e5b
-        jsl scorpion3s
+        jsl left_scorpion3s
         
         ldx #$3e6b
-        jsl scorpion4
+        jsl left_scorpion4
         
         ldx #$3e7b
-        jsl scorpion4s
+        jsl left_scorpion4s
+        
+        ldx #$480b
+        jsl right_scorpion1
+        
+        ldx #$481b
+        jsl right_scorpion1s
+        
+        ldx #$482b
+        jsl right_scorpion2
+        
+        ldx #$483b
+        jsl right_scorpion2s
+        
+        ldx #$484b
+        jsl right_scorpion3
+        
+        ldx #$485b
+        jsl right_scorpion3s
+        
+        ldx #$486b
+        jsl left_scorpion4
+        
+        ldx #$487b
+        jsl left_scorpion4s
         
         jsl waitForKey
         rtl

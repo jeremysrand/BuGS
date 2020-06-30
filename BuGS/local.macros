@@ -9,12 +9,14 @@
         macro
         _spriteHeader
         sei
-        phd
         tsc
         sta backupStack
         lda $e1c068      ; Direct Page and Stack in Bank 01/
         ora #$0030
         sta $e1c068
+        clc
+        txa
+        tcs
         mend
 
         macro
@@ -24,7 +26,5 @@
         sta $e1c068
         lda backupStack
         tcs
-        pld
         cli
-        rtl
         mend

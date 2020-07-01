@@ -6653,6 +6653,169 @@ right_scorpion4s entry
         rtl
 
 
+spider1 entry
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+ 
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ..O.|....|....|O...
+; .O.O|....|...O|.O.
+; O...|O..G|..O.|..O.
+; ....|.ORG|RO..|....
+; ..O.|.RRG|RR..|O...
+; .O.O|.GGG|GG.O|.O..
+; O...|OGRR|RGO.|..O.
+; ....|..GR|G...|....
+        
+        lda $1,s
+        and #$0fff
+        ora #$8000
+        sta $1,s
+        
+        lda $7,s
+        and #$ff0f
+        ora #$0080
+        sta $7,s
+        
+        lda $a1,s
+        and #$f0f0
+        ora #$0808
+        sta $a1,s
+        
+        lda $a5,s
+        and #$f0ff
+        ora #$0800
+        sta $a5,s
+        
+        lda $a7,s
+        and #$fff0
+        ora #$0008
+        sta $a7,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+        and #$ff0f
+        ora #$0080
+        sta $1,s
+        
+        lda $3,s
+        and #$f00f
+        ora #$0c80
+        sta $3,s
+        
+        lda $5,s
+        and #$0fff
+        ora #$8000
+        sta $5,s
+        
+        lda $7,s
+        and #$0fff
+        ora #$8000
+        sta $7,s
+        
+        lda $a3,s
+        and #$00f0
+        ora #$4c08
+        sta $a3,s
+        
+        lda $a5,s
+        and #$ff00
+        ora #$0048
+        sta $a5,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+        and #$0fff
+        ora #$8000
+        sta $1,s
+        
+        lda $3,s
+        and #$ff0f
+        ora #$4c04
+        sta $3,s
+        
+        lda $5,s
+        and #$ff00
+        ora #$0044
+        sta $5,s
+        
+        lda $7,s
+        and #$ff0f
+        ora #$0080
+        sta $7,s
+        
+        lda $a1,s
+        and #$f0f0
+        ora #$0808
+        sta $a1,s
+        
+        lda $a3,s
+        and #$00f0
+        ora #$cc0c
+        sta $a3,s
+        
+        lda $a5,s
+        and #$f000
+        ora #$08cc
+        sta $a5,s
+        
+        lda $a7,s
+        and #$fff0
+        ora #$0008
+        sta $a7,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+        and #$ff0f
+        ora #$0080
+        sta $1,s
+        
+        lda #$448c
+        sta $3,s
+        
+        lda $5,s
+        and #$0f00
+        ora #$804c
+        sta $5,s
+        
+        lda $7,s
+        and #$0fff
+        ora #$8000
+        sta $7,s
+        
+        lda $a3,s
+        and #$00ff
+        ora #$c400
+        sta $a3,s
+        
+        lda $a5,s
+        and #$ff0f
+        ora #$00c0
+        sta $a5,s
+        
+        _spriteFooter
+        rtl
+
+
 backupStack dc i2'0'
 
         end

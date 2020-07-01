@@ -252,6 +252,9 @@ game    start
         ldx #$487b
         jsl right_scorpion4s
         
+        ldx #$520b
+        jsl spider1
+        
         jsl waitForKey
         rtl
         

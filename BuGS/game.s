@@ -247,10 +247,10 @@ game    start
         jsl right_scorpion3s
         
         ldx #$486b
-        jsl left_scorpion4
+        jsl right_scorpion4
         
         ldx #$487b
-        jsl left_scorpion4s
+        jsl right_scorpion4s
         
         jsl waitForKey
         rtl

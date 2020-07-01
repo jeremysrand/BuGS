@@ -255,6 +255,15 @@ game    start
         ldx #$520b
         jsl spider1
         
+        ldx #$521b
+        jsl spider1s
+        
+        ldx #$522b
+        jsl spider2
+        
+        ldx #$523b
+        jsl spider2s
+        
         jsl waitForKey
         rtl
         

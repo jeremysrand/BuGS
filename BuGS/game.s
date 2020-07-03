@@ -264,6 +264,54 @@ game    start
         ldx #$523b
         jsl spider2s
         
+        ldx #$524b
+        jsl spider3
+        
+        ldx #$525b
+        jsl spider3s
+        
+        ldx #$526b
+        jsl spider4
+        
+        ldx #$527b
+        jsl spider4s
+        
+        ldx #$528b
+        jsl spider5
+        
+        ldx #$529b
+        jsl spider5s
+        
+        ldx #$5c0b
+        jsl spider6
+        
+        ldx #$5c1b
+        jsl spider6s
+        
+        ldx #$5c2b
+        jsl spider7
+        
+        ldx #$5c3b
+        jsl spider7s
+        
+        ldx #$5c43
+        jsl explosion1
+        
+        ldx #$5c4b
+        jsl explosion2
+        
+        ldx #$5c53
+        jsl explosion3
+        
+        ldx #$5c5b
+        jsl explosion4
+        
+        ldx #$5c63
+        jsl explosion5
+        
+        ldx #$5c6b
+        jsl explosion6
+        
         jsl waitForKey
         rtl
         

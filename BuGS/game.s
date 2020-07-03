@@ -312,6 +312,12 @@ game    start
         ldx #$5c6b
         jsl explosion6
         
+        ldx #$5c73
+        jsl left_head1
+        
+        ldx #$5c7b
+        jsl left_head1s
+        
         jsl waitForKey
         rtl
         

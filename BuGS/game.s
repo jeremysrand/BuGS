@@ -342,6 +342,36 @@ game    start
         ldx #$661b
         jsl leftHead5s
         
+        ldx #$6623
+        jsl leftBody1
+        
+        ldx #$662b
+        jsl leftBody1s
+        
+        ldx #$6633
+        jsl leftBody2
+        
+        ldx #$663b
+        jsl leftBody2s
+        
+        ldx #$6643
+        jsl leftBody3
+        
+        ldx #$664b
+        jsl leftBody3s
+        
+        ldx #$6653
+        jsl leftBody4
+        
+        ldx #$665b
+        jsl leftBody4s
+        
+        ldx #$6663
+        jsl leftBody5
+        
+        ldx #$666b
+        jsl leftBody5s
+        
         jsl waitForKey
         rtl
         

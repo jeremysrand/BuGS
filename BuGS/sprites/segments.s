@@ -372,6 +372,366 @@ leftHead5s entry
         rtl
 
 
+leftBody1 entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ...O|....
+; .GGG|G...
+; GGGG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GGGG|GG..
+; .GGG|G...
+; ...O|....
+        
+        lda $1,s
+        and #$f0ff
+        ora #$0800
+        sta $1,s
+        
+        _leftBody
+        
+        lda $a1,s
+        and #$f0ff
+        ora #$0800
+        sta $a1,s
+        
+        _spriteFooter
+        rtl
+
+
+leftBody1s entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|O...
+; ..GG|GG..
+; .GGG|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GGG|GGG.
+; ..GG|GG..
+; ....|O...
+        
+        lda $3,s
+        and #$ff0f
+        ora #$0080
+        sta $3,s
+        
+        _leftBodyShift
+        
+        lda $a3,s
+        and #$ff0f
+        ora #$0080
+        sta $a3,s
+        
+        _spriteFooter
+        rtl
+
+
+leftBody2 entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|O...
+; .GGG|G...
+; GGGG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GGGG|GG..
+; .GGG|G...
+; ....|O...
+        
+        lda $3,s
+        and #$ff0f
+        ora #$0080
+        sta $3,s
+        
+        _leftBody
+        
+        lda $a3,s
+        and #$ff0f
+        ora #$0080
+        sta $a3,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody2s entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|.O..
+; ..GG|GG..
+; .GGG|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GGG|GGG.
+; ..GG|GG..
+; ....|.O..
+        
+        lda $3,s
+        and #$fff0
+        ora #$0008
+        sta $3,s
+        
+        _leftBodyShift
+        
+        lda $a3,s
+        and #$fff0
+        ora #$0008
+        sta $a3,s
+        
+        _spriteFooter
+        rtl
+
+
+leftBody3 entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|.O..
+; .GGG|G...
+; GGGG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GGGG|GG..
+; .GGG|G...
+; ....|.O..
+        
+        lda $3,s
+        and #$fff0
+        ora #$0008
+        sta $3,s
+        
+        _leftBody
+        
+        lda $a3,s
+        and #$fff0
+        ora #$0008
+        sta $a3,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody3s entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|..O.
+; ..GG|GG..
+; .GGG|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GGG|GGG.
+; ..GG|GG..
+; ....|..O.
+        
+        lda $3,s
+        and #$0fff
+        ora #$8000
+        sta $3,s
+        
+        _leftBodyShift
+        
+        lda $a3,s
+        and #$0fff
+        ora #$8000
+        sta $a3,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody4 entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ..O.|....
+; .GGG|G...
+; GGGG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GGGG|GG..
+; .GGG|G...
+; ..O.|....
+        
+        lda $1,s
+        and #$0fff
+        ora #$8000
+        sta $1,s
+        
+        _leftBody
+        
+        lda $a1,s
+        and #$0fff
+        ora #$8000
+        sta $a1,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody4s entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ...O|....
+; ..GG|GG..
+; .GGG|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GGG|GGG.
+; ..GG|GG..
+; ...O|....
+        
+        lda $1,s
+        and #$f0ff
+        ora #$0800
+        sta $1,s
+        
+        _leftBodyShift
+        
+        lda $a1,s
+        and #$f0ff
+        ora #$0800
+        sta $a1,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody5 entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; .O..|....
+; .GGG|G...
+; GGGG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GGGG|GG..
+; .GGG|G...
+; .O..|....
+        
+        lda $1,s
+        and #$fff0
+        ora #$0008
+        sta $1,s
+        
+        _leftBody
+        
+        lda $a1,s
+        and #$fff0
+        ora #$0008
+        sta $a1,s
+        
+        _spriteFooter
+        rtl
+        
+
+leftBody5s entry
+        dex
+        dex
+        dex
+        dex
+        _spriteHeader
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ..O.|....
+; ..GG|GG..
+; .GGG|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GGG|GGG.
+; ..GG|GG..
+; ..O.|....
+        
+        lda $1,s
+        and #$0fff
+        ora #$8000
+        sta $1,s
+        
+        _leftBodyShift
+        
+        lda $a1,s
+        and #$0fff
+        ora #$8000
+        sta $a1,s
+        
+        _spriteFooter
+        rtl
+
+
 backupStack dc i2'0'
 
         end

@@ -205,52 +205,52 @@ game    start
         jsl score900
         
         ldx #$3e0b
-        jsl left_scorpion1
+        jsl leftScorpion1
         
         ldx #$3e1b
-        jsl left_scorpion1s
+        jsl leftScorpion1s
         
         ldx #$3e2b
-        jsl left_scorpion2
+        jsl leftScorpion2
         
         ldx #$3e3b
-        jsl left_scorpion2s
+        jsl leftScorpion2s
         
         ldx #$3e4b
-        jsl left_scorpion3
+        jsl leftScorpion3
         
         ldx #$3e5b
-        jsl left_scorpion3s
+        jsl leftScorpion3s
         
         ldx #$3e6b
-        jsl left_scorpion4
+        jsl leftScorpion4
         
         ldx #$3e7b
-        jsl left_scorpion4s
+        jsl leftScorpion4s
         
         ldx #$480b
-        jsl right_scorpion1
+        jsl rightScorpion1
         
         ldx #$481b
-        jsl right_scorpion1s
+        jsl rightScorpion1s
         
         ldx #$482b
-        jsl right_scorpion2
+        jsl rightScorpion2
         
         ldx #$483b
-        jsl right_scorpion2s
+        jsl rightScorpion2s
         
         ldx #$484b
-        jsl right_scorpion3
+        jsl rightScorpion3
         
         ldx #$485b
-        jsl right_scorpion3s
+        jsl rightScorpion3s
         
         ldx #$486b
-        jsl right_scorpion4
+        jsl rightScorpion4
         
         ldx #$487b
-        jsl right_scorpion4s
+        jsl rightScorpion4s
         
         ldx #$520b
         jsl spider1
@@ -313,10 +313,34 @@ game    start
         jsl explosion6
         
         ldx #$5c73
-        jsl left_head1
+        jsl leftHead1
         
         ldx #$5c7b
-        jsl left_head1s
+        jsl leftHead1s
+        
+        ldx #$5c83
+        jsl leftHead2
+        
+        ldx #$5c8b
+        jsl leftHead2s
+        
+        ldx #$5c93
+        jsl leftHead3
+        
+        ldx #$5c9b
+        jsl leftHead3s
+        
+        ldx #$6603
+        jsl leftHead4
+        
+        ldx #$660b
+        jsl leftHead4s
+        
+        ldx #$6613
+        jsl leftHead5
+        
+        ldx #$661b
+        jsl leftHead5s
         
         jsl waitForKey
         rtl

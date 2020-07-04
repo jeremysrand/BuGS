@@ -54,7 +54,7 @@ REZFLAGS+=
 MACGENFLAGS+=
 
 # Add any other macro libraries to include in this variable:
-MACGENMACROS+=local.macros
+MACGENMACROS+=sprites/sprites.macros
 
 # Add any arguments you want passed to the assembler to this variable:
 ASMFLAGS+=

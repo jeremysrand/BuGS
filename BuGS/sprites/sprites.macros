@@ -1,0 +1,198 @@
+;
+;  sprites.macros
+;  BuGS
+;
+;  Created by Jeremy Rand on 2020-06-16.
+;Copyright © 2020 Jeremy Rand. All rights reserved.
+;
+
+        macro
+        _spriteHeader
+        sei
+        tsc
+        sta backupStack
+        lda $e1c068      ; Direct Page and Stack in Bank 01/
+        ora #$0030
+        sta $e1c068
+        clc
+        txa
+        tcs
+        mend
+
+
+        macro
+        _spriteFooter
+        lda $e1c068
+        and #$ffcf
+        sta $e1c068
+        lda backupStack
+        tcs
+        cli
+        mend
+
+        
+        macro
+        _leftHead
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; .RRG|G...
+; GRRG|GG..
+; GGGG|GGG.
+; GGGG|GGG.
+; GRRG|GG..
+; .RRG|G...
+; ....|....
+        
+        lda $a1,s
+        and #$00f0
+        ora #$4c04
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$ff0f     not necessary with pure green
+        ora #$00c0
+        sta $a3,s
+        
+        tsc
+        adc #$142
+        tcs
+        
+        pea $4cc4
+        
+        lda $3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $3,s
+        
+        lda #$cccc
+        sta $a1,s
+
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+        
+        tsc
+        adc #$142
+        tcs
+        
+        pea $cccc
+
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+        
+        lda #$4cc4
+        sta $a1,s
+
+        lda $a3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+        and #$00f0
+        ora #$4c04
+        sta $1,s
+        
+        lda $3,s
+;        and #$ff0f     not necessary with pure green
+        ora #$00c0
+        sta $3,s
+        
+        mend
+        
+        macro
+        _leftHeadShift
+
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; ..RR|GG..
+; .GRR|GGG.
+; .GGG|GGGG
+; .GGG|GGGG
+; .GRR|GGG.
+; ..RR|GG..
+; ....|....
+
+        lda $a1,s
+        and #$00ff
+        ora #$4400
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+        and #$00f0
+        ora #$440c
+        sta $1,s
+        
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+        
+        lda $a1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $a1,s
+        
+        lda #$cccc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $1,s
+        
+        lda #$cccc
+        sta $3,s
+        
+        lda $a1,s
+        and #$00f0
+        ora #$440c
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+        and #$00ff
+        ora #$4400
+        sta $1,s
+        
+        lda $3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $3,s
+        
+        mend

@@ -12,7 +12,7 @@
 
 scorpions start
 
-left_scorpion1 entry
+leftScorpion1 entry
         dex
         dex
         dex
@@ -175,7 +175,7 @@ left_scorpion1 entry
         rtl
         
 
-left_scorpion1s entry
+leftScorpion1s entry
         dex
         dex
         dex
@@ -325,7 +325,7 @@ left_scorpion1s entry
         rtl
         
 
-left_scorpion2 entry
+leftScorpion2 entry
         dex
         dex
         dex
@@ -493,7 +493,7 @@ left_scorpion2 entry
         rtl
 
 
-left_scorpion2s entry
+leftScorpion2s entry
         dex
         dex
         dex
@@ -658,7 +658,7 @@ left_scorpion2s entry
        rtl
 
 
-left_scorpion3 entry
+leftScorpion3 entry
         dex
         dex
         dex
@@ -810,7 +810,7 @@ left_scorpion3 entry
         rtl
 
 
-left_scorpion3s entry
+leftScorpion3s entry
         dex
         dex
         dex
@@ -986,7 +986,7 @@ left_scorpion3s entry
        rtl
 
 
-left_scorpion4 entry
+leftScorpion4 entry
         dex
         dex
         dex
@@ -1137,7 +1137,7 @@ left_scorpion4 entry
         rtl
 
 
-left_scorpion4s entry
+leftScorpion4s entry
         dex
         dex
         dex
@@ -1311,7 +1311,7 @@ left_scorpion4s entry
        rtl
 
 
-right_scorpion1 entry
+rightScorpion1 entry
         dex
         dex
         dex
@@ -1476,7 +1476,7 @@ right_scorpion1 entry
         rtl
 
 
-right_scorpion1s entry
+rightScorpion1s entry
         dex
         dex
         dex
@@ -1659,7 +1659,7 @@ right_scorpion1s entry
         rtl
 
 
-right_scorpion2 entry
+rightScorpion2 entry
         dex
         dex
         dex
@@ -1827,7 +1827,7 @@ right_scorpion2 entry
         rtl
 
 
-right_scorpion2s entry
+rightScorpion2s entry
         dex
         dex
         dex
@@ -2012,7 +2012,7 @@ right_scorpion2s entry
         rtl
 
 
-right_scorpion3 entry
+rightScorpion3 entry
         dex
         dex
         dex
@@ -2163,7 +2163,7 @@ right_scorpion3 entry
         rtl
 
 
-right_scorpion3s entry
+rightScorpion3s entry
         dex
         dex
         dex
@@ -2334,7 +2334,7 @@ right_scorpion3s entry
         rtl
 
 
-right_scorpion4 entry
+rightScorpion4 entry
         dex
         dex
         dex
@@ -2485,7 +2485,7 @@ right_scorpion4 entry
         rtl
         
 
-right_scorpion4s entry
+rightScorpion4s entry
         dex
         dex
         dex

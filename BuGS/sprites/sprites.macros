@@ -215,7 +215,7 @@
 ; ....|....
         
         lda $a1,s
-;;        and #$00f0     not necessary with pure green
+;        and #$00f0     not necessary with pure green
         ora #$cc0c
         sta $a1,s
         
@@ -277,6 +277,7 @@
         sta $3,s
         
         mend
+        
         
         macro
         _leftBodyShift
@@ -352,6 +353,344 @@
         adc #$140
         tcs
 
+        lda $1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $1,s
+        
+        lda $3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $3,s
+        
+        mend
+
+        
+        macro
+        _rightHead
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; ...G|GRR.
+; ..GG|GRRG
+; .GGG|GGGG
+; .GGG|GGGG
+; ..GG|GRRG
+; ...G|GRR.
+; ....|....
+        
+        lda $a1,s
+;        and #$f0ff     not necessary with pure green
+        ora #$0c00
+        sta $a1,s
+        
+        lda $a3,s
+        and #$0f00
+        ora #$40c4
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $1,s
+        
+        lda #$4cc4
+        sta $3,s
+
+        lda $a1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $a1,s
+        
+        lda #$cccc
+        sta $a3,s
+
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $1,s
+
+        lda #$cccc
+        sta $3,s
+
+        lda $a1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $a1,s
+        
+        lda #$4cc4
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+;        and #$f0ff     not necessary with pure green
+        ora #$0c00
+        sta $1,s
+        
+        lda $3,s
+        and #$0f00
+        ora #$40c4
+        sta $3,s
+        
+        mend
+ 
+
+        macro
+        _rightHeadShift
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; ..GG|RR..
+; .GGG|RRG.
+; GGGG|GGG.
+; GGGG|GGG.
+; .GGG|RRG.
+; ..GG|RR..
+; ....|....
+        
+        lda $a1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $a1,s
+        
+        lda $a3,s
+        and #$ff00
+        ora #$0044
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $1,s
+        
+        lda $3,s
+        and #$0f00
+        ora #$c044
+        sta $3,s
+
+        lda #$cccc
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+
+        tsc
+        adc #$142
+        tcs
+        
+        pea $cccc
+
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+
+        lda $a1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $a1,s
+        
+        lda $a3,s
+        and #$0f00
+        ora #$c044
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $1,s
+        
+        lda $3,s
+        and #$ff00
+        ora #$0044
+        sta $3,s
+        
+        mend
+
+
+        macro
+        _rightBody
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; ...G|GGG.
+; ..GG|GGGG
+; .GGG|GGGG
+; .GGG|GGGG
+; ..GG|GGGG
+; ...G|GGG.
+; ....|....
+        
+        lda $a1,s
+;        and #$f0ff     not necessary with pure green
+        ora #$0c00
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $1,s
+        
+        lda #$cccc
+        sta $3,s
+
+        lda $a1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $a1,s
+        
+        lda #$cccc
+        sta $a3,s
+
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $1,s
+
+        lda #$cccc
+        sta $3,s
+
+        lda $a1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $a1,s
+        
+        lda #$cccc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $1,s
+;        and #$f0ff     not necessary with pure green
+        ora #$0c00
+        sta $1,s
+        
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+        
+        mend
+ 
+ 
+        macro
+        _rightBodyShift
+        
+; $c - Green
+; $4 - Red
+; $8 - Off-white
+;
+; ....|....
+; ..GG|GG..
+; .GGG|GGG.
+; GGGG|GGG.
+; GGGG|GGG.
+; .GGG|GGG.
+; ..GG|GG..
+; ....|....
+        
+        lda $a1,s
+;        and #$00ff     not necessary with pure green
+        ora #$cc00
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$ff00     not necessary with pure green
+        ora #$00cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+
+        lda $1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $1,s
+        
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+
+        lda #$cccc
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+
+        tsc
+        adc #$142
+        tcs
+        
+        pea $cccc
+
+        lda $3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $3,s
+
+        lda $a1,s
+;        and #$00f0     not necessary with pure green
+        ora #$cc0c
+        sta $a1,s
+        
+        lda $a3,s
+;        and #$0f00     not necessary with pure green
+        ora #$c0cc
+        sta $a3,s
+        
+        tsc
+        adc #$140
+        tcs
+        
         lda $1,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00

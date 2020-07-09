@@ -444,6 +444,60 @@ game    start
         ldx #$708b
         jsl leftDownHead2s
         
+        ldx #$7093
+        jsl leftDownBody1
+        
+        ldx #$709b
+        jsl leftDownBody1s
+        
+        ldx #$7a03
+        jsl leftDownBody2
+        
+        ldx #$7a0b
+        jsl leftDownBody2s
+        
+        ldx #$7a13
+        jsl rightDownHead1
+        
+        ldx #$7a1b
+        jsl rightDownHead1s
+        
+        ldx #$7a23
+        jsl rightDownHead2
+        
+        ldx #$7a2b
+        jsl rightDownHead2s
+        
+        ldx #$7a33
+        jsl rightDownBody1
+        
+        ldx #$7a3b
+        jsl rightDownBody1s
+        
+        ldx #$7a43
+        jsl rightDownBody2
+        
+        ldx #$7a4b
+        jsl rightDownBody2s
+        
+        ldx #$7a53
+        jsl downHead1
+        
+        ldx #$7a5b
+        jsl downHead2
+        
+        ldx #$7a63
+        jsl downHead3
+        
+        ldx #$7a6b
+        jsl downBody1
+        
+        ldx #$7a73
+        jsl downBody2
+        
+        ldx #$7a7b
+        jsl downBody3
+        
         jsl waitForKey
         rtl
         

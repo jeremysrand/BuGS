@@ -29,91 +29,91 @@ score300 entry
 ; ....|....|....
 ;
         tsc
-        adc #$013a
+        adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f0f0
         ora #$0808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f0f0
         ora #$0808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
         _spriteFooter
         rtl
@@ -137,91 +137,91 @@ score600 entry
 ;
         
         tsc
-        adc #$013a
+        adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f0f0
         ora #$0808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f0f0
         ora #$0808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0f0
         ora #$0808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
         _spriteFooter
         rtl
@@ -245,91 +245,91 @@ score900 entry
 ;
 
         tsc
-        adc #$013a
+        adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0f0
         ora #$0808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f0f0
         ora #$0808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f0f0
         ora #$0808
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0f0
         ora #$0808
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0f0
         ora #$0808
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$0140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0
         ora #$8808
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$8808
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00f0
         ora #$8808
-        sta $5,s
+        sta $4,s
         
         _spriteFooter
         rtl

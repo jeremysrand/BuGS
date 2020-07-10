@@ -13,14 +13,6 @@
 spiders start
 
 spider1 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -36,154 +28,146 @@ spider1 entry
 ; O...|OGRR|RGO.|..O.
 ; ....|..GR|G...|....
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0f0
         ora #$0808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0ff
         ora #$0800
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0fff
         ora #$8000
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0f0
         ora #$0808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0  Not necessary with green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
         lda #$448c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$804c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f    not necessary with green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 spider1s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -199,154 +183,146 @@ spider1s entry
 ; .O..|.OGR|RRGO|...O
 ; ....|...G|RG..|....
         
-        lda $1,s
+        lda $0,s
 ;        and #$0f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0f0f
         ora #$8080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0f0f
         ora #$8080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$c408
-        sta $3,s
+        sta $2,s
         
         lda #$c844
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 spider2 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -362,134 +338,126 @@ spider2 entry
 ; O...|OGRR|GGO.|..O.
 ; ....|..GR|G...|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0
         ora #$8808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0ff
         ora #$0800
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff00
         ora #$0088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0fff
         ora #$8000
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0
         ora #$8808
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0        not necessary with pure green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff00
         ora #$0088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
         lda #$448c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$80cc
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f        not necessary with pure green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 spider2s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -505,134 +473,126 @@ spider2s entry
 ; .O..|.OGR|RGGO|...O
 ; ....|...G|RG..|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff
         ora #$8800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0f00
         ora #$8088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff
         ora #$8800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0f00
         ora #$8088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$c408
-        sta $3,s
+        sta $2,s
         
         lda #$c84c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 spider3 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -652,145 +612,137 @@ spider3 entry
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00ff
         ora #$8800
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff
         ora #$8800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0        not necessary with pure green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         lda #$c48c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$804c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$ff0f
         ora #$0080
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f        not necessary with pure green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider3s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -810,145 +762,137 @@ spider3s entry
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00
         ora #$0088
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff00
         ora #$0088
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff00
         ora #$0088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$cc08
-        sta $3,s
+        sta $2,s
         
         lda #$c844
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$f0ff
         ora #$0800
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider4 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -968,119 +912,111 @@ spider4 entry
         adc #$140
         tcs
         
-        lda $3,s
+        lda $2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         lda #$4c88
-        sta $a3,s
+        sta $a2,s
         
         lda #$8848
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
         lda #$cc8c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
         lda #$c48c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$80cc
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff
         ora #$8800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f00f
         ora #$08c0
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider4s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1100,119 +1036,111 @@ spider4s entry
         adc #$140
         tcs
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff0f        not necessary with pure green
         ora #$00c0
-        sta $5,s
+        sta $4,s
         
         lda #$8488
-        sta $a3,s
+        sta $a2,s
         
         lda #$88c4
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$cc08
-        sta $a3,s
+        sta $a2,s
         
         lda #$c8cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$cc08
-        sta $3,s
+        sta $2,s
         
         lda #$c84c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f00f
         ora #$0c80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff00
         ora #$0088
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider5 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1232,145 +1160,137 @@ spider5 entry
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00ff
         ora #$8800
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$ff0f
         ora #$0080
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff
         ora #$8800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0        not necessary with pure green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         lda #$448c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$804c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$ff0f
         ora #$0080
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f        not necessary with pure green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider5s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1390,145 +1310,137 @@ spider5s entry
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00
         ora #$0088
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff00
         ora #$0088
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f0ff
         ora #$0800
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff00
         ora #$0088
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$c408
-        sta $3,s
+        sta $2,s
         
         lda #$c844
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$f0ff
         ora #$0800
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider6 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1544,164 +1456,156 @@ spider6 entry
 ; ..O.|OGGR|RGO.|O...
 ; .O..|..GR|G...|.O..
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f0ff
         ora #$0800
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0ff
         ora #$0800
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0fff
         ora #$8000
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f00f
         ora #$0880
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f000
         ora #$0844
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0  Not necessary with green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         lda #$c48c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$804c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f    not necessary with green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider6s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1717,165 +1621,157 @@ spider6s entry
 ; ...O|.OGG|RRGO|.O..
 ; ..O.|...G|RG..|..O.
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$000f
         ora #$4480
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$f00f
         ora #$0880
-        sta $7,s
+        sta $6,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0
         ora #$cc08
-        sta $3,s
+        sta $2,s
         
         lda #$c844
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider7 entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -1891,157 +1787,149 @@ spider7 entry
 ; ...O|OGGR|GGOO|....
 ; ..O.|..GR|G...|O...
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0fff
         ora #$8000
-        sta $5,s
+        sta $4,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0fff
         ora #$8000
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$f00f
         ora #$0c80
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$00ff
         ora #$8800
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0
         ora #$4c08
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$0048
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f
         ora #$4c04
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00
         ora #$0044
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$fff0
         ora #$0008
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f00f
         ora #$0880
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00f0  Not necessary with green
         ora #$cc0c
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f000
         ora #$08cc
-        sta $a5,s
+        sta $a4,s
 
-        lda $a7,s
+        lda $a6,s
 ;        and #$0fff
         ora #$8000
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         lda #$c48c
-        sta $3,s
+        sta $2,s
         
         lda #$88cc
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f    not necessary with green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$ff0f
         ora #$0080
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl
 
 
 spider7s entry
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -2057,144 +1945,144 @@ spider7s entry
 ; ....|OOGG|RGGO|O...
 ; ...O|...G|RG..|.O..
         
-        lda $3,s
+        lda $2,s
 ;        and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f0ff
         ora #$0800
-        sta $5,s
+        sta $4,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$f0ff
         ora #$0800
-        sta $a5,s
+        sta $a4,s
         
         tsc
         adc #$140
         tcs
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00
         ora #$0088
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$f00f
         ora #$08c0
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff
         ora #$8400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00
         ora #$80c4
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00ff
         ora #$4400
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$0f00
         ora #$40c4
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$0fff
         ora #$8000
-        sta $7,s
+        sta $6,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$000f
         ora #$cc80
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$0f00        not necessary with pure green
         ora #$c0cc
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$f00f
         ora #$0880
-        sta $a7,s
+        sta $a6,s
         
         tsc
         adc #$140
         tcs
         
         lda #$cc88
-        sta $3,s
+        sta $2,s
         
         lda #$c84c
-        sta $5,s
+        sta $4,s
         
-        lda $7,s
+        lda $6,s
 ;        and #$ff0f
         ora #$0080
-        sta $7,s
+        sta $6,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$f0ff        not necessary with pure green
         ora #$0c00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff00
         ora #$004c
-        sta $a5,s
+        sta $a4,s
         
-        lda $a7,s
+        lda $a6,s
 ;        and #$fff0
         ora #$0008
-        sta $a7,s
+        sta $a6,s
         
         _spriteFooter
         rtl

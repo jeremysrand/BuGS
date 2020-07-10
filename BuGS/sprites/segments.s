@@ -13,10 +13,6 @@
 segments start
 
 leftHead1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -32,27 +28,23 @@ leftHead1 entry
 ; .RRG|G...
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _leftHead
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 leftHead1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -68,27 +60,23 @@ leftHead1s entry
 ; ..RR|GG..
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _leftHeadShift
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 leftHead2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -104,27 +92,23 @@ leftHead2 entry
 ; .RRG|G...
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _leftHead
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftHead2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -140,27 +124,23 @@ leftHead2s entry
 ; ..RR|GG..
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _leftHeadShift
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 leftHead3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -176,27 +156,23 @@ leftHead3 entry
 ; .RRG|G...
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _leftHead
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftHead3s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -212,27 +188,23 @@ leftHead3s entry
 ; ..RR|GG..
 ; ....|..O.
         
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
         _leftHeadShift
         
-        lda $a3,s
+        lda $a2,s
         and #$0fff
         ora #$8000
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftHead4 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -248,27 +220,23 @@ leftHead4 entry
 ; .RRG|G...
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _leftHead
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftHead4s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -284,27 +252,23 @@ leftHead4s entry
 ; ..RR|GG..
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _leftHeadShift
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftHead5 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -320,27 +284,23 @@ leftHead5 entry
 ; .RRG|G...
 ; .O..|....
         
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         _leftHead
         
-        lda $a1,s
+        lda $a0,s
         and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftHead5s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -356,27 +316,23 @@ leftHead5s entry
 ; ..RR|GG..
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _leftHeadShift
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 leftBody1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -392,27 +348,23 @@ leftBody1 entry
 ; .GGG|G...
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _leftBody
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 leftBody1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -428,27 +380,23 @@ leftBody1s entry
 ; ..GG|GG..
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _leftBodyShift
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 leftBody2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -464,27 +412,23 @@ leftBody2 entry
 ; .GGG|G...
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _leftBody
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftBody2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -500,27 +444,23 @@ leftBody2s entry
 ; ..GG|GG..
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _leftBodyShift
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 leftBody3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -536,27 +476,23 @@ leftBody3 entry
 ; .GGG|G...
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _leftBody
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftBody3s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -572,27 +508,23 @@ leftBody3s entry
 ; ..GG|GG..
 ; ....|..O.
         
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
         _leftBodyShift
         
-        lda $a3,s
+        lda $a2,s
         and #$0fff
         ora #$8000
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftBody4 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -608,27 +540,23 @@ leftBody4 entry
 ; .GGG|G...
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _leftBody
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftBody4s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -644,27 +572,23 @@ leftBody4s entry
 ; ..GG|GG..
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _leftBodyShift
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftBody5 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -680,27 +604,23 @@ leftBody5 entry
 ; .GGG|G...
 ; .O..|....
         
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         _leftBody
         
-        lda $a1,s
+        lda $a0,s
         and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 leftBody5s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -716,27 +636,23 @@ leftBody5s entry
 ; ..GG|GG..
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _leftBodyShift
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightHead1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -752,27 +668,23 @@ rightHead1 entry
 ; ...G|GRR.
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _rightHead
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightHead1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -788,27 +700,23 @@ rightHead1s entry
 ; ..GG|RR..
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _rightHeadShift
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightHead2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -824,27 +732,23 @@ rightHead2 entry
 ; ...G|GRR.
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _rightHead
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightHead2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -860,27 +764,23 @@ rightHead2s entry
 ; ..GG|RR..
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _rightHeadShift
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 rightHead3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -896,27 +796,23 @@ rightHead3 entry
 ; ...G|GRR.
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _rightHead
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightHead3s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -932,27 +828,23 @@ rightHead3s entry
 ; ..GG|RR..
 ; .O..|....
         
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         _rightHeadShift
         
-        lda $a1,s
+        lda $a0,s
         and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightHead4 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -968,27 +860,23 @@ rightHead4 entry
 ; ...G|GRR.
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _rightHead
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightHead4s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1004,27 +892,23 @@ rightHead4s entry
 ; ..GG|RR..
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _rightHeadShift
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 rightHead5 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1040,27 +924,23 @@ rightHead5 entry
 ; ...G|GRR.
 ; ....|..O.
         
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
         _rightHead
         
-        lda $a3,s
+        lda $a2,s
         and #$0fff
         ora #$8000
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightHead5s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1076,27 +956,23 @@ rightHead5s entry
 ; ..GG|RR..
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _rightHeadShift
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 rightBody1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1112,27 +988,23 @@ rightBody1 entry
 ; ...G|GGG.
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _rightBody
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightBody1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1148,27 +1020,23 @@ rightBody1s entry
 ; ..GG|GG..
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _rightBodyShift
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightBody2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1184,27 +1052,23 @@ rightBody2 entry
 ; ...G|GGG.
 ; ...O|....
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
         _rightBody
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0800
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightBody2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1220,27 +1084,23 @@ rightBody2s entry
 ; ..GG|GG..
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _rightBodyShift
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
         
 
 rightBody3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1256,27 +1116,23 @@ rightBody3 entry
 ; ...G|GGG.
 ; ..O.|....
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
         _rightBody
         
-        lda $a1,s
+        lda $a0,s
         and #$0fff
         ora #$8000
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightBody3s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1292,27 +1148,23 @@ rightBody3s entry
 ; ..GG|GG..
 ; .O..|....
         
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
         _rightBodyShift
         
-        lda $a1,s
+        lda $a0,s
         and #$fff0
         ora #$0008
-        sta $a1,s
+        sta $a0,s
         
         _spriteFooter
         rtl
 
 
 rightBody4 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1328,27 +1180,23 @@ rightBody4 entry
 ; ...G|GGG.
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _rightBody
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightBody4s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1364,27 +1212,23 @@ rightBody4s entry
 ; ..GG|GG..
 ; ....|O...
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
         _rightBodyShift
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0080
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 rightBody5 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1400,27 +1244,23 @@ rightBody5 entry
 ; ...G|GGG.
 ; ....|..O.
         
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
         _rightBody
         
-        lda $a3,s
+        lda $a2,s
         and #$0fff
         ora #$8000
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightBody5s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1436,27 +1276,23 @@ rightBody5s entry
 ; ..GG|GG..
 ; ....|.O..
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
         _rightBodyShift
         
-        lda $a3,s
+        lda $a2,s
         and #$fff0
         ora #$0008
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownHead1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1472,40 +1308,40 @@ leftDownHead1 entry
 ; .GRR|GG..
 ; ..RR|G.O.
         
-        lda $a1,s
+        lda $a0,s
         and #$000f
         ora #$cc80
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cc44
@@ -1524,38 +1360,34 @@ leftDownHead1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$440c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00ff
         ora #$4400
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f0f
         ora #$80c0
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownHead1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1571,91 +1403,87 @@ leftDownHead1s entry
 ; ..GR|RGG.
 ; ...R|RG.O
         
-        lda $a1,s
+        lda $a0,s
         and #$f0f0
         ora #$0c08
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$4c04
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$4c04
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$c400
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$c04c
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0400
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$f000
         ora #$084c
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownHead2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1671,45 +1499,45 @@ leftDownHead2 entry
 ; .GRR|GG.O
 ; ..RR|G...
 
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cc44
@@ -1728,38 +1556,34 @@ leftDownHead2 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$440c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$f000
         ora #$08cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00ff
         ora #$4400
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownHead2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1775,101 +1599,97 @@ leftDownHead2s entry
 ; ..GR|RGG.|O...
 ; ...R|RG..
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$4c04
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$4c04
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$c400
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$c04c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
         and #$ff0f
         ora #$0080
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0400
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$004c
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
    
 
 leftDownBody1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1885,40 +1705,40 @@ leftDownBody1 entry
 ; .GGG|GG..
 ; ..GG|G.O.
         
-        lda $a1,s
+        lda $a0,s
         and #$000f
         ora #$cc80
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -1937,38 +1757,34 @@ leftDownBody1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f0f
         ora #$80c0
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownBody1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -1984,91 +1800,87 @@ leftDownBody1s entry
 ; ..GG|GGG.
 ; ...G|GG.O
         
-        lda $a1,s
+        lda $a0,s
         and #$f0f0
         ora #$0c08
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$f000
         ora #$08cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownBody2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2084,45 +1896,45 @@ leftDownBody2 entry
 ; .GGG|GG.O
 ; ..GG|G...
 
-        lda $1,s
+        lda $0,s
         and #$fff0
         ora #$0008
-        sta $1,s
+        sta $0,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -2141,38 +1953,34 @@ leftDownBody2 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$f000
         ora #$08cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 leftDownBody2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2188,101 +1996,97 @@ leftDownBody2s entry
 ; ..GG|GGG.|O...
 ; ...G|GG..
         
-        lda $1,s
+        lda $0,s
         and #$0fff
         ora #$8000
-        sta $1,s
+        sta $0,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0ff
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
         and #$ff0f
         ora #$0080
-        sta $5,s
+        sta $4,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightDownHead1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2298,40 +2102,40 @@ rightDownHead1 entry
 ; .GGR|RG..
 ; O.GR|R...
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f0f
         ora #$80c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -2350,38 +2154,34 @@ rightDownHead1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$c40c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff00
         ora #$004c
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$000f
         ora #$c480
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff0f
         ora #$0040
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 rightDownHead1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2397,91 +2197,87 @@ rightDownHead1s entry
 ; ..GG|RRG.
 ; .O.G|RR..
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$f000
         ora #$08cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$44cc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$44cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$c044
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0f0
         ora #$0c08
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0044
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightDownHead2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2497,45 +2293,45 @@ rightDownHead2 entry
 ; ...O|.GGR|RG..
 ; ....|..GR|R...
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -2554,43 +2350,39 @@ rightDownHead2 entry
         sta $a3,s
         
         tsc
-        adc #$13e
+        adc #$13f
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$00f0
         ora #$c40c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
         and #$ff00
         ora #$004c
-        sta $5,s
+        sta $4,s
         
-        lda $a3,s
+        lda $a2,s
         and #$00ff
         ora #$c400
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
         and #$ff0f
         ora #$0040
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 rightDownHead2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2606,96 +2398,92 @@ rightDownHead2s entry
 ; O.GG|RRG.
 ; ...G|RR..
 
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$44cc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$44cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$000f
         ora #$cc80
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$c044
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0044
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightDownBody1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2711,40 +2499,40 @@ rightDownBody1 entry
 ; .GGG|GG..
 ; O.GG|G...
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f0f
         ora #$80c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -2763,38 +2551,34 @@ rightDownBody1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$000f
         ora #$cc80
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 rightDownBody1s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2810,91 +2594,87 @@ rightDownBody1s entry
 ; ..GG|GGG.
 ; .O.G|GG..
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$f000
         ora #$08cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$f0f0
         ora #$0c08
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 rightDownBody2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -2910,45 +2690,45 @@ rightDownBody2 entry
 ; ...O|.GGG|GG..
 ; ....|..GG|G...
         
-        lda $3,s
+        lda $2,s
         and #$fff0
         ora #$0008
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -2967,43 +2747,39 @@ rightDownBody2 entry
         sta $a3,s
         
         tsc
-        adc #$13e
+        adc #$13f
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$f0ff
         ora #$0800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $3,s
+        sta $2,s
         
-        lda $5,s
+        lda $4,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $5,s
+        sta $4,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a3,s
+        sta $a2,s
         
-        lda $a5,s
+        lda $a4,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a5,s
+        sta $a4,s
         
         _spriteFooter
         rtl
 
 
 rightDownBody2s entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3019,96 +2795,92 @@ rightDownBody2s entry
 ; O.GG|GGG.
 ; ...G|GG..
 
-        lda $3,s
+        lda $2,s
         and #$0fff
         ora #$8000
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
 
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$000f
         ora #$cc80
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 downHead1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3124,42 +2896,42 @@ downHead1 entry
 ; .RRG|GRR.
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$144
+        adc #$143
         tcs
         
         pea $c8cc
@@ -3176,38 +2948,34 @@ downHead1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$4c04
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$40c4
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 downHead2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3223,97 +2991,93 @@ downHead2 entry
 ; .RRG|GRR.
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
         and #$000f
         ora #$cc80
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$f000
         ora #$08cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$4c04
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f00
         ora #$40c4
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$4c04
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$40c4
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 downHead3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3329,66 +3093,66 @@ downHead3 entry
 ; ORRG|GRRO
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$4c04
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f00
         ora #$40c4
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$144
+        adc #$143
         tcs
         
         pea $48c4
@@ -3409,10 +3173,6 @@ downHead3 entry
         
 
 downBody1 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3428,42 +3188,42 @@ downBody1 entry
 ; .GGG|GGG.
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$144
+        adc #$143
         tcs
         
         pea $c8cc
@@ -3480,38 +3240,34 @@ downBody1 entry
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
         
 
 downBody2 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3527,97 +3283,93 @@ downBody2 entry
 ; .GGG|GGG.
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
         and #$000f
         ora #$cc80
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$f000
         ora #$08cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         _spriteFooter
         rtl
 
 
 downBody3 entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
         
 ; $c - Green
@@ -3633,66 +3385,66 @@ downBody3 entry
 ; OGGG|GGGO
 ; ..GG|GG..
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$144
+        adc #$143
         tcs
         
         pea $c8cc

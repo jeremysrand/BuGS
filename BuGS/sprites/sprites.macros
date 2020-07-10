@@ -47,18 +47,18 @@
 ; .RRG|G...
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$4c04
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $4cc4
@@ -96,18 +96,18 @@
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$4c04
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $3,s
+        sta $2,s
         
         mend
         
@@ -127,73 +127,73 @@
 ; ..RR|GG..
 ; ....|....
 
-        lda $a1,s
+        lda $a0,s
         and #$00ff
         ora #$4400
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
         and #$00f0
         ora #$440c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
         lda #$cccc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$440c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$4400
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         mend
 
@@ -214,18 +214,18 @@
 ; .GGG|G...
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -263,18 +263,18 @@
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff0f     not necessary with pure green
         ora #$00c0
-        sta $3,s
+        sta $2,s
         
         mend
         
@@ -295,73 +295,73 @@
 ; ..GG|GG..
 ; ....|....
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
         lda #$cccc
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
         
         mend
 
@@ -382,69 +382,69 @@
 ; ...G|GRR.
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$0f00
         ora #$40c4
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
         lda #$4cc4
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
 
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
         lda #$4cc4
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$40c4
-        sta $3,s
+        sta $2,s
         
         mend
  
@@ -465,40 +465,40 @@
 ; ..GG|RR..
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0044
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$0f00
         ora #$c044
-        sta $3,s
+        sta $2,s
 
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
 
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -519,18 +519,18 @@
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff00
         ora #$0044
-        sta $3,s
+        sta $2,s
         
         mend
 
@@ -551,69 +551,69 @@
 ; ...G|GGG.
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
 
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
 
         lda #$cccc
-        sta $3,s
+        sta $2,s
 
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
         lda #$cccc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$f0ff     not necessary with pure green
         ora #$0c00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
         
         mend
  
@@ -634,40 +634,40 @@
 ; ..GG|GG..
 ; ....|....
         
-        lda $a1,s
+        lda $a0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $a3,s
+        sta $a2,s
         
         tsc
         adc #$140
         tcs
 
-        lda $1,s
+        lda $0,s
 ;        and #$00f0     not necessary with pure green
         ora #$cc0c
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $3,s
+        sta $2,s
 
         lda #$cccc
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
 ;        and #$0f00     not necessary with pure green
         ora #$c0cc
-        sta $a3,s
+        sta $a2,s
 
         tsc
-        adc #$142
+        adc #$141
         tcs
         
         pea $cccc
@@ -688,17 +688,30 @@
         sta $a3,s
         
         tsc
-        adc #$140
+        adc #$141
         tcs
         
-        lda $1,s
+        lda $0,s
 ;        and #$00ff     not necessary with pure green
         ora #$cc00
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
 ;        and #$ff00     not necessary with pure green
         ora #$00cc
-        sta $3,s
+        sta $2,s
+        
+        mend
+        
+        macro
+        _collision &mask
+        
+        tax
+        and #$0c00
+        beq ~&SYSCNT
+        sta collision
+        
+~&SYSCNT anop
+        txa
         
         mend

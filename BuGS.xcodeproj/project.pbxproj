@@ -81,6 +81,8 @@
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
 		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		9DC4D7BD24B7652100BACF4B /* ship.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
+		9DC4D7BE24B80C9600BACF4B /* shot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,8 @@
 				9D3396FC24AECFBB003222B3 /* letters.s */,
 				9D3396FD24AECFF5003222B3 /* mushrooms.s */,
 				9D33970024AEFBF2003222B3 /* segments.s */,
+				9DC4D7BD24B7652100BACF4B /* ship.s */,
+				9DC4D7BE24B80C9600BACF4B /* shot.s */,
 			);
 			path = sprites;
 			sourceTree = "<group>";

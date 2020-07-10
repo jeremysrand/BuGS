@@ -14,10 +14,6 @@ fleas start
 
 
 flea1  entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -34,28 +30,28 @@ flea1  entry
 ; ....|.G.G|...G
 ;
         
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$8804
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0088
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$0142
+        adc #$0141
         tcs
         
         pea $8844
@@ -124,10 +120,6 @@ flea1  entry
         
 
 flea2  entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -144,28 +136,28 @@ flea2  entry
 ; ....|.G.G|..G.
 ;
         
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$8804
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0088
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$0142
+        adc #$0141
         tcs
         
         pea $8844
@@ -238,10 +230,6 @@ flea2  entry
         
 
 flea3  entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -258,28 +246,28 @@ flea3  entry
 ; ....|...G|..G.
 ;
         
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$8804
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0088
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$0142
+        adc #$0141
         tcs
         
         pea $8844
@@ -352,10 +340,6 @@ flea3  entry
         
 
 flea4  entry
-        dex
-        dex
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -371,28 +355,28 @@ flea4  entry
 ; ....|..G.|.G.G
 ; ....|...G|.G.G
 ;
-        lda $1,s
+        lda $0,s
         and #$00ff
         ora #$8800
-        sta $1,s
+        sta $0,s
         
-        lda $3,s
+        lda $2,s
         and #$ff0f
         ora #$0080
-        sta $3,s
+        sta $2,s
         
-        lda $a1,s
+        lda $a0,s
         and #$00f0
         ora #$8804
-        sta $a1,s
+        sta $a0,s
         
-        lda $a3,s
+        lda $a2,s
         and #$ff00
         ora #$0088
-        sta $a3,s
+        sta $a2,s
         
         tsc
-        adc #$0142
+        adc #$0141
         tcs
         
         pea $8844

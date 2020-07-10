@@ -183,320 +183,338 @@ game    start
         ldx #$345b
         jsl number9
         
-        ldx #$3463
+        ldx #$345f
         jsl flea1
         
-        ldx #$346b
+        ldx #$3467
         jsl flea2
         
-        ldx #$3473
+        ldx #$346f
         jsl flea3
         
-        ldx #$347b
+        ldx #$3477
         jsl flea4
         
-        ldx #$3483
+        ldx #$347e
         jsl score300
         
-        ldx #$348b
+        ldx #$3486
         jsl score600
         
-        ldx #$3493
+        ldx #$348e
         jsl score900
         
-        ldx #$3e0b
+        ldx #$3e04
         jsl leftScorpion1
         
-        ldx #$3e1b
+        ldx #$3e14
         jsl leftScorpion1s
         
-        ldx #$3e2b
+        ldx #$3e24
         jsl leftScorpion2
         
-        ldx #$3e3b
+        ldx #$3e34
         jsl leftScorpion2s
         
-        ldx #$3e4b
+        ldx #$3e44
         jsl leftScorpion3
         
-        ldx #$3e5b
+        ldx #$3e54
         jsl leftScorpion3s
         
-        ldx #$3e6b
+        ldx #$3e64
         jsl leftScorpion4
         
-        ldx #$3e7b
+        ldx #$3e74
         jsl leftScorpion4s
         
-        ldx #$480b
+        ldx #$4804
         jsl rightScorpion1
         
-        ldx #$481b
+        ldx #$4814
         jsl rightScorpion1s
         
-        ldx #$482b
+        ldx #$4824
         jsl rightScorpion2
         
-        ldx #$483b
+        ldx #$4834
         jsl rightScorpion2s
         
-        ldx #$484b
+        ldx #$4844
         jsl rightScorpion3
         
-        ldx #$485b
+        ldx #$4854
         jsl rightScorpion3s
         
-        ldx #$486b
+        ldx #$4864
         jsl rightScorpion4
         
-        ldx #$487b
+        ldx #$4874
         jsl rightScorpion4s
         
-        ldx #$520b
+        ldx #$5204
         jsl spider1
         
-        ldx #$521b
+        ldx #$5214
         jsl spider1s
         
-        ldx #$522b
+        ldx #$5224
         jsl spider2
         
-        ldx #$523b
+        ldx #$5234
         jsl spider2s
         
-        ldx #$524b
+        ldx #$5244
         jsl spider3
         
-        ldx #$525b
+        ldx #$5254
         jsl spider3s
         
-        ldx #$526b
+        ldx #$5264
         jsl spider4
         
-        ldx #$527b
+        ldx #$5274
         jsl spider4s
         
-        ldx #$528b
+        ldx #$5284
         jsl spider5
         
-        ldx #$529b
+        ldx #$5294
         jsl spider5s
         
-        ldx #$5c0b
+        ldx #$5c04
         jsl spider6
         
-        ldx #$5c1b
+        ldx #$5c14
         jsl spider6s
         
-        ldx #$5c2b
+        ldx #$5c24
         jsl spider7
         
-        ldx #$5c3b
+        ldx #$5c34
         jsl spider7s
         
-        ldx #$5c43
+        ldx #$5c40
         jsl explosion1
         
-        ldx #$5c4b
+        ldx #$5c48
         jsl explosion2
         
-        ldx #$5c53
+        ldx #$5c50
         jsl explosion3
         
-        ldx #$5c5b
+        ldx #$5c58
         jsl explosion4
         
-        ldx #$5c63
+        ldx #$5c60
         jsl explosion5
         
-        ldx #$5c6b
+        ldx #$5c68
         jsl explosion6
         
-        ldx #$5c73
+        ldx #$5c70
         jsl leftHead1
         
-        ldx #$5c7b
+        ldx #$5c78
         jsl leftHead1s
         
-        ldx #$5c83
+        ldx #$5c80
         jsl leftHead2
         
-        ldx #$5c8b
+        ldx #$5c88
         jsl leftHead2s
         
-        ldx #$5c93
+        ldx #$5c90
         jsl leftHead3
         
-        ldx #$5c9b
+        ldx #$5c98
         jsl leftHead3s
         
-        ldx #$6603
+        ldx #$6600
         jsl leftHead4
         
-        ldx #$660b
+        ldx #$6608
         jsl leftHead4s
         
-        ldx #$6613
+        ldx #$6610
         jsl leftHead5
         
-        ldx #$661b
+        ldx #$6618
         jsl leftHead5s
         
-        ldx #$6623
+        ldx #$6620
         jsl leftBody1
         
-        ldx #$662b
+        ldx #$6628
         jsl leftBody1s
         
-        ldx #$6633
+        ldx #$6630
         jsl leftBody2
         
-        ldx #$663b
+        ldx #$6638
         jsl leftBody2s
         
-        ldx #$6643
+        ldx #$6640
         jsl leftBody3
         
-        ldx #$664b
+        ldx #$6648
         jsl leftBody3s
         
-        ldx #$6653
+        ldx #$6650
         jsl leftBody4
         
-        ldx #$665b
+        ldx #$6658
         jsl leftBody4s
         
-        ldx #$6663
+        ldx #$6660
         jsl leftBody5
         
-        ldx #$666b
+        ldx #$6668
         jsl leftBody5s
         
-        ldx #$6673
+        ldx #$6670
         jsl rightHead1
         
-        ldx #$667b
+        ldx #$6678
         jsl rightHead1s
         
-        ldx #$6683
+        ldx #$6680
         jsl rightHead2
         
-        ldx #$668b
+        ldx #$6688
         jsl rightHead2s
         
-        ldx #$6693
+        ldx #$6690
         jsl rightHead3
         
-        ldx #$669b
+        ldx #$6698
         jsl rightHead3s
         
-        ldx #$7003
+        ldx #$7000
         jsl rightHead4
         
-        ldx #$700b
+        ldx #$7008
         jsl rightHead4s
         
-        ldx #$7013
+        ldx #$7010
         jsl rightHead5
         
-        ldx #$701b
+        ldx #$7018
         jsl rightHead5s
         
-        ldx #$7023
+        ldx #$7020
         jsl rightBody1
         
-        ldx #$702b
+        ldx #$7028
         jsl rightBody1s
         
-        ldx #$7033
+        ldx #$7030
         jsl rightBody2
         
-        ldx #$703b
+        ldx #$7038
         jsl rightBody2s
         
-        ldx #$7043
+        ldx #$7040
         jsl rightBody3
         
-        ldx #$704b
+        ldx #$7048
         jsl rightBody3s
         
-        ldx #$7053
+        ldx #$7050
         jsl rightBody4
         
-        ldx #$705b
+        ldx #$7058
         jsl rightBody4s
         
-        ldx #$7063
+        ldx #$7060
         jsl rightBody5
         
-        ldx #$706b
+        ldx #$7068
         jsl rightBody5s
         
-        ldx #$7073
+        ldx #$7070
         jsl leftDownHead1
         
-        ldx #$707b
+        ldx #$7078
         jsl leftDownHead1s
         
-        ldx #$7083
+        ldx #$7080
         jsl leftDownHead2
         
-        ldx #$708b
+        ldx #$7088
         jsl leftDownHead2s
         
-        ldx #$7093
+        ldx #$7090
         jsl leftDownBody1
         
-        ldx #$709b
+        ldx #$7098
         jsl leftDownBody1s
         
-        ldx #$7a03
+        ldx #$7a00
         jsl leftDownBody2
         
-        ldx #$7a0b
+        ldx #$7a08
         jsl leftDownBody2s
         
-        ldx #$7a13
+        ldx #$7a10
         jsl rightDownHead1
         
-        ldx #$7a1b
+        ldx #$7a18
         jsl rightDownHead1s
         
-        ldx #$7a23
+        ldx #$7a20
         jsl rightDownHead2
         
-        ldx #$7a2b
+        ldx #$7a28
         jsl rightDownHead2s
         
-        ldx #$7a33
+        ldx #$7a30
         jsl rightDownBody1
         
-        ldx #$7a3b
+        ldx #$7a38
         jsl rightDownBody1s
         
-        ldx #$7a43
+        ldx #$7a40
         jsl rightDownBody2
         
-        ldx #$7a4b
+        ldx #$7a48
         jsl rightDownBody2s
         
-        ldx #$7a53
+        ldx #$7a50
         jsl downHead1
         
-        ldx #$7a5b
+        ldx #$7a58
         jsl downHead2
         
-        ldx #$7a63
+        ldx #$7a60
         jsl downHead3
         
-        ldx #$7a6b
+        ldx #$7a68
         jsl downBody1
         
-        ldx #$7a73
+        ldx #$7a70
         jsl downBody2
         
-        ldx #$7a7b
+        ldx #$7a78
         jsl downBody3
+        
+        ldx #$7a80
+        jsl drawShip
+        
+        ldx #$7a88
+        jsl drawShipShift
+        
+        ldx #$7a90
+        jsl drawHalfShot
+        
+        ldx #$7a98
+        jsl drawHalfShotShift
+        
+        ldx #$8400
+        jsl drawShot
+        
+        ldx #$8408
+        jsl drawShotShift
         
         jsl waitForKey
         rtl

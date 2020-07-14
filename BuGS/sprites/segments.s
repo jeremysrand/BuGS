@@ -2002,7 +2002,7 @@ leftDownBody2s entry
         sta $0,s
         
         lda $a0,s
-        and #$f0ff
+;        and #$f0ff     not necessary with pure green
         ora #$0c00
         sta $a0,s
         

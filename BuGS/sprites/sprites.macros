@@ -707,7 +707,7 @@
         _collision &mask
         
         tax
-        and #$0c00
+        and &mask
         beq ~&SYSCNT
         sta collision
         

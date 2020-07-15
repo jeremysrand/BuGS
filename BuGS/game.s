@@ -27,6 +27,109 @@ game    start
         lda colourPalette
         jsl setColour
         
+        jsl drawDirtyGameTiles
+        
+        jsl drawDirtyNonGameTiles
+        
+        jsl waitForKey
+        rtl
+
+
+drawDirtyGameTiles entry
+        ldy #$0
+dirtyTileLoop anop
+        cpy numDirtyGameTiles
+        blt handleDirtyTile
+        stz numDirtyGameTiles
+        rtl
+handleDirtyTile anop
+        phy
+        tya
+        asl a
+        tay
+        
+        lda dirtyGameTiles,y
+        asl a
+        asl a
+        asl a
+        tax
+        
+        stz tiles,x
+        
+        txy
+        iny
+        iny
+        
+        ldx tiles,y
+        
+        iny
+        iny
+        
+        lda tiles,y
+        
+        jsl drawTile
+        
+        ply
+        iny
+        bra dirtyTileLoop
+        
+
+drawDirtyNonGameTiles entry
+        ldy #$0
+dirtyTileLoop2 anop
+        cpy numDirtyNonGameTiles
+        blt handleDirtyTile2
+        stz numDirtyNonGameTiles
+        rtl
+handleDirtyTile2 anop
+        phy
+        tya
+        asl a
+        tay
+        
+        lda dirtyNonGameTiles,y
+        asl a
+        asl a
+        asl a
+        tax
+        
+        stz tiles,x
+        
+        txy
+        iny
+        iny
+        
+        ldx tiles,y
+        
+        iny
+        iny
+        
+        lda tiles,y
+        
+        jsl drawTile
+        
+        ply
+        iny
+        bra dirtyTileLoop2
+
+drawTile entry
+        asl a
+        asl a
+        tay
+        
+        lda tileJumpTable,y
+        sta jumpInst+1
+        iny
+        iny
+        
+        lda tileJumpTable,y
+        sta jumpInst+3
+        
+jumpInst jmp >mushroom1
+        nop
+        
+
+drawAll entry
         ldx #$2003
         jsl mushroom1
         
@@ -516,7 +619,6 @@ game    start
         ldx #$8408
         jsl drawShotShift
         
-        jsl waitForKey
         rtl
         
         
@@ -585,5 +687,59 @@ quit    rtl
         
 backupStack dc i2'0'
 colourPalette dc i2'0'
+
+tileJumpTable dc a4'solid0'
+              dc a4'mushroom4'
+              dc a4'mushroom3'
+              dc a4'mushroom2'
+              dc a4'mushroom1'
+              dc a4'symbolC'
+              dc a4'symbolP'
+              dc a4'symbolDot'
+              dc a4'symbolColon'
+              dc a4'poisonedMushroom4'
+              dc a4'poisonedMushroom3'
+              dc a4'poisonedMushroom2'
+              dc a4'poisonedMushroom1'
+              dc a4'letterA'
+              dc a4'letterB'
+              dc a4'letterC'
+              dc a4'letterD'
+              dc a4'letterE'
+              dc a4'letterF'
+              dc a4'letterG'
+              dc a4'letterH'
+              dc a4'letterI'
+              dc a4'letterJ'
+              dc a4'letterK'
+              dc a4'letterL'
+              dc a4'letterM'
+              dc a4'letterN'
+              dc a4'letterO'
+              dc a4'letterP'
+              dc a4'letterQ'
+              dc a4'letterR'
+              dc a4'letterS'
+              dc a4'letterT'
+              dc a4'letterU'
+              dc a4'letterV'
+              dc a4'letterW'
+              dc a4'letterX'
+              dc a4'letterY'
+              dc a4'letterZ'
+              dc a4'number0'
+              dc a4'number1'
+              dc a4'number2'
+              dc a4'number3'
+              dc a4'number4'
+              dc a4'number5'
+              dc a4'number6'
+              dc a4'number7'
+              dc a4'number8'
+              dc a4'number9'
+              dc a4'solid1'
+              dc a4'solid2'
+              dc a4'solid3'
+              dc a4'drawPlayer'
 
         end

@@ -8,13 +8,15 @@
  */
 
 
+#include <stdlib.h>
 
 #include <Memory.h>
 #include <Locator.h>
 #include <MiscTool.h>
 
 #include "main.h"
-#include "game.h"s
+#include "game.h"
+#include "tiles.h"
 
 
 /* Defines and macros */
@@ -23,22 +25,12 @@
     if (toolerror()) SysFailMgr(toolerror(), "\p" string "\n\r    Error Code -> $");
 
 
-/* Types */
-
-
 /* Globals */
 
-BOOLEAN shouldQuit;
 unsigned int userid;
 
 
 /* Implementation */
-
-
-void initGlobals(void)
-{
-    shouldQuit = FALSE;
-}
 
 
 int main(void)
@@ -60,6 +52,12 @@ int main(void)
        screen without overwriting memory I do not own. */
     NewHandle(0x9000, userid, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x011000);
     TOOLFAIL("Unable to allocate SHR screen");
+    
+    srand((int)(time(NULL)));
+    
+    initTiles();
+    initPlayer();
+    addStartingMushrooms();
     
     game();
     

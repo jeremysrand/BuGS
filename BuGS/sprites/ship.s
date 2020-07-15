@@ -28,6 +28,8 @@ drawShip entry
 ; ..OO|O...
 ; ..OO|O...
 
+        stz collision
+        
         lda $0,s
         _collision #$0c00
         and #$f0ff
@@ -150,6 +152,8 @@ drawShipShift entry
 ; ...O|OO..
 ; ...O|OO..
 
+        stz collision
+
         lda $2,s
         _collision #$00c0
         and #$ff0f
@@ -255,10 +259,84 @@ drawShipShift entry
         lda collision
         rtl
         
+; This differs from the above by being a tile draw routine for drawing the number of lives left.
+; It assumes it is drawing to the background and overwrites what may be there and does not check
+; for collisions
+drawPlayer entry
+        _spriteHeader
         
-clearShipCollision entry
-        lda #$0000
-        sta collision
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
+;
+; ...O|....
+; ..OO|O...
+; .RRO|RR..
+; ORRO|RRO.
+; OOOO|OOO.
+; .OOO|OO..
+; ..OO|O...
+; ..OO|O...
+;
+; Colours #$0000 - Black, Black, Black, Black (x1)
+;         #$0300 - Black, Black, Black, Off-white (x1)
+;         #$3300 - Black, Black, Off-white, Off-white (x3)
+;         #$0030 - Off-white, Black, Black, Black (x3)
+;         #$2302 - Black, Red, Red, Off-white (x1)
+;         #$0022 - Red, Red, Black, Black (x1)
+;         #$2332 - Off-white, Red, Red, Off-white (x1)
+;         #$3022 - Red, Red, Off-white, Black (x1)
+;         #$3333 - Off-white, Off-white, Off-white, Off-white (x1)
+;         #$3033 - Off-white, Off-white, Off-white, Black (x1)
+;         #$3303 - Black, Off-white, Off-white, Off-white (x1)
+;         #$0033 - Off-white, Off-white, Black, Black (x1)
+
+        pea $0000
+        pea $0300
+        
+        adc #$00a0
+        tcs
+        
+        pea $0030
+        pea $3300
+        
+        adc #$00a0
+        tcs
+        
+        pea $0022
+        pea $2302
+        
+        adc #$00a0
+        tcs
+        
+        pea $3022
+        pea $2332
+        
+        adc #$00a0
+        tcs
+        
+        pea $3033
+        pea $3333
+        
+        adc #$00a0
+        tcs
+        
+        pea $0033
+        pea $3303
+        
+        adc #$00a0
+        tcs
+        
+        pea $0030
+        pea $3300
+        
+        adc #$00a0
+        tcs
+        
+        pea $0030
+        pea $3300
+
+        _spriteFooter
         rtl
         
         

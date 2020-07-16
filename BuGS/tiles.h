@@ -17,10 +17,15 @@
 
 #define NUM_GAME_TILES (GAME_NUM_TILES_WIDE * GAME_NUM_TILES_TALL)
 
-#define NUM_PLAYER_TILES (2 * GAME_NUM_TILES_TALL)
-#define FIRST_PLAYER_TILE NUM_GAME_TILES
+#define RHS_NUM_TILES_WIDE 2
+#define NUM_RHS_NON_GAME_TILES (RHS_NUM_TILES_WIDE * GAME_NUM_TILES_TALL)
+#define RHS_FIRST_TILE NUM_GAME_TILES
 
-#define NUM_NON_GAME_TILES (NUM_PLAYER_TILES)
+#define LHS_NUM_TILES_WIDE 13
+#define NUM_LHS_NON_GAME_TILES (LHS_NUM_TILES_WIDE * GAME_NUM_TILES_TALL)
+#define LHS_FIRST_TILE (RHS_FIRST_TILE + NUM_RHS_NON_GAME_TILES)
+
+#define NUM_NON_GAME_TILES (NUM_RHS_NON_GAME_TILES + NUM_LHS_NON_GAME_TILES)
 
 #define TOTAL_GAME_TILES (NUM_GAME_TILES + NUM_NON_GAME_TILES)
 
@@ -101,7 +106,7 @@ typedef struct
 /* Globals */
 
 extern tTile tiles[TOTAL_GAME_TILES];
-extern unsigned int dirtyGameTiles[NUM_GAME_TILES];
+extern unsigned int dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 extern unsigned int numDirtyGameTiles;
 extern unsigned int dirtyNonGameTiles[NUM_NON_GAME_TILES];
 extern unsigned int numDirtyNonGameTiles;

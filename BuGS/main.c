@@ -56,7 +56,7 @@ int main(void)
     srand((int)(time(NULL)));
     
     initTiles();
-    initPlayer();
+    initNonGameTiles();
     addStartingMushrooms();
     
     game();

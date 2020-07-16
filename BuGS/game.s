@@ -684,6 +684,19 @@ skip    sta colourPalette
         jsl setColour
         bra loop2
 quit    rtl
+
+
+waitForVbl entry
+        short i,m
+vblLoop1 anop
+        lda $e0c019
+        bmi vblLoop1
+vblLoop2 anop
+        lda $e0c019
+        bmi vblLoop2
+        long i,m
+        rtl
+        
         
 backupStack dc i2'0'
 colourPalette dc i2'0'

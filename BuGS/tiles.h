@@ -38,6 +38,7 @@
 /* Types */
 
 typedef word tTileNum;
+typedef word tTileOffset;   /* A tile offset is a tile number times the sizeof(tTile). */
 
 
 typedef enum {
@@ -108,10 +109,10 @@ typedef struct
     word offset;
     tTileType type;
     
-    tTileNum tileAbove;
-    tTileNum tileBelow;
-    tTileNum tileLeft;
-    tTileNum tileRight;
+    tTileOffset tileAbove;
+    tTileOffset tileBelow;
+    tTileOffset tileLeft;
+    tTileOffset tileRight;
     word dummy; /* I want a size which is a multiple of 2 */
 } tTile;
 
@@ -119,9 +120,9 @@ typedef struct
 /* Globals */
 
 extern tTile tiles[TOTAL_GAME_TILES];
-extern tTileNum dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
+extern tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 extern word numDirtyGameTiles;
-extern tTileNum dirtyNonGameTiles[NUM_NON_GAME_TILES];
+extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 extern word numDirtyNonGameTiles;
 
 

@@ -49,10 +49,6 @@ handleDirtyTile anop
         tay
         
         lda dirtyGameTiles,y
-        asl a
-        asl a
-        asl a
-        asl a
         tax
         
         stz tiles,x
@@ -89,10 +85,6 @@ handleDirtyTile2 anop
         tay
         
         lda dirtyNonGameTiles,y
-        asl a
-        asl a
-        asl a
-        asl a
         tax
         
         stz tiles,x

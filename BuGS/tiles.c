@@ -22,30 +22,43 @@
 #define GAME_LEFT_MOST_X_POS (13 * TILE_WIDTH)       /* 13 tiles from the left */
 #define GAME_TOP_MOST_Y_POS (0 * TILE_HEIGHT)
 
-#define GAME_X_Y_TO_TILE_NUM(X, Y) \
-    (((Y) * GAME_NUM_TILES_WIDE) + (X))
+#define GAME_X_Y_TO_TILE_OFFSET(X, Y) \
+    ((((Y) * GAME_NUM_TILES_WIDE) + (X)) * sizeof(tTile))
 
-#define RHS_X_Y_TO_TILE_NUM(X, Y) \
-    (RHS_FIRST_TILE + ((Y) * RHS_NUM_TILES_WIDE) + (X))
+#define RHS_X_Y_TO_TILE_OFFSET(X, Y) \
+    ((RHS_FIRST_TILE + ((Y) * RHS_NUM_TILES_WIDE) + (X)) * sizeof(tTile))
 
-#define LHS_X_Y_TO_TILE_NUM(X, Y) \
-    (LHS_FIRST_TILE + ((Y) * LHS_NUM_TILES_WIDE) + (X))
+#define LHS_X_Y_TO_TILE_OFFSET(X, Y) \
+    ((LHS_FIRST_TILE + ((Y) * LHS_NUM_TILES_WIDE) + (X)) * sizeof(tTile))
 
-#define TILE_OFFSET_FOR_X_Y(X, Y) \
+#define SCREEN_ADDRESS_FOR_TILE_AT_X_Y(X, Y) \
     (0x2000 + (0xa0 * (Y)) + ((X) / 2) + 3)
 
 #define STARTING_NUM_MUSHROOMS 30
 #define STARTING_NUM_PLAYERS 3
 
+#define ADD_DIRTY_GAME_TILE(tileNum)                                        \
+    if (!tiles[tileNum].dirty) {                                            \
+        tiles[tileNum].dirty = 1;                                           \
+        dirtyGameTiles[numDirtyGameTiles] = ((tileNum) * sizeof(tTile));    \
+        numDirtyGameTiles++;                                                \
+    }
+
+#define ADD_DIRTY_NON_GAME_TILE(tileNum)                                        \
+    if (!tiles[tileNum].dirty) {                                                \
+        tiles[tileNum].dirty = 1;                                               \
+        dirtyNonGameTiles[numDirtyNonGameTiles] = ((tileNum) * sizeof(tTile));  \
+        numDirtyNonGameTiles++;                                                 \
+    }
 
 /* Globals */
 
 tTile tiles[TOTAL_GAME_TILES];
 
-tTileNum dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
+tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 word numDirtyGameTiles;
 
-tTileNum dirtyNonGameTiles[NUM_NON_GAME_TILES];
+tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 word numDirtyNonGameTiles;
 
 word numPlayers;
@@ -64,7 +77,7 @@ void initTiles(void)
     
     for (tileY = 0; tileY < GAME_NUM_TILES_TALL; tileY++)
     {
-        lastOffset = TILE_OFFSET_FOR_X_Y(0, tileY * TILE_HEIGHT);
+        lastOffset = SCREEN_ADDRESS_FOR_TILE_AT_X_Y(0, tileY * TILE_HEIGHT);
         
         for (tileX = 0; tileX < LHS_NUM_TILES_WIDE; tileX++)
         {
@@ -75,22 +88,22 @@ void initTiles(void)
             if (tileY == 0)
                 lhsTilePtr->tileAbove = INVALID_TILE_NUM;
             else
-                lhsTilePtr->tileAbove = LHS_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+                lhsTilePtr->tileAbove = LHS_X_Y_TO_TILE_OFFSET(tileX, tileY - 1);
             
             if (tileY == GAME_NUM_TILES_TALL - 1)
                 lhsTilePtr->tileBelow = INVALID_TILE_NUM;
             else
-                lhsTilePtr->tileBelow = LHS_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+                lhsTilePtr->tileBelow = LHS_X_Y_TO_TILE_OFFSET(tileX, tileY + 1);
             
             if (tileX == 0)
                 lhsTilePtr->tileLeft = INVALID_TILE_NUM;
             else
-                lhsTilePtr->tileLeft = LHS_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+                lhsTilePtr->tileLeft = LHS_X_Y_TO_TILE_OFFSET(tileX - 1, tileY);
             
             if (tileX == LHS_NUM_TILES_WIDE - 1)
-                lhsTilePtr->tileRight = GAME_X_Y_TO_TILE_NUM(0, tileY);
+                lhsTilePtr->tileRight = GAME_X_Y_TO_TILE_OFFSET(0, tileY);
             else
-                lhsTilePtr->tileRight = LHS_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+                lhsTilePtr->tileRight = LHS_X_Y_TO_TILE_OFFSET(tileX + 1, tileY);
 
             lhsTilePtr->dummy = 0;
             
@@ -108,22 +121,22 @@ void initTiles(void)
             if (tileY == 0)
                 tilePtr->tileAbove = INVALID_TILE_NUM;
             else
-                tilePtr->tileAbove = GAME_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+                tilePtr->tileAbove = GAME_X_Y_TO_TILE_OFFSET(tileX, tileY - 1);
             
             if (tileY == GAME_NUM_TILES_TALL - 1)
                 tilePtr->tileBelow = INVALID_TILE_NUM;
             else
-                tilePtr->tileBelow = GAME_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+                tilePtr->tileBelow = GAME_X_Y_TO_TILE_OFFSET(tileX, tileY + 1);
             
             if (tileX == 0)
-                tilePtr->tileLeft = LHS_X_Y_TO_TILE_NUM(LHS_NUM_TILES_WIDE - 1, tileY);
+                tilePtr->tileLeft = LHS_X_Y_TO_TILE_OFFSET(LHS_NUM_TILES_WIDE - 1, tileY);
             else
-                tilePtr->tileLeft = GAME_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+                tilePtr->tileLeft = GAME_X_Y_TO_TILE_OFFSET(tileX - 1, tileY);
             
             if (tileX == GAME_NUM_TILES_WIDE - 1)
-                tilePtr->tileRight = RHS_X_Y_TO_TILE_NUM(0, tileY);
+                tilePtr->tileRight = RHS_X_Y_TO_TILE_OFFSET(0, tileY);
             else
-                tilePtr->tileRight = GAME_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+                tilePtr->tileRight = GAME_X_Y_TO_TILE_OFFSET(tileX + 1, tileY);
             
             tilePtr->dummy = 0;
             tilePtr++;
@@ -140,22 +153,22 @@ void initTiles(void)
             if (tileY == 0)
                 rhsTilePtr->tileAbove = INVALID_TILE_NUM;
             else
-                rhsTilePtr->tileAbove = RHS_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+                rhsTilePtr->tileAbove = RHS_X_Y_TO_TILE_OFFSET(tileX, tileY - 1);
             
             if (tileY == GAME_NUM_TILES_TALL - 1)
                 rhsTilePtr->tileBelow = INVALID_TILE_NUM;
             else
-                rhsTilePtr->tileBelow = RHS_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+                rhsTilePtr->tileBelow = RHS_X_Y_TO_TILE_OFFSET(tileX, tileY + 1);
             
             if (tileX == 0)
-                rhsTilePtr->tileLeft = GAME_X_Y_TO_TILE_NUM(GAME_NUM_TILES_WIDE - 1, tileY);
+                rhsTilePtr->tileLeft = GAME_X_Y_TO_TILE_OFFSET(GAME_NUM_TILES_WIDE - 1, tileY);
             else
-                rhsTilePtr->tileLeft = RHS_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+                rhsTilePtr->tileLeft = RHS_X_Y_TO_TILE_OFFSET(tileX - 1, tileY);
             
             if (tileX == RHS_NUM_TILES_WIDE - 1)
                 rhsTilePtr->tileRight = INVALID_TILE_NUM;
             else
-                rhsTilePtr->tileRight = RHS_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+                rhsTilePtr->tileRight = RHS_X_Y_TO_TILE_OFFSET(tileX + 1, tileY);
 
             rhsTilePtr->dummy = 0;
             rhsTilePtr++;
@@ -177,121 +190,82 @@ void initNonGameTiles(void)
     for (i = 0; i < numPlayers; i++)
     {
         tileNum = RHS_FIRST_TILE + i;
-        tiles[tileNum].dirty = 1;
         tiles[tileNum].type = TILE_PLAYER;
-        
-        dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-        numDirtyNonGameTiles++;
+        ADD_DIRTY_NON_GAME_TILE(tileNum);
     }
     
     tileNum = LHS_FIRST_TILE + (1 * LHS_NUM_TILES_WIDE) + 6;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_S;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_C;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_O;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_R;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_E;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_SYMBOL_COLON;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum = LHS_FIRST_TILE + (4 * LHS_NUM_TILES_WIDE) - 2;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_NUMBER_0;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum = LHS_FIRST_TILE + (12 * LHS_NUM_TILES_WIDE) + 1;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_H;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_I;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_G;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_H;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_S;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_C;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_O;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_R;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_LETTER_E;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum++;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_SYMBOL_COLON;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
     
     tileNum = LHS_FIRST_TILE + (15 * LHS_NUM_TILES_WIDE) - 2;
-    tiles[tileNum].dirty = 1;
     tiles[tileNum].type = TILE_NUMBER_0;
-    dirtyNonGameTiles[numDirtyNonGameTiles] = tileNum;
-    numDirtyNonGameTiles++;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
 }
 
 
@@ -309,9 +283,7 @@ void addStartingMushrooms(void)
             continue;
         
         tiles[tileNum].type = TILE_MUSHROOM4;
-        tiles[tileNum].dirty = 1;
-        dirtyGameTiles[numDirtyGameTiles] = tileNum;
-        numDirtyGameTiles++;
+        ADD_DIRTY_GAME_TILE(tileNum);
         numMushrooms++;
     }
 }

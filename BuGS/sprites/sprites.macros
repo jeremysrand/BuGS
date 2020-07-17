@@ -15,7 +15,7 @@
         ora #$0030
         sta $e1c068
         clc
-        txa
+        tya
         tcs
         mend
 

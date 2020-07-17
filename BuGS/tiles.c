@@ -40,15 +40,15 @@
 #define ADD_DIRTY_GAME_TILE(tileNum)                                        \
     if (!tiles[tileNum].dirty) {                                            \
         tiles[tileNum].dirty = 1;                                           \
-        dirtyGameTiles[numDirtyGameTiles] = ((tileNum) * sizeof(tTile));    \
-        numDirtyGameTiles++;                                                \
+        dirtyGameTiles[numDirtyGameTiles / 2] = ((tileNum) * sizeof(tTile));    \
+        numDirtyGameTiles += 2;                                             \
     }
 
 #define ADD_DIRTY_NON_GAME_TILE(tileNum)                                        \
     if (!tiles[tileNum].dirty) {                                                \
         tiles[tileNum].dirty = 1;                                               \
-        dirtyNonGameTiles[numDirtyNonGameTiles] = ((tileNum) * sizeof(tTile));  \
-        numDirtyNonGameTiles++;                                                 \
+        dirtyNonGameTiles[numDirtyNonGameTiles / 2] = ((tileNum) * sizeof(tTile));  \
+        numDirtyNonGameTiles += 2;                                              \
     }
 
 /* Globals */

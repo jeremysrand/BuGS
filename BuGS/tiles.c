@@ -22,6 +22,15 @@
 #define GAME_LEFT_MOST_X_POS (13 * TILE_WIDTH)       /* 13 tiles from the left */
 #define GAME_TOP_MOST_Y_POS (0 * TILE_HEIGHT)
 
+#define GAME_X_Y_TO_TILE_NUM(X, Y) \
+    (((Y) * GAME_NUM_TILES_WIDE) + (X))
+
+#define RHS_X_Y_TO_TILE_NUM(X, Y) \
+    (RHS_FIRST_TILE + ((Y) * RHS_NUM_TILES_WIDE) + (X))
+
+#define LHS_X_Y_TO_TILE_NUM(X, Y) \
+    (LHS_FIRST_TILE + ((Y) * LHS_NUM_TILES_WIDE) + (X))
+
 #define TILE_OFFSET_FOR_X_Y(X, Y) \
     (0x2000 + (0xa0 * (Y)) + ((X) / 2) + 3)
 
@@ -33,22 +42,22 @@
 
 tTile tiles[TOTAL_GAME_TILES];
 
-unsigned int dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
-unsigned int numDirtyGameTiles;
+tTileNum dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
+word numDirtyGameTiles;
 
-unsigned int dirtyNonGameTiles[NUM_NON_GAME_TILES];
-unsigned int numDirtyNonGameTiles;
+tTileNum dirtyNonGameTiles[NUM_NON_GAME_TILES];
+word numDirtyNonGameTiles;
 
-unsigned int numPlayers;
+word numPlayers;
 
 
 /* Implementation */
 
 void initTiles(void)
 {
-    int tileX;
-    int tileY;
-    int lastOffset;
+    word tileX;
+    word tileY;
+    word lastOffset;
     tTile * tilePtr = &(tiles[0]);
     tTile * rhsTilePtr = &(tiles[RHS_FIRST_TILE]);
     tTile * lhsTilePtr = &(tiles[LHS_FIRST_TILE]);
@@ -62,7 +71,29 @@ void initTiles(void)
             lhsTilePtr->dirty = 0;
             lhsTilePtr->offset = lastOffset;
             lhsTilePtr->type = TILE_EMPTY;
+
+            if (tileY == 0)
+                lhsTilePtr->tileAbove = INVALID_TILE_NUM;
+            else
+                lhsTilePtr->tileAbove = LHS_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+            
+            if (tileY == GAME_NUM_TILES_TALL - 1)
+                lhsTilePtr->tileBelow = INVALID_TILE_NUM;
+            else
+                lhsTilePtr->tileBelow = LHS_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+            
+            if (tileX == 0)
+                lhsTilePtr->tileLeft = INVALID_TILE_NUM;
+            else
+                lhsTilePtr->tileLeft = LHS_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+            
+            if (tileX == LHS_NUM_TILES_WIDE - 1)
+                lhsTilePtr->tileRight = GAME_X_Y_TO_TILE_NUM(0, tileY);
+            else
+                lhsTilePtr->tileRight = LHS_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+
             lhsTilePtr->dummy = 0;
+            
             lhsTilePtr++;
                 
             lastOffset += 4;
@@ -73,6 +104,27 @@ void initTiles(void)
             tilePtr->dirty = 0;
             tilePtr->offset = lastOffset;
             tilePtr->type = TILE_EMPTY;
+            
+            if (tileY == 0)
+                tilePtr->tileAbove = INVALID_TILE_NUM;
+            else
+                tilePtr->tileAbove = GAME_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+            
+            if (tileY == GAME_NUM_TILES_TALL - 1)
+                tilePtr->tileBelow = INVALID_TILE_NUM;
+            else
+                tilePtr->tileBelow = GAME_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+            
+            if (tileX == 0)
+                tilePtr->tileLeft = LHS_X_Y_TO_TILE_NUM(LHS_NUM_TILES_WIDE - 1, tileY);
+            else
+                tilePtr->tileLeft = GAME_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+            
+            if (tileX == GAME_NUM_TILES_WIDE - 1)
+                tilePtr->tileRight = RHS_X_Y_TO_TILE_NUM(0, tileY);
+            else
+                tilePtr->tileRight = GAME_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+            
             tilePtr->dummy = 0;
             tilePtr++;
             
@@ -84,6 +136,27 @@ void initTiles(void)
             rhsTilePtr->dirty = 0;
             rhsTilePtr->offset = lastOffset;
             rhsTilePtr->type = TILE_EMPTY;
+
+            if (tileY == 0)
+                rhsTilePtr->tileAbove = INVALID_TILE_NUM;
+            else
+                rhsTilePtr->tileAbove = RHS_X_Y_TO_TILE_NUM(tileX, tileY - 1);
+            
+            if (tileY == GAME_NUM_TILES_TALL - 1)
+                rhsTilePtr->tileBelow = INVALID_TILE_NUM;
+            else
+                rhsTilePtr->tileBelow = RHS_X_Y_TO_TILE_NUM(tileX, tileY + 1);
+            
+            if (tileX == 0)
+                rhsTilePtr->tileLeft = GAME_X_Y_TO_TILE_NUM(GAME_NUM_TILES_WIDE - 1, tileY);
+            else
+                rhsTilePtr->tileLeft = RHS_X_Y_TO_TILE_NUM(tileX - 1, tileY);
+            
+            if (tileX == RHS_NUM_TILES_WIDE - 1)
+                rhsTilePtr->tileRight = INVALID_TILE_NUM;
+            else
+                rhsTilePtr->tileRight = RHS_X_Y_TO_TILE_NUM(tileX + 1, tileY);
+
             rhsTilePtr->dummy = 0;
             rhsTilePtr++;
             
@@ -92,13 +165,14 @@ void initTiles(void)
     }
     
     numDirtyGameTiles = 0;
+    numDirtyNonGameTiles = 0;
 }
 
 
 void initNonGameTiles(void)
 {
     unsigned int i;
-    unsigned int tileNum;
+    tTileNum tileNum;
     numPlayers = STARTING_NUM_PLAYERS;
     for (i = 0; i < numPlayers; i++)
     {
@@ -223,8 +297,8 @@ void initNonGameTiles(void)
 
 void addStartingMushrooms(void)
 {
-    int tileNum;
-    int numMushrooms = 0;
+    tTileNum tileNum;
+    unsigned int numMushrooms = 0;
     
     while (numMushrooms < STARTING_NUM_MUSHROOMS)
     {

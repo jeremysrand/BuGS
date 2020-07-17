@@ -10,6 +10,9 @@
 #define _GUARD_PROJECTBuGS_FILEtiles_
 
 
+#include <types.h>
+
+
 /* Defines */
 
 #define GAME_NUM_TILES_WIDE 25
@@ -29,8 +32,13 @@
 
 #define TOTAL_GAME_TILES (NUM_GAME_TILES + NUM_NON_GAME_TILES)
 
+#define INVALID_TILE_NUM 0xffff
+
 
 /* Types */
+
+typedef word tTileNum;
+
 
 typedef enum {
     TILE_EMPTY = 0,
@@ -96,20 +104,25 @@ typedef enum {
 
 typedef struct
 {
-    unsigned int dirty;
-    unsigned int offset;
+    word dirty;
+    word offset;
     tTileType type;
-    unsigned int dummy; /* I want a size which is a multiple of 2 */
+    
+    tTileNum tileAbove;
+    tTileNum tileBelow;
+    tTileNum tileLeft;
+    tTileNum tileRight;
+    word dummy; /* I want a size which is a multiple of 2 */
 } tTile;
 
 
 /* Globals */
 
 extern tTile tiles[TOTAL_GAME_TILES];
-extern unsigned int dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
-extern unsigned int numDirtyGameTiles;
-extern unsigned int dirtyNonGameTiles[NUM_NON_GAME_TILES];
-extern unsigned int numDirtyNonGameTiles;
+extern tTileNum dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
+extern word numDirtyGameTiles;
+extern tTileNum dirtyNonGameTiles[NUM_NON_GAME_TILES];
+extern word numDirtyNonGameTiles;
 
 
 /* API */

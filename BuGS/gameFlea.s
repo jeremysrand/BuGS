@@ -21,7 +21,8 @@ drawFlea entry
         beq drawFlea_done
         
         ldy fleaScreenOffset
-        jsl flea1
+        ldx fleaSprite
+        jsl fleaJump
         
         ldy numDirtyGameTiles
         
@@ -78,10 +79,23 @@ drawFlea_done anop
         rtl
         
         
+fleaJump entry
+        lda fleaJumpTable,x
+        sta jumpInst+1
+        
+        lda fleaJumpTable+2,x
+        sta jumpInst+3
+        
+jumpInst jmp >flea1
+        nop
+        
+        
 updateFlea entry
         lda fleaState
-        beq updateFlea_done
-        
+        bne updateFlea_cont
+        rtl
+
+updateFlea_cont anop
         lda fleaHeightInTile
         beq updateFlea_nextTile
         dec a
@@ -94,6 +108,22 @@ updateFlea_bottomOfTile anop
         sta fleaTileOffsets+4
         lda fleaTileOffsets+2
         sta fleaTileOffsets+6
+        
+        lda fleaSpriteCounter
+        eor #$1
+        sta fleaSpriteCounter
+        bne updateFlea_nextAction
+        
+        lda fleaSprite
+        cmp #$c
+        beq updateFlea_resetSprite
+        clc
+        adc #$4
+        sta fleaSprite
+        bra updateFlea_nextAction
+        
+updateFlea_resetSprite anop
+        stz fleaSprite
         bra updateFlea_nextAction
         
 updateFlea_nextTile anop
@@ -109,6 +139,16 @@ updateFlea_nextTile anop
         ldx fleaTileOffsets+2
         lda tiles+8,x
         sta fleaTileOffsets+2
+        
+        ldx fleaTileOffsets+4
+        lda tiles+4,x
+        bne updateFlea_nextAction
+        
+        jsl rand65535
+        and #$7
+        bne updateFlea_nextAction
+        lda #$10
+        sta tiles+4,x
         
         bra updateFlea_nextAction
         
@@ -136,7 +176,13 @@ addFlea entry
         lda #$3
         sta fleaHeightInTile
         
-        lda #$40
+        stz fleaSpriteCounter
+        
+        jsl rand25
+        asl a
+        asl a
+        asl a
+        asl a
         sta fleaTileOffsets
         sta fleaTileOffsets+4
         
@@ -161,5 +207,12 @@ fleaTileOffsets  dc i2'0'
                  dc i2'0'
                  dc i2'0'
 fleaHeightInTile dc i2'0'
+fleaSpriteCounter dc i2'0'
+fleaSprite       dc i2'0'
+
+fleaJumpTable    dc i4'flea1'
+                 dc i4'flea2'
+                 dc i4'flea3'
+                 dc i4'flea4'
 
         end

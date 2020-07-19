@@ -28,6 +28,7 @@
 /* Globals */
 
 unsigned int userid;
+unsigned int randomSeed;
 
 
 /* Implementation */
@@ -53,7 +54,11 @@ int main(void)
     NewHandle(0x9000, userid, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x011000);
     TOOLFAIL("Unable to allocate SHR screen");
     
-    srand((int)(time(NULL)));
+    randomSeed = (int)time(NULL);
+    if (randomSeed == 0)
+        randomSeed = 1;
+    srand(randomSeed);
+    randInit();
     
     initTiles();
     initNonGameTiles();

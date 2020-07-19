@@ -64,6 +64,7 @@
 		9D1716A42491C49300C83148 /* system601.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601.2mg; sourceTree = "<group>"; };
 		9D1716A62491C49300C83148 /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = tail.mk; sourceTree = "<group>"; };
 		9D1716A92491C49300C83148 /* BuGS.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = BuGS.xcscheme; path = ../../BuGS.xcodeproj/xcshareddata/xcschemes/BuGS.xcscheme; sourceTree = "<group>"; };
+		9D2FF6DA24C4C79A000181E5 /* random.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = random.s; sourceTree = "<group>"; };
 		9D3396F424AECB1D003222B3 /* explosions.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = explosions.s; sourceTree = "<group>"; };
 		9D3396F524AECBB1003222B3 /* spiders.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = spiders.s; sourceTree = "<group>"; };
 		9D3396F624AECC40003222B3 /* scorpions.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = scorpions.s; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 				9D8FFC612491CAF0005C9327 /* game.h */,
 				9DB1505024C3801100558B87 /* gameFlea.s */,
 				9D62AF3B249871A300348F45 /* colour.s */,
+				9D2FF6DA24C4C79A000181E5 /* random.s */,
 				9D3396F324AECACC003222B3 /* sprites */,
 				9D1716912491C49300C83148 /* main.rez */,
 				9D1716932491C49300C83148 /* Makefile */,

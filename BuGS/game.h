@@ -11,6 +11,7 @@
 
 
 extern void game(void);
+extern void randInit(void);
 
 
 #endif /* define _GUARD_PROJECTBuGS_FILEgame_ */

@@ -97,7 +97,7 @@ updateFlea_bottomOfTile anop
         bra updateFlea_nextAction
         
 updateFlea_nextTile anop
-        lda #$7
+        lda #$3
         sta fleaHeightInTile
         
         ldx fleaTileOffsets
@@ -119,7 +119,7 @@ updateFlea_bottom anop
 updateFlea_nextAction anop
         lda fleaScreenOffset
         clc
-        adc #$a0
+        adc #$140
         sta fleaScreenOffset
         
 updateFlea_done anop
@@ -133,7 +133,7 @@ addFlea entry
         lda #fleaState_falling
         sta fleaState
         
-        lda #$7
+        lda #$3
         sta fleaHeightInTile
         
         lda #$40
@@ -147,7 +147,7 @@ addFlea entry
         
         lda tiles+2,x
         sec
-        sbc #$463
+        sbc #$3c3
         sta fleaScreenOffset
         
 addFlea_done anop

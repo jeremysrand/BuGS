@@ -688,10 +688,11 @@ waitForKey_loop anop
 waitForVbl entry
         short i,m
 vblLoop1 anop
-        lda $e0c019
-        bmi vblLoop1
+        lda #$fe
+        cmp $e0c019
+        bpl vblLoop1
 vblLoop2 anop
-        lda $e0c019
+        cmp $e0c019
         bmi vblLoop2
         long i,m
         rtl

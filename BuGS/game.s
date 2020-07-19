@@ -637,7 +637,7 @@ checkKeyboard entry
 checkKey_loop2 anop
         short i,m
         lda $e0c000
-        bpl quit
+        bpl checkKey_done
         sta $e0c010
         long i,m
         and #$007f
@@ -676,28 +676,13 @@ checkKey_done anop
 
 
 waitForKey entry
-loop2   short i,m
-loop1   anop
+        short i,m
+waitForKey_loop anop
         lda $e0c000
-        bpl loop1
+        bpl waitForKey_loop
         sta $e0c010
         long i,m
-        and #$007f
-        cmp #'q'
-        beq quit
-        cmp #'Q'
-        beq quit
-        cmp #$001b
-        beq quit
-        lda colourPalette
-        inc a
-        cmp #$000e
-        blt skip
-        lda #$0000
-skip    sta colourPalette
-        jsl setColour
-        bra loop2
-quit    rtl
+        rtl
 
 
 waitForVbl entry

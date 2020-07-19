@@ -26,12 +26,20 @@ game    start
         
         lda colourPalette
         jsl setColour
-        
+
+gameLoop anop
         jsl drawDirtyGameTiles
-        
+        jsl drawFlea
         jsl drawDirtyNonGameTiles
         
-        jsl waitForKey
+        jsl updateFlea
+        
+        jsl checkKeyboard
+        jsl waitForVbl
+        
+        lda shouldQuit
+        bne gameLoop
+        
         rtl
 
 
@@ -624,6 +632,49 @@ nextWord anop
         rtl
         
 
+
+checkKeyboard entry
+checkKey_loop2 anop
+        short i,m
+        lda $e0c000
+        bpl quit
+        sta $e0c010
+        long i,m
+        and #$007f
+        
+        cmp #'q'
+        beq checkKey_quit
+        cmp #'Q'
+        beq checkKey_quit
+        cmp #$001b
+        beq checkKey_quit
+        
+        cmp #'f'
+        beq checkKey_addFlea
+        cmp #'F'
+        beq checkKey_addFlea
+        
+        lda colourPalette
+        inc a
+        cmp #$000e
+        blt checkKey_skip
+        lda #$0000
+checkKey_skip anop
+        sta colourPalette
+        jsl setColour
+        rtl
+        
+checkKey_addFlea anop
+        jsl addFlea
+        rtl
+        
+checkKey_quit anop
+        stz shouldQuit
+        
+checkKey_done anop
+        rtl
+
+
 waitForKey entry
 loop2   short i,m
 loop1   anop
@@ -632,9 +683,9 @@ loop1   anop
         sta $e0c010
         long i,m
         and #$007f
-        cmp #$0051
+        cmp #'q'
         beq quit
-        cmp #$0071
+        cmp #'Q'
         beq quit
         cmp #$001b
         beq quit
@@ -663,6 +714,7 @@ vblLoop2 anop
         
 backupStack dc i2'0'
 colourPalette dc i2'0'
+shouldQuit dc i2'1'
 
 tileJumpTable dc a4'solid0'
               dc a4'mushroom4'

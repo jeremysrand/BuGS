@@ -33,8 +33,8 @@ gameLoop anop
         jsl drawDirtyNonGameTiles
         
         jsl updateFlea
-        
         jsl checkKeyboard
+        
         jsl waitForVbl
         
         lda shouldQuit
@@ -654,6 +654,11 @@ checkKey_loop2 anop
         cmp #'F'
         beq checkKey_addFlea
         
+        cmp #'s'
+        beq checkKey_shootFlea
+        cmp #'S'
+        beq checkKey_shootFlea
+        
         lda colourPalette
         inc a
         cmp #$000e
@@ -666,6 +671,10 @@ checkKey_skip anop
         
 checkKey_addFlea anop
         jsl addFlea
+        rtl
+        
+checkKey_shootFlea anop
+        jsl shootFlea
         rtl
         
 checkKey_quit anop

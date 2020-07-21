@@ -13,6 +13,7 @@
 scorpions start
 
 leftScorpion1 entry
+        iny
         _spriteHeader
  
 ; $c - Green
@@ -168,8 +169,6 @@ leftScorpion1 entry
         
 
 leftScorpion1s entry
-        dex
-        dex
         _spriteHeader
  
 ; $c - Green
@@ -310,6 +309,7 @@ leftScorpion1s entry
         
 
 leftScorpion2 entry
+        iny
         _spriteHeader
  
 ; $c - Green
@@ -470,8 +470,6 @@ leftScorpion2 entry
 
 
 leftScorpion2s entry
-        dex
-        dex
        _spriteHeader
  
 ; $c - Green
@@ -627,6 +625,7 @@ leftScorpion2s entry
 
 
 leftScorpion3 entry
+        iny
         _spriteHeader
  
 ; $c - Green
@@ -771,8 +770,6 @@ leftScorpion3 entry
 
 
 leftScorpion3s entry
-        dex
-        dex
        _spriteHeader
 
 ; $c - Green
@@ -939,6 +936,7 @@ leftScorpion3s entry
 
 
 leftScorpion4 entry
+        iny
         _spriteHeader
  
 ; $c - Green
@@ -1082,8 +1080,6 @@ leftScorpion4 entry
 
 
 leftScorpion4s entry
-        dex
-        dex
        _spriteHeader
 
 ; $c - Green

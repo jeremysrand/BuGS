@@ -29,9 +29,11 @@ game    start
 
 gameLoop anop
         jsl drawDirtyGameTiles
+        jsl drawScorpion
         jsl drawFlea
         jsl drawDirtyNonGameTiles
         
+        jsl updateScorpion
         jsl updateFlea
         jsl checkKeyboard
         
@@ -652,12 +654,12 @@ checkKey_loop2 anop
         cmp #'f'
         beq checkKey_addFlea
         cmp #'F'
-        beq checkKey_addFlea
+        beq checkKey_shootFlea
         
         cmp #'s'
-        beq checkKey_shootFlea
+        beq checkKey_addScorpion
         cmp #'S'
-        beq checkKey_shootFlea
+        beq checkKey_shootScorpion
         
         lda colourPalette
         inc a
@@ -666,16 +668,19 @@ checkKey_loop2 anop
         lda #$0000
 checkKey_skip anop
         sta colourPalette
-        jsl setColour
-        rtl
+        jmp setColour
         
 checkKey_addFlea anop
-        jsl addFlea
-        rtl
+        jmp addFlea
         
 checkKey_shootFlea anop
-        jsl shootFlea
-        rtl
+        jmp shootFlea
+        
+checkKey_addScorpion anop
+        jmp addScorpion
+        
+checkKey_shootScorpion anop
+        jmp shootScorpion
         
 checkKey_quit anop
         stz shouldQuit

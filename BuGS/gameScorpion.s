@@ -22,6 +22,10 @@ SCORPION_STATE_EXPLODING equ 3
 SCORPION_SLOW_UPDATES_PER_TILE  equ TILE_PIXEL_WIDTH-1
 SCORPION_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_WIDTH/2-1
 
+; A scorpion will only be generated in the top N rows.  This defines that number.
+SCORPION_NUM_POSSIBLE_ROWS      equ 15
+
+
 drawScorpion entry
         lda scorpionState
         bne drawScorpion_cont
@@ -149,31 +153,64 @@ jumpInst jmp >leftScorpion1
 
 updateScorpion entry
         lda scorpionState
-        beq updateScorpion_done
+        bne updateScorpion_cont
+        rtl
         
+updateScorpion_cont anop
+        cmp #SCORPION_STATE_EXPLODING
+        bra updateScorpion_notExploding
+        jmp updateScorpion_exploding
+
+updateScorpion_notExploding anop
+; Common code for left or right moving scorpions
         lda scorpionSprite
-        beq updateScorpionLeft_resetSprite
+        beq updateScorpion_resetSprite
         sec
         sbc #$4
         sta scorpionSprite
         
-        bra updateScorpionLeft_nextAction
+        bra updateScorpion_nextAction
         
-updateScorpionLeft_resetSprite anop
+updateScorpion_resetSprite anop
         lda #SCORPION_SPRITE_LAST_OFFSET
         sta scorpionSprite
         
-updateScorpionLeft_nextAction anop
+updateScorpion_nextAction anop
         lda scorpionShiftInTile
-        beq updateScorpionLeft_nextTile
+        beq updateScorpion_nextTile
         dec a
         sta scorpionShiftInTile
         
         and #$1
         beq updateScorpion_done
-        dec scorpionScreenOffset
-        bra updateScorpion_done
+        lda scorpionState
+        cmp #SCORPION_STATE_LEFT
+        beq updateScorpion_screenLeft
+        inc scorpionScreenOffset
+        rtl
         
+updateScorpion_screenLeft anop
+        dec scorpionScreenOffset
+        rtl
+        
+
+updateScorpion_nextTile anop
+        lda scorpionState
+        cmp #SCORPION_STATE_LEFT
+        beq updateScorpionLeft_nextTile
+
+updateScorpionRight_nextTile anop
+        inc scorpionScreenOffset
+        lda #SCORPION_SLOW_UPDATES_PER_TILE
+        sta scorpionShiftInTile
+        
+        ldx scorpionTileOffsets+2
+        cpx #RHS_FIRST_TILE_OFFSET
+        blt updateScorpionRight_notOffScreen
+        cpx #LHS_FIRST_TILE_OFFSET
+        bge updateScorpionRight_notOffScreen
+        bra updateScorpion_offScreen
+
 updateScorpionLeft_nextTile anop
         dec scorpionScreenOffset
         lda #SCORPION_SLOW_UPDATES_PER_TILE
@@ -188,11 +225,32 @@ updateScorpionLeft_nextTile anop
         stx scorpionTileOffsets+2
         lda tiles+TILE_LEFT_OFFSET,x
         sta scorpionTileOffsets
+        bra updateScorpion_maybePoison
+        
+updateScorpionRight_notOffScreen anop
+        stx scorpionTileOffsets+4
+        ldx scorpionTileOffsets
+        stx scorpionTileOffsets+2
+        lda tiles+TILE_RIGHT_OFFSET,x
+        sta scorpionTileOffsets
+        
+updateScorpion_maybePoison anop
+        lda tiles+TILE_TYPE_OFFSET,x
+        beq updateScorpion_done
+        cmp #TILE_MUSHROOM4+1
+        bge updateScorpion_done
+
+        ora #32
+        sta tiles+TILE_TYPE_OFFSET,x
         rtl
         
 updateScorpion_offScreen anop
         stz scorpionState
-        
+        rtl
+
+updateScorpion_exploding anop
+; Write this code
+
 updateScorpion_done anop
         rtl
         
@@ -201,11 +259,20 @@ addScorpion entry
         lda scorpionState
         bne addScorpion_done
         
+        jsl rand0_to_14
+        asl a
+        tay
+        
+        jsl rand0_to_65534
+        and #1
+        beq addScorpion_right
+        
         lda #SCORPION_STATE_LEFT
         sta scorpionState
         
-        ldx #(24+25)*16
+        ldx scorpionLeftTileOffset,y
         stx scorpionTileOffsets
+        
         lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
         dec a
         sta scorpionScreenOffset
@@ -217,6 +284,30 @@ addScorpion entry
         lda tiles+TILE_RIGHT_OFFSET,x
         sta scorpionTileOffsets+4
         
+        bra addScorpion_common
+        
+addScorpion_right anop
+        
+        lda #SCORPION_STATE_RIGHT
+        sta scorpionState
+        
+        ldx scorpionRightTileOffset,y
+        stx scorpionTileOffsets
+        
+        lda tiles+TILE_LEFT_OFFSET,x
+        sta scorpionTileOffsets+2
+        
+        tax
+        lda tiles+TILE_LEFT_OFFSET,x
+        sta scorpionTileOffsets+4
+        
+        tax
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        dec a
+        dec a
+        sta scorpionScreenOffset
+
+addScorpion_common anop
         lda #SCORPION_SLOW_UPDATES_PER_TILE
         sta scorpionShiftInTile
         
@@ -275,6 +366,40 @@ scorpionRightJumpTable dc i4'rightScorpion4'
                        dc i4'rightScorpion1s'
                        dc i4'rightScorpion1'
                        dc i4'rightScorpion1s'
+                       
+                       
+scorpionLeftTileOffset  dc i2'((0*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((1*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((2*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((3*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((4*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((5*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((6*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((7*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((8*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((9*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((10*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((11*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((12*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((13*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        dc i2'((14*GAME_NUM_TILES_WIDE)+GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO'
+                        
+                        
+scorpionRightTileOffset dc i2'0*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'1*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'2*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'3*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'4*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'5*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'6*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'7*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'8*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'9*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'10*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'11*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'12*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'13*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
+                        dc i2'14*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO'
                  
 
         end

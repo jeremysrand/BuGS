@@ -240,7 +240,7 @@ updateScorpion_maybePoison anop
         cmp #TILE_MUSHROOM4+1
         bge updateScorpion_done
 
-        ora #32
+        ora #TILE_POISON_A_MUSHROOM
         sta tiles+TILE_TYPE_OFFSET,x
         rtl
         

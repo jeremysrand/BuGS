@@ -18,8 +18,8 @@ FLEA_STATE_FALLING      equ 1
 FLEA_STATE_EXPLODING    equ 2
 
 FLEA_SCREEN_SPEED       equ 2*SCREEN_BYTES_PER_ROW
-FLEA_SLOW_UPDATES_PER_TILE  equ 3
-FLEA_FAST_UPDATES_PER_TILE  equ 1
+FLEA_SLOW_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/2-1
+FLEA_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/4-1
 
 
 drawFlea entry
@@ -33,10 +33,10 @@ drawFlea entry
         ldy numDirtyGameTiles
         
         ldx fleaTileOffsets
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawFlea_skipTile1
         lda #TILE_STATE_DIRTY
-        sta tiles,x
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         sta dirtyGameTiles,y
         iny
@@ -45,10 +45,10 @@ drawFlea entry
 drawFlea_skipTile1 anop
 
         ldx fleaTileOffsets+2
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawFlea_skipTile2
         lda #TILE_STATE_DIRTY
-        sta tiles,x
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         sta dirtyGameTiles,y
         iny
@@ -57,10 +57,10 @@ drawFlea_skipTile1 anop
 drawFlea_skipTile2 anop
 
         ldx fleaTileOffsets+4
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawFlea_skipTile3
         lda #TILE_STATE_DIRTY
-        sta tiles,x
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         sta dirtyGameTiles,y
         iny
@@ -69,10 +69,10 @@ drawFlea_skipTile2 anop
 drawFlea_skipTile3 anop
 
         ldx fleaTileOffsets+6
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawFlea_skipTile4
         lda #TILE_STATE_DIRTY
-        sta tiles,x
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         sta dirtyGameTiles,y
         iny
@@ -117,6 +117,7 @@ updateFlea_cont anop
 ; Handle explosion
         lda fleaSprite
         beq updateFlea_explosionDone
+        sec
         sbc #$4
         sta fleaSprite
         rtl
@@ -141,6 +142,7 @@ updateFlea_bottomOfTile anop
         
         lda fleaSprite
         beq updateFlea_resetSprite
+        sec
         sbc #$4
         sta fleaSprite
         bra updateFlea_nextAction
@@ -156,25 +158,25 @@ updateFlea_nextTile anop
         
         ldx fleaTileOffsets
         stx fleaTileOffsets+4
-        lda tiles+8,x
+        lda tiles+TILE_BELOW_OFFSET,x
         cmp #INVALID_TILE_NUM
         beq updateFlea_bottom
         sta fleaTileOffsets
         
         ldx fleaTileOffsets+2
         stx fleaTileOffsets+6
-        lda tiles+8,x
+        lda tiles+TILE_BELOW_OFFSET,x
         sta fleaTileOffsets+2
         
         ldx fleaTileOffsets+4
-        lda tiles+4,x
+        lda tiles+TILE_TYPE_OFFSET,x
         bne updateFlea_nextAction
         
         jsl rand65535
         and #$7
         bne updateFlea_nextAction
         lda #TILE_MUSHROOM4
-        sta tiles+4,x
+        sta tiles+TILE_TYPE_OFFSET,x
         
         bra updateFlea_nextAction
         
@@ -219,11 +221,11 @@ addFlea entry
         sta fleaTileOffsets+4
         
         tax
-        lda tiles+10,x
+        lda tiles+TILE_LEFT_OFFSET,x
         sta fleaTileOffsets+2
         sta fleaTileOffsets+6
         
-        lda tiles+2,x
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
         sec
         sbc #6*SCREEN_BYTES_PER_ROW+3
         sta fleaScreenOffset
@@ -261,6 +263,7 @@ shootFlea_faster anop
         bcc shootFlea_done
         
         lda fleaScreenOffset
+        sec
         sbc #SCREEN_BYTES_PER_ROW
         sta fleaScreenOffset
         

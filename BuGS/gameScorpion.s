@@ -14,11 +14,13 @@ gameScorpion start
         using globalData
 
 
-scorpionState_none      equ 0
-scorpionState_left      equ 1
-scorpionState_right     equ 2
-scorpionState_exploding equ 3
+SCORPION_STATE_NONE      equ 0
+SCORPION_STATE_LEFT      equ 1
+SCORPION_STATE_RIGHT     equ 2
+SCORPION_STATE_EXPLODING equ 3
 
+SCORPION_SLOW_UPDATES_PER_TILE  equ TILE_PIXEL_WIDTH-1
+SCORPION_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_WIDTH/2-1
 
 drawScorpion entry
         lda scorpionState
@@ -31,10 +33,10 @@ drawScorpion_cont anop
         jsl scorpionJump
         
         ldx scorpionTileOffsets
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawScorpion_skipTile1
-        lda #$1
-        sta tiles,x
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         cmp #RHS_FIRST_TILE_OFFSET
         bge drawScorpion_nonGame1
@@ -56,10 +58,10 @@ drawScorpion_nonGame1 anop
 drawScorpion_skipTile1 anop
 
         ldx scorpionTileOffsets+2
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawScorpion_skipTile2
-        lda #$1
-        sta tiles,x
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         cmp #RHS_FIRST_TILE_OFFSET
         bge drawScorpion_nonGame2
@@ -81,10 +83,10 @@ drawScorpion_nonGame2 anop
 drawScorpion_skipTile2 anop
 
         ldx scorpionTileOffsets+4
-        lda tiles,x
+        lda tiles+TILE_DIRTY_OFFSET,x
         bne drawScorpion_done
-        lda #$1
-        sta tiles,x
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
         txa
         cmp #RHS_FIRST_TILE_OFFSET
         bge drawScorpion_nonGame3
@@ -108,7 +110,7 @@ drawScorpion_done anop
         
         
 scorpionJump entry
-        cmp #scorpionState_left
+        cmp #SCORPION_STATE_LEFT
         bne scorpionJump_next
         
         lda scorpionLeftJumpTable,x
@@ -119,7 +121,7 @@ scorpionJump entry
         bra jumpInst
         
 scorpionJump_next anop
-        cmp #scorpionState_right
+        cmp #SCORPION_STATE_RIGHT
         bne scorpionJump_explosion
         
         lda scorpionRightJumpTable,x
@@ -132,7 +134,7 @@ scorpionJump_next anop
 scorpionJump_explosion anop
         tya
         clc
-        adc #$4
+        adc #TILE_BYTE_WIDTH
         tay
         
         lda explosionJumpTable,x
@@ -150,16 +152,16 @@ updateScorpion entry
         beq updateScorpion_done
         
         lda scorpionSprite
-        cmp #$3c
         beq updateScorpionLeft_resetSprite
-        clc
-        adc #$4
+        sec
+        sbc #$4
         sta scorpionSprite
         
         bra updateScorpionLeft_nextAction
         
 updateScorpionLeft_resetSprite anop
-        stz scorpionSprite
+        lda #SCORPION_SPRITE_LAST_OFFSET
+        sta scorpionSprite
         
 updateScorpionLeft_nextAction anop
         lda scorpionShiftInTile
@@ -174,7 +176,7 @@ updateScorpionLeft_nextAction anop
         
 updateScorpionLeft_nextTile anop
         dec scorpionScreenOffset
-        lda #$7
+        lda #SCORPION_SLOW_UPDATES_PER_TILE
         sta scorpionShiftInTile
         
         ldx scorpionTileOffsets+2
@@ -184,7 +186,7 @@ updateScorpionLeft_nextTile anop
         stx scorpionTileOffsets+4
         ldx scorpionTileOffsets
         stx scorpionTileOffsets+2
-        lda tiles+10,x
+        lda tiles+TILE_LEFT_OFFSET,x
         sta scorpionTileOffsets
         rtl
         
@@ -199,24 +201,27 @@ addScorpion entry
         lda scorpionState
         bne addScorpion_done
         
-        lda #scorpionState_left
+        lda #SCORPION_STATE_LEFT
         sta scorpionState
         
-        ldx #24*16
+        ldx #(24+25)*16
         stx scorpionTileOffsets
-        lda tiles+2,x
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
         dec a
         sta scorpionScreenOffset
         
-        lda tiles+12,x
+        lda tiles+TILE_RIGHT_OFFSET,x
         sta scorpionTileOffsets+2
         
         tax
-        lda tiles+12,x
+        lda tiles+TILE_RIGHT_OFFSET,x
         sta scorpionTileOffsets+4
         
-        lda #$7
+        lda #SCORPION_SLOW_UPDATES_PER_TILE
         sta scorpionShiftInTile
+        
+        lda #SCORPION_SPRITE_LAST_OFFSET
+        sta scorpionSprite
         
 addScorpion_done anop
         rtl
@@ -226,7 +231,7 @@ shootScorpion entry
         rtl
 
 
-scorpionState        dc i2'scorpionState_none'
+scorpionState        dc i2'SCORPION_STATE_NONE'
 scorpionScreenOffset dc i2'0'
 scorpionTileOffsets  dc i2'0'
                      dc i2'0'
@@ -234,39 +239,42 @@ scorpionTileOffsets  dc i2'0'
 scorpionShiftInTile  dc i2'0'
 scorpionSprite       dc i2'0'
 
-scorpionLeftJumpTable dc i4'leftScorpion1s'
+
+SCORPION_SPRITE_LAST_OFFSET gequ 15*4
+scorpionLeftJumpTable dc i4'leftScorpion4'
+                      dc i4'leftScorpion4s'
+                      dc i4'leftScorpion4'
+                      dc i4'leftScorpion4s'
+                      dc i4'leftScorpion3'
+                      dc i4'leftScorpion3s'
+                      dc i4'leftScorpion3'
+                      dc i4'leftScorpion3s'
+                      dc i4'leftScorpion2'
+                      dc i4'leftScorpion2s'
+                      dc i4'leftScorpion2'
+                      dc i4'leftScorpion2s'
                       dc i4'leftScorpion1'
                       dc i4'leftScorpion1s'
                       dc i4'leftScorpion1'
-                      dc i4'leftScorpion2s'
-                      dc i4'leftScorpion2'
-                      dc i4'leftScorpion2s'
-                      dc i4'leftScorpion2'
-                      dc i4'leftScorpion3s'
-                      dc i4'leftScorpion3'
-                      dc i4'leftScorpion3s'
-                      dc i4'leftScorpion3'
-                      dc i4'leftScorpion4s'
-                      dc i4'leftScorpion4'
-                      dc i4'leftScorpion4s'
-                      dc i4'leftScorpion4'
+                      dc i4'leftScorpion1s'
+                      
 
-scorpionRightJumpTable dc i4'rightScorpion1s'
+scorpionRightJumpTable dc i4'rightScorpion4'
+                       dc i4'rightScorpion4s'
+                       dc i4'rightScorpion4'
+                       dc i4'rightScorpion4s'
+                       dc i4'rightScorpion3'
+                       dc i4'rightScorpion3s'
+                       dc i4'rightScorpion3'
+                       dc i4'rightScorpion3s'
+                       dc i4'rightScorpion2'
+                       dc i4'rightScorpion2s'
+                       dc i4'rightScorpion2'
+                       dc i4'rightScorpion2s'
                        dc i4'rightScorpion1'
                        dc i4'rightScorpion1s'
                        dc i4'rightScorpion1'
-                       dc i4'rightScorpion2s'
-                       dc i4'rightScorpion2'
-                       dc i4'rightScorpion2s'
-                       dc i4'rightScorpion2'
-                       dc i4'rightScorpion3s'
-                       dc i4'rightScorpion3'
-                       dc i4'rightScorpion3s'
-                       dc i4'rightScorpion3'
-                       dc i4'rightScorpion4s'
-                       dc i4'rightScorpion4'
-                       dc i4'rightScorpion4s'
-                       dc i4'rightScorpion4'
+                       dc i4'rightScorpion1s'
                  
 
         end

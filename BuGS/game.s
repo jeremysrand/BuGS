@@ -56,9 +56,9 @@ dirtyTileLoop anop
         phy
         
         ldx dirtyGameTiles,y
-        stz tiles,x
-        ldy tiles+2,x
-        lda tiles+4,x
+        stz tiles+TILE_DIRTY_OFFSET,x
+        ldy tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tiles+TILE_TYPE_OFFSET,x
         
         jsl drawTile
         
@@ -78,9 +78,9 @@ dirtyTileLoop2 anop
         phy
         
         ldx dirtyNonGameTiles,y
-        stz tiles,x
-        ldy tiles+2,x
-        lda tiles+4,x
+        stz tiles+TILE_DIRTY_OFFSET,x
+        ldy tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tiles+TILE_TYPE_OFFSET,x
         
         jsl drawTile
         

@@ -20,6 +20,11 @@ SCREEN_BYTES_PER_ROW    gequ 160
 
 SIZEOF_TILE_INFO        gequ 16
 
+TILE_PIXEL_WIDTH        gequ 8
+TILE_PIXEL_HEIGHT       gequ 8
+
+TILE_BYTE_WIDTH         gequ TILE_PIXEL_WIDTH/2
+
 GAME_NUM_TILES_WIDE     gequ 25
 GAME_NUM_TILES_TALL     gequ 25
 
@@ -103,9 +108,13 @@ TILE_SOLID3             gequ 51*4
 
 TILE_PLAYER             gequ 52*4
 
-
-tileState               gequ tiles
-tileScreenOffset        gequ tileState+2
+TILE_DIRTY_OFFSET           gequ 0
+TILE_SCREEN_OFFSET_OFFSET   gequ 2
+TILE_TYPE_OFFSET            gequ 4
+TILE_ABOVE_OFFSET           gequ 6
+TILE_BELOW_OFFSET           gequ 8
+TILE_LEFT_OFFSET            gequ 10
+TILE_RIGHT_OFFSET           gequ 12
 
 
 backupStack dc i2'0'

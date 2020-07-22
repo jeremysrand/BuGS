@@ -166,13 +166,13 @@ updateScorpion_notExploding anop
         lda scorpionSprite
         beq updateScorpion_resetSprite
         sec
-        sbc #$4
+        sbc scorpionSpriteUpdateDec
         sta scorpionSprite
         
         bra updateScorpion_nextAction
         
 updateScorpion_resetSprite anop
-        lda #SCORPION_SPRITE_LAST_OFFSET
+        lda scorpionSpriteLastOffset
         sta scorpionSprite
         
 updateScorpion_nextAction anop
@@ -180,7 +180,8 @@ updateScorpion_nextAction anop
         beq updateScorpion_nextTile
         dec a
         sta scorpionShiftInTile
-        
+
+updateScorpion_nextByteTest anop
         and #$1
         beq updateScorpion_done
         lda scorpionState
@@ -201,7 +202,7 @@ updateScorpion_nextTile anop
 
 updateScorpionRight_nextTile anop
         inc scorpionScreenOffset
-        lda #SCORPION_SLOW_UPDATES_PER_TILE
+        lda scorpionUpdatesPerTile
         sta scorpionShiftInTile
         
         ldx scorpionTileOffsets+2
@@ -213,7 +214,7 @@ updateScorpionRight_nextTile anop
 
 updateScorpionLeft_nextTile anop
         dec scorpionScreenOffset
-        lda #SCORPION_SLOW_UPDATES_PER_TILE
+        lda scorpionUpdatesPerTile
         sta scorpionShiftInTile
         
         ldx scorpionTileOffsets+2
@@ -257,7 +258,49 @@ updateScorpion_done anop
         
 addScorpion entry
         lda scorpionState
-        bne addScorpion_done
+        beq addScorpion_doit
+        rtl
+        
+addScorpion_doit anop
+; TODO - Add code to select between fast or slow scorpions based on the level
+;        bra addScorpion_fast
+        
+        lda #SCORPION_SLOW_SPRITE_LAST_OFFSET
+        sta scorpionSpriteLastOffset
+        
+        lda #SCORPION_SLOW_SPRITE_UPDATE_DEC
+        sta scorpionSpriteUpdateDec
+        
+        lda #SCORPION_SLOW_UPDATES_PER_TILE
+        sta scorpionUpdatesPerTile
+ 
+; This is funky.  This sets the instruction at this location to be an immediate and
+; instruction.  That causes us to only move to the next byte every other frame.
+        short i,m
+        lda #$29
+        sta updateScorpion_nextByteTest
+        long i,m
+        
+        bra addScorpion_cont
+        
+addScorpion_fast anop
+        lda #SCORPION_FAST_SPRITE_LAST_OFFSET
+        sta scorpionSpriteLastOffset
+        
+        lda #SCORPION_FAST_SPRITE_UPDATE_DEC
+        sta scorpionSpriteUpdateDec
+
+        lda #SCORPION_FAST_UPDATES_PER_TILE
+        sta scorpionUpdatesPerTile
+
+; This is funky.  This sets the instruction at this location to be an immediate or
+; instruction.  That causes us to only move to the next byte on every frame.
+       short i,m
+       lda #$09
+       sta updateScorpion_nextByteTest
+       long i,m
+        
+addScorpion_cont anop
         
         jsl rand0_to_14
         asl a
@@ -308,10 +351,10 @@ addScorpion_right anop
         sta scorpionScreenOffset
 
 addScorpion_common anop
-        lda #SCORPION_SLOW_UPDATES_PER_TILE
+        lda scorpionUpdatesPerTile
         sta scorpionShiftInTile
         
-        lda #SCORPION_SPRITE_LAST_OFFSET
+        lda scorpionSpriteLastOffset
         sta scorpionSprite
         
 addScorpion_done anop
@@ -319,6 +362,7 @@ addScorpion_done anop
         
 
 shootScorpion entry
+; TODO - Write this code
         rtl
 
 
@@ -330,8 +374,16 @@ scorpionTileOffsets  dc i2'0'
 scorpionShiftInTile  dc i2'0'
 scorpionSprite       dc i2'0'
 
+scorpionSpriteLastOffset    dc i2'0'
+scorpionSpriteUpdateDec     dc i2'0'
+scorpionUpdatesPerTile      dc i2'0'
 
-SCORPION_SPRITE_LAST_OFFSET gequ 15*4
+
+SCORPION_SLOW_SPRITE_LAST_OFFSET gequ 15*4
+SCORPION_FAST_SPRITE_LAST_OFFSET gequ 14*4
+SCORPION_SLOW_SPRITE_UPDATE_DEC  gequ 4
+SCORPION_FAST_SPRITE_UPDATE_DEC  gequ 8
+
 scorpionLeftJumpTable dc i4'leftScorpion4'
                       dc i4'leftScorpion4s'
                       dc i4'leftScorpion4'

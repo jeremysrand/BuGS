@@ -11,6 +11,7 @@
         keep scorpions
 
 scorpions start
+        using globalData
 
 leftScorpion1 entry
         iny
@@ -2520,8 +2521,5 @@ rightScorpion4s entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

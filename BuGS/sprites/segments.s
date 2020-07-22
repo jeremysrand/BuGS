@@ -11,6 +11,7 @@
         keep segments
 
 segments start
+        using globalData
 
 leftHead1 entry
         _spriteHeader
@@ -3462,8 +3463,5 @@ downBody3 entry
         
         _spriteFooter
         rtl
-  
-
-backupStack dc i2'0'
 
         end

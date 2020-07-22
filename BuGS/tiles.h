@@ -30,7 +30,7 @@
 
 #define NUM_NON_GAME_TILES (NUM_RHS_NON_GAME_TILES + NUM_LHS_NON_GAME_TILES)
 
-#define TOTAL_GAME_TILES (NUM_GAME_TILES + NUM_NON_GAME_TILES)
+#define TOTAL_NUM_TILES (NUM_GAME_TILES + NUM_NON_GAME_TILES)
 
 #define INVALID_TILE_NUM 0xffff
 
@@ -119,7 +119,7 @@ typedef struct
 
 /* Globals */
 
-extern tTile tiles[TOTAL_GAME_TILES];
+extern tTile tiles[TOTAL_NUM_TILES];
 extern tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 extern word numDirtyGameTiles;
 extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];

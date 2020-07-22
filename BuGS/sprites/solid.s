@@ -11,7 +11,7 @@
         keep solid
 
 solid start
-
+        using globalData
 
 solid0  entry
         _spriteHeader
@@ -235,8 +235,5 @@ solid3  entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

@@ -11,7 +11,7 @@
         keep numbers
 
 numbers start
-
+        using globalData
 
 number0  entry
         _spriteHeader
@@ -638,8 +638,5 @@ number9  entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

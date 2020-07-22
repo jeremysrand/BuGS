@@ -11,6 +11,7 @@
         keep symbols
 
 symbols start
+        using globalData
 
 symbolC entry
         _spriteHeader
@@ -254,8 +255,5 @@ symbolColon entry
         
         _spriteFooter
         rtl
-        
-
-backupStack dc i2'0'
 
         end

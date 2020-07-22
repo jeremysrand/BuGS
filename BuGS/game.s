@@ -22,6 +22,8 @@
         keep game
 
 game    start
+        using globalData
+        
         jsl setupScreen
         
         lda colourPalette
@@ -712,62 +714,7 @@ vblLoop2 anop
         rtl
         
         
-backupStack dc i2'0'
 colourPalette dc i2'0'
 shouldQuit dc i2'1'
-
-tileJumpTable dc a4'solid0'
-              dc a4'mushroom4'
-              dc a4'mushroom3'
-              dc a4'mushroom2'
-              dc a4'mushroom1'
-              dc a4'symbolC'
-              dc a4'symbolP'
-              dc a4'symbolDot'
-              dc a4'symbolColon'
-              dc a4'poisonedMushroom4'
-              dc a4'poisonedMushroom3'
-              dc a4'poisonedMushroom2'
-              dc a4'poisonedMushroom1'
-              dc a4'letterA'
-              dc a4'letterB'
-              dc a4'letterC'
-              dc a4'letterD'
-              dc a4'letterE'
-              dc a4'letterF'
-              dc a4'letterG'
-              dc a4'letterH'
-              dc a4'letterI'
-              dc a4'letterJ'
-              dc a4'letterK'
-              dc a4'letterL'
-              dc a4'letterM'
-              dc a4'letterN'
-              dc a4'letterO'
-              dc a4'letterP'
-              dc a4'letterQ'
-              dc a4'letterR'
-              dc a4'letterS'
-              dc a4'letterT'
-              dc a4'letterU'
-              dc a4'letterV'
-              dc a4'letterW'
-              dc a4'letterX'
-              dc a4'letterY'
-              dc a4'letterZ'
-              dc a4'number0'
-              dc a4'number1'
-              dc a4'number2'
-              dc a4'number3'
-              dc a4'number4'
-              dc a4'number5'
-              dc a4'number6'
-              dc a4'number7'
-              dc a4'number8'
-              dc a4'number9'
-              dc a4'solid1'
-              dc a4'solid2'
-              dc a4'solid3'
-              dc a4'drawPlayer'
 
         end

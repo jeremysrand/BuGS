@@ -11,6 +11,7 @@
         keep ship
 
 ship start
+        using globalData
 
 drawShip entry
         _spriteHeader
@@ -340,7 +341,6 @@ drawPlayer entry
         rtl
         
         
-backupStack dc i2'0'
 collision   dc i2'0'
         
         end

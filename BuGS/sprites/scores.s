@@ -11,6 +11,7 @@
         keep scores
 
 scores start
+        using globalData
 
 score300 entry
         _spriteHeader
@@ -333,9 +334,5 @@ score900 entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
-
 
         end

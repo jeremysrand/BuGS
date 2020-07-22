@@ -11,6 +11,7 @@
         keep letters
 
 letters start
+        using globalData
 
 letterA entry
         _spriteHeader
@@ -1607,8 +1608,5 @@ letterZ entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

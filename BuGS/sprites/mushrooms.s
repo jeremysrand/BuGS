@@ -11,6 +11,7 @@
         keep mushrooms
 
 mushrooms start
+        using globalData
 
 mushroom1 entry
         _spriteHeader
@@ -522,8 +523,5 @@ poisonedMushroom4 entry
         
         _spriteFooter
         rtl
-        
-
-backupStack dc i2'0'
 
         end

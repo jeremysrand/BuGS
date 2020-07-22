@@ -11,6 +11,7 @@
         keep explosions
 
 explosions start
+        using globalData
 
 explosion1 entry
         _spriteHeader
@@ -630,8 +631,5 @@ explosion6 entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

@@ -11,6 +11,7 @@
         keep fleas
 
 fleas start
+        using globalData
 
 
 flea1  entry
@@ -442,8 +443,5 @@ flea4  entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

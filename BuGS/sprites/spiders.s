@@ -11,6 +11,7 @@
         keep spiders
 
 spiders start
+        using globalData
 
 spider1 entry
         _spriteHeader
@@ -2086,8 +2087,5 @@ spider7s entry
         
         _spriteFooter
         rtl
-
-
-backupStack dc i2'0'
 
         end

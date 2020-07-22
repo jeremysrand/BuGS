@@ -11,6 +11,7 @@
         keep shot
 
 shot start
+        using globalData
 
 drawHalfShot entry
         _spriteHeader
@@ -248,7 +249,6 @@ drawShotShift entry
         rtl
         
         
-backupStack dc i2'0'
 collision   dc i2'0'
 
         end

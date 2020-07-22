@@ -53,7 +53,7 @@
 
 /* Globals */
 
-tTile tiles[TOTAL_GAME_TILES];
+tTile tiles[TOTAL_NUM_TILES];
 
 tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 word numDirtyGameTiles;

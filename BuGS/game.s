@@ -599,21 +599,21 @@ drawAll entry
         
 setupScreen entry
         short i,m
-        lda $e0c035     ; Enable shadowing of SHR
+        lda >SHADOW_REGISTER     ; Enable shadowing of SHR
         and #$f7
-        sta $e0c035
+        sta >SHADOW_REGISTER
         
         lda #$a1
-        sta $e0c029     ; Enable SHR mode
+        sta >NEW_VIDEO_REGISTER     ; Enable SHR mode
         long i,m
         
         sei
         phd
         tsc
         sta backupStack
-        lda $e1c068      ; Direct Page and Stack in Bank 01/
+        lda >STATE_REGISTER      ; Direct Page and Stack in Bank 01/
         ora #$0030
-        sta $e1c068
+        sta >STATE_REGISTER
         ldx #$0000
         
         lda #$9dfe
@@ -625,9 +625,9 @@ nextWord anop
         dey
         bpl nextWord
         
-        lda $e1c068
+        lda >STATE_REGISTER
         and #$ffcf
-        sta $e1c068
+        sta >STATE_REGISTER
         lda backupStack
         tcs
         pld
@@ -640,9 +640,9 @@ nextWord anop
 checkKeyboard entry
 checkKey_loop2 anop
         short i,m
-        lda $e0c000
+        lda >KEYBOARD
         bpl checkKey_done
-        sta $e0c010
+        sta >KEYBOARD_STROBE
         long i,m
         and #$007f
         
@@ -665,7 +665,7 @@ checkKey_loop2 anop
         
         lda colourPalette
         inc a
-        cmp #$000e
+        cmp #NUM_COLOUR_PALETTES
         blt checkKey_skip
         lda #$0000
 checkKey_skip anop
@@ -694,9 +694,9 @@ checkKey_done anop
 waitForKey entry
         short i,m
 waitForKey_loop anop
-        lda $e0c000
+        lda >KEYBOARD
         bpl waitForKey_loop
-        sta $e0c010
+        sta >KEYBOARD_STROBE
         long i,m
         rtl
 
@@ -705,10 +705,10 @@ waitForVbl entry
         short i,m
 vblLoop1 anop
         lda #$fe
-        cmp $e0c019
+        cmp >READ_VBL
         bpl vblLoop1
 vblLoop2 anop
-        cmp $e0c019
+        cmp >READ_VBL
         bmi vblLoop2
         long i,m
         rtl

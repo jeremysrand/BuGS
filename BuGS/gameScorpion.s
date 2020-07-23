@@ -158,7 +158,7 @@ updateScorpion entry
         
 updateScorpion_cont anop
         cmp #SCORPION_STATE_EXPLODING
-        bra updateScorpion_notExploding
+        bne updateScorpion_notExploding
         jmp updateScorpion_exploding
 
 updateScorpion_notExploding anop
@@ -243,6 +243,7 @@ updateScorpion_maybePoison anop
 
         ora #TILE_POISON_A_MUSHROOM
         sta tiles+TILE_TYPE_OFFSET,x
+updateScorpion_done anop
         rtl
         
 updateScorpion_offScreen anop
@@ -250,9 +251,15 @@ updateScorpion_offScreen anop
         rtl
 
 updateScorpion_exploding anop
-; Write this code
-
-updateScorpion_done anop
+        lda scorpionSprite
+        beq updateScorpion_explosionDone
+        sec
+        sbc #$4
+        sta scorpionSprite
+        rtl
+        
+updateScorpion_explosionDone anop
+        stz scorpionState
         rtl
         
         
@@ -362,7 +369,18 @@ addScorpion_done anop
         
 
 shootScorpion entry
-; TODO - Write this code
+        lda scorpionState
+        beq shootScorpion_done
+        cmp #SCORPION_STATE_EXPLODING
+        beq shootScorpion_done
+        
+        lda #SCORPION_STATE_EXPLODING
+        sta scorpionState
+        
+        lda #EXPLOSION_LAST_OFFSET
+        sta scorpionSprite
+        
+shootScorpion_done anop
         rtl
 
 

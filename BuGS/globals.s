@@ -118,6 +118,15 @@ TILE_BELOW_OFFSET           gequ 8
 TILE_LEFT_OFFSET            gequ 10
 TILE_RIGHT_OFFSET           gequ 12
 
+NUM_COLOUR_PALETTES     gequ 14
+
+KEYBOARD                gequ $e0c000
+KEYBOARD_STROBE         gequ $e0c010
+READ_VBL                gequ $e0c019
+SHADOW_REGISTER         gequ $e0c035
+NEW_VIDEO_REGISTER      gequ $e0c029
+STATE_REGISTER          gequ $e1c068
+
 
 backupStack dc i2'0'
 

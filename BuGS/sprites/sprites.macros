@@ -11,9 +11,9 @@
         sei
         tsc
         sta backupStack
-        lda $e1c068      ; Direct Page and Stack in Bank 01/
+        lda >STATE_REGISTER      ; Direct Page and Stack in Bank 01/
         ora #$0030
-        sta $e1c068
+        sta >STATE_REGISTER
         clc
         tya
         tcs
@@ -22,9 +22,9 @@
 
         macro
         _spriteFooter
-        lda $e1c068
+        lda >STATE_REGISTER
         and #$ffcf
-        sta $e1c068
+        sta >STATE_REGISTER
         lda backupStack
         tcs
         cli

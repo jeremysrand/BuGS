@@ -32,10 +32,12 @@ game    start
 gameLoop anop
         jsl drawDirtyGameTiles
         jsl drawScorpion
+        jsl drawSpider
         jsl drawFlea
         jsl drawDirtyNonGameTiles
         
         jsl updateScorpion
+        jsl updateSpider
         jsl updateFlea
         jsl checkKeyboard
         
@@ -43,6 +45,13 @@ gameLoop anop
         
         lda shouldQuit
         bne gameLoop
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        and #$f0
+        ora borderColour
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
         
         rtl
 
@@ -605,7 +614,10 @@ setupScreen entry
         
         lda #$a1
         sta >NEW_VIDEO_REGISTER     ; Enable SHR mode
+        lda >BORDER_COLOUR_REGISTER
         long i,m
+        and #$000f
+        sta borderColour
         
         sei
         phd
@@ -663,6 +675,11 @@ checkKey_loop2 anop
         cmp #'S'
         beq checkKey_shootScorpion
         
+        cmp #'p'
+        beq checkKey_addSpider
+        cmp #'P'
+        beq checkKey_shootSpider
+        
         lda colourPalette
         inc a
         cmp #NUM_COLOUR_PALETTES
@@ -684,6 +701,12 @@ checkKey_addScorpion anop
 checkKey_shootScorpion anop
         jmp shootScorpion
         
+checkKey_addSpider anop
+        jmp addSpider
+        
+checkKey_shootSpider anop
+        jmp shootSpider
+        
 checkKey_quit anop
         stz shouldQuit
         
@@ -703,6 +726,9 @@ waitForKey_loop anop
 
 waitForVbl entry
         short i,m
+        lda >BORDER_COLOUR_REGISTER
+        and #$f0
+        sta >BORDER_COLOUR_REGISTER
 vblLoop1 anop
         lda #$fe
         cmp >READ_VBL
@@ -710,11 +736,15 @@ vblLoop1 anop
 vblLoop2 anop
         cmp >READ_VBL
         bmi vblLoop2
+        lda >BORDER_COLOUR_REGISTER
+        ora #$0f
+        sta >BORDER_COLOUR_REGISTER
         long i,m
         rtl
         
         
-colourPalette dc i2'0'
-shouldQuit dc i2'1'
+colourPalette       dc i2'0'
+shouldQuit          dc i2'1'
+borderColour        dc i2'0'
 
         end

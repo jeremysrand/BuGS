@@ -60,7 +60,6 @@ drawScorpion_nonGame1 anop
         sty numDirtyNonGameTiles
         
 drawScorpion_skipTile1 anop
-
         ldx scorpionTileOffsets+2
         lda tiles+TILE_DIRTY_OFFSET,x
         bne drawScorpion_skipTile2
@@ -85,7 +84,6 @@ drawScorpion_nonGame2 anop
         sty numDirtyNonGameTiles
         
 drawScorpion_skipTile2 anop
-
         ldx scorpionTileOffsets+4
         lda tiles+TILE_DIRTY_OFFSET,x
         bne drawScorpion_done

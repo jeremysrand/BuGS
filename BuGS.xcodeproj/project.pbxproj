@@ -86,6 +86,7 @@
 		9DB1505024C3801100558B87 /* gameFlea.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameFlea.s; sourceTree = "<group>"; };
 		9DB1505124C6875C00558B87 /* gameScorpion.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameScorpion.s; sourceTree = "<group>"; };
 		9DB1505224C7495400558B87 /* globals.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
+		9DB1505324C9E54C00558B87 /* gameSpider.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSpider.s; sourceTree = "<group>"; };
 		9DC4D7BD24B7652100BACF4B /* ship.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
 		9DC4D7BE24B80C9600BACF4B /* shot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
 		9DC4D7BF24BE9F7100BACF4B /* tiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiles.h; sourceTree = "<group>"; };
@@ -134,6 +135,7 @@
 				9D8FFC612491CAF0005C9327 /* game.h */,
 				9DB1505024C3801100558B87 /* gameFlea.s */,
 				9DB1505124C6875C00558B87 /* gameScorpion.s */,
+				9DB1505324C9E54C00558B87 /* gameSpider.s */,
 				9D62AF3B249871A300348F45 /* colour.s */,
 				9D2FF6DA24C4C79A000181E5 /* random.s */,
 				9DB1505224C7495400558B87 /* globals.s */,

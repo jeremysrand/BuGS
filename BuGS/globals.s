@@ -125,6 +125,7 @@ KEYBOARD_STROBE         gequ $e0c010
 READ_VBL                gequ $e0c019
 SHADOW_REGISTER         gequ $e0c035
 NEW_VIDEO_REGISTER      gequ $e0c029
+BORDER_COLOUR_REGISTER  gequ $e0c034
 STATE_REGISTER          gequ $e1c068
 
 

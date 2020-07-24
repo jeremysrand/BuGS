@@ -24,6 +24,20 @@ SPIDER_STATE_RIGHT_DOWN         equ 7
 SPIDER_STATE_RIGHT_UP           equ 8
 SPIDER_STATE_EXPLODING          equ 9
 
+
+; A spider only travels in the bottom N rows.  This defines that number.
+SPIDER_NUM_POSSIBLE_ROWS    equ 10
+SPIDER_TOP_ROW              equ GAME_NUM_TILES_TALL-SPIDER_NUM_POSSIBLE_ROWS
+SPIDER_TOP_ROW_OFFSET       equ SPIDER_TOP_ROW*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO
+SPIDER_LHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET
+SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO
+
+; The spider starts 2 pixel rows above the top row offset so it can slide in on the edge of
+; the screen on a diagonal and hit the centre of the tiles with the middle of its body.
+SPIDER_STARTING_SHIFT               equ 2
+SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
+
+
 drawSpider entry
         lda spiderState
         bne drawSpider_cont
@@ -154,7 +168,7 @@ drawSpider_nonGame5 anop
         sty numDirtyNonGameTiles
     
 drawSpider_skipTile5 anop
-        ldx spiderTileOffsets+2
+        ldx spiderTileOffsets+10
         lda tiles+TILE_DIRTY_OFFSET,x
         bne drawSpider_done
         lda #TILE_STATE_DIRTY
@@ -230,7 +244,36 @@ addSpider entry
         lda #SPIDER_STATE_RIGHT_DOWN
         sta spiderState
         
-        stz spiderScreenShift
+        lda #1
+        sta spiderScreenShift
+        
+        ldx #SPIDER_LHS_TILE_OFFSET
+        stx spiderTileOffsets
+        
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+2
+        
+        lda tiles+TILE_LEFT_OFFSET,x
+        sta spiderTileOffsets+4
+        
+        tax
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        sec
+        sbc #SPIDER_LHS_STARTING_SCREEN_OFFSET
+        sta spiderScreenOffset
+        
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+6
+        
+        lda tiles+TILE_LEFT_OFFSET,x
+        sta spiderTileOffsets+8
+        
+        tax
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+10
+        
+        lda #SPIDER_STARTING_SHIFT
+        sta spiderShiftInTile
         
 ; Write this code
         

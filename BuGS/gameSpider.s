@@ -37,6 +37,8 @@ SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SI
 SPIDER_STARTING_SHIFT               equ 2
 SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
 
+SPIDER_SPRITE_REFRESH_COUNT     equ 4
+
 
 drawSpider entry
         lda spiderState
@@ -199,7 +201,7 @@ spiderJump entry
         beq spiderJump_exploding
         
         lda spiderScreenShift
-        beq spiderJump_shift
+        bne spiderJump_shift
         
         lda spiderJumpTable,x
         sta jumpInst+1
@@ -244,6 +246,15 @@ updateSpider_cont anop
         
         tay
         
+        lda spiderSpriteRefresh
+        beq updateSpider_spriteRefresh
+        dec a
+        sta spiderSpriteRefresh
+        bra updateSpider_testState
+        
+updateSpider_spriteRefresh anop
+        lda #SPIDER_SPRITE_REFRESH_COUNT
+        sta spiderSpriteRefresh
         lda spiderSprite
         beq updateSpider_resetSprite
         sec
@@ -321,10 +332,10 @@ updateSpider_rightDiagDown_skipInc anop
         lda spiderShiftInTile
         dec a
         sta spiderShiftInTile
-        beq updateSpider_tilesDown
+        beq updateSpider_tilesRight
         
         cmp #5
-        beq updateSpider_tilesRight
+        beq updateSpider_tilesDown
         rtl
         
 updateSpider_tilesRight anop
@@ -413,7 +424,8 @@ addSpider entry
         lda #SPIDER_SPRITE_LAST_OFFSET
         sta spiderSprite
         
-; Write this code
+        lda #SPIDER_SPRITE_REFRESH_COUNT
+        sta spiderSpriteRefresh
         
 addSpider_done anop
         rtl
@@ -426,6 +438,7 @@ shootSpider entry
         
 spiderState         dc i2'SPIDER_STATE_NONE'
 spiderSprite        dc i2'0'
+spiderSpriteRefresh dc i2'0'
 spiderScreenOffset  dc i2'0'
 spiderScreenShift   dc i2'0'
 spiderShiftInTile   dc i2'0'

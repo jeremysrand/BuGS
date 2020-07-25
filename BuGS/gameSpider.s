@@ -315,7 +315,6 @@ updateSpider_rightUp anop
         rtl
 
 updateSpider_rightDiagDown anop
-        jsl waitForKey
         lda spiderScreenOffset
         clc
         adc #SCREEN_BYTES_PER_ROW
@@ -332,16 +331,13 @@ updateSpider_rightDiagDown_skipInc anop
         lda spiderShiftInTile
         dec a
         sta spiderShiftInTile
-        beq updateSpider_tilesRight
-        
-        cmp #5
         beq updateSpider_tilesDown
+        
+        cmp #SPIDER_STARTING_SHIFT
+        beq updateSpider_tilesRight
         rtl
         
 updateSpider_tilesRight anop
-        lda #7
-        sta spiderShiftInTile
-        
         ldx spiderTileOffsets+4
         cmp #RHS_FIRST_TILE_OFFSET
         bge updateSpider_offScreen
@@ -363,6 +359,9 @@ updateSpider_tilesRight anop
         rtl
         
 updateSpider_tilesDown anop
+        lda #TILE_PIXEL_HEIGHT
+        sta spiderShiftInTile
+
         ldx spiderTileOffsets
         stx spiderTileOffsets+2
         lda tiles+TILE_BELOW_OFFSET,x
@@ -375,6 +374,14 @@ updateSpider_tilesDown anop
         lda tiles+TILE_BELOW_OFFSET,x
         sta spiderTileOffsets+4
         
+        cpx #RHS_FIRST_TILE_OFFSET
+        bge updateSpider_tilesDownCont
+        lda tiles+TILE_TYPE_OFFSET,x
+        beq updateSpider_tilesDownCont
+        lda #TILE_EMPTY
+        sta tiles+TILE_TYPE_OFFSET,x
+        
+updateSpider_tilesDownCont anop
         ldx spiderTileOffsets+8
         stx spiderTileOffsets+10
         lda tiles+TILE_BELOW_OFFSET,x
@@ -421,7 +428,7 @@ addSpider entry
         lda tiles+TILE_ABOVE_OFFSET,x
         sta spiderTileOffsets+10
         
-        lda #7
+        lda #SPIDER_STARTING_SHIFT
         sta spiderShiftInTile
         
         lda #SPIDER_SPRITE_LAST_OFFSET

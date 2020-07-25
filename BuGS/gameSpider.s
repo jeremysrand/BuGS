@@ -339,6 +339,9 @@ updateSpider_rightDiagDown_skipInc anop
         rtl
         
 updateSpider_tilesRight anop
+        lda #7
+        sta spiderShiftInTile
+        
         ldx spiderTileOffsets+4
         cmp #RHS_FIRST_TILE_OFFSET
         bge updateSpider_offScreen

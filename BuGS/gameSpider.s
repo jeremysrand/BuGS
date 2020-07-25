@@ -37,6 +37,7 @@ SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SI
 SPIDER_STARTING_SHIFT               equ 2
 SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
 
+; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
 
 
@@ -366,7 +367,7 @@ updateSpider_tilesDown anop
         stx spiderTileOffsets+2
         lda tiles+TILE_BELOW_OFFSET,x
         cmp #INVALID_TILE_NUM
-        beq updateSpider_offScreen
+        beq updateSpider_tilesDownSkip
         sta spiderTileOffsets
         
         ldx spiderTileOffsets+4
@@ -374,6 +375,8 @@ updateSpider_tilesDown anop
         lda tiles+TILE_BELOW_OFFSET,x
         sta spiderTileOffsets+4
         
+; If the middle tile is a game time and it isn't empty, then
+; empty it.  Spiders "consume" mushrooms as they pass over them.
         cpx #RHS_FIRST_TILE_OFFSET
         bge updateSpider_tilesDownCont
         lda tiles+TILE_TYPE_OFFSET,x
@@ -386,6 +389,13 @@ updateSpider_tilesDownCont anop
         stx spiderTileOffsets+10
         lda tiles+TILE_BELOW_OFFSET,x
         sta spiderTileOffsets+8
+        
+updateSpider_tilesDownSkip anop
+        lda spiderCurrentRow
+        inc a
+        sta spiderCurrentRow
+        cmp spiderTargetRow
+        beq updateSpider_offScreen
         
         rtl
         
@@ -437,6 +447,14 @@ addSpider entry
         lda #SPIDER_SPRITE_REFRESH_COUNT
         sta spiderSpriteRefresh
         
+        lda #SPIDER_TOP_ROW-1
+        sta spiderCurrentRow
+        
+        lda #SPIDER_NUM_POSSIBLE_ROWS-1
+        jsl randN
+        adc #SPIDER_TOP_ROW+1
+        sta spiderTargetRow
+        
 addSpider_done anop
         rtl
         
@@ -452,6 +470,9 @@ spiderSpriteRefresh dc i2'0'
 spiderScreenOffset  dc i2'0'
 spiderScreenShift   dc i2'0'
 spiderShiftInTile   dc i2'0'
+
+spiderCurrentRow    dc i2'0'
+spiderTargetRow     dc i2'0'
 
 
 ;  10  6  2

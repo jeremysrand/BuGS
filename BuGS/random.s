@@ -51,6 +51,7 @@ randInit_store16 anop
         
         rtl
 
+
 ; Returns a number from 0 to 14
 rand0_to_14  entry
         lda seed16
@@ -62,6 +63,21 @@ skipEor16 anop
         dec a
         rtl
         
+; Returns a number from 0 to N-1 where N is <= 15, arrives in the accumulator
+randN entry
+        cmp #2
+        bge randN_doit
+        lda #0
+        rtl
+        
+randN_doit anop
+        sta upperLimit
+randN_retry anop
+        jsl rand0_to_14
+        cmp upperLimit
+        bge randN_retry
+        rtl
+
 
 ; Returns a number from 0 to 30
 rand0_to_30 entry
@@ -94,7 +110,9 @@ skipEor65535 anop
         rtl
         
         
-seed65535 dc i2'0'
-seed32    dc i2'0'
-seed16    dc i2'0'
+seed65535   dc i2'0'
+seed32      dc i2'0'
+seed16      dc i2'0'
+
+upperLimit  dc i2'0'
         end

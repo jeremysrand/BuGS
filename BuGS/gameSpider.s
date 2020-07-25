@@ -14,15 +14,15 @@ gameSpider start
         using globalData
 
 SPIDER_STATE_NONE               equ 0
-SPIDER_STATE_LEFT_DIAG_DOWN     equ 1
-SPIDER_STATE_LEFT_DIAG_UP       equ 2
-SPIDER_STATE_LEFT_DOWN          equ 3
-SPIDER_STATE_LEFT_UP            equ 4
-SPIDER_STATE_RIGHT_DIAG_DOWN    equ 5
-SPIDER_STATE_RIGHT_DIAG_UP      equ 6
-SPIDER_STATE_RIGHT_DOWN         equ 7
-SPIDER_STATE_RIGHT_UP           equ 8
-SPIDER_STATE_EXPLODING          equ 9
+SPIDER_STATE_EXPLODING          equ 1
+SPIDER_STATE_LEFT_DIAG_DOWN     equ 2
+SPIDER_STATE_LEFT_DIAG_UP       equ 3
+SPIDER_STATE_LEFT_DOWN          equ 4
+SPIDER_STATE_LEFT_UP            equ 5
+SPIDER_STATE_RIGHT_DIAG_DOWN    equ 6
+SPIDER_STATE_RIGHT_DIAG_UP      equ 7
+SPIDER_STATE_RIGHT_DOWN         equ 8
+SPIDER_STATE_RIGHT_UP           equ 9
 
 
 ; A spider only travels in the bottom N rows.  This defines that number.
@@ -233,7 +233,143 @@ jumpInst jmp >spider1
         
         
 updateSpider entry
+        lda spiderState
+        bne updateSpider_cont
+        rtl
+        
+updateSpider_cont anop
+
+        dec a
+        beq updateSpider_exploding
+        
+        tay
+        
+        lda spiderSprite
+        beq updateSpider_resetSprite
+        sec
+        sbc #$4
+        sta spiderSprite
+        bra updateSpider_testState
+        
+updateSpider_resetSprite anop
+        lda #SPIDER_SPRITE_LAST_OFFSET
+        sta spiderSprite
+        
+updateSpider_testState anop
+        tya
+        dec a
+        beq updateSpider_leftDiagDown
+        
+        dec a
+        beq updateSpider_leftDiagUp
+        
+        dec a
+        beq updateSpider_leftDown
+        
+        dec a
+        beq updateSpider_leftUp
+        
+        dec a
+        beq updateSpider_rightDiagDown
+        
+        dec a
+        beq updateSpider_rightDiagUp
+        
+        dec a
+        beq updateSpider_rightDown
+        
+        bra updateSpider_rightUp
+
+updateSpider_exploding anop
+        lda spiderSprite
+        beq updateSpider_explosionDone
+        sec
+        sbc #$4
+        sta spiderSprite
+        rtl
+                
+updateSpider_explosionDone anop
+        stz spiderState
+        rtl
+
+
+updateSpider_leftDiagDown anop
+updateSpider_leftDiagUp anop
+updateSpider_leftDown anop
+updateSpider_leftUp anop
+updateSpider_rightDiagUp anop
+updateSpider_rightDown anop
+updateSpider_rightUp anop
 ; Write this code
+        rtl
+
+updateSpider_rightDiagDown anop
+        jsl waitForKey
+        lda spiderScreenOffset
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        sta spiderScreenOffset
+        
+        lda spiderScreenShift
+        eor #1
+        sta spiderScreenShift
+        bne updateSpider_rightDiagDown_skipInc
+        inc spiderScreenOffset
+        
+updateSpider_rightDiagDown_skipInc anop
+        
+        lda spiderShiftInTile
+        dec a
+        sta spiderShiftInTile
+        beq updateSpider_tilesDown
+        
+        cmp #5
+        beq updateSpider_tilesRight
+        rtl
+        
+updateSpider_tilesRight anop
+        ldx spiderTileOffsets+4
+        cmp #RHS_FIRST_TILE_OFFSET
+        bge updateSpider_offScreen
+        stx spiderTileOffsets+8
+        
+        ldx spiderTileOffsets+6
+        stx spiderTileOffsets+10
+        
+        ldx spiderTileOffsets+2
+        stx spiderTileOffsets+6
+        lda tiles+TILE_RIGHT_OFFSET,x
+        sta spiderTileOffsets+2
+        
+        ldx spiderTileOffsets
+        stx spiderTileOffsets+4
+        lda tiles+TILE_RIGHT_OFFSET,x
+        sta spiderTileOffsets
+        
+        rtl
+        
+updateSpider_tilesDown anop
+        ldx spiderTileOffsets
+        stx spiderTileOffsets+2
+        lda tiles+TILE_BELOW_OFFSET,x
+        cmp #INVALID_TILE_NUM
+        beq updateSpider_offScreen
+        sta spiderTileOffsets
+        
+        ldx spiderTileOffsets+4
+        stx spiderTileOffsets+6
+        lda tiles+TILE_BELOW_OFFSET,x
+        sta spiderTileOffsets+4
+        
+        ldx spiderTileOffsets+8
+        stx spiderTileOffsets+10
+        lda tiles+TILE_BELOW_OFFSET,x
+        sta spiderTileOffsets+8
+        
+        rtl
+        
+updateSpider_offScreen anop
+        stz spiderState
         rtl
         
         
@@ -241,11 +377,10 @@ addSpider entry
         lda spiderState
         bne addSpider_done
         
-        lda #SPIDER_STATE_RIGHT_DOWN
+        lda #SPIDER_STATE_RIGHT_DIAG_DOWN
         sta spiderState
         
-        lda #1
-        sta spiderScreenShift
+        stz spiderScreenShift
         
         ldx #SPIDER_LHS_TILE_OFFSET
         stx spiderTileOffsets
@@ -272,8 +407,11 @@ addSpider entry
         lda tiles+TILE_ABOVE_OFFSET,x
         sta spiderTileOffsets+10
         
-        lda #SPIDER_STARTING_SHIFT
+        lda #7
         sta spiderShiftInTile
+        
+        lda #SPIDER_SPRITE_LAST_OFFSET
+        sta spiderSprite
         
 ; Write this code
         
@@ -292,6 +430,9 @@ spiderScreenOffset  dc i2'0'
 spiderScreenShift   dc i2'0'
 spiderShiftInTile   dc i2'0'
 
+
+;  10  6  2
+;   8  4  0
 spiderTileOffsets   dc i2'0'
                     dc i2'0'
                     dc i2'0'

@@ -36,6 +36,7 @@ SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SI
 ; the screen on a diagonal and hit the centre of the tiles with the middle of its body.
 SPIDER_STARTING_SHIFT               equ 2
 SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
+SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+3
 
 ; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
@@ -278,6 +279,7 @@ updateSpider_explosionDone anop
         stz spiderState
         rtl
 
+updateSpider_leftDown anop
 updateSpider_rightDown anop
         lda spiderScreenOffset
         clc
@@ -289,9 +291,8 @@ updateSpider_rightDown anop
         sta spiderShiftInTile
         bne updateSpider_done
         jmp updateSpider_tilesDown
-updateSpider_done anop
-        rtl
-        
+
+updateSpider_leftUp anop
 updateSpider_rightUp anop
 
         lda spiderScreenOffset
@@ -328,11 +329,57 @@ updateSpider_rightDiagDown_cont anop
         cmp #SPIDER_STARTING_SHIFT
         bne updateSpider_done
         jmp updateSpider_tilesRight
-
+        
 updateSpider_leftDiagDown anop
+        lda spiderScreenOffset
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        sta spiderScreenOffset
+        
+        lda spiderScreenShift
+        eor #1
+        sta spiderScreenShift
+        bne updateSpider_leftDiagDown_skipInc
+        dec spiderScreenOffset
+        
+updateSpider_leftDiagDown_skipInc anop
+        lda spiderShiftInTile
+        dec a
+        sta spiderShiftInTile
+        bne updateSpider_leftDiagDown_cont
+        jmp updateSpider_tilesDown
+        
+updateSpider_leftDiagDown_cont anop
+        cmp #SPIDER_STARTING_SHIFT
+        bne updateSpider_done
+        jmp updateSpider_tilesRight
+
+updateSpider_done anop
+        rtl
+        
 updateSpider_leftDiagUp anop
-updateSpider_leftDown anop
-updateSpider_leftUp anop
+        lda spiderScreenOffset
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        sta spiderScreenOffset
+        
+        lda spiderScreenShift
+        eor #1
+        sta spiderScreenShift
+        bne updateSpider_lefttDiagUp_skipInc
+        dec spiderScreenOffset
+        
+updateSpider_lefttDiagUp_skipInc anop
+        lda spiderShiftInTile
+        dec a
+        sta spiderShiftInTile
+        bne updateSpider_lefttDiagUp_cont
+        jmp updateSpider_tilesUp
+        
+updateSpider_lefttDiagUp_cont anop
+        cmp #SPIDER_STARTING_SHIFT
+        bne updateSpider_done
+        jmp updateSpider_tilesRight
         rtl
         
 updateSpider_rightDiagUp anop
@@ -382,7 +429,6 @@ updateSpider_tilesRight_cont anop
         stx spiderTileOffsets+4
         lda tiles+TILE_RIGHT_OFFSET,x
         sta spiderTileOffsets
-        
         rtl
 
 updateSpider_tilesLeft anop
@@ -416,7 +462,6 @@ updateSpider_tilesUp anop
         dec a
         sta spiderCurrentRow
         cmp spiderTargetRow
-; TODO - Change direction!!
         beq updateSpider_upChangeDir
         
         ldx spiderTileOffsets+2
@@ -445,9 +490,37 @@ updateSpider_tilesUpCont anop
         rtl
         
 updateSpider_upChangeDir anop
-; TODO - Randomly pick direction and row
         lda #GAME_NUM_TILES_TALL-1
+        sec
+        sbc spiderTargetRow
+        jsl randN
+        inc a
+        clc
+        adc spiderTargetRow
         sta spiderTargetRow
+        
+        jsl rand0_to_65534
+        and #1
+        beq updateSpider_upChangeDirDiag
+        lda spiderState
+        cmp #SPIDER_STATE_RIGHT_DIAG_DOWN
+        bge updateSpider_upChangeDirDownRight
+        lda #SPIDER_STATE_LEFT_DOWN
+        sta spiderState
+        rtl
+updateSpider_upChangeDirDownRight anop
+        lda #SPIDER_STATE_RIGHT_DOWN
+        sta spiderState
+        rtl
+        
+updateSpider_upChangeDirDiag anop
+        lda spiderState
+        cmp #SPIDER_STATE_RIGHT_DIAG_DOWN
+        bge updateSpider_upChangeDirDiagRight
+        lda #SPIDER_STATE_LEFT_DIAG_DOWN
+        sta spiderState
+        rtl
+updateSpider_upChangeDirDiagRight anop
         lda #SPIDER_STATE_RIGHT_DIAG_DOWN
         sta spiderState
         rtl
@@ -489,9 +562,37 @@ updateSpider_tilesDownCont anop
         rtl
         
 updateSpider_downChangeDir anop
-; TODO - Randomly pick direction and row
-        lda #SPIDER_TOP_ROW
+        lda spiderTargetRow
+        sec
+        sbc #SPIDER_TOP_ROW
+        jsl randN
+        inc a
+        clc
+        adc #SPIDER_TOP_ROW-1
         sta spiderTargetRow
+        
+        jsl rand0_to_65534
+        and #1
+        beq updateSpider_downChangeDirDiag
+        lda spiderState
+        cmp #SPIDER_STATE_RIGHT_DIAG_DOWN
+        bge updateSpider_downChangeDirUpRight
+        lda #SPIDER_STATE_LEFT_UP
+        sta spiderState
+        rtl
+updateSpider_downChangeDirUpRight anop
+        lda #SPIDER_STATE_RIGHT_UP
+        sta spiderState
+        rtl
+        
+updateSpider_downChangeDirDiag anop
+        lda spiderState
+        cmp #SPIDER_STATE_RIGHT_DIAG_DOWN
+        bge updateSpider_downChangeDirDiagRight
+        lda #SPIDER_STATE_LEFT_DIAG_UP
+        sta spiderState
+        rtl
+updateSpider_downChangeDirDiagRight anop
         lda #SPIDER_STATE_RIGHT_DIAG_UP
         sta spiderState
         rtl
@@ -503,8 +604,67 @@ updateSpider_offScreen anop
         
 addSpider entry
         lda spiderState
-        bne addSpider_done
+        beq addSpider_doit
+        rtl
         
+addSpider_doit anop
+        
+        lda #SPIDER_STARTING_SHIFT
+        sta spiderShiftInTile
+        
+        lda #SPIDER_SPRITE_LAST_OFFSET
+        sta spiderSprite
+        
+        lda #SPIDER_SPRITE_REFRESH_COUNT
+        sta spiderSpriteRefresh
+        
+        lda #SPIDER_TOP_ROW-1
+        sta spiderCurrentRow
+        
+        lda #SPIDER_NUM_POSSIBLE_ROWS-1
+        jsl randN
+        adc #SPIDER_TOP_ROW+1
+        sta spiderTargetRow
+        
+        jsl rand0_to_65534
+        and #1
+        bra addSpider_right
+
+addSpider_left anop
+        lda #SPIDER_STATE_LEFT_DIAG_DOWN
+        sta spiderState
+        
+        lda #0
+        sta spiderScreenShift
+        
+        ldx #SPIDER_RHS_TILE_OFFSET
+        stx spiderTileOffsets+8
+        
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+10
+        
+        lda tiles+TILE_RIGHT_OFFSET,x
+        sta spiderTileOffsets+4
+        
+        tax
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        sec
+        sbc #SPIDER_RHS_STARTING_SCREEN_OFFSET
+        sta spiderScreenOffset
+        
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+6
+        
+        lda tiles+TILE_RIGHT_OFFSET,x
+        sta spiderTileOffsets
+        
+        tax
+        lda tiles+TILE_ABOVE_OFFSET,x
+        sta spiderTileOffsets+2
+        
+        rtl
+        
+addSpider_right anop
         lda #SPIDER_STATE_RIGHT_DIAG_DOWN
         sta spiderState
         
@@ -535,24 +695,6 @@ addSpider entry
         lda tiles+TILE_ABOVE_OFFSET,x
         sta spiderTileOffsets+10
         
-        lda #SPIDER_STARTING_SHIFT
-        sta spiderShiftInTile
-        
-        lda #SPIDER_SPRITE_LAST_OFFSET
-        sta spiderSprite
-        
-        lda #SPIDER_SPRITE_REFRESH_COUNT
-        sta spiderSpriteRefresh
-        
-        lda #SPIDER_TOP_ROW-1
-        sta spiderCurrentRow
-        
-        lda #SPIDER_NUM_POSSIBLE_ROWS-1
-        jsl randN
-        adc #SPIDER_TOP_ROW+1
-        sta spiderTargetRow
-        
-addSpider_done anop
         rtl
         
         
@@ -600,6 +742,7 @@ spiderShiftJumpTable dc i4'spider7s'
                      dc i4'spider3s'
                      dc i4'spider2s'
                      dc i4'spider1s'
+                     
                      
 spiderUpdateJumpTable dc i2'updateSpider_done'
                       dc i2'updateSpider_exploding'

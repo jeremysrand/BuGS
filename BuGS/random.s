@@ -66,7 +66,23 @@ skipEor16 anop
 ; Returns a number from 0 to N-1 where N is <= 15, arrives in the accumulator
 randN entry
         cmp #2
-        bge randN_doit
+        blt randN_ret0
+        cmp #2
+        beq randN_power2
+        cmp #4
+        beq randN_power2
+        cmp #8
+        beq randN_power2
+        bra randN_doit
+
+randN_power2 anop
+        dec a
+        sta upperLimit
+        jsl rand0_to_65534
+        and upperLimit
+        rtl
+        
+randN_ret0 anop
         lda #0
         rtl
         

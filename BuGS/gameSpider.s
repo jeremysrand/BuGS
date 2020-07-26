@@ -36,7 +36,7 @@ SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SI
 ; the screen on a diagonal and hit the centre of the tiles with the middle of its body.
 SPIDER_STARTING_SHIFT               equ 2
 SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
-SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+3
+SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+4
 
 ; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
@@ -294,7 +294,6 @@ updateSpider_rightDown anop
 
 updateSpider_leftUp anop
 updateSpider_rightUp anop
-
         lda spiderScreenOffset
         sec
         sbc #SCREEN_BYTES_PER_ROW
@@ -339,7 +338,7 @@ updateSpider_leftDiagDown anop
         lda spiderScreenShift
         eor #1
         sta spiderScreenShift
-        bne updateSpider_leftDiagDown_skipInc
+        beq updateSpider_leftDiagDown_skipInc
         dec spiderScreenOffset
         
 updateSpider_leftDiagDown_skipInc anop
@@ -352,7 +351,7 @@ updateSpider_leftDiagDown_skipInc anop
 updateSpider_leftDiagDown_cont anop
         cmp #SPIDER_STARTING_SHIFT
         bne updateSpider_done
-        jmp updateSpider_tilesRight
+        jmp updateSpider_tilesLeft
 
 updateSpider_done anop
         rtl
@@ -366,7 +365,7 @@ updateSpider_leftDiagUp anop
         lda spiderScreenShift
         eor #1
         sta spiderScreenShift
-        bne updateSpider_lefttDiagUp_skipInc
+        beq updateSpider_lefttDiagUp_skipInc
         dec spiderScreenOffset
         
 updateSpider_lefttDiagUp_skipInc anop
@@ -379,7 +378,7 @@ updateSpider_lefttDiagUp_skipInc anop
 updateSpider_lefttDiagUp_cont anop
         cmp #SPIDER_STARTING_SHIFT
         bne updateSpider_done
-        jmp updateSpider_tilesRight
+        jmp updateSpider_tilesLeft
         rtl
         
 updateSpider_rightDiagUp anop
@@ -628,13 +627,13 @@ addSpider_doit anop
         
         jsl rand0_to_65534
         and #1
-        bra addSpider_right
+        beq addSpider_right
 
 addSpider_left anop
         lda #SPIDER_STATE_LEFT_DIAG_DOWN
         sta spiderState
         
-        lda #0
+        lda #1
         sta spiderScreenShift
         
         ldx #SPIDER_RHS_TILE_OFFSET

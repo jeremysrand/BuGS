@@ -134,11 +134,6 @@ scorpionJump_next anop
         bra jumpInst
         
 scorpionJump_explosion anop
-        tya
-        clc
-        adc #TILE_BYTE_WIDTH
-        tay
-        
         lda explosionJumpTable,x
         sta jumpInst+1
         
@@ -377,6 +372,12 @@ shootScorpion entry
         
         lda #EXPLOSION_LAST_OFFSET
         sta scorpionSprite
+        
+        lda scorpionScreenOffset
+        inc a
+        inc a
+        sta scorpionScreenOffset
+; TODO - Increment the score
         
 shootScorpion_done anop
         rtl

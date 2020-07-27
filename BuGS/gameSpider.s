@@ -15,14 +15,15 @@ gameSpider start
 
 SPIDER_STATE_NONE               equ 0
 SPIDER_STATE_EXPLODING          equ 1
-SPIDER_STATE_LEFT_DIAG_DOWN     equ 2
-SPIDER_STATE_LEFT_DIAG_UP       equ 3
-SPIDER_STATE_LEFT_DOWN          equ 4
-SPIDER_STATE_LEFT_UP            equ 5
-SPIDER_STATE_RIGHT_DIAG_DOWN    equ 6
-SPIDER_STATE_RIGHT_DIAG_UP      equ 7
-SPIDER_STATE_RIGHT_DOWN         equ 8
-SPIDER_STATE_RIGHT_UP           equ 9
+SPIDER_STATE_SCORE              equ 2
+SPIDER_STATE_LEFT_DIAG_DOWN     equ 3
+SPIDER_STATE_LEFT_DIAG_UP       equ 4
+SPIDER_STATE_LEFT_DOWN          equ 5
+SPIDER_STATE_LEFT_UP            equ 6
+SPIDER_STATE_RIGHT_DIAG_DOWN    equ 7
+SPIDER_STATE_RIGHT_DIAG_UP      equ 8
+SPIDER_STATE_RIGHT_DOWN         equ 9
+SPIDER_STATE_RIGHT_UP           equ 10
 
 
 ; A spider only travels in the bottom N rows.  This defines that number.
@@ -40,6 +41,8 @@ SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHI
 
 ; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
+
+SPIDER_SCORE_NUM_FRAMES          equ 120
 
 
 drawSpider entry
@@ -202,6 +205,9 @@ spiderJump entry
         cmp #SPIDER_STATE_EXPLODING
         beq spiderJump_exploding
         
+        cmp #SPIDER_STATE_SCORE
+        beq spiderJump_score
+        
         lda spiderScreenShift
         bne spiderJump_shift
         
@@ -220,12 +226,16 @@ spiderJump_shift anop
         sta jumpInst+3
         bra jumpInst
         
-spiderJump_exploding anop
-        tya
-        clc
-        adc #TILE_BYTE_WIDTH
-        tay
+spiderJump_score anop
+        lda spiderScoreJumpTable,x
+        sta jumpInst+1
         
+        lda spiderScoreJumpTable+2,x
+        sta jumpInst+3
+        bra jumpInst
+        
+spiderJump_exploding anop
+        iny
         lda explosionJumpTable,x
         sta jumpInst+1
         
@@ -276,6 +286,25 @@ updateSpider_exploding anop
         rtl
                 
 updateSpider_explosionDone anop
+        lda #SPIDER_STATE_SCORE
+        sta spiderState
+        
+        lda #SPIDER_SCORE_NUM_FRAMES
+        sta spiderScoreFrames
+        
+        lda spiderScoreType
+        sta spiderSprite
+        
+        rtl
+                
+updateSpider_score anop
+        lda spiderScoreFrames
+        beq updateSpider_scoreDone
+        dec a
+        sta spiderScoreFrames
+        rtl
+        
+updateSpider_scoreDone anop
         stz spiderState
         rtl
 
@@ -698,7 +727,24 @@ addSpider_right anop
         
         
 shootSpider entry
-; Write this code
+        lda spiderState
+        cmp #SPIDER_STATE_LEFT_DIAG_DOWN
+        blt shootSpider_done
+        
+        lda #SPIDER_STATE_EXPLODING
+        sta spiderState
+        
+        lda #EXPLOSION_LAST_OFFSET
+        sta spiderSprite
+        
+        lda spiderScreenOffset
+        inc a
+        sta spiderScreenOffset
+        
+; TODO - Increase the score and set the spiderScoreType to 0, 2 or 4 for
+; 300, 600 or 900 points depending on the distance from the player.
+        
+shootSpider_done anop
         rtl
         
         
@@ -711,6 +757,9 @@ spiderShiftInTile   dc i2'0'
 
 spiderCurrentRow    dc i2'0'
 spiderTargetRow     dc i2'0'
+
+spiderScoreType     dc i2'0'
+spiderScoreFrames   dc i2'0'
 
 
 ;  10  6  2
@@ -745,6 +794,7 @@ spiderShiftJumpTable dc i4'spider7s'
                      
 spiderUpdateJumpTable dc i2'updateSpider_done'
                       dc i2'updateSpider_exploding'
+                      dc i2'updateSpider_score'
                       dc i2'updateSpider_leftDiagDown'
                       dc i2'updateSpider_leftDiagUp'
                       dc i2'updateSpider_leftDown'
@@ -753,5 +803,11 @@ spiderUpdateJumpTable dc i2'updateSpider_done'
                       dc i2'updateSpider_rightDiagUp'
                       dc i2'updateSpider_rightDown'
                       dc i2'updateSpider_rightUp'
+                      
+                      
+spiderScoreJumpTable  dc i4'score300'
+                      dc i4'score600'
+                      dc i4'score900'
+                      
                 
         end

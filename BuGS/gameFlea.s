@@ -266,6 +266,7 @@ shootFlea_faster anop
         sec
         sbc #SCREEN_BYTES_PER_ROW
         sta fleaScreenOffset
+; TODO - Increment the score
         
 shootFlea_done anop
         rtl

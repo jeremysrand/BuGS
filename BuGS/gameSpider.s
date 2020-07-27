@@ -42,7 +42,11 @@ SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHI
 ; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
 
-SPIDER_SCORE_NUM_FRAMES          equ 120
+SPIDER_SCORE_NUM_FRAMES         equ 120
+
+SPIDER_SCORE_300                equ 0
+SPIDER_SCORE_600                equ 4
+SPIDER_SCORE_900                equ 8
 
 
 drawSpider entry
@@ -741,8 +745,10 @@ shootSpider entry
         inc a
         sta spiderScreenOffset
         
-; TODO - Increase the score and set the spiderScoreType to 0, 2 or 4 for
+; TODO - Increase the score and set the spiderScoreType to 0, 4 or 8 for
 ; 300, 600 or 900 points depending on the distance from the player.
+        lda #SPIDER_SCORE_900
+        sta spiderScoreType
         
 shootSpider_done anop
         rtl

@@ -174,7 +174,7 @@ updateFlea_nextTile anop
         bne updateFlea_nextAction
         
         jsl rand0_to_65534
-        and #$7
+        and #$3
         bne updateFlea_nextAction
         lda #TILE_MUSHROOM4
         sta tiles+TILE_TYPE_OFFSET,x

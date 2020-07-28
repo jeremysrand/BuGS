@@ -120,6 +120,9 @@ TILE_RIGHT_OFFSET           gequ 12
 
 NUM_COLOUR_PALETTES     gequ 14
 
+SPRITE_SPEED_SLOW     gequ 0
+SPRITE_SPEED_FAST     gequ 1
+
 KEYBOARD                gequ $e0c000
 KEYBOARD_STROBE         gequ $e0c010
 READ_VBL                gequ $e0c019

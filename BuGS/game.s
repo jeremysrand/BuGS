@@ -686,6 +686,11 @@ checkKey_loop2 anop
         cmp #'P'
         beq checkKey_shootSpider
         
+        cmp #'+'
+        beq checkKey_fast
+        cmp #'-'
+        beq checkKey_slow
+        
         lda colourPalette
         inc a
         cmp #NUM_COLOUR_PALETTES
@@ -694,6 +699,9 @@ checkKey_loop2 anop
 checkKey_skip anop
         sta colourPalette
         jmp setColour
+        
+checkKey_done anop
+        rtl
         
 checkKey_addFlea anop
         jmp addFlea
@@ -713,10 +721,20 @@ checkKey_addSpider anop
 checkKey_shootSpider anop
         jmp shootSpider
         
+checkKey_fast anop
+        lda #SPRITE_SPEED_FAST
+        jsl setFleaSpeed
+        lda #SPRITE_SPEED_FAST
+        jmp setScorpionSpeed
+
+checkKey_slow anop
+        lda #SPRITE_SPEED_SLOW
+        jsl setFleaSpeed
+        lda #SPRITE_SPEED_SLOW
+        jmp setScorpionSpeed
+        
 checkKey_quit anop
         stz shouldQuit
-        
-checkKey_done anop
         rtl
 
 

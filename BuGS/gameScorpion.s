@@ -256,14 +256,10 @@ updateScorpion_explosionDone anop
         rtl
         
         
-addScorpion entry
-        lda scorpionState
-        beq addScorpion_doit
-        rtl
-        
-addScorpion_doit anop
-; TODO - Add code to select between fast or slow scorpions based on the level
-;        bra addScorpion_fast
+setScorpionSpeed entry
+; TODO - Call this code with each level to set the scorpion speed
+        cmp #SPRITE_SPEED_FAST
+        beq setScorpionSpeed_fast
         
         lda #SCORPION_SLOW_SPRITE_LAST_OFFSET
         sta scorpionSpriteLastOffset
@@ -281,9 +277,9 @@ addScorpion_doit anop
         sta updateScorpion_nextByteTest
         long i,m
         
-        bra addScorpion_cont
+        rtl
         
-addScorpion_fast anop
+setScorpionSpeed_fast anop
         lda #SCORPION_FAST_SPRITE_LAST_OFFSET
         sta scorpionSpriteLastOffset
         
@@ -299,9 +295,16 @@ addScorpion_fast anop
        lda #$09
        sta updateScorpion_nextByteTest
        long i,m
+       
+       rtl
         
-addScorpion_cont anop
         
+addScorpion entry
+        lda scorpionState
+        beq addScorpion_doit
+        rtl
+        
+addScorpion_doit anop
         jsl rand0_to_14
         asl a
         tay
@@ -391,9 +394,9 @@ scorpionTileOffsets  dc i2'0'
 scorpionShiftInTile  dc i2'0'
 scorpionSprite       dc i2'0'
 
-scorpionSpriteLastOffset    dc i2'0'
-scorpionSpriteUpdateDec     dc i2'0'
-scorpionUpdatesPerTile      dc i2'0'
+scorpionSpriteLastOffset    dc i2'SCORPION_SLOW_SPRITE_LAST_OFFSET'
+scorpionSpriteUpdateDec     dc i2'SCORPION_SLOW_SPRITE_UPDATE_DEC'
+scorpionUpdatesPerTile      dc i2'SCORPION_SLOW_UPDATES_PER_TILE'
 
 
 SCORPION_SLOW_SPRITE_LAST_OFFSET gequ 15*4

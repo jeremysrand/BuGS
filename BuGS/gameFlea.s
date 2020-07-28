@@ -17,7 +17,8 @@ FLEA_STATE_NONE         equ 0
 FLEA_STATE_FALLING      equ 1
 FLEA_STATE_EXPLODING    equ 2
 
-FLEA_SCREEN_SPEED       equ 2*SCREEN_BYTES_PER_ROW
+FLEA_SCREEN_SPEED_SLOW      equ 2*SCREEN_BYTES_PER_ROW
+FLEA_SCREEN_SPEED_FAST      equ 4*SCREEN_BYTES_PER_ROW
 FLEA_SLOW_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/2-1
 FLEA_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/4-1
 
@@ -198,15 +199,14 @@ addFlea entry
         lda fleaState
         bne addFlea_done
         
+        lda fleaSpriteSpeed
+        jsl setFleaSpeed
+        
         lda #FLEA_STATE_FALLING
         sta fleaState
         
-        lda #FLEA_SLOW_UPDATES_PER_TILE
-        sta fleaUpdatePerTile
+        lda fleaUpdatePerTile
         sta fleaHeightInTile
-        
-        lda #FLEA_SCREEN_SPEED
-        sta fleaSpeed
         
         stz fleaSpriteCounter
         lda #FLEA_SPRITE_LAST_OFFSET
@@ -233,13 +233,34 @@ addFlea entry
 addFlea_done anop
         rtl
         
+
+setFleaSpeed entry
+        sta fleaSpriteSpeed
+        cmp #SPRITE_SPEED_FAST
+        beq setFleaSpeed_fast
+        
+        lda #FLEA_SCREEN_SPEED_SLOW
+        sta fleaSpeed
+        lda #FLEA_SLOW_UPDATES_PER_TILE
+        sta fleaUpdatePerTile
+        rtl
+        
+setFleaSpeed_fast anop
+        lda #FLEA_SCREEN_SPEED_FAST
+        sta fleaSpeed
+        lda #FLEA_FAST_UPDATES_PER_TILE
+        sta fleaUpdatePerTile
+        rtl
+
+        
 shootFlea entry
+; TODO - Increment the score
         lda fleaState
         cmp #FLEA_STATE_FALLING
         bne shootFlea_done
         
         lda fleaSpeed
-        cmp #FLEA_SCREEN_SPEED
+        cmp #FLEA_SCREEN_SPEED_SLOW
         beq shootFlea_faster
         
         lda #FLEA_STATE_EXPLODING
@@ -251,11 +272,7 @@ shootFlea entry
         rtl
         
 shootFlea_faster anop
-        asl a
-        sta fleaSpeed
-        
-        lda #FLEA_FAST_UPDATES_PER_TILE
-        sta fleaUpdatePerTile
+        jsl setFleaSpeed_fast
         
         lda fleaHeightInTile
         lsr a
@@ -266,7 +283,6 @@ shootFlea_faster anop
         sec
         sbc #SCREEN_BYTES_PER_ROW
         sta fleaScreenOffset
-; TODO - Increment the score
         
 shootFlea_done anop
         rtl
@@ -288,7 +304,8 @@ fleaJumpTable    dc i4'flea4'
                  dc i4'flea2'
                  dc i4'flea1'
                  
-fleaSpeed        dc i2'0'
-fleaUpdatePerTile dc i2'0'
+fleaSpriteSpeed     dc i2'SPRITE_SPEED_SLOW'
+fleaSpeed           dc i2'FLEA_SCREEN_SPEED_SLOW'
+fleaUpdatePerTile   dc i2'FLEA_SLOW_UPDATES_PER_TILE'
 
         end

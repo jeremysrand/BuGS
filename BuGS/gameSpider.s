@@ -35,9 +35,10 @@ SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SI
 
 ; The spider starts 2 pixel rows above the top row offset so it can slide in on the edge of
 ; the screen on a diagonal and hit the centre of the tiles with the middle of its body.
-SPIDER_STARTING_SHIFT               equ 2
-SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+6
-SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT+4
+SPIDER_STARTING_SHIFT_SLOW          equ 2
+SPIDER_STARTING_SHIFT_FAST          equ 1
+SPIDER_LHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT_SLOW+6
+SPIDER_RHS_STARTING_SCREEN_OFFSET   equ SCREEN_BYTES_PER_ROW*SPIDER_STARTING_SHIFT_SLOW+4
 
 ; Every four frames, change the spider sprite
 SPIDER_SPRITE_REFRESH_COUNT     equ 4
@@ -47,6 +48,17 @@ SPIDER_SCORE_NUM_FRAMES         equ 120
 SPIDER_SCORE_300                equ 0
 SPIDER_SCORE_600                equ 4
 SPIDER_SCORE_900                equ 8
+
+SPIDER_VERT_SPEED_SLOW          equ SCREEN_BYTES_PER_ROW
+SPIDER_VERT_SPEED_FAST          equ SCREEN_BYTES_PER_ROW*2
+
+SPIDER_MAX_SHIFT_IN_TILE_SLOW   equ TILE_PIXEL_HEIGHT
+SPIDER_MAX_SHIFT_IN_TILE_FAST   equ TILE_PIXEL_HEIGHT/2
+
+SPIDER_LEFT_SCREEN_SHIFT_SLOW   equ 1
+SPIDER_LEFT_SCREEN_SHIFT_FAST   equ 0
+SPIDER_RIGHT_SCREEN_SHIFT_SLOW   equ 0
+SPIDER_RIGHT_SCREEN_SHIFT_FAST   equ 1
 
 
 drawSpider entry
@@ -316,7 +328,7 @@ updateSpider_leftDown anop
 updateSpider_rightDown anop
         lda spiderScreenOffset
         clc
-        adc #SCREEN_BYTES_PER_ROW
+        adc spiderVertSpeed
         sta spiderScreenOffset
         
         lda spiderShiftInTile
@@ -329,7 +341,7 @@ updateSpider_leftUp anop
 updateSpider_rightUp anop
         lda spiderScreenOffset
         sec
-        sbc #SCREEN_BYTES_PER_ROW
+        sbc spiderVertSpeed
         sta spiderScreenOffset
 
         lda spiderShiftInTile
@@ -341,12 +353,14 @@ updateSpider_rightUp anop
 updateSpider_rightDiagDown anop
         lda spiderScreenOffset
         clc
-        adc #SCREEN_BYTES_PER_ROW
+        adc spiderVertSpeed
         sta spiderScreenOffset
         
         lda spiderScreenShift
+updateSpider_rightDiagDown_eor anop
         eor #1
         sta spiderScreenShift
+        cmp spiderRightStartingScreenShift
         bne updateSpider_rightDiagDown_skipInc
         inc spiderScreenOffset
         
@@ -358,20 +372,22 @@ updateSpider_rightDiagDown_skipInc anop
         jmp updateSpider_tilesDown
         
 updateSpider_rightDiagDown_cont anop
-        cmp #SPIDER_STARTING_SHIFT
+        cmp spiderStartingShift
         bne updateSpider_done
         jmp updateSpider_tilesRight
         
 updateSpider_leftDiagDown anop
         lda spiderScreenOffset
         clc
-        adc #SCREEN_BYTES_PER_ROW
+        adc spiderVertSpeed
         sta spiderScreenOffset
         
         lda spiderScreenShift
+updateSpider_leftDiagDown_eor anop
         eor #1
         sta spiderScreenShift
-        beq updateSpider_leftDiagDown_skipInc
+        cmp spiderLeftStartingScreenShift
+        bne updateSpider_leftDiagDown_skipInc
         dec spiderScreenOffset
         
 updateSpider_leftDiagDown_skipInc anop
@@ -382,7 +398,7 @@ updateSpider_leftDiagDown_skipInc anop
         jmp updateSpider_tilesDown
         
 updateSpider_leftDiagDown_cont anop
-        cmp #SPIDER_STARTING_SHIFT
+        cmp spiderStartingShift
         bne updateSpider_done
         jmp updateSpider_tilesLeft
 
@@ -392,13 +408,15 @@ updateSpider_done anop
 updateSpider_leftDiagUp anop
         lda spiderScreenOffset
         sec
-        sbc #SCREEN_BYTES_PER_ROW
+        sbc spiderVertSpeed
         sta spiderScreenOffset
         
         lda spiderScreenShift
+updateSpider_leftDiagUp_eor anop
         eor #1
         sta spiderScreenShift
-        beq updateSpider_lefttDiagUp_skipInc
+        cmp spiderLeftStartingScreenShift
+        bne updateSpider_lefttDiagUp_skipInc
         dec spiderScreenOffset
         
 updateSpider_lefttDiagUp_skipInc anop
@@ -409,7 +427,7 @@ updateSpider_lefttDiagUp_skipInc anop
         jmp updateSpider_tilesUp
         
 updateSpider_lefttDiagUp_cont anop
-        cmp #SPIDER_STARTING_SHIFT
+        cmp spiderStartingShift
         bne updateSpider_done
         jmp updateSpider_tilesLeft
         rtl
@@ -417,12 +435,14 @@ updateSpider_lefttDiagUp_cont anop
 updateSpider_rightDiagUp anop
         lda spiderScreenOffset
         sec
-        sbc #SCREEN_BYTES_PER_ROW
+        sbc spiderVertSpeed
         sta spiderScreenOffset
         
         lda spiderScreenShift
+updateSpider_rightDiagUp_eor anop
         eor #1
         sta spiderScreenShift
+        cmp spiderRightStartingScreenShift
         bne updateSpider_rightDiagUp_skipInc
         inc spiderScreenOffset
         
@@ -434,7 +454,7 @@ updateSpider_rightDiagUp_skipInc anop
         jmp updateSpider_tilesUp
         
 updateSpider_rightDiagUp_cont anop
-        cmp #SPIDER_STARTING_SHIFT
+        cmp spiderStartingShift
         bne updateSpider_done
         jmp updateSpider_tilesRight
         rtl
@@ -487,7 +507,7 @@ updateSpider_tilesLeft_cont anop
         rtl
         
 updateSpider_tilesUp anop
-        lda #TILE_PIXEL_HEIGHT
+        lda spiderMaxShiftInTile
         sta spiderShiftInTile
         
         lda spiderCurrentRow
@@ -558,7 +578,7 @@ updateSpider_upChangeDirDiagRight anop
         rtl
         
 updateSpider_tilesDown anop
-        lda #TILE_PIXEL_HEIGHT
+        lda spiderMaxShiftInTile
         sta spiderShiftInTile
 
         lda spiderCurrentRow
@@ -640,8 +660,7 @@ addSpider entry
         rtl
         
 addSpider_doit anop
-        
-        lda #SPIDER_STARTING_SHIFT
+        lda spiderStartingShift
         sta spiderShiftInTile
         
         lda #SPIDER_SPRITE_LAST_OFFSET
@@ -666,7 +685,7 @@ addSpider_left anop
         lda #SPIDER_STATE_LEFT_DIAG_DOWN
         sta spiderState
         
-        lda #1
+        lda spiderLeftStartingScreenShift
         sta spiderScreenShift
         
         ldx #SPIDER_RHS_TILE_OFFSET
@@ -700,7 +719,8 @@ addSpider_right anop
         lda #SPIDER_STATE_RIGHT_DIAG_DOWN
         sta spiderState
         
-        stz spiderScreenShift
+        lda spiderRightStartingScreenShift
+        sta spiderScreenShift
         
         ldx #SPIDER_LHS_TILE_OFFSET
         stx spiderTileOffsets
@@ -726,6 +746,68 @@ addSpider_right anop
         tax
         lda tiles+TILE_ABOVE_OFFSET,x
         sta spiderTileOffsets+10
+        
+        rtl
+        
+        
+setSpiderSpeed entry
+        cmp #SPRITE_SPEED_FAST
+        beq setSpiderSpeed_fast
+        
+        lda #SPIDER_VERT_SPEED_SLOW
+        sta spiderVertSpeed
+        
+        lda #SPIDER_MAX_SHIFT_IN_TILE_SLOW
+        sta spiderMaxShiftInTile
+        
+        lda #SPIDER_STARTING_SHIFT_SLOW
+        sta spiderStartingShift
+        
+        lda #SPIDER_LEFT_SCREEN_SHIFT_SLOW
+        sta spiderLeftStartingScreenShift
+        
+        lda #SPIDER_RIGHT_SCREEN_SHIFT_SLOW
+        sta spiderRightStartingScreenShift
+        
+; This is funky.  This sets the instruction at these location to be an immediate eor
+; instruction.  That causes us to only move to the next byte every other frame.
+        short i,m
+        lda #$49
+        sta updateSpider_rightDiagDown_eor
+        sta updateSpider_rightDiagUp_eor
+        sta updateSpider_leftDiagDown_eor
+        sta updateSpider_leftDiagUp_eor
+        long i,m
+        
+        rtl
+        
+setSpiderSpeed_fast anop
+        lda #SPIDER_VERT_SPEED_FAST
+        sta spiderVertSpeed
+        
+        lda #SPIDER_MAX_SHIFT_IN_TILE_FAST
+        sta spiderMaxShiftInTile
+        
+        lda #SPIDER_STARTING_SHIFT_FAST
+        sta spiderStartingShift
+        
+        lda #SPIDER_LEFT_SCREEN_SHIFT_FAST
+        sta spiderLeftStartingScreenShift
+        
+        lda #SPIDER_RIGHT_SCREEN_SHIFT_FAST
+        sta spiderRightStartingScreenShift
+        
+; This is funky.  This sets the instruction at these location to be an immediate or
+; instruction for the right and and immediate and instruction for the left.  That causes
+; us to only move to the next byte on every frame.
+        short i,m
+        lda #$09
+        sta updateSpider_rightDiagDown_eor
+        sta updateSpider_rightDiagUp_eor
+        lda #$29
+        sta updateSpider_leftDiagDown_eor
+        sta updateSpider_leftDiagUp_eor
+        long i,m
         
         rtl
         
@@ -766,6 +848,12 @@ spiderTargetRow     dc i2'0'
 
 spiderScoreType     dc i2'0'
 spiderScoreFrames   dc i2'0'
+
+spiderVertSpeed                 dc i2'SPIDER_VERT_SPEED_SLOW'
+spiderMaxShiftInTile            dc i2'SPIDER_MAX_SHIFT_IN_TILE_SLOW'
+spiderStartingShift             dc i2'SPIDER_STARTING_SHIFT_SLOW'
+spiderLeftStartingScreenShift   dc i2'SPIDER_LEFT_SCREEN_SHIFT_SLOW'
+spiderRightStartingScreenShift  dc i2'SPIDER_RIGHT_SCREEN_SHIFT_SLOW'
 
 
 ;  10  6  2

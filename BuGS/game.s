@@ -725,11 +725,15 @@ checkKey_fast anop
         lda #SPRITE_SPEED_FAST
         jsl setFleaSpeed
         lda #SPRITE_SPEED_FAST
+        jsl setSpiderSpeed
+        lda #SPRITE_SPEED_FAST
         jmp setScorpionSpeed
 
 checkKey_slow anop
         lda #SPRITE_SPEED_SLOW
         jsl setFleaSpeed
+        lda #SPRITE_SPEED_SLOW
+        jsl setSpiderSpeed
         lda #SPRITE_SPEED_SLOW
         jmp setScorpionSpeed
         

@@ -88,10 +88,14 @@ randN_ret0 anop
         
 randN_doit anop
         sta upperLimit
-randN_retry anop
         jsl rand0_to_14
+randN_loop anop
         cmp upperLimit
-        bge randN_retry
+        blt randN_done
+        sec
+        sbc upperLimit
+        bra randN_loop
+randN_done anop
         rtl
 
 

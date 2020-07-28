@@ -36,6 +36,12 @@ gameLoop anop
         jsl drawFlea
         jsl drawDirtyNonGameTiles
         
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        and #$f1
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
         jsl updateScorpion
         jsl updateSpider
         jsl updateFlea

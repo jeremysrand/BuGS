@@ -1,0 +1,56 @@
+;
+;  global.macros
+;  BuGS
+;
+;  Created by Jeremy Rand on 2020-07-30.
+;Copyright © 2020 Jeremy Rand. All rights reserved.
+;
+
+
+; Call this with Y already loaded with the numDirtyGameTiles.  Also, the new
+; numDirtyGameTiles is left in Y.  The caller must store it.
+        macro
+        _dirtyGameTile &tileOffset
+        
+        ldx &tileOffset
+        lda tiles+TILE_DIRTY_OFFSET,x
+        bne _dirtyGameTile_skip&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
+        txa
+        sta dirtyGameTiles,y
+        iny
+        iny
+        
+_dirtyGameTile_skip&SYSCNT anop
+        mend
+        
+        
+        macro
+        _dirtyGameOrNonGameTile &tileOffset
+
+        ldx &tileOffset
+        lda tiles+TILE_DIRTY_OFFSET,x
+        bne _dirtyGameTile_skip&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
+        txa
+        cmp #RHS_FIRST_TILE_OFFSET
+        bge _dirtyGameTile_nonGame&SYSCNT
+        
+        ldy numDirtyGameTiles
+        sta dirtyGameTiles,y
+        iny
+        iny
+        sty numDirtyGameTiles
+        bra _dirtyGameTile_skip&SYSCNT
+        
+_dirtyGameTile_nonGame&SYSCNT anop
+        ldy numDirtyNonGameTiles
+        sta dirtyNonGameTiles,y
+        iny
+        iny
+        sty numDirtyNonGameTiles
+        
+_dirtyGameTile_skip&SYSCNT anop
+        mend

@@ -33,53 +33,11 @@ drawFlea entry
         
         ldy numDirtyGameTiles
         
-        ldx fleaTileOffsets
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawFlea_skipTile1
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        sta dirtyGameTiles,y
-        iny
-        iny
+        _dirtyGameTile fleaTileOffsets
+        _dirtyGameTile fleaTileOffsets+2
+        _dirtyGameTile fleaTileOffsets+4
+        _dirtyGameTile fleaTileOffsets+6
         
-drawFlea_skipTile1 anop
-
-        ldx fleaTileOffsets+2
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawFlea_skipTile2
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        sta dirtyGameTiles,y
-        iny
-        iny
-        
-drawFlea_skipTile2 anop
-
-        ldx fleaTileOffsets+4
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawFlea_skipTile3
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        sta dirtyGameTiles,y
-        iny
-        iny
-        
-drawFlea_skipTile3 anop
-
-        ldx fleaTileOffsets+6
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawFlea_skipTile4
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        sta dirtyGameTiles,y
-        iny
-        iny
-        
-drawFlea_skipTile4 anop
         sty numDirtyGameTiles
         
 drawFlea_done anop

@@ -43,10 +43,9 @@ Each colour is 4 bits wide.  All zeros is always black in all the different pall
    * solid squares (primarily the all black square)
    
 These sprites generally draw first and overwrite what may have been there before.  After the background layer is drawn, other things are drawn in this order:
-  * spiders
+  * spiders/scores
   * scorpions
   * fleas
-  * scores
   * centipede segments
   * missle
   * player
@@ -63,4 +62,4 @@ An exception to the "background is drawn first" rule though is the non-playable 
 
 We also need to clip a flea which is dropping down from the top.  The solution there is that the game allocates memory before the SHR page, enough for an extra unseen tile above the screen.  A partially obscured flea is drawn offscreen into that part of memory before the SHR page.
 
-There is a similar problem when the flea reaches the bottom of the screen.  I haven't decided how to handle this yet.  After the SHR screen are the screen control bytes and the colour palettes so I can't just overwrite that memory with the off-screen flea sprite.  I could maybe allow the flea to corrupt this memory and then try to repair it.  Or maybe the flea sprite code will need to have special cases for the last few lines of the screen.  This problem is still to be solved.
+There is a similar problem when the flea reaches the bottom of the screen.  I have decided to just not handle it.  The flea disappears once it reaches the bottom of the screen.  It does not scroll off the bottom.

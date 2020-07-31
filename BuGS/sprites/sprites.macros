@@ -708,10 +708,10 @@
         
         tax
         and &mask
-        beq ~&SYSCNT
+        beq _noCollision_&SYSCNT
         sta collision
         
-~&SYSCNT anop
+_noCollision_&SYSCNT anop
         txa
         
         mend

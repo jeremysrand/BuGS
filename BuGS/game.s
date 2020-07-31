@@ -31,9 +31,10 @@ game    start
 
 gameLoop anop
         jsl drawDirtyGameTiles
-        jsl drawScorpion
         jsl drawSpider
+        jsl drawScorpion
         jsl drawFlea
+        jsl drawSegments
         jsl drawDirtyNonGameTiles
         
         short i,m
@@ -45,6 +46,7 @@ gameLoop anop
         jsl updateScorpion
         jsl updateSpider
         jsl updateFlea
+        jsl updateSegments
         jsl checkKeyboard
         
         jsl waitForVbl

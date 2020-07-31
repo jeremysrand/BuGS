@@ -36,78 +36,10 @@ drawScorpion_cont anop
         ldx scorpionSprite
         jsl scorpionJump
         
-        ldx scorpionTileOffsets
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawScorpion_skipTile1
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        cmp #RHS_FIRST_TILE_OFFSET
-        bge drawScorpion_nonGame1
+        _dirtyGameOrNonGameTile scorpionTileOffsets
+        _dirtyGameOrNonGameTile scorpionTileOffsets+2
+        _dirtyGameOrNonGameTile scorpionTileOffsets+4
         
-        ldy numDirtyGameTiles
-        sta dirtyGameTiles,y
-        iny
-        iny
-        sty numDirtyGameTiles
-        bra drawScorpion_skipTile1
-        
-drawScorpion_nonGame1 anop
-        ldy numDirtyNonGameTiles
-        sta dirtyNonGameTiles,y
-        iny
-        iny
-        sty numDirtyNonGameTiles
-        
-drawScorpion_skipTile1 anop
-        ldx scorpionTileOffsets+2
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawScorpion_skipTile2
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        cmp #RHS_FIRST_TILE_OFFSET
-        bge drawScorpion_nonGame2
-        
-        ldy numDirtyGameTiles
-        sta dirtyGameTiles,y
-        iny
-        iny
-        sty numDirtyGameTiles
-        bra drawScorpion_skipTile2
-        
-drawScorpion_nonGame2 anop
-        ldy numDirtyNonGameTiles
-        sta dirtyNonGameTiles,y
-        iny
-        iny
-        sty numDirtyNonGameTiles
-        
-drawScorpion_skipTile2 anop
-        ldx scorpionTileOffsets+4
-        lda tiles+TILE_DIRTY_OFFSET,x
-        bne drawScorpion_done
-        lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
-        txa
-        cmp #RHS_FIRST_TILE_OFFSET
-        bge drawScorpion_nonGame3
-        
-        ldy numDirtyGameTiles
-        sta dirtyGameTiles,y
-        iny
-        iny
-        sty numDirtyGameTiles
-        rtl
-        
-drawScorpion_nonGame3 anop
-        ldy numDirtyNonGameTiles
-        sta dirtyNonGameTiles,y
-        iny
-        iny
-        sty numDirtyNonGameTiles
-        
-drawScorpion_done anop
         rtl
         
         

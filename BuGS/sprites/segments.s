@@ -13,6 +13,11 @@
 segments start
         using globalData
 
+; IMPORTANT!!!! - It is critical that the X register is preserved in all of these
+; draw routines.  The caller to this uses the X register to hold the head/segment
+; number that is being drawn.  If the X register is changed in any way, the draw
+; routine will fail.
+
 leftHead1 entry
         _spriteHeader
         

@@ -7,14 +7,36 @@
 ;
 
 
-; Call this with Y already loaded with the numDirtyGameTiles.  Also, the new
-; numDirtyGameTiles is left in Y.  The caller must store it.
+; This macro uses the Y register as an index into the tile offsets.  This is
+; needed for segments because each segment has their own dirty tile offsets.
         macro
         _dirtyGameTile &tileOffset
         
-        ldx &tileOffset
+        ldx &tileOffset,y
         lda tiles+TILE_DIRTY_OFFSET,x
         bne _dirtyGameTile_skip&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tiles+TILE_DIRTY_OFFSET,x
+        txa
+        ldx numDirtyGameTiles
+        sta dirtyGameTiles,x
+        inx
+        inx
+        sta numDirtyGameTiles
+        
+_dirtyGameTile_skip&SYSCNT anop
+        mend
+        
+        
+
+; Call this with Y already loaded with the numDirtyGameTiles.  Also, the new
+; numDirtyGameTiles is left in Y.  The caller must store it.
+        macro
+        _dirtyGameTileWithY &tileOffset
+        
+        ldx &tileOffset
+        lda tiles+TILE_DIRTY_OFFSET,x
+        bne _dirtyGameTileWithY_skip&SYSCNT
         lda #TILE_STATE_DIRTY
         sta tiles+TILE_DIRTY_OFFSET,x
         txa
@@ -22,7 +44,7 @@
         iny
         iny
         
-_dirtyGameTile_skip&SYSCNT anop
+_dirtyGameTileWithY_skip&SYSCNT anop
         mend
         
         

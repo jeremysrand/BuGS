@@ -33,10 +33,10 @@ drawFlea entry
         
         ldy numDirtyGameTiles
         
-        _dirtyGameTile fleaTileOffsets
-        _dirtyGameTile fleaTileOffsets+2
-        _dirtyGameTile fleaTileOffsets+4
-        _dirtyGameTile fleaTileOffsets+6
+        _dirtyGameTileWithY fleaTileOffsets
+        _dirtyGameTileWithY fleaTileOffsets+2
+        _dirtyGameTileWithY fleaTileOffsets+4
+        _dirtyGameTileWithY fleaTileOffsets+6
         
         sty numDirtyGameTiles
         
@@ -141,6 +141,8 @@ updateFlea_nextTile anop
         
 updateFlea_bottom anop
         stz fleaState
+; Uncomment the next line to continuously display fleas.
+;        jsl addFlea
         rtl
 
 updateFlea_nextAction anop

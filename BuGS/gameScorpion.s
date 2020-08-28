@@ -173,6 +173,8 @@ updateScorpion_done anop
         
 updateScorpion_offScreen anop
         stz scorpionState
+; Uncomment the following line to continuously add scorpions
+;        jsl addScorpion
         rtl
 
 updateScorpion_exploding anop

@@ -514,6 +514,8 @@ updateSpider_downChangeDirDiagRight anop
         
 updateSpider_offScreen anop
         stz spiderState
+; Uncomment the following line to continuously add
+;        jsl addSpider
         rtl
         
         

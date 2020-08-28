@@ -35,8 +35,10 @@ drawSegments entry
         ldx #SEGMENT_MAX_OFFSET
 drawSegments_nextSegment anop
         lda segmentStates,x
-        beq drawSegments_skipSegment
-        
+        bne drawSegments_cont
+        jmp drawSegments_skipSegment
+
+drawSegments_cont anop
         lda segmentFacing,x
         clc
         adc segmentSpriteOffset
@@ -46,15 +48,31 @@ drawSegments_nextSegment anop
         cmp #SEGMENT_STATE_HEAD
         beq drawSegments_head
         jsl segmentBodyJump
-        bra drawSegments_skipSegment
+        bra drawSegments_handleTiles
         
 drawSegments_head anop
         jsl segmentHeadJump
-
+        
+drawSegments_handleTiles anop
+        phx
+        txa
+        asl a
+        asl a
+        tay
+        
+        _dirtyGameTile segmentTileOffsets
+        _dirtyGameTile segmentTileOffsets+2
+        _dirtyGameTile segmentTileOffsets+4
+        _dirtyGameTile segmentTileOffsets+6
+        plx
+        
 drawSegments_skipSegment anop
         dex
         dex
-        bpl drawSegments_nextSegment
+        bmi drawSegments_done
+        jmp drawSegments_nextSegment
+        
+drawSegments_done anop
         rtl
         
         
@@ -144,6 +162,7 @@ segmentDirections       dc 12i2'SEGMENT_DIR_RIGHT'
 segmentFacing           dc 12i2'SEGMENT_FACING_DOWN'
 segmentScreenOffsets    dc 12i2'0'
 segmentScreenShifts     dc 12i2'0'
+segmentTileOffsets      dc 48i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'SEGMENT_SPRITE_LAST_OFFSET'

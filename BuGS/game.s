@@ -693,6 +693,9 @@ checkKey_loop2 anop
         cmp #'-'
         beq checkKey_slow
         
+        cmp #'c'
+        beq checkKey_centipede
+        
         lda colourPalette
         inc a
         cmp #NUM_COLOUR_PALETTES
@@ -722,6 +725,10 @@ checkKey_addSpider anop
         
 checkKey_shootSpider anop
         jmp shootSpider
+                
+checkKey_quit anop
+        stz shouldQuit
+        rtl
         
 checkKey_fast anop
         lda #SPRITE_SPEED_FAST
@@ -738,10 +745,21 @@ checkKey_slow anop
         jsl setSpiderSpeed
         lda #SPRITE_SPEED_SLOW
         jmp setScorpionSpeed
-        
-checkKey_quit anop
-        stz shouldQuit
-        rtl
+
+checkKey_centipede anop
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jsl addHeadSegment
+        jmp addHeadSegment
+;        jmp addBodySegment
 
 
 waitForKey entry

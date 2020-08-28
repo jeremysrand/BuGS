@@ -22,7 +22,7 @@
         sta dirtyGameTiles,x
         inx
         inx
-        sta numDirtyGameTiles
+        stx numDirtyGameTiles
         
 _dirtyGameTile_skip&SYSCNT anop
         mend

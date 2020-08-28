@@ -125,6 +125,11 @@ segmentBodyJump_jumpInst anop
         
         
 updateSegments entry
+        lda segmentSpriteShift
+        eor #1
+        sta segmentSpriteShift
+        beq updateSegments_skipSpriteOffset
+
         lda segmentSpriteOffset
         beq updateSegments_resetSpriteOffset
         sec
@@ -136,17 +141,95 @@ updateSegments_resetSpriteOffset anop
 updateSegments_spriteOffsetCont anop
         sta segmentSpriteOffset
 
+updateSegments_skipSpriteOffset anop
+
 ; Write this code...
         rtl
         
 
 addBodySegment entry
-; Write this code...
+        lda numSegments
+        asl a
+        tax
+
+        lda #SEGMENT_STATE_BODY
+        sta segmentStates,x
+
+        lda #SEGMENT_DIR_LEFT
+        sta segmentDirections,x
+
+        lda #SEGMENT_FACING_LEFT
+        sta segmentFacing,x
+
+        txa
+        asl a
+        asl a
+        asl a
+        tay
+
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,y
+        sec
+        sbc #3
+        sta segmentScreenOffsets,x
+
+        stz segmentScreenShifts,x
+
+        txa
+        asl a
+        asl a
+        tax
+
+        tya
+        sta segmentTileOffsets,x
+        sta segmentTileOffsets+2,x
+        sta segmentTileOffsets+4,x
+        sta segmentTileOffsets+6,x
+        
+        inc numSegments
+
         rtl
         
         
 addHeadSegment entry
-; Write this code...
+        lda numSegments
+        asl a
+        tax
+        
+        lda #SEGMENT_STATE_HEAD
+        sta segmentStates,x
+        
+        lda #SEGMENT_DIR_LEFT
+        sta segmentDirections,x
+        
+        lda #SEGMENT_FACING_LEFT
+        sta segmentFacing,x
+        
+        txa
+        asl a
+        asl a
+        asl a
+        tay
+        
+        lda tiles+TILE_SCREEN_OFFSET_OFFSET,y
+        sec
+        sbc #3
+        sta segmentScreenOffsets,x
+        
+        stz segmentScreenShifts,x
+        
+        txa
+        asl a
+        asl a
+        tax
+        
+        tya
+        sta segmentTileOffsets,x
+        sta segmentTileOffsets+2,x
+        sta segmentTileOffsets+4,x
+        sta segmentTileOffsets+6,x
+        
+        inc numSegments
+        
         rtl
         
 
@@ -166,6 +249,7 @@ segmentTileOffsets      dc 48i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'SEGMENT_SPRITE_LAST_OFFSET'
+segmentSpriteShift  dc i2'0'
 
 
 headJumpTable anop

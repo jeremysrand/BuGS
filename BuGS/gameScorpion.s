@@ -149,7 +149,7 @@ updateScorpionLeft_nextTile anop
         stx scorpionTileOffsets+4
         ldx scorpionTileOffsets
         stx scorpionTileOffsets+2
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta scorpionTileOffsets
         bra updateScorpion_maybePoison
         
@@ -157,17 +157,17 @@ updateScorpionRight_notOffScreen anop
         stx scorpionTileOffsets+4
         ldx scorpionTileOffsets
         stx scorpionTileOffsets+2
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta scorpionTileOffsets
         
 updateScorpion_maybePoison anop
-        lda tiles+TILE_TYPE_OFFSET,x
+        lda tileType,x
         beq updateScorpion_done
         cmp #TILE_MUSHROOM4+1
         bge updateScorpion_done
 
         ora #TILE_POISON_A_MUSHROOM
-        sta tiles+TILE_TYPE_OFFSET,x
+        sta tileType,x
 updateScorpion_done anop
         rtl
         
@@ -253,15 +253,15 @@ addScorpion_doit anop
         ldx scorpionLeftTileOffset,y
         stx scorpionTileOffsets
         
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tileOffset,x
         dec a
         sta scorpionScreenOffset
         
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta scorpionTileOffsets+2
         
         tax
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta scorpionTileOffsets+4
         
         bra addScorpion_common
@@ -274,15 +274,15 @@ addScorpion_right anop
         ldx scorpionRightTileOffset,y
         stx scorpionTileOffsets
         
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta scorpionTileOffsets+2
         
         tax
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta scorpionTileOffsets+4
         
         tax
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tileOffset,x
         dec a
         dec a
         sta scorpionScreenOffset

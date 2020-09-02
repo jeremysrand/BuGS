@@ -103,23 +103,16 @@ typedef enum {
 } tTileType;
 
 
-typedef struct
-{
-    word dirty;
-    word offset;
-    tTileType type;
-    
-    tTileOffset tileAbove;
-    tTileOffset tileBelow;
-    tTileOffset tileLeft;
-    tTileOffset tileRight;
-    word dummy; /* I want a size which is a multiple of 2 */
-} tTile;
-
-
 /* Globals */
 
-extern tTile tiles[TOTAL_NUM_TILES];
+extern word tileDirty[TOTAL_NUM_TILES];
+extern word tileOffset[TOTAL_NUM_TILES];
+extern tTileType tileType[TOTAL_NUM_TILES];
+extern tTileOffset tileAbove[TOTAL_NUM_TILES];
+extern tTileOffset tileBelow[TOTAL_NUM_TILES];
+extern tTileOffset tileLeft[TOTAL_NUM_TILES];
+extern tTileOffset tileRight[TOTAL_NUM_TILES];
+
 extern tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
 extern word numDirtyGameTiles;
 extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];

@@ -8,28 +8,28 @@
 
         macro
         _spriteHeader
-        sei
-        tsc
-        sta backupStack
-        lda >STATE_REGISTER      ; Direct Page and Stack in Bank 01/
-        ora #$0030
-        sta >STATE_REGISTER
-        clc
-        tya
-        tcs
-        mend
+        sei                     ; 2
+        tsc                     ; 2
+        sta backupStack         ; 5
+        lda >STATE_REGISTER     ; 6 - Direct Page and Stack in Bank 01/
+        ora #$0030              ; 3
+        sta >STATE_REGISTER     ; 6
+        clc                     ; 2
+        tya                     ; 2
+        tcs                     ; 2
+        mend                    ; 30
 
 
         macro
         _spriteFooter
-        lda >STATE_REGISTER
-        and #$ffcf
-        sta >STATE_REGISTER
-        lda backupStack
-        tcs
-        cli
-        mend
-
+        lda >STATE_REGISTER     ; 6
+        and #$ffcf              ; 3
+        sta >STATE_REGISTER     ; 6
+        lda backupStack         ; 5
+        tcs                     ; 2
+        cli                     ; 2
+        mend                    ; 24
+        
         
         macro
         _leftHead

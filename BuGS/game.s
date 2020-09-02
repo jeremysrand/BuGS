@@ -31,15 +31,50 @@ game    start
 
 gameLoop anop
         jsl drawDirtyGameTiles
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        and #$f7
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
         jsl drawSpider
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        and #$f3
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
         jsl drawScorpion
-        jsl drawFlea
-        jsl drawSegments
-        jsl drawDirtyNonGameTiles
         
         short i,m
         lda >BORDER_COLOUR_REGISTER
         and #$f1
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
+        jsl drawFlea
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        ora #$08
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
+        jsl drawSegments
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        ora #$04
+        sta >BORDER_COLOUR_REGISTER
+        long i,m
+        
+        jsl drawDirtyNonGameTiles
+        
+        short i,m
+        lda >BORDER_COLOUR_REGISTER
+        ora #$02
         sta >BORDER_COLOUR_REGISTER
         long i,m
         
@@ -52,8 +87,10 @@ gameLoop anop
         jsl waitForVbl
         
         lda shouldQuit
-        bne gameLoop
+        beq gameDone
+        jmp gameLoop
         
+gameDone anop
         short i,m
         lda >BORDER_COLOUR_REGISTER
         and #$f0
@@ -73,9 +110,9 @@ dirtyTileLoop anop
         phy
         
         ldx dirtyGameTiles,y
-        stz tiles+TILE_DIRTY_OFFSET,x
-        ldy tiles+TILE_SCREEN_OFFSET_OFFSET,x
-        lda tiles+TILE_TYPE_OFFSET,x
+        stz tileDirty,x
+        ldy tileOffset,x
+        lda tileType,x
         
         jsl drawTile
         
@@ -95,9 +132,9 @@ dirtyTileLoop2 anop
         phy
         
         ldx dirtyNonGameTiles,y
-        stz tiles+TILE_DIRTY_OFFSET,x
-        ldy tiles+TILE_SCREEN_OFFSET_OFFSET,x
-        lda tiles+TILE_TYPE_OFFSET,x
+        stz tileDirty,x
+        ldy tileOffset,x
+        lda tileType,x
         
         jsl drawTile
         

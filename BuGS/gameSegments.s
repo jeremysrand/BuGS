@@ -161,13 +161,7 @@ addBodySegment entry
         lda #SEGMENT_FACING_LEFT
         sta segmentFacing,x
 
-        txa
-        asl a
-        asl a
-        asl a
-        tay
-
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,y
+        lda tileOffset,x
         sec
         sbc #3
         sta segmentScreenOffsets,x
@@ -177,13 +171,13 @@ addBodySegment entry
         txa
         asl a
         asl a
-        tax
+        tay
 
-        tya
-        sta segmentTileOffsets,x
-        sta segmentTileOffsets+2,x
-        sta segmentTileOffsets+4,x
-        sta segmentTileOffsets+6,x
+        txa
+        sta segmentTileOffsets,y
+        sta segmentTileOffsets+2,y
+        sta segmentTileOffsets+4,y
+        sta segmentTileOffsets+6,y
         
         inc numSegments
 
@@ -204,13 +198,7 @@ addHeadSegment entry
         lda #SEGMENT_FACING_LEFT
         sta segmentFacing,x
         
-        txa
-        asl a
-        asl a
-        asl a
-        tay
-        
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,y
+        lda tileOffset,x
         sec
         sbc #3
         sta segmentScreenOffsets,x
@@ -220,13 +208,13 @@ addHeadSegment entry
         txa
         asl a
         asl a
-        tax
+        tay
         
-        tya
-        sta segmentTileOffsets,x
-        sta segmentTileOffsets+2,x
-        sta segmentTileOffsets+4,x
-        sta segmentTileOffsets+6,x
+        txa
+        sta segmentTileOffsets,y
+        sta segmentTileOffsets+2,y
+        sta segmentTileOffsets+4,y
+        sta segmentTileOffsets+6,y
         
         inc numSegments
         

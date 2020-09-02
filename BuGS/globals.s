@@ -18,7 +18,7 @@ globalData data
 
 SCREEN_BYTES_PER_ROW    gequ 160
 
-SIZEOF_TILE_INFO        gequ 16
+SIZEOF_TILE_INFO        gequ 2
 
 TILE_PIXEL_WIDTH        gequ 8
 TILE_PIXEL_HEIGHT       gequ 8
@@ -109,14 +109,6 @@ TILE_SOLID3             gequ 51*4
 TILE_PLAYER             gequ 52*4
 
 TILE_POISON_A_MUSHROOM  gequ TILE_POISON_MUSHROOM4-TILE_MUSHROOM4
-
-TILE_DIRTY_OFFSET           gequ 0
-TILE_SCREEN_OFFSET_OFFSET   gequ 2
-TILE_TYPE_OFFSET            gequ 4
-TILE_ABOVE_OFFSET           gequ 6
-TILE_BELOW_OFFSET           gequ 8
-TILE_LEFT_OFFSET            gequ 10
-TILE_RIGHT_OFFSET           gequ 12
 
 NUM_COLOUR_PALETTES     gequ 14
 

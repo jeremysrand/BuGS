@@ -337,12 +337,12 @@ updateSpider_tilesRight_cont anop
         
         ldx spiderTileOffsets+2
         stx spiderTileOffsets+6
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta spiderTileOffsets+2
         
         ldx spiderTileOffsets
         stx spiderTileOffsets+4
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta spiderTileOffsets
         rtl
 
@@ -359,12 +359,12 @@ updateSpider_tilesLeft_cont anop
         
         ldx spiderTileOffsets+10
         stx spiderTileOffsets+6
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta spiderTileOffsets+10
         
         ldx spiderTileOffsets+8
         stx spiderTileOffsets+4
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta spiderTileOffsets+8
         
         rtl
@@ -381,26 +381,26 @@ updateSpider_tilesUp anop
         
         ldx spiderTileOffsets+2
         stx spiderTileOffsets
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+2
         
         ldx spiderTileOffsets+6
         stx spiderTileOffsets+4
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+6
 
 ; As per the below, clear any mushroom if present
         cpx #RHS_FIRST_TILE_OFFSET
         bge updateSpider_tilesUpCont
-        lda tiles+TILE_TYPE_OFFSET,x
+        lda tileType,x
         beq updateSpider_tilesUpCont
         lda #TILE_EMPTY
-        sta tiles+TILE_TYPE_OFFSET,x
+        sta tileType,x
         
 updateSpider_tilesUpCont anop
         ldx spiderTileOffsets+10
         stx spiderTileOffsets+8
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+10
         rtl
         
@@ -452,27 +452,27 @@ updateSpider_tilesDown anop
 
         ldx spiderTileOffsets
         stx spiderTileOffsets+2
-        lda tiles+TILE_BELOW_OFFSET,x
+        lda tileBelow,x
         sta spiderTileOffsets
         
         ldx spiderTileOffsets+4
         stx spiderTileOffsets+6
-        lda tiles+TILE_BELOW_OFFSET,x
+        lda tileBelow,x
         sta spiderTileOffsets+4
         
 ; If the middle tile is a game time and it isn't empty, then
 ; empty it.  Spiders "consume" mushrooms as they pass over them.
         cpx #RHS_FIRST_TILE_OFFSET
         bge updateSpider_tilesDownCont
-        lda tiles+TILE_TYPE_OFFSET,x
+        lda tileType,x
         beq updateSpider_tilesDownCont
         lda #TILE_EMPTY
-        sta tiles+TILE_TYPE_OFFSET,x
+        sta tileType,x
         
 updateSpider_tilesDownCont anop
         ldx spiderTileOffsets+8
         stx spiderTileOffsets+10
-        lda tiles+TILE_BELOW_OFFSET,x
+        lda tileBelow,x
         sta spiderTileOffsets+8
         rtl
         
@@ -556,26 +556,26 @@ addSpider_left anop
         ldx #SPIDER_RHS_TILE_OFFSET
         stx spiderTileOffsets+8
         
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+10
         
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta spiderTileOffsets+4
         
         tax
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tileOffset,x
         sec
         sbc #SPIDER_RHS_STARTING_SCREEN_OFFSET
         sta spiderScreenOffset
         
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+6
         
-        lda tiles+TILE_RIGHT_OFFSET,x
+        lda tileRight,x
         sta spiderTileOffsets
         
         tax
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+2
         
         rtl
@@ -590,26 +590,26 @@ addSpider_right anop
         ldx #SPIDER_LHS_TILE_OFFSET
         stx spiderTileOffsets
         
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+2
         
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta spiderTileOffsets+4
         
         tax
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tileOffset,x
         sec
         sbc #SPIDER_LHS_STARTING_SCREEN_OFFSET
         sta spiderScreenOffset
         
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+6
         
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta spiderTileOffsets+8
         
         tax
-        lda tiles+TILE_ABOVE_OFFSET,x
+        lda tileAbove,x
         sta spiderTileOffsets+10
         
         rtl

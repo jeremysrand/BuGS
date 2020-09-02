@@ -117,25 +117,25 @@ updateFlea_nextTile anop
         
         ldx fleaTileOffsets
         stx fleaTileOffsets+4
-        lda tiles+TILE_BELOW_OFFSET,x
+        lda tileBelow,x
         cmp #INVALID_TILE_NUM
         beq updateFlea_bottom
         sta fleaTileOffsets
         
         ldx fleaTileOffsets+2
         stx fleaTileOffsets+6
-        lda tiles+TILE_BELOW_OFFSET,x
+        lda tileBelow,x
         sta fleaTileOffsets+2
         
         ldx fleaTileOffsets+4
-        lda tiles+TILE_TYPE_OFFSET,x
+        lda tileType,x
         bne updateFlea_nextAction
         
         jsl rand0_to_65534
         and #$3
         bne updateFlea_nextAction
         lda #TILE_MUSHROOM4
-        sta tiles+TILE_TYPE_OFFSET,x
+        sta tileType,x
         
         bra updateFlea_nextAction
         
@@ -174,18 +174,15 @@ addFlea entry
         
         jsl rand25
         asl a
-        asl a
-        asl a
-        asl a
         sta fleaTileOffsets
         sta fleaTileOffsets+4
         
         tax
-        lda tiles+TILE_LEFT_OFFSET,x
+        lda tileLeft,x
         sta fleaTileOffsets+2
         sta fleaTileOffsets+6
         
-        lda tiles+TILE_SCREEN_OFFSET_OFFSET,x
+        lda tileOffset,x
         sec
         sbc #6*SCREEN_BYTES_PER_ROW+3
         sta fleaScreenOffset

@@ -13,10 +13,10 @@
         _dirtyGameTile &tileOffset
         
         ldx &tileOffset,y
-        lda tiles+TILE_DIRTY_OFFSET,x
+        lda tileDirty,x
         bne _dirtyGameTile_skip&SYSCNT
         lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
+        sta tileDirty,x
         txa
         ldx numDirtyGameTiles
         sta dirtyGameTiles,x
@@ -35,10 +35,10 @@ _dirtyGameTile_skip&SYSCNT anop
         _dirtyGameTileWithY &tileOffset
         
         ldx &tileOffset
-        lda tiles+TILE_DIRTY_OFFSET,x
+        lda tileDirty,x
         bne _dirtyGameTileWithY_skip&SYSCNT
         lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
+        sta tileDirty,x
         txa
         sta dirtyGameTiles,y
         iny
@@ -52,10 +52,10 @@ _dirtyGameTileWithY_skip&SYSCNT anop
         _dirtyGameOrNonGameTile &tileOffset
 
         ldx &tileOffset
-        lda tiles+TILE_DIRTY_OFFSET,x
+        lda tileDirty,x
         bne _dirtyGameTile_skip&SYSCNT
         lda #TILE_STATE_DIRTY
-        sta tiles+TILE_DIRTY_OFFSET,x
+        sta tileDirty,x
         txa
         cmp #RHS_FIRST_TILE_OFFSET
         bge _dirtyGameTile_nonGame&SYSCNT

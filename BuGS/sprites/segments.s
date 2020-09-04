@@ -10,7 +10,7 @@
         mcopy segments.macros
         keep segments
 
-segments start
+segments start spriteSeg
         using globalData
 
 ; IMPORTANT!!!! - It is critical that the X register is preserved in all of these

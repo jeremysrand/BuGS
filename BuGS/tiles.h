@@ -106,7 +106,7 @@ typedef enum {
 /* Globals */
 
 extern word tileDirty[TOTAL_NUM_TILES];
-extern word tileOffset[TOTAL_NUM_TILES];
+extern word tileScreenOffset[TOTAL_NUM_TILES];
 extern tTileType tileType[TOTAL_NUM_TILES];
 extern tTileOffset tileAbove[TOTAL_NUM_TILES];
 extern tTileOffset tileBelow[TOTAL_NUM_TILES];

@@ -161,7 +161,7 @@ addBodySegment entry
         lda #SEGMENT_FACING_LEFT
         sta segmentFacing,x
 
-        lda tileOffset,x
+        lda tileScreenOffset,x
         sec
         sbc #3
         sta segmentScreenOffsets,x
@@ -198,7 +198,7 @@ addHeadSegment entry
         lda #SEGMENT_FACING_LEFT
         sta segmentFacing,x
         
-        lda tileOffset,x
+        lda tileScreenOffset,x
         sec
         sbc #3
         sta segmentScreenOffsets,x

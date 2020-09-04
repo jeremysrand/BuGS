@@ -10,7 +10,7 @@
         mcopy scorpions.macros
         keep scorpions
 
-scorpions start
+scorpions start spriteSeg
         using globalData
 
 leftScorpion1 entry

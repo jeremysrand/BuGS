@@ -10,7 +10,7 @@
         mcopy scores.macros
         keep scores
 
-scores start
+scores start spriteSeg
         using globalData
 
 score300 entry

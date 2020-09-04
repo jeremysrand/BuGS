@@ -10,7 +10,7 @@
         mcopy shot.macros
         keep shot
 
-shot start
+shot start spriteSeg
         using globalData
 
 drawHalfShot entry

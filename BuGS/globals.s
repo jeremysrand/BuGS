@@ -122,6 +122,7 @@ SHADOW_REGISTER         gequ $e0c035
 NEW_VIDEO_REGISTER      gequ $e0c029
 BORDER_COLOUR_REGISTER  gequ $e0c034
 STATE_REGISTER          gequ $e1c068
+VERTICAL_COUNTER        gequ $e0c02e
 
 
 backupStack dc i2'0'

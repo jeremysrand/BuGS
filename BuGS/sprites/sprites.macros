@@ -10,7 +10,7 @@
         _spriteHeader
         sei                     ; 2
         tsc                     ; 2
-        sta backupStack         ; 5
+        sta >backupStack        ; 5
         lda >STATE_REGISTER     ; 6 - Direct Page and Stack in Bank 01/
         ora #$0030              ; 3
         sta >STATE_REGISTER     ; 6
@@ -25,7 +25,7 @@
         lda >STATE_REGISTER     ; 6
         and #$ffcf              ; 3
         sta >STATE_REGISTER     ; 6
-        lda backupStack         ; 5
+        lda >backupStack        ; 5
         tcs                     ; 2
         cli                     ; 2
         mend                    ; 24

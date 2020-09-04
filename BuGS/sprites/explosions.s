@@ -10,7 +10,7 @@
         mcopy explosions.macros
         keep explosions
 
-explosions start
+explosions start spriteSeg
         using globalData
 
 explosion1 entry

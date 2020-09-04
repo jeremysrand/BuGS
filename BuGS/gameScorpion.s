@@ -253,7 +253,7 @@ addScorpion_doit anop
         ldx scorpionLeftTileOffset,y
         stx scorpionTileOffsets
         
-        lda tileOffset,x
+        lda tileScreenOffset,x
         dec a
         sta scorpionScreenOffset
         
@@ -282,7 +282,7 @@ addScorpion_right anop
         sta scorpionTileOffsets+4
         
         tax
-        lda tileOffset,x
+        lda tileScreenOffset,x
         dec a
         dec a
         sta scorpionScreenOffset

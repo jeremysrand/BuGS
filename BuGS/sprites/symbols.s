@@ -10,7 +10,7 @@
         mcopy symbols.macros
         keep symbols
 
-symbols start
+symbols start spriteSeg
         using globalData
 
 symbolC entry

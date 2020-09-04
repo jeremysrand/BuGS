@@ -10,7 +10,7 @@
         mcopy mushrooms.macros
         keep mushrooms
 
-mushrooms start
+mushrooms start spriteSeg
         using globalData
 
 mushroom1 entry

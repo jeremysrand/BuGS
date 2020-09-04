@@ -10,7 +10,7 @@
         mcopy numbers.macros
         keep numbers
 
-numbers start
+numbers start spriteSeg
         using globalData
 
 number0  entry

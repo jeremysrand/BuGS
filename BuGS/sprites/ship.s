@@ -10,7 +10,7 @@
         mcopy ship.macros
         keep ship
 
-ship start
+ship start spriteSeg
         using globalData
 
 drawShip entry

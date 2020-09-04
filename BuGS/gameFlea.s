@@ -182,7 +182,7 @@ addFlea entry
         sta fleaTileOffsets+2
         sta fleaTileOffsets+6
         
-        lda tileOffset,x
+        lda tileScreenOffset,x
         sec
         sbc #6*SCREEN_BYTES_PER_ROW+3
         sta fleaScreenOffset

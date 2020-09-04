@@ -10,7 +10,7 @@
         mcopy solid.macros
         keep solid
 
-solid start
+solid start spriteSeg
         using globalData
 
 solid0  entry

@@ -10,7 +10,7 @@
         mcopy spiders.macros
         keep spiders
 
-spiders start
+spiders start spriteSeg
         using globalData
 
 spider1 entry

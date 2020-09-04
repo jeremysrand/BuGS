@@ -54,7 +54,7 @@
 /* Globals */
 
 word tileDirty[TOTAL_NUM_TILES];
-word tileOffset[TOTAL_NUM_TILES];
+word tileScreenOffset[TOTAL_NUM_TILES];
 tTileType tileType[TOTAL_NUM_TILES];
 tTileOffset tileAbove[TOTAL_NUM_TILES];
 tTileOffset tileBelow[TOTAL_NUM_TILES];
@@ -88,7 +88,7 @@ void initTiles(void)
         for (tileX = 0; tileX < LHS_NUM_TILES_WIDE; tileX++)
         {
             tileDirty[lhsTileIndex] = 0;
-            tileOffset[lhsTileIndex] = lastOffset;
+            tileScreenOffset[lhsTileIndex] = lastOffset;
             tileType[lhsTileIndex] = TILE_EMPTY;
 
             if (tileY == 0)
@@ -119,7 +119,7 @@ void initTiles(void)
         for (tileX = 0; tileX < GAME_NUM_TILES_WIDE; tileX++)
         {
             tileDirty[tileIndex] = 0;
-            tileOffset[tileIndex] = lastOffset;
+            tileScreenOffset[tileIndex] = lastOffset;
             tileType[tileIndex] = TILE_EMPTY;
             
             if (tileY == 0)
@@ -150,7 +150,7 @@ void initTiles(void)
         for (tileX = 0; tileX < RHS_NUM_TILES_WIDE; tileX++)
         {
             tileDirty[rhsTileIndex] = 0;
-            tileOffset[rhsTileIndex] = lastOffset;
+            tileScreenOffset[rhsTileIndex] = lastOffset;
             tileType[rhsTileIndex] = TILE_EMPTY;
 
             if (tileY == 0)

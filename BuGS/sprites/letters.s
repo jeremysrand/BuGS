@@ -10,7 +10,7 @@
         mcopy letters.macros
         keep letters
 
-letters start
+letters start spriteSeg
         using globalData
 
 letterA entry

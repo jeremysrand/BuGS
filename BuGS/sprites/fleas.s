@@ -10,7 +10,7 @@
         mcopy fleas.macros
         keep fleas
 
-fleas start
+fleas start spriteSeg
         using globalData
 
 

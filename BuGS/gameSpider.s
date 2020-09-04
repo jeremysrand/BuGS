@@ -563,7 +563,7 @@ addSpider_left anop
         sta spiderTileOffsets+4
         
         tax
-        lda tileOffset,x
+        lda tileScreenOffset,x
         sec
         sbc #SPIDER_RHS_STARTING_SCREEN_OFFSET
         sta spiderScreenOffset
@@ -597,7 +597,7 @@ addSpider_right anop
         sta spiderTileOffsets+4
         
         tax
-        lda tileOffset,x
+        lda tileScreenOffset,x
         sec
         sbc #SPIDER_LHS_STARTING_SCREEN_OFFSET
         sta spiderScreenOffset

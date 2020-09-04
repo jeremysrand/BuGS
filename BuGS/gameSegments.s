@@ -60,10 +60,10 @@ drawSegments_handleTiles anop
         asl a
         tay
         
-        _dirtyGameTile segmentTileOffsets
-        _dirtyGameTile segmentTileOffsets+2
-        _dirtyGameTile segmentTileOffsets+4
-        _dirtyGameTile segmentTileOffsets+6
+        _dirtyGameTileWithY segmentTileOffsets
+        _dirtyGameTileWithY segmentTileOffsets+2
+        _dirtyGameTileWithY segmentTileOffsets+4
+        _dirtyGameTileWithY segmentTileOffsets+6
         plx
         
 drawSegments_skipSegment anop

@@ -102,7 +102,6 @@ gameDone anop
 
 
 drawDirtyGameTiles entry
-        stz numDirtyGameTiles
         _drawDirtyGameRow 0
         _drawDirtyGameRow 1
         _drawDirtyGameRow 2

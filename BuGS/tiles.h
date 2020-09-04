@@ -113,8 +113,6 @@ extern tTileOffset tileBelow[TOTAL_NUM_TILES];
 extern tTileOffset tileLeft[TOTAL_NUM_TILES];
 extern tTileOffset tileRight[TOTAL_NUM_TILES];
 
-extern tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
-extern word numDirtyGameTiles;
 extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 extern word numDirtyNonGameTiles;
 

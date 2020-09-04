@@ -9,7 +9,6 @@
 
         macro
         _drawDirtyGameRow &rowNum
-        trace on
         short i,m
         lda >BORDER_COLOUR_REGISTER
         and #$f0
@@ -64,48 +63,16 @@ _drawDirtyGameRow_wait&rowNum anop
 _drawDirtyGameRow_skip&tileOffset anop
 &tileOffset seta &tileOffset+2
         aif &tileOffset<&lastTileOffset,.drawDirtyGameRowLoop
-        trace off
         
         mend
 
 ; This macro uses the Y register as an index into the tile offsets.  This is
 ; needed for segments because each segment has their own dirty tile offsets.
         macro
-        _dirtyGameTile &tileOffset
-        
-        ldx &tileOffset,y
-        lda tileDirty,x
-        bne _dirtyGameTile_skip&SYSCNT
-        lda #TILE_STATE_DIRTY
-        sta tileDirty,x
-        txa
-        ldx numDirtyGameTiles
-        sta dirtyGameTiles,x
-        inx
-        inx
-        stx numDirtyGameTiles
-        
-_dirtyGameTile_skip&SYSCNT anop
-        mend
-        
-        
-
-; Call this with Y already loaded with the numDirtyGameTiles.  Also, the new
-; numDirtyGameTiles is left in Y.  The caller must store it.
-        macro
         _dirtyGameTileWithY &tileOffset
-        
-        ldx &tileOffset
-        lda tileDirty,x
-        bne _dirtyGameTileWithY_skip&SYSCNT
+        ldx &tileOffset,y
         lda #TILE_STATE_DIRTY
         sta tileDirty,x
-        txa
-        sta dirtyGameTiles,y
-        iny
-        iny
-        
-_dirtyGameTileWithY_skip&SYSCNT anop
         mend
         
         
@@ -113,23 +80,20 @@ _dirtyGameTileWithY_skip&SYSCNT anop
         _dirtyGameOrNonGameTile &tileOffset
 
         ldx &tileOffset
+        cpx #RHS_FIRST_TILE_OFFSET
+        bge _dirtyGameTile_nonGame&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tileDirty,x
+        bra _dirtyGameTile_skip&SYSCNT
+
+_dirtyGameTile_nonGame&SYSCNT anop
         lda tileDirty,x
         bne _dirtyGameTile_skip&SYSCNT
         lda #TILE_STATE_DIRTY
         sta tileDirty,x
-        txa
-        cmp #RHS_FIRST_TILE_OFFSET
-        bge _dirtyGameTile_nonGame&SYSCNT
         
-        ldy numDirtyGameTiles
-        sta dirtyGameTiles,y
-        iny
-        iny
-        sty numDirtyGameTiles
-        bra _dirtyGameTile_skip&SYSCNT
-        
-_dirtyGameTile_nonGame&SYSCNT anop
         ldy numDirtyNonGameTiles
+        txa
         sta dirtyNonGameTiles,y
         iny
         iny

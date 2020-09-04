@@ -25,22 +25,19 @@ FLEA_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/4-1
 
 drawFlea entry
         lda fleaState
-        beq drawFlea_done
-        
+        bne drawFlea_cont
+        rtl
+
+drawFlea_cont anop
         ldy fleaScreenOffset
         ldx fleaSprite
         jsl fleaJump
         
-        ldy numDirtyGameTiles
+        _dirtyGameOrNonGameTile fleaTileOffsets
+        _dirtyGameOrNonGameTile fleaTileOffsets+2
+        _dirtyGameOrNonGameTile fleaTileOffsets+4
+        _dirtyGameOrNonGameTile fleaTileOffsets+6
         
-        _dirtyGameTileWithY fleaTileOffsets
-        _dirtyGameTileWithY fleaTileOffsets+2
-        _dirtyGameTileWithY fleaTileOffsets+4
-        _dirtyGameTileWithY fleaTileOffsets+6
-        
-        sty numDirtyGameTiles
-        
-drawFlea_done anop
         rtl
         
         

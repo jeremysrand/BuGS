@@ -37,12 +37,7 @@
 #define STARTING_NUM_MUSHROOMS 30
 #define STARTING_NUM_PLAYERS 3
 
-#define ADD_DIRTY_GAME_TILE(tileNum)                                        \
-    if (!tileDirty[tileNum]) {                                              \
-        tileDirty[tileNum] = 1;                                             \
-        dirtyGameTiles[numDirtyGameTiles / 2] = ((tileNum) * sizeof(word)); \
-        numDirtyGameTiles += 2;                                             \
-    }
+#define ADD_DIRTY_GAME_TILE(tileNum) tileDirty[tileNum] = 1;
 
 #define ADD_DIRTY_NON_GAME_TILE(tileNum)                                          \
     if (!tileDirty[tileNum]) {                                                    \
@@ -60,9 +55,6 @@ tTileOffset tileAbove[TOTAL_NUM_TILES];
 tTileOffset tileBelow[TOTAL_NUM_TILES];
 tTileOffset tileLeft[TOTAL_NUM_TILES];
 tTileOffset tileRight[TOTAL_NUM_TILES];
-
-tTileOffset dirtyGameTiles[NUM_GAME_TILES + GAME_NUM_TILES_TALL];
-word numDirtyGameTiles;
 
 tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 word numDirtyNonGameTiles;
@@ -179,7 +171,6 @@ void initTiles(void)
         }
     }
     
-    numDirtyGameTiles = 0;
     numDirtyNonGameTiles = 0;
 }
 

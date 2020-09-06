@@ -296,18 +296,17 @@ checkKey_slow anop
 
 checkKey_centipede anop
         jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jsl addHeadSegment
-        jmp addHeadSegment
-;        jmp addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jsl addBodySegment
+        jmp addBodySegment
 
 
 waitForKey entry

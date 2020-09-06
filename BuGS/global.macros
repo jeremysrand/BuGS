@@ -65,15 +65,6 @@ _drawDirtyGameRow_skip&tileOffset anop
         aif &tileOffset<&lastTileOffset,.drawDirtyGameRowLoop
         
         mend
-
-; This macro uses the X register as an index into the tile offsets.  This is
-; needed for segments because each segment has their own dirty tile offsets.
-        macro
-        _dirtyGameTileWithX &tileOffset
-        ldy &tileOffset,x
-        lda #TILE_STATE_DIRTY
-        sta tileDirty,y
-        mend
         
         
         macro

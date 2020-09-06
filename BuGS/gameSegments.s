@@ -52,16 +52,23 @@ drawSegments_head anop
         jsl segmentHeadJump
         
 drawSegments_handleTiles anop
-        _dirtyGameTileWithX segmentTileOffsetsUL
-        _dirtyGameTileWithX segmentTileOffsetsUR
-        _dirtyGameTileWithX segmentTileOffsetsLL
-        _dirtyGameTileWithX segmentTileOffsetsLR
+        lda #TILE_STATE_DIRTY
+        ldy segmentTileOffsetsUL,x
+        sta tileDirty,y
+        
+        ldy segmentTileOffsetsUR,x
+        sta tileDirty,y
+        
+        ldy segmentTileOffsetsLL,x
+        sta tileDirty,y
+        
+        ldy segmentTileOffsetsLR,x
+        sta tileDirty,y
         
 drawSegments_skipSegment anop
         dex
         dex
-        bmi drawSegments_done
-        bra drawSegments_nextSegment
+        bpl drawSegments_nextSegment
         
 drawSegments_done anop
         rtl
@@ -89,8 +96,8 @@ segmentHeadJump_noShift anop
         
 segmentHeadJump_jumpInst anop
         jmp >leftHead1
+        nop
         
-
 segmentBodyJump entry
         lda segmentScreenShifts,x
         beq segmentBodyJump_noShift
@@ -113,7 +120,7 @@ segmentBodyJump_noShift anop
         
 segmentBodyJump_jumpInst anop
         jmp >leftHead1
-        
+        nop
         
 updateSegments entry
         lda segmentSpriteShift

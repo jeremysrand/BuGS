@@ -35,10 +35,8 @@ drawSegments entry
         ldx #SEGMENT_MAX_OFFSET
 drawSegments_nextSegment anop
         lda segmentStates,x
-        bne drawSegments_cont
-        jmp drawSegments_skipSegment
+        beq drawSegments_skipSegment
 
-drawSegments_cont anop
         lda segmentFacing,x
         clc
         adc segmentSpriteOffset
@@ -54,23 +52,16 @@ drawSegments_head anop
         jsl segmentHeadJump
         
 drawSegments_handleTiles anop
-        phx
-        txa
-        asl a
-        asl a
-        tay
-        
-        _dirtyGameTileWithY segmentTileOffsets
-        _dirtyGameTileWithY segmentTileOffsets+2
-        _dirtyGameTileWithY segmentTileOffsets+4
-        _dirtyGameTileWithY segmentTileOffsets+6
-        plx
+        _dirtyGameTileWithX segmentTileOffsetsUL
+        _dirtyGameTileWithX segmentTileOffsetsUR
+        _dirtyGameTileWithX segmentTileOffsetsLL
+        _dirtyGameTileWithX segmentTileOffsetsLR
         
 drawSegments_skipSegment anop
         dex
         dex
         bmi drawSegments_done
-        jmp drawSegments_nextSegment
+        bra drawSegments_nextSegment
         
 drawSegments_done anop
         rtl
@@ -169,15 +160,10 @@ addBodySegment entry
         stz segmentScreenShifts,x
 
         txa
-        asl a
-        asl a
-        tay
-
-        txa
-        sta segmentTileOffsets,y
-        sta segmentTileOffsets+2,y
-        sta segmentTileOffsets+4,y
-        sta segmentTileOffsets+6,y
+        sta segmentTileOffsetsUL,x
+        sta segmentTileOffsetsUR,x
+        sta segmentTileOffsetsLL,x
+        sta segmentTileOffsetsLR,x
         
         inc numSegments
 
@@ -206,15 +192,10 @@ addHeadSegment entry
         stz segmentScreenShifts,x
         
         txa
-        asl a
-        asl a
-        tay
-        
-        txa
-        sta segmentTileOffsets,y
-        sta segmentTileOffsets+2,y
-        sta segmentTileOffsets+4,y
-        sta segmentTileOffsets+6,y
+        sta segmentTileOffsetsUL,x
+        sta segmentTileOffsetsUR,x
+        sta segmentTileOffsetsLL,x
+        sta segmentTileOffsetsLR,x
         
         inc numSegments
         
@@ -233,7 +214,10 @@ segmentDirections       dc 12i2'SEGMENT_DIR_RIGHT'
 segmentFacing           dc 12i2'SEGMENT_FACING_DOWN'
 segmentScreenOffsets    dc 12i2'0'
 segmentScreenShifts     dc 12i2'0'
-segmentTileOffsets      dc 48i2'0'
+segmentTileOffsetsUL    dc 12i2'0'
+segmentTileOffsetsUR    dc 12i2'0'
+segmentTileOffsetsLL    dc 12i2'0'
+segmentTileOffsetsLR    dc 12i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'SEGMENT_SPRITE_LAST_OFFSET'

@@ -30,7 +30,22 @@ game    start
         jsl setColour
 
 gameLoop anop
-        jsl drawDirtyGameTiles
+        
+        _drawDirtyGameRow 0
+        _drawDirtyGameRow 1
+        _drawDirtyGameRow 2
+        _drawDirtyGameRow 3
+        _drawDirtyGameRow 4
+        _drawDirtyGameRow 5
+        _drawDirtyGameRow 6
+        _drawDirtyGameRow 7
+        _drawDirtyGameRow 8
+        _drawDirtyGameRow 9
+        _drawDirtyGameRow 10
+        _drawDirtyGameRow 11
+        _drawDirtyGameRow 12
+        _drawDirtyGameRow 13
+        _drawDirtyGameRow 14
         
         short i,m
         lda >BORDER_COLOUR_REGISTER
@@ -38,7 +53,18 @@ gameLoop anop
         sta >BORDER_COLOUR_REGISTER
         long i,m
         
-        jsl drawSpider
+        jsl drawScorpion
+        
+        _drawDirtyGameRow 15
+        _drawDirtyGameRow 16
+        _drawDirtyGameRow 17
+        _drawDirtyGameRow 18
+        _drawDirtyGameRow 19
+        _drawDirtyGameRow 20
+        _drawDirtyGameRow 21
+        _drawDirtyGameRow 22
+        _drawDirtyGameRow 23
+        _drawDirtyGameRow 24
         
         short i,m
         lda >BORDER_COLOUR_REGISTER
@@ -46,7 +72,7 @@ gameLoop anop
         sta >BORDER_COLOUR_REGISTER
         long i,m
         
-        jsl drawScorpion
+        jsl drawSpider
         
         short i,m
         lda >BORDER_COLOUR_REGISTER
@@ -99,34 +125,6 @@ gameDone anop
         long i,m
         
         rtl
-
-
-drawDirtyGameTiles entry
-        _drawDirtyGameRow 0
-        _drawDirtyGameRow 1
-        _drawDirtyGameRow 2
-        _drawDirtyGameRow 3
-        _drawDirtyGameRow 4
-        _drawDirtyGameRow 5
-        _drawDirtyGameRow 6
-        _drawDirtyGameRow 7
-        _drawDirtyGameRow 8
-        _drawDirtyGameRow 9
-        _drawDirtyGameRow 10
-        _drawDirtyGameRow 11
-        _drawDirtyGameRow 12
-        _drawDirtyGameRow 13
-        _drawDirtyGameRow 14
-        _drawDirtyGameRow 15
-        _drawDirtyGameRow 16
-        _drawDirtyGameRow 17
-        _drawDirtyGameRow 18
-        _drawDirtyGameRow 19
-        _drawDirtyGameRow 20
-        _drawDirtyGameRow 21
-        _drawDirtyGameRow 22
-        _drawDirtyGameRow 23
-        _drawDirtyGameRow 24
         
 
 drawDirtyNonGameTiles entry
@@ -333,7 +331,7 @@ vblLoop anop
         and #$80ff                ; mask out the VBL bits
         asl a                     ; shift the word around
         adc #0                    ; move MSB -> LSB
-        cmp #$100
+        cmp #$1c8
         bge vblLoop
         rtl
         

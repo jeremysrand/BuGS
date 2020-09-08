@@ -92,3 +92,29 @@ _dirtyGameTile_nonGame&SYSCNT anop
         
 _dirtyGameTile_skip&SYSCNT anop
         mend
+
+        macro
+        _dirtyGameOrNonGameTileX &tileOffset
+
+        ldy &tileOffset,x
+        cpy #RHS_FIRST_TILE_OFFSET
+        bge _dirtyGameTile_nonGame&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tileDirty,y
+        bra _dirtyGameTile_skip&SYSCNT
+
+_dirtyGameTile_nonGame&SYSCNT anop
+        lda tileDirty,y
+        bne _dirtyGameTile_skip&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tileDirty,y
+        
+        tya
+        ldy numDirtyNonGameTiles
+        sta dirtyNonGameTiles,y
+        iny
+        iny
+        sty numDirtyNonGameTiles
+        
+_dirtyGameTile_skip&SYSCNT anop
+        mend

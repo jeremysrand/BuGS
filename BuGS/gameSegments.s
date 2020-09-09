@@ -38,6 +38,17 @@ SEGMENT_FACING_DOWN_LEFT    equ 32
 SEGMENT_FACING_DOWN         equ 64
 SEGMENT_FACING_DOWN_RIGHT   equ 96
 SEGMENT_FACING_RIGHT        equ 128
+
+SEGMENT_POSITION_OFFSET_SPARE   equ TILE_PIXEL_WIDTH*SEGMENT_MAX_NUM*2
+SEGMENT_MAX_POSITION_OFFSET     equ SEGMENT_POSITION_OFFSET_SPARE-2
+
+; I think I want to eliminate segmentScreenShifts and instead use segmentSpriteOffset
+; and a segment speed to figure out whether to draw the shifted sprite or the regular
+; sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted
+; sprite.  If the result is non-zero, we want a shifted sprite.  Then, we just need a
+; per segment speed instead of a per position offset screen shift.
+SEGMENT_SPEED_FAST      equ 0
+SEGMENT_SPEED_SLOW      equ 1
         
         
 drawSegments entry
@@ -49,7 +60,6 @@ drawSegments_nextSegment anop
 
 drawSegments_cont anop
         phx
-        lda segmentStates,x
         cmp #SEGMENT_STATE_BODY
         bne drawSegments_head
         jsl segmentBodyJump
@@ -166,8 +176,88 @@ updateSegments_spriteOffsetCont anop
         sta segmentSpriteOffset
 
 updateSegments_skipSpriteOffset anop
-
-; Write this code...
+        ldx #SEGMENT_MAX_OFFSET
+updateSegments_nextSegment anop
+        lda segmentStates,x
+        bne updateSegments_cont
+        jmp updateSegments_skipSegment
+updateSegments_cont anop
+        cmp #SEGMENT_STATE_BODY
+        bne updateSegments_head
+        
+        lda segmentPosOffset,x
+        beq updateSegments_bodyWrapPos
+        dec a
+        dec a
+        sta segmentPosOffset,x
+        jmp updateSegments_skipSegment
+updateSegments_bodyWrapPos anop
+        lda #SEGMENT_MAX_POSITION_OFFSET
+        sta segmentPosOffset,x
+        jmp updateSegments_skipSegment
+        
+updateSegments_head anop
+        lda segmentPosOffset,x
+        beq updateSegments_headWrapPos
+        dec a
+        dec a
+        sta segmentPosOffset,x
+        tay
+        jmp updateSegments_headCont
+        
+updateSegments_headWrapPos anop
+        lda #SEGMENT_MAX_POSITION_OFFSET
+        sta segmentPosOffset,x
+        tay
+; Copy the 0th position entry to the SEGMENT_POSITION_OFFSET_SPARE(th) entry.
+; That way, Y points to the new entry for the head and Y+2 always points to
+; the previous entry, even on a wrap around.
+        lda segmentHorizontalDir
+        sta segmentHorizontalDir+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentVerticalDir
+        sta segmentVerticalDir+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentFacing
+        sta segmentFacing+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentScreenOffsets
+        sta segmentScreenOffsets+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentScreenShifts
+        sta segmentScreenShifts+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentTileOffsetsUL
+        sta segmentTileOffsetsUL+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentTileOffsetsUR
+        sta segmentTileOffsetsUR+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentTileOffsetsLL
+        sta segmentTileOffsetsLL+SEGMENT_POSITION_OFFSET_SPARE
+        lda segmentTileOffsetsLR
+        sta segmentTileOffsetsLR+SEGMENT_POSITION_OFFSET_SPARE
+        
+updateSegments_headCont anop
+; Write this code...  For now, we are just copying the position from where it was before.
+        lda segmentHorizontalDir+2,y
+        sta segmentHorizontalDir,y
+        lda segmentVerticalDir+2,y
+        sta segmentVerticalDir,y
+        lda segmentFacing+2,y
+        sta segmentFacing,y
+        lda segmentScreenOffsets+2,y
+        sta segmentScreenOffsets,y
+        lda segmentScreenShifts+2,y
+        sta segmentScreenShifts,y
+        lda segmentTileOffsetsUL+2,y
+        sta segmentTileOffsetsUL,y
+        lda segmentTileOffsetsUR+2,y
+        sta segmentTileOffsetsUR,y
+        lda segmentTileOffsetsLL+2,y
+        sta segmentTileOffsetsLL,y
+        lda segmentTileOffsetsLR+2,y
+        sta segmentTileOffsetsLR,y
+        
+updateSegments_skipSegment anop
+        dex
+        dex
+        bmi updateSegments_done
+        jmp updateSegments_nextSegment
+updateSegments_done anop
         rtl
         
 
@@ -181,7 +271,8 @@ addBodySegment entry
         lda #SEGMENT_STATE_BODY
         sta segmentStates,x
         
-        txa
+        lda numSegments
+        asl a
         asl a
         asl a
         asl a
@@ -226,7 +317,8 @@ addHeadSegment entry
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
         
-        txa
+        lda numSegments
+        asl a
         asl a
         asl a
         asl a

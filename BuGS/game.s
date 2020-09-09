@@ -296,6 +296,7 @@ checkKey_slow anop
 
 checkKey_centipede anop
         jsl addHeadSegment
+        rtl
         jsl addBodySegment
         jsl addBodySegment
         jsl addBodySegment

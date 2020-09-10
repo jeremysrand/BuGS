@@ -39,14 +39,13 @@ SEGMENT_FACING_DOWN         equ 64
 SEGMENT_FACING_DOWN_RIGHT   equ 96
 SEGMENT_FACING_RIGHT        equ 128
 
-SEGMENT_POSITION_OFFSET_SPARE   equ TILE_PIXEL_WIDTH*SEGMENT_MAX_NUM*2
-SEGMENT_MAX_POSITION_OFFSET     equ SEGMENT_POSITION_OFFSET_SPARE-2
+SEGMENT_MAX_POSITION_OFFSET     equ TILE_PIXEL_WIDTH*SEGMENT_MAX_NUM*2-2
 
-; I think I want to eliminate segmentScreenShifts and instead use segmentSpriteOffset
-; and a segment speed to figure out whether to draw the shifted sprite or the regular
-; sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted
-; sprite.  If the result is non-zero, we want a shifted sprite.  Then, we just need a
-; per segment speed instead of a per position offset screen shift.
+; The code uses segmentPixelOffset and the segment speed to figure out whether to draw the shifted sprite
+; or the regular sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted sprite.
+; If the result is non-zero, we want a shifted sprite.  Then, we just need a per segment speed instead of a
+; per position offset screen shift.  Similarly, the same result can be used to figure out whether we need
+; to increment/decrement the screen offset when updating segment position.
 SEGMENT_SPEED_FAST      equ 0
 SEGMENT_SPEED_SLOW      equ 1
         
@@ -95,17 +94,21 @@ drawSegments_done anop
         
         
 segmentHeadJump entry
+        lda segmentPixelOffset
+        and segmentSpeed,x
+        tay
+        
         lda segmentPosOffset,x
         tax
         
         lda segmentFacing,x
         clc
         adc segmentSpriteOffset
-        tay
         
-        lda segmentScreenShifts,x
+        cpy #0
         beq segmentHeadJump_noShift
         
+        tay
         lda headShiftJumpTable,y
         sta segmentHeadJump_jumpInst+1
         lda headShiftJumpTable+2,y
@@ -115,6 +118,7 @@ segmentHeadJump entry
         bra segmentHeadJump_jumpInst
         
 segmentHeadJump_noShift anop
+        tay
         lda headJumpTable,y
         sta segmentHeadJump_jumpInst+1
         lda headJumpTable+2,y
@@ -127,17 +131,21 @@ segmentHeadJump_jumpInst anop
         nop
         
 segmentBodyJump entry
+        lda segmentPixelOffset
+        and segmentSpeed,x
+        tay
+        
         lda segmentPosOffset,x
         tax
         
         lda segmentFacing,x
         clc
         adc segmentSpriteOffset
-        tay
         
-        lda segmentScreenShifts,x
+        cpy #0
         beq segmentBodyJump_noShift
         
+        tay
         lda bodyShiftJumpTable,y
         sta segmentBodyJump_jumpInst+1
         lda bodyShiftJumpTable+2,y
@@ -147,6 +155,7 @@ segmentBodyJump entry
         bra segmentBodyJump_jumpInst
         
 segmentBodyJump_noShift anop
+        tay
         lda bodyJumpTable,y
         sta segmentBodyJump_jumpInst+1
         lda bodyJumpTable+2,y
@@ -159,6 +168,11 @@ segmentBodyJump_jumpInst anop
         nop
         
 updateSegments entry
+        lda segmentPixelOffset
+        inc a
+        and #TILE_PIXEL_WIDTH-1
+        sta segmentPixelOffset
+        
         lda segmentSpriteShift
         eor #1
         sta segmentSpriteShift
@@ -203,7 +217,7 @@ updateSegments_head anop
         dec a
         sta segmentPosOffset,x
         tay
-        jmp updateSegments_headCont
+        jmp updateSegments_headNoWrap
         
 updateSegments_headWrapPos anop
         lda #SEGMENT_MAX_POSITION_OFFSET
@@ -213,36 +227,34 @@ updateSegments_headWrapPos anop
 ; That way, Y points to the new entry for the head and Y+2 always points to
 ; the previous entry, even on a wrap around.
         lda segmentHorizontalDir
-        sta segmentHorizontalDir+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentHorizontalDir+SEGMENT_MAX_POSITION_OFFSET
         lda segmentVerticalDir
-        sta segmentVerticalDir+SEGMENT_POSITION_OFFSET_SPARE
-        lda segmentFacing
-        sta segmentFacing+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentVerticalDir+SEGMENT_MAX_POSITION_OFFSET
         lda segmentScreenOffsets
-        sta segmentScreenOffsets+SEGMENT_POSITION_OFFSET_SPARE
-        lda segmentScreenShifts
-        sta segmentScreenShifts+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentScreenOffsets+SEGMENT_MAX_POSITION_OFFSET
         lda segmentTileOffsetsUL
-        sta segmentTileOffsetsUL+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentTileOffsetsUL+SEGMENT_MAX_POSITION_OFFSET
         lda segmentTileOffsetsUR
-        sta segmentTileOffsetsUR+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentTileOffsetsUR+SEGMENT_MAX_POSITION_OFFSET
         lda segmentTileOffsetsLL
-        sta segmentTileOffsetsLL+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentTileOffsetsLL+SEGMENT_MAX_POSITION_OFFSET
         lda segmentTileOffsetsLR
-        sta segmentTileOffsetsLR+SEGMENT_POSITION_OFFSET_SPARE
+        sta segmentTileOffsetsLR+SEGMENT_MAX_POSITION_OFFSET
         
-updateSegments_headCont anop
-; Write this code...  For now, we are just copying the position from where it was before.
+; Important - Do facing last because we use that to index into the jump
+; table for update.
+        lda segmentFacing
+        sta segmentFacing+SEGMENT_MAX_POSITION_OFFSET
+        bra updateSegments_headCont
+        
+updateSegments_headNoWrap anop
+; Assume no change in any of the data for now and just copy it into place.
         lda segmentHorizontalDir+2,y
         sta segmentHorizontalDir,y
         lda segmentVerticalDir+2,y
         sta segmentVerticalDir,y
-        lda segmentFacing+2,y
-        sta segmentFacing,y
         lda segmentScreenOffsets+2,y
         sta segmentScreenOffsets,y
-        lda segmentScreenShifts+2,y
-        sta segmentScreenShifts,y
         lda segmentTileOffsetsUL+2,y
         sta segmentTileOffsetsUL,y
         lda segmentTileOffsetsUR+2,y
@@ -252,6 +264,20 @@ updateSegments_headCont anop
         lda segmentTileOffsetsLR+2,y
         sta segmentTileOffsetsLR,y
         
+; Important - Do facing last because we use that to index into the jump
+; table for update.
+        lda segmentFacing+2,y
+        sta segmentFacing,y
+        
+updateSegments_headCont anop
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        stx segmentBeingUpdated
+        tax
+        jsr (segmentUpdateJumpTable,x)
+        ldx segmentBeingUpdated
 updateSegments_skipSegment anop
         dex
         dex
@@ -259,6 +285,62 @@ updateSegments_skipSegment anop
         jmp updateSegments_nextSegment
 updateSegments_done anop
         rtl
+        
+        
+updateSegmentLeft entry
+; TODO - Write this code...
+        rts
+        
+updateSegmentDownLeft entry
+; TODO - Write this code...
+        rts
+        
+        
+updateSegmentDown entry
+; TODO - Write this code...
+        rts
+        
+        
+updateSegmentDownRight entry
+; TODO - Write this code...
+        rts
+        
+        
+updateSegmentRight entry
+        ldx segmentBeingUpdated
+        lda segmentSpeed,x
+        beq updateSegmentRight_doInc
+        and segmentPixelOffset
+        beq updateSegmentRight_skipInc
+
+updateSegmentRight_doInc anop
+        tyx
+        inc segmentScreenOffsets,x
+
+updateSegmentRight_skipInc anop
+        lda segmentPixelOffset
+; TODO - Need to and with #3 for fast because we want 0 and 4 pixel
+; offsets and 1 and 5 to do tile updates.
+        bne updateSegmentRight_nextOffset
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        bra updateSegmentRight_done
+        
+updateSegmentRight_nextOffset anop
+        cmp #1
+        bne updateSegmentRight_done
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileRight,x
+        sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+
+; TODO - Write this code...
+; It needs to find obstacles and change direction.
+updateSegmentRight_done anop
+        rts
         
 
 addBodySegment entry
@@ -270,6 +352,9 @@ addBodySegment entry
 
         lda #SEGMENT_STATE_BODY
         sta segmentStates,x
+        
+        lda #SEGMENT_SPEED_SLOW
+        sta segmentSpeed,x
         
         lda numSegments
         asl a
@@ -293,9 +378,6 @@ addBodySegment entry
         sbc #3
         sta segmentScreenOffsets,y
 
-        lda #0
-        sta segmentScreenShifts,y
-
         txa
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsUR,y
@@ -303,6 +385,8 @@ addBodySegment entry
         sta segmentTileOffsetsLR,y
         
         inc numSegments
+        stz segmentSpriteShift
+        stz segmentPixelOffset
 
         rtl
         
@@ -317,6 +401,9 @@ addHeadSegment entry
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
         
+        lda #SEGMENT_SPEED_SLOW
+        sta segmentSpeed,x
+        
         lda numSegments
         asl a
         asl a
@@ -339,9 +426,6 @@ addHeadSegment entry
         sbc #3
         sta segmentScreenOffsets,y
         
-        lda #0
-        sta segmentScreenShifts,y
-        
         txa
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsUR,y
@@ -349,6 +433,8 @@ addHeadSegment entry
         sta segmentTileOffsetsLR,y
         
         inc numSegments
+        stz segmentSpriteShift
+        stz segmentPixelOffset
         
         rtl
         
@@ -363,7 +449,7 @@ numSegments     dc i2'0'
 ; The method used to track a segments position and other details on the screen are a bit
 ; funky.  In order to have body segments follow a head segment, we keep information from
 ; the position of the head segment.  The segmentPosOffset gives an offset into the other
-; larger arrays (97 words) which describes the position of the segment.  When a head is
+; larger arrays (96 words) which describes the position of the segment.  When a head is
 ; updated, the segmentPosOffset is decremented.  That way, the previous positions are
 ; still there and body segments after that can reference it.
 ;
@@ -371,28 +457,23 @@ numSegments     dc i2'0'
 ; before it can be re-used by the next body segment.  If there are 12 segments max, we
 ; need (8*12) positions to ensure all segments can know where there position was and will
 ; be next.
-;
-; But I bump that count up to 97.  When the segmentPosOffset is 0, the next one to use is
-; the last.  It is nice to assume that the previous position information is at (index + 2).
-; That works all the time except when segmentPosOffset was 0 and now wraps around to 190
-; or ((96 - 1) * 2).  When that happens, we copy the info from 0 to 192 or (96 *2).  That
-; way the code can safely assume that the old position information is in fact always at.
-; (index + 2).
 segmentStates           dc 12i2'SEGMENT_STATE_NONE'
+segmentSpeed            dc 12i2'SEGMENT_SPEED_SLOW'
 segmentPosOffset        dc 12i2'0'
-segmentHorizontalDir    dc 97i2'SEGMENT_DIR_RIGHT'
-segmentVerticalDir      dc 97i2'SEGMENT_DIR_DOWN'
-segmentFacing           dc 97i2'SEGMENT_FACING_DOWN'
-segmentScreenOffsets    dc 97i2'0'
-segmentScreenShifts     dc 97i2'0'
-segmentTileOffsetsUL    dc 97i2'0'
-segmentTileOffsetsUR    dc 97i2'0'
-segmentTileOffsetsLL    dc 97i2'0'
-segmentTileOffsetsLR    dc 97i2'0'
+segmentHorizontalDir    dc 96i2'SEGMENT_DIR_RIGHT'
+segmentVerticalDir      dc 96i2'SEGMENT_DIR_DOWN'
+segmentFacing           dc 96i2'SEGMENT_FACING_DOWN'
+segmentScreenOffsets    dc 96i2'0'
+segmentTileOffsetsUL    dc 96i2'0'
+segmentTileOffsetsUR    dc 96i2'0'
+segmentTileOffsetsLL    dc 96i2'0'
+segmentTileOffsetsLR    dc 96i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
-segmentSpriteOffset dc i2'SEGMENT_SPRITE_LAST_OFFSET'
+segmentSpriteOffset dc i2'0'
 segmentSpriteShift  dc i2'0'
+segmentPixelOffset  dc i2'0'
+segmentBeingUpdated dc i2'0'
 
 
 headJumpTable anop
@@ -617,5 +698,10 @@ bodyShiftJumpTable anop
                     dc i4'rightBody1s'
                     dc i4'rightBody4s'
 
- 
+segmentUpdateJumpTable  dc i2'updateSegmentLeft'
+                        dc i2'updateSegmentDownLeft'
+                        dc i2'updateSegmentDown'
+                        dc i2'updateSegmentDownRight'
+                        dc i2'updateSegmentRight'
+                        
         end

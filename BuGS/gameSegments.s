@@ -211,6 +211,7 @@ updateSegments_bodyWrapPos anop
         jmp updateSegments_skipSegment
         
 updateSegments_head anop
+;        jsl waitForKey
         lda segmentPosOffset,x
         beq updateSegments_headWrapPos
         dec a
@@ -270,10 +271,19 @@ updateSegments_headNoWrap anop
         sta segmentFacing,y
         
 updateSegments_headCont anop
+; This is funky.  Each "facing" value is in increments of 32 to make figuring out where
+; the sprite callback is easy but it makes this update callback harder.  We divide by
+; 16 to get values incrementing by 2's.  Then, we or in the speed.  The speed is 0 or 1
+; so now we have values incrementing by 1 each with a unique pair of facing and speed.
+; Then we multiply by two again so we have unique values incrementing by 2 and that is
+; used as an index into the jump table.  That way, we jump to a subroutine which is
+; unique for each facing/speed pair.
         lsr a
         lsr a
         lsr a
         lsr a
+        ora segmentSpeed,x
+        asl a
         stx segmentBeingUpdated
         tax
         jsr (segmentUpdateJumpTable,x)
@@ -287,49 +297,295 @@ updateSegments_done anop
         rtl
         
         
-updateSegmentLeft entry
+updateSegmentLeftFast entry
 ; TODO - Write this code...
         rts
-        
-updateSegmentDownLeft entry
-; TODO - Write this code...
-        rts
-        
-        
-updateSegmentDown entry
-; TODO - Write this code...
-        rts
-        
-        
-updateSegmentDownRight entry
-; TODO - Write this code...
-        rts
-        
-        
-updateSegmentRight entry
-        ldx segmentBeingUpdated
-        lda segmentSpeed,x
-        beq updateSegmentRight_doInc
-        and segmentPixelOffset
-        beq updateSegmentRight_skipInc
 
-updateSegmentRight_doInc anop
+        
+updateSegmentLeftSlow entry
+        lda #1
+        and segmentPixelOffset
+        beq updateSegmentLeftSlow_skipDec
+        tyx
+        dec segmentScreenOffsets,x
+
+updateSegmentLeftSlow_skipDec anop
+        lda segmentPixelOffset
+        bne updateSegmentLeftSlow_nextOffset
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        jmp updateSegmentLeftSlow_done
+        
+updateSegmentLeftSlow_nextOffset anop
+        cmp #1
+        bne updateSegmentLeftSlow_nextOffset2
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileLeft,x
+        sta segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        
+        jmp updateSegmentLeftSlow_done
+
+updateSegmentLeftSlow_nextOffset2 anop
+        cmp #5
+        beq updateSegmentLeftSlow_checkDir
+        jmp updateSegmentLeftSlow_done
+
+updateSegmentLeftSlow_checkDir anop
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileLeft,x
+        cmp #LHS_FIRST_TILE
+        bge updateSegmentLeftSlow_changeDir
+        tax
+        lda tileType,x
+        beq updateSegmentLeftSlow_done
+; TODO - Test the tile type to see if it is a poisoned mushroom.
+
+updateSegmentLeftSlow_changeDir anop
+        lda #SEGMENT_FACING_DOWN_LEFT
+        sta segmentFacing,y
+        lda #SEGMENT_DIR_RIGHT
+        sta segmentHorizontalDir,y
+        lda segmentVerticalDir,y
+        beq updateSegmentLeftSlow_dirDown
+
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-5*GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        bge updateSegmentLeftSlow_doUp
+        lda #SEGMENT_DIR_DOWN
+        sta segmentVerticalDir,y
+        bra updateSegmentLeftSlow_doDown
+
+updateSegmentLeftSlow_doUp anop
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsLR,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUL,y
+        bra updateSegmentLeftSlow_done
+        
+updateSegmentLeftSlow_dirDown anop
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        blt updateSegmentLeftSlow_doDown
+        lda #SEGMENT_DIR_UP
+        sta segmentVerticalDir,y
+        bra updateSegmentLeftSlow_doUp
+        
+updateSegmentLeftSlow_doDown anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLR,y
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLL,y
+        
+updateSegmentLeftSlow_done anop
+        rts
+        
+        
+updateSegmentDownLeftFast entry
+; TODO - Write this code...
+        rts
+        
+        
+updateSegmentDownLeftSlow entry
+        lda segmentScreenOffsets,y
+        tax
+        lda #1
+        and segmentPixelOffset
+        beq updateSegmentDownLeftSlow_skipDec
+        dex
+
+updateSegmentDownLeftSlow_skipDec anop
+        lda segmentVerticalDir,y
+        beq updateSegmentDownLeftSlow_down
+        txa
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        bra updateSegmentDownLeftSlow_cont
+        
+updateSegmentDownLeftSlow_down anop
+        txa
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        
+updateSegmentDownLeftSlow_cont anop
+        sta segmentScreenOffsets,y
+        
+        lda segmentPixelOffset
+        cmp #4
+        bne updateSegmentDownLeftSlow_nextOffset
+        
+        lda #SEGMENT_FACING_LEFT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownLeftSlow_tilesDown
+        
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        bra updateSegmentDownLeftSlow_done
+        
+updateSegmentDownLeftSlow_tilesDown anop
+        lda segmentTileOffsetsLL,y
+        sta segmentTileOffsetsUL,y
+        lda segmentTileOffsetsLR,y
+        sta segmentTileOffsetsUR,y
+        bra updateSegmentDownLeftSlow_done
+        
+updateSegmentDownLeftSlow_nextOffset anop
+        cmp #7
+        bne updateSegmentDownLeftSlow_done
+        lda #SEGMENT_FACING_DOWN
+        sta segmentFacing,y
+        
+updateSegmentDownLeftSlow_done anop
+        rts
+      
+      
+updateSegmentDownFast entry
+; TODO - Write this code...
+        rts
+      
+      
+updateSegmentDownSlow entry
+        lda segmentVerticalDir,y
+        beq updateSegmentDownSlow_down
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        bra updateSegmentDownSlow_cont
+        
+updateSegmentDownSlow_down anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        
+updateSegmentDownSlow_cont anop
+        sta segmentScreenOffsets,y
+
+        lda segmentPixelOffset
+        cmp #2
+        bne updateSegmentDownSlow_done
+        
+        lda segmentHorizontalDir,y
+        beq updateSegmentDownSlow_left
+        
+        lda #SEGMENT_FACING_DOWN_RIGHT
+        sta segmentFacing,y
         tyx
         inc segmentScreenOffsets,x
+        bra updateSegmentDownSlow_done
+        
+updateSegmentDownSlow_left anop
+        lda #SEGMENT_FACING_DOWN_LEFT
+        sta segmentFacing,y
+        tyx
+        dec segmentScreenOffsets,x
 
-updateSegmentRight_skipInc anop
+updateSegmentDownSlow_done anop
+        rts
+ 
+ 
+updateSegmentDownRightFast entry
+; TODO - Write this code...
+        rts
+        
+        
+updateSegmentDownRightSlow entry
+        lda segmentScreenOffsets,y
+        tax
+        lda #1
+        and segmentPixelOffset
+        beq updateSegmentDownRightSlow_skipInc
+        inx
+
+updateSegmentDownRightSlow_skipInc anop
+        lda segmentVerticalDir,y
+        beq updateSegmentDownRightSlow_down
+        txa
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        bra updateSegmentDownRightSlow_cont
+        
+updateSegmentDownRightSlow_down anop
+        txa
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        
+updateSegmentDownRightSlow_cont anop
+        sta segmentScreenOffsets,y
+        
         lda segmentPixelOffset
-; TODO - Need to and with #3 for fast because we want 0 and 4 pixel
-; offsets and 1 and 5 to do tile updates.
-        bne updateSegmentRight_nextOffset
+        cmp #4
+        bne updateSegmentDownRightSlow_nextOffset
+        
+        lda #SEGMENT_FACING_RIGHT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownRightSlow_tilesDown
+        
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        bra updateSegmentDownRightSlow_done
+        
+updateSegmentDownRightSlow_tilesDown anop
+        lda segmentTileOffsetsLL,y
+        sta segmentTileOffsetsUL,y
+        lda segmentTileOffsetsLR,y
+        sta segmentTileOffsetsUR,y
+        bra updateSegmentDownRightSlow_done
+        
+updateSegmentDownRightSlow_nextOffset anop
+        cmp #7
+        bne updateSegmentDownRightSlow_done
+        lda #SEGMENT_FACING_DOWN
+        sta segmentFacing,y
+        
+updateSegmentDownRightSlow_done anop
+        rts
+
+                
+updateSegmentRightFast entry
+        tyx
+        inc segmentScreenOffsets,x
+        
+        lda segmentPixelOffset
+        and #3
+        bne updateSegmentRightFast_nextOffset
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        bra updateSegmentRight_done
+        bra updateSegmentRightFast_done
         
-updateSegmentRight_nextOffset anop
+updateSegmentRightFast_nextOffset anop
         cmp #1
-        bne updateSegmentRight_done
+        bne updateSegmentRightFast_done
         
         lda segmentTileOffsetsUR,y
         tax
@@ -339,7 +595,111 @@ updateSegmentRight_nextOffset anop
 
 ; TODO - Write this code...
 ; It needs to find obstacles and change direction.
-updateSegmentRight_done anop
+updateSegmentRightFast_done anop
+        rts
+        
+
+updateSegmentRightSlow entry
+        lda #1
+        and segmentPixelOffset
+        beq updateSegmentRightSlow_skipInc
+        tyx
+        inc segmentScreenOffsets,x
+
+updateSegmentRightSlow_skipInc anop
+        lda segmentPixelOffset
+        bne updateSegmentRightSlow_nextOffset
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        jmp updateSegmentRightSlow_done
+        
+updateSegmentRightSlow_nextOffset anop
+        cmp #1
+        bne updateSegmentRightSlow_nextOffset2
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileRight,x
+        sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        
+        jmp updateSegmentRightSlow_done
+
+updateSegmentRightSlow_nextOffset2 anop
+        cmp #5
+        beq updateSegmentRightSlow_checkDir
+        jmp updateSegmentRightSlow_done
+
+updateSegmentRightSlow_checkDir anop
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileRight,x
+        cmp #RHS_FIRST_TILE
+        bge updateSegmentRightSlow_changeDir
+        tax
+        lda tileType,x
+        beq updateSegmentRightSlow_done
+; TODO - Test the tile type to see if it is a poisoned mushroom.
+
+updateSegmentRightSlow_changeDir anop
+        lda #SEGMENT_FACING_DOWN_RIGHT
+        sta segmentFacing,y
+        lda #SEGMENT_DIR_LEFT
+        sta segmentHorizontalDir,y
+        lda segmentVerticalDir,y
+        beq updateSegmentRightSlow_dirDown
+
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-5*GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        bge updateSegmentRightSlow_doUp
+        lda #SEGMENT_DIR_DOWN
+        sta segmentVerticalDir,y
+        bra updateSegmentRightSlow_doDown
+
+updateSegmentRightSlow_doUp anop
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsLR,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUL,y
+        bra updateSegmentRightSlow_done
+        
+updateSegmentRightSlow_dirDown anop
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        blt updateSegmentRightSlow_doDown
+        lda #SEGMENT_DIR_UP
+        sta segmentVerticalDir,y
+        bra updateSegmentRightSlow_doUp
+        
+        
+updateSegmentRightSlow_doDown anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLR,y
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLL,y
+        
+updateSegmentRightSlow_done anop
         rts
         
 
@@ -412,13 +772,13 @@ addHeadSegment entry
         sta segmentPosOffset,x
         tay
         
-        lda #SEGMENT_DIR_RIGHT
+        lda #SEGMENT_DIR_LEFT
         sta segmentHorizontalDir,y
         
         lda #SEGMENT_DIR_DOWN
         sta segmentVerticalDir,y
         
-        lda #SEGMENT_FACING_RIGHT
+        lda #SEGMENT_FACING_LEFT
         sta segmentFacing,y
         
         lda tileScreenOffset,x
@@ -510,14 +870,14 @@ headJumpTable anop
 
 
 ; rightDownHeadJumpTable
-                    dc i4'rightDownHead1'
-                    dc i4'rightDownHead2'       ; Problem, spills into next tile...
-                    dc i4'rightDownHead1'
-                    dc i4'rightDownHead2'       ; Problem, spills into next tile...
-                    dc i4'rightDownHead1'
-                    dc i4'rightDownHead2'       ; Problem, spills into next tile...
-                    dc i4'rightDownHead1'
-                    dc i4'rightDownHead2'       ; Problem, spills into next tile...
+                    dc i4'rightDownHead1s'
+                    dc i4'rightDownHead2s'
+                    dc i4'rightDownHead1s'
+                    dc i4'rightDownHead2s'
+                    dc i4'rightDownHead1s'
+                    dc i4'rightDownHead2s'
+                    dc i4'rightDownHead1s'
+                    dc i4'rightDownHead2s'
 
 
 ; rightHeadJumpTable
@@ -566,14 +926,14 @@ headShiftJumpTable  anop
 
 
 ; rightDownShiftHeadJumpTable
-                    dc i4'rightDownHead1s'
-                    dc i4'rightDownHead2s'
-                    dc i4'rightDownHead1s'
-                    dc i4'rightDownHead2s'
-                    dc i4'rightDownHead1s'
-                    dc i4'rightDownHead2s'
-                    dc i4'rightDownHead1s'
-                    dc i4'rightDownHead2s'
+                    dc i4'rightDownHead1'
+                    dc i4'rightDownHead2'
+                    dc i4'rightDownHead1'
+                    dc i4'rightDownHead2'
+                    dc i4'rightDownHead1'
+                    dc i4'rightDownHead2'
+                    dc i4'rightDownHead1'
+                    dc i4'rightDownHead2'
 
 
 ; rightHeadShiftJumpTable
@@ -622,14 +982,14 @@ bodyJumpTable   anop
 
 
 ; rightDownBodyJumpTable
-                    dc i4'rightDownBody1'
-                    dc i4'rightDownBody2'       ; Problem, spills into next tile...
-                    dc i4'rightDownBody1'
-                    dc i4'rightDownBody2'       ; Problem, spills into next tile...
-                    dc i4'rightDownBody1'
-                    dc i4'rightDownBody2'       ; Problem, spills into next tile...
-                    dc i4'rightDownBody1'
-                    dc i4'rightDownBody2'       ; Problem, spills into next tile...
+                    dc i4'rightDownBody1s'
+                    dc i4'rightDownBody2s'
+                    dc i4'rightDownBody1s'
+                    dc i4'rightDownBody2s'
+                    dc i4'rightDownBody1s'
+                    dc i4'rightDownBody2s'
+                    dc i4'rightDownBody1s'
+                    dc i4'rightDownBody2s'
 
 
 ; rightBodyJumpTable
@@ -678,14 +1038,14 @@ bodyShiftJumpTable anop
 
 
 ; rightDownShiftBodyJumpTable
-                    dc i4'rightDownBody1s'
-                    dc i4'rightDownBody2s'
-                    dc i4'rightDownBody1s'
-                    dc i4'rightDownBody2s'
-                    dc i4'rightDownBody1s'
-                    dc i4'rightDownBody2s'
-                    dc i4'rightDownBody1s'
-                    dc i4'rightDownBody2s'
+                    dc i4'rightDownBody1'
+                    dc i4'rightDownBody2'
+                    dc i4'rightDownBody1'
+                    dc i4'rightDownBody2'
+                    dc i4'rightDownBody1'
+                    dc i4'rightDownBody2'
+                    dc i4'rightDownBody1'
+                    dc i4'rightDownBody2'
 
 
 ; rightBodyShiftJumpTable
@@ -698,10 +1058,15 @@ bodyShiftJumpTable anop
                     dc i4'rightBody1s'
                     dc i4'rightBody4s'
 
-segmentUpdateJumpTable  dc i2'updateSegmentLeft'
-                        dc i2'updateSegmentDownLeft'
-                        dc i2'updateSegmentDown'
-                        dc i2'updateSegmentDownRight'
-                        dc i2'updateSegmentRight'
+segmentUpdateJumpTable  dc i2'updateSegmentLeftFast'
+                        dc i2'updateSegmentLeftSlow'
+                        dc i2'updateSegmentDownLeftFast'
+                        dc i2'updateSegmentDownLeftSlow'
+                        dc i2'updateSegmentDownFast'
+                        dc i2'updateSegmentDownSlow'
+                        dc i2'updateSegmentDownRightFast'
+                        dc i2'updateSegmentDownRightSlow'
+                        dc i2'updateSegmentRightFast'
+                        dc i2'updateSegmentRightSlow'
                         
         end

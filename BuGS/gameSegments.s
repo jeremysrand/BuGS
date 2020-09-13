@@ -172,10 +172,7 @@ updateSegments entry
         inc a
         and #TILE_PIXEL_WIDTH-1
         sta segmentPixelOffset
-        
-        lda segmentSpriteShift
-        eor #1
-        sta segmentSpriteShift
+        and #1
         beq updateSegments_skipSpriteOffset
 
         lda segmentSpriteOffset
@@ -1005,29 +1002,91 @@ addBodySegment entry
         sta segmentPosOffset,x
         tay
 
-        lda #SEGMENT_DIR_RIGHT
+        lda segmentHorizontalDir-16,y
+        sta segmentHorizontalDir-14,y
+        sta segmentHorizontalDir-12,y
+        sta segmentHorizontalDir-10,y
+        sta segmentHorizontalDir-8,y
+        sta segmentHorizontalDir-6,y
+        sta segmentHorizontalDir-4,y
+        sta segmentHorizontalDir-2,y
         sta segmentHorizontalDir,y
         
-        lda #SEGMENT_DIR_DOWN
+        lda segmentVerticalDir-16,y
+        sta segmentVerticalDir-14,y
+        sta segmentVerticalDir-12,y
+        sta segmentVerticalDir-10,y
+        sta segmentVerticalDir-8,y
+        sta segmentVerticalDir-6,y
+        sta segmentVerticalDir-4,y
+        sta segmentVerticalDir-2,y
         sta segmentVerticalDir,y
-
-        lda #SEGMENT_FACING_RIGHT
+        
+        lda segmentFacing-16,y
+        sta segmentFacing-14,y
+        sta segmentFacing-12,y
+        sta segmentFacing-10,y
+        sta segmentFacing-8,y
+        sta segmentFacing-6,y
+        sta segmentFacing-4,y
+        sta segmentFacing-2,y
         sta segmentFacing,y
 
-        lda tileScreenOffset,x
+        lda tileScreenOffset
         sec
-        sbc #3
+        sbc #SCREEN_BYTES_PER_ROW*8
+        sta segmentScreenOffsets-14,y
+        sta segmentScreenOffsets-12,y
+        sta segmentScreenOffsets-10,y
+        sta segmentScreenOffsets-8,y
+        sta segmentScreenOffsets-6,y
+        sta segmentScreenOffsets-4,y
+        sta segmentScreenOffsets-2,y
         sta segmentScreenOffsets,y
 
-        txa
+        lda segmentTileOffsetsUL-16,y
+        sta segmentTileOffsetsUL-14,y
+        sta segmentTileOffsetsUL-12,y
+        sta segmentTileOffsetsUL-10,y
+        sta segmentTileOffsetsUL-8,y
+        sta segmentTileOffsetsUL-6,y
+        sta segmentTileOffsetsUL-4,y
+        sta segmentTileOffsetsUL-2,y
         sta segmentTileOffsetsUL,y
+        
+        lda segmentTileOffsetsUR-16,y
+        sta segmentTileOffsetsUR-14,y
+        sta segmentTileOffsetsUR-12,y
+        sta segmentTileOffsetsUR-10,y
+        sta segmentTileOffsetsUR-8,y
+        sta segmentTileOffsetsUR-6,y
+        sta segmentTileOffsetsUR-4,y
+        sta segmentTileOffsetsUR-2,y
         sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL-16,y
+        sta segmentTileOffsetsLL-14,y
+        sta segmentTileOffsetsLL-12,y
+        sta segmentTileOffsetsLL-10,y
+        sta segmentTileOffsetsLL-8,y
+        sta segmentTileOffsetsLL-6,y
+        sta segmentTileOffsetsLL-4,y
+        sta segmentTileOffsetsLL-2,y
         sta segmentTileOffsetsLL,y
+        
+        lda segmentTileOffsetsLR-16,y
+        sta segmentTileOffsetsLR-14,y
+        sta segmentTileOffsetsLR-12,y
+        sta segmentTileOffsetsLR-10,y
+        sta segmentTileOffsetsLR-8,y
+        sta segmentTileOffsetsLR-6,y
+        sta segmentTileOffsetsLR-4,y
+        sta segmentTileOffsetsLR-2,y
+        sta segmentTileOffsetsLR,y
         sta segmentTileOffsetsLR,y
         
         inc numSegments
-        stz segmentSpriteShift
-        stz segmentPixelOffset
 
         rtl
         
@@ -1042,7 +1101,7 @@ addHeadSegment entry
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
         
-        lda #SEGMENT_SPEED_FAST
+        lda #SEGMENT_SPEED_SLOW
         sta segmentSpeed,x
         
         lda numSegments
@@ -1059,23 +1118,24 @@ addHeadSegment entry
         lda #SEGMENT_DIR_DOWN
         sta segmentVerticalDir,y
         
-        lda #SEGMENT_FACING_RIGHT
+        lda #SEGMENT_FACING_DOWN_LEFT
         sta segmentFacing,y
         
         lda tileScreenOffset,x
         sec
-        sbc #3
+        sbc #SCREEN_BYTES_PER_ROW*7+2
         sta segmentScreenOffsets,y
         
         txa
         sta segmentTileOffsetsUL,y
-        sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLL,y
+        lda tileRight,x
+        sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
         
         inc numSegments
-        stz segmentSpriteShift
-        stz segmentPixelOffset
+        lda #5
+        sta segmentPixelOffset
         
         rtl
         
@@ -1112,7 +1172,6 @@ segmentTileOffsetsLR    dc 96i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'0'
-segmentSpriteShift  dc i2'0'
 segmentPixelOffset  dc i2'0'
 segmentBeingUpdated dc i2'0'
 

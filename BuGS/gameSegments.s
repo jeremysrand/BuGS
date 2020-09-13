@@ -324,6 +324,10 @@ updateSegmentLeftFast_nextOffset2 anop
         jmp updateSegmentLeftFast_done
 
 updateSegmentLeftFast_checkDir anop
+        ldx segmentBeingUpdated
+        lda segmentStates,x
+        cmp #SEGMENT_STATE_POISONED_HEAD
+        beq updateSegmentLeftFast_changeDir
         lda segmentTileOffsetsUL,y
         tax
         lda tileLeft,x
@@ -331,9 +335,15 @@ updateSegmentLeftFast_checkDir anop
         bge updateSegmentLeftFast_changeDir
         tax
         lda tileType,x
-        beq updateSegmentLeftFast_done
-; TODO - Test the tile type to see if it is a poisoned mushroom.
-
+        bne updateSegmentLeftFast_checkPoison
+        jmp updateSegmentLeftFast_done
+updateSegmentLeftFast_checkPoison anop
+        cmp #TILE_POISON_MUSHROOM1
+        blt updateSegmentLeftFast_changeDir
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_POISONED_HEAD
+        sta segmentStates,x
+        
 updateSegmentLeftFast_changeDir anop
         lda #SEGMENT_FACING_DOWN_LEFT
         sta segmentFacing,y
@@ -370,6 +380,10 @@ updateSegmentLeftFast_dirDown anop
         lda segmentTileOffsetsUR,y
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentLeftFast_doDown
+; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_HEAD
+        sta segmentStates,x
         lda #SEGMENT_DIR_UP
         sta segmentVerticalDir,y
         bra updateSegmentLeftFast_doUp
@@ -427,6 +441,10 @@ updateSegmentLeftSlow_nextOffset2 anop
         jmp updateSegmentLeftSlow_done
 
 updateSegmentLeftSlow_checkDir anop
+        ldx segmentBeingUpdated
+        lda segmentStates,x
+        cmp #SEGMENT_STATE_POISONED_HEAD
+        beq updateSegmentLeftSlow_changeDir
         lda segmentTileOffsetsUL,y
         tax
         lda tileLeft,x
@@ -434,8 +452,14 @@ updateSegmentLeftSlow_checkDir anop
         bge updateSegmentLeftSlow_changeDir
         tax
         lda tileType,x
-        beq updateSegmentLeftSlow_done
-; TODO - Test the tile type to see if it is a poisoned mushroom.
+        bne updateSegmentLeftSlow_checkPoison
+        jmp updateSegmentLeftSlow_done
+updateSegmentLeftSlow_checkPoison anop
+        cmp #TILE_POISON_MUSHROOM1
+        blt updateSegmentLeftSlow_changeDir
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_POISONED_HEAD
+        sta segmentStates,x
 
 updateSegmentLeftSlow_changeDir anop
         lda #SEGMENT_FACING_DOWN_LEFT
@@ -473,6 +497,10 @@ updateSegmentLeftSlow_dirDown anop
         lda segmentTileOffsetsUR,y
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentLeftSlow_doDown
+; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_HEAD
+        sta segmentStates,x
         lda #SEGMENT_DIR_UP
         sta segmentVerticalDir,y
         bra updateSegmentLeftSlow_doUp
@@ -807,6 +835,10 @@ updateSegmentRightFast_nextOffset2 anop
         jmp updateSegmentRightFast_done
         
 updateSegmentRightFast_checkDir anop
+        ldx segmentBeingUpdated
+        lda segmentStates,x
+        cmp #SEGMENT_STATE_POISONED_HEAD
+        beq updateSegmentRightFast_changeDir
         lda segmentTileOffsetsUR,y
         tax
         lda tileRight,x
@@ -814,8 +846,14 @@ updateSegmentRightFast_checkDir anop
         bge updateSegmentRightFast_changeDir
         tax
         lda tileType,x
-        beq updateSegmentRightFast_done
-; TODO - Test the tile type to see if it is a poisoned mushroom.
+        bne updateSegmentRightFast_checkPoison
+        jmp updateSegmentRightFast_done
+updateSegmentRightFast_checkPoison anop
+        cmp #TILE_POISON_MUSHROOM1
+        blt updateSegmentRightFast_changeDir
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_POISONED_HEAD
+        sta segmentStates,x
 
 updateSegmentRightFast_changeDir anop
         lda #SEGMENT_FACING_DOWN_RIGHT
@@ -853,6 +891,10 @@ updateSegmentRightFast_dirDown anop
         lda segmentTileOffsetsUR,y
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentRightFast_doDown
+; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_HEAD
+        sta segmentStates,x
         lda #SEGMENT_DIR_UP
         sta segmentVerticalDir,y
         bra updateSegmentRightFast_doUp
@@ -910,6 +952,10 @@ updateSegmentRightSlow_nextOffset2 anop
         jmp updateSegmentRightSlow_done
 
 updateSegmentRightSlow_checkDir anop
+        ldx segmentBeingUpdated
+        lda segmentStates,x
+        cmp #SEGMENT_STATE_POISONED_HEAD
+        beq updateSegmentRightSlow_changeDir
         lda segmentTileOffsetsUR,y
         tax
         lda tileRight,x
@@ -917,8 +963,14 @@ updateSegmentRightSlow_checkDir anop
         bge updateSegmentRightSlow_changeDir
         tax
         lda tileType,x
-        beq updateSegmentRightSlow_done
-; TODO - Test the tile type to see if it is a poisoned mushroom.
+        bne updateSegmentRightSlow_checkPoison
+        jmp updateSegmentRightSlow_done
+updateSegmentRightSlow_checkPoison anop
+        cmp #TILE_POISON_MUSHROOM1
+        blt updateSegmentRightSlow_changeDir
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_POISONED_HEAD
+        sta segmentStates,x
 
 updateSegmentRightSlow_changeDir anop
         lda #SEGMENT_FACING_DOWN_RIGHT
@@ -956,10 +1008,13 @@ updateSegmentRightSlow_dirDown anop
         lda segmentTileOffsetsUR,y
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentRightSlow_doDown
+; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+        ldx segmentBeingUpdated
+        lda #SEGMENT_STATE_HEAD
+        sta segmentStates,x
         lda #SEGMENT_DIR_UP
         sta segmentVerticalDir,y
         bra updateSegmentRightSlow_doUp
-        
         
 updateSegmentRightSlow_doDown anop
         lda segmentScreenOffsets,y
@@ -987,18 +1042,82 @@ addBodySegment entry
         sbc numSegments
         asl a
         tax
+        
+        inc numSegments
 
         lda #SEGMENT_STATE_BODY
         sta segmentStates,x
         
-        lda #SEGMENT_SPEED_SLOW
+        lda segmentSpeed+2,x
         sta segmentSpeed,x
         
-        lda numSegments
-        asl a
-        asl a
-        asl a
-        asl a
+        beq addBodySegment_fast
+        jmp addBodySegment_slow
+
+addBodySegment_fast anop
+        lda segmentPosOffset+2,x
+        clc
+        adc #8
+        sta segmentPosOffset,x
+        tay
+
+        lda segmentHorizontalDir-8,y
+        sta segmentHorizontalDir-6,y
+        sta segmentHorizontalDir-4,y
+        sta segmentHorizontalDir-2,y
+        sta segmentHorizontalDir,y
+        
+        lda segmentVerticalDir-8,y
+        sta segmentVerticalDir-6,y
+        sta segmentVerticalDir-4,y
+        sta segmentVerticalDir-2,y
+        sta segmentVerticalDir,y
+        
+        lda segmentFacing-8,y
+        sta segmentFacing-6,y
+        sta segmentFacing-4,y
+        sta segmentFacing-2,y
+        sta segmentFacing,y
+
+        lda tileScreenOffset
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*8
+        sta segmentScreenOffsets-6,y
+        sta segmentScreenOffsets-4,y
+        sta segmentScreenOffsets-2,y
+        sta segmentScreenOffsets,y
+
+        lda segmentTileOffsetsUL-8,y
+        sta segmentTileOffsetsUL-6,y
+        sta segmentTileOffsetsUL-4,y
+        sta segmentTileOffsetsUL-2,y
+        sta segmentTileOffsetsUL,y
+        
+        lda segmentTileOffsetsUR-8,y
+        sta segmentTileOffsetsUR-6,y
+        sta segmentTileOffsetsUR-4,y
+        sta segmentTileOffsetsUR-2,y
+        sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL-8,y
+        sta segmentTileOffsetsLL-6,y
+        sta segmentTileOffsetsLL-4,y
+        sta segmentTileOffsetsLL-2,y
+        sta segmentTileOffsetsLL,y
+        
+        lda segmentTileOffsetsLR-8,y
+        sta segmentTileOffsetsLR-6,y
+        sta segmentTileOffsetsLR-4,y
+        sta segmentTileOffsetsLR-2,y
+        sta segmentTileOffsetsLR,y
+        sta segmentTileOffsetsLR,y
+
+        rtl
+addBodySegment_slow anop
+        lda segmentPosOffset+2,x
+        clc
+        adc #16
         sta segmentPosOffset,x
         tay
 
@@ -1085,8 +1204,6 @@ addBodySegment entry
         sta segmentTileOffsetsLR-2,y
         sta segmentTileOffsetsLR,y
         sta segmentTileOffsetsLR,y
-        
-        inc numSegments
 
         rtl
         

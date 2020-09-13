@@ -338,7 +338,7 @@ updateSegmentLeftSlow_checkDir anop
         lda segmentTileOffsetsUL,y
         tax
         lda tileLeft,x
-        cmp #LHS_FIRST_TILE*SIZEOF_TILE_INFO
+        cmp #LHS_FIRST_TILE_OFFSET
         bge updateSegmentLeftSlow_changeDir
         tax
         lda tileType,x
@@ -635,7 +635,7 @@ updateSegmentRightSlow_checkDir anop
         lda segmentTileOffsetsUR,y
         tax
         lda tileRight,x
-        cmp #RHS_FIRST_TILE*SIZEOF_TILE_INFO
+        cmp #RHS_FIRST_TILE_OFFSET
         bge updateSegmentRightSlow_changeDir
         tax
         lda tileType,x

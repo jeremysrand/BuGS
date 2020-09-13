@@ -298,7 +298,102 @@ updateSegments_done anop
         
         
 updateSegmentLeftFast entry
-; TODO - Write this code...
+        tyx
+        dec segmentScreenOffsets,x
+
+        lda segmentPixelOffset
+        and #3
+        bne updateSegmentLeftFast_nextOffset
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        jmp updateSegmentLeftFast_done
+        
+updateSegmentLeftFast_nextOffset anop
+        cmp #1
+        bne updateSegmentLeftFast_nextOffset2
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileLeft,x
+        sta segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        
+        jmp updateSegmentLeftFast_done
+
+updateSegmentLeftFast_nextOffset2 anop
+        cmp #3
+        beq updateSegmentLeftFast_checkDir
+        jmp updateSegmentLeftFast_done
+
+updateSegmentLeftFast_checkDir anop
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileLeft,x
+        cmp #LHS_FIRST_TILE_OFFSET
+        bge updateSegmentLeftFast_changeDir
+        tax
+        lda tileType,x
+        beq updateSegmentLeftFast_done
+; TODO - Test the tile type to see if it is a poisoned mushroom.
+
+updateSegmentLeftFast_changeDir anop
+        lda #SEGMENT_FACING_DOWN_LEFT
+        sta segmentFacing,y
+        lda #SEGMENT_DIR_RIGHT
+        sta segmentHorizontalDir,y
+        lda segmentVerticalDir,y
+        beq updateSegmentLeftFast_dirDown
+
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-5*GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        bge updateSegmentLeftFast_doUp
+        lda #SEGMENT_DIR_DOWN
+        sta segmentVerticalDir,y
+        bra updateSegmentLeftFast_doDown
+
+updateSegmentLeftFast_doUp anop
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsLR,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUL,y
+        bra updateSegmentLeftFast_done
+        
+updateSegmentLeftFast_dirDown anop
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        blt updateSegmentLeftFast_doDown
+        lda #SEGMENT_DIR_UP
+        sta segmentVerticalDir,y
+        bra updateSegmentLeftFast_doUp
+        
+updateSegmentLeftFast_doDown anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLR,y
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLL,y
+        
+updateSegmentLeftFast_done anop
         rts
 
         
@@ -406,7 +501,48 @@ updateSegmentLeftSlow_done anop
         
         
 updateSegmentDownLeftFast entry
-; TODO - Write this code...
+        lda segmentVerticalDir,y
+        beq updateSegmentDownLeftFast_down
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2+1
+        bra updateSegmentDownLeftFast_cont
+        
+updateSegmentDownLeftFast_down anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2-1
+        
+updateSegmentDownLeftFast_cont anop
+        sta segmentScreenOffsets,y
+        
+        lda segmentPixelOffset
+        and #3
+        beq updateSegmentDownLeftFast_nextOffset
+        
+        lda #SEGMENT_FACING_LEFT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownLeftFast_tilesDown
+        
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        bra updateSegmentDownLeftFast_done
+        
+updateSegmentDownLeftFast_tilesDown anop
+        lda segmentTileOffsetsLL,y
+        sta segmentTileOffsetsUL,y
+        lda segmentTileOffsetsLR,y
+        sta segmentTileOffsetsUR,y
+        bra updateSegmentDownLeftFast_done
+        
+updateSegmentDownLeftFast_nextOffset anop
+        lda #SEGMENT_FACING_DOWN
+        sta segmentFacing,y
+        
+updateSegmentDownLeftFast_done anop
         rts
         
         
@@ -467,7 +603,41 @@ updateSegmentDownLeftSlow_done anop
       
       
 updateSegmentDownFast entry
-; TODO - Write this code...
+        lda segmentHorizontalDir,y
+        beq updateSegmentDownFast_left
+        
+        lda #SEGMENT_FACING_DOWN_RIGHT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownFast_downRight
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2-1
+        bra updateSegmentDownFast_done
+        
+updateSegmentDownFast_downRight anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2+1
+        bra updateSegmentDownFast_done
+        
+updateSegmentDownFast_left anop
+        lda #SEGMENT_FACING_DOWN_LEFT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownFast_downLeft
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2+1
+        bra updateSegmentDownFast_done
+        
+updateSegmentDownFast_downLeft anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2-1
+        
+updateSegmentDownFast_done anop
+        sta segmentScreenOffsets,y
         rts
       
       
@@ -511,7 +681,48 @@ updateSegmentDownSlow_done anop
  
  
 updateSegmentDownRightFast entry
-; TODO - Write this code...
+        lda segmentVerticalDir,y
+        beq updateSegmentDownRightFast_down
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2-1
+        bra updateSegmentDownRightFast_cont
+        
+updateSegmentDownRightFast_down anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2+1
+        
+updateSegmentDownRightFast_cont anop
+        sta segmentScreenOffsets,y
+        
+        lda segmentPixelOffset
+        and #3
+        beq updateSegmentDownRightFast_nextOffset
+        
+        lda #SEGMENT_FACING_RIGHT
+        sta segmentFacing,y
+        lda segmentVerticalDir,y
+        beq updateSegmentDownRightFast_tilesDown
+        
+        lda segmentTileOffsetsUL,y
+        sta segmentTileOffsetsLL,y
+        lda segmentTileOffsetsUR,y
+        sta segmentTileOffsetsLR,y
+        bra updateSegmentDownRightFast_done
+        
+updateSegmentDownRightFast_tilesDown anop
+        lda segmentTileOffsetsLL,y
+        sta segmentTileOffsetsUL,y
+        lda segmentTileOffsetsLR,y
+        sta segmentTileOffsetsUR,y
+        bra updateSegmentDownRightFast_done
+        
+updateSegmentDownRightFast_nextOffset anop
+        lda #SEGMENT_FACING_DOWN
+        sta segmentFacing,y
+        
+updateSegmentDownRightFast_done anop
         rts
         
         
@@ -581,20 +792,90 @@ updateSegmentRightFast entry
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        bra updateSegmentRightFast_done
+        jmp updateSegmentRightFast_done
         
 updateSegmentRightFast_nextOffset anop
         cmp #1
-        bne updateSegmentRightFast_done
+        bne updateSegmentRightFast_nextOffset2
         
         lda segmentTileOffsetsUR,y
         tax
         lda tileRight,x
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
+        
+updateSegmentRightFast_nextOffset2 anop
+        cmp #3
+        beq updateSegmentRightFast_checkDir
+        jmp updateSegmentRightFast_done
+        
+updateSegmentRightFast_checkDir anop
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileRight,x
+        cmp #RHS_FIRST_TILE_OFFSET
+        bge updateSegmentRightFast_changeDir
+        tax
+        lda tileType,x
+        beq updateSegmentRightFast_done
+; TODO - Test the tile type to see if it is a poisoned mushroom.
 
-; TODO - Write this code...
-; It needs to find obstacles and change direction.
+updateSegmentRightFast_changeDir anop
+        lda #SEGMENT_FACING_DOWN_RIGHT
+        sta segmentFacing,y
+        lda #SEGMENT_DIR_LEFT
+        sta segmentHorizontalDir,y
+        lda segmentVerticalDir,y
+        beq updateSegmentRightFast_dirDown
+
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-5*GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        bge updateSegmentRightFast_doUp
+        lda #SEGMENT_DIR_DOWN
+        sta segmentVerticalDir,y
+        bra updateSegmentRightFast_doDown
+
+updateSegmentRightFast_doUp anop
+        lda segmentScreenOffsets,y
+        sec
+        sbc #SCREEN_BYTES_PER_ROW*2
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsLR,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUR,y
+        
+        lda segmentTileOffsetsLL,y
+        tax
+        lda tileAbove,x
+        sta segmentTileOffsetsUL,y
+        bra updateSegmentRightFast_done
+        
+updateSegmentRightFast_dirDown anop
+        lda segmentTileOffsetsUR,y
+        cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+        blt updateSegmentRightFast_doDown
+        lda #SEGMENT_DIR_UP
+        sta segmentVerticalDir,y
+        bra updateSegmentRightFast_doUp
+        
+updateSegmentRightFast_doDown anop
+        lda segmentScreenOffsets,y
+        clc
+        adc #SCREEN_BYTES_PER_ROW*2
+        sta segmentScreenOffsets,y
+        
+        lda segmentTileOffsetsUR,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLR,y
+        
+        lda segmentTileOffsetsUL,y
+        tax
+        lda tileBelow,x
+        sta segmentTileOffsetsLL,y
+        
 updateSegmentRightFast_done anop
         rts
         
@@ -761,7 +1042,7 @@ addHeadSegment entry
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
         
-        lda #SEGMENT_SPEED_SLOW
+        lda #SEGMENT_SPEED_FAST
         sta segmentSpeed,x
         
         lda numSegments
@@ -772,13 +1053,13 @@ addHeadSegment entry
         sta segmentPosOffset,x
         tay
         
-        lda #SEGMENT_DIR_LEFT
+        lda #SEGMENT_DIR_RIGHT
         sta segmentHorizontalDir,y
         
         lda #SEGMENT_DIR_DOWN
         sta segmentVerticalDir,y
         
-        lda #SEGMENT_FACING_LEFT
+        lda #SEGMENT_FACING_RIGHT
         sta segmentFacing,y
         
         lda tileScreenOffset,x

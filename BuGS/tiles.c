@@ -55,6 +55,8 @@ tTileOffset tileAbove[TOTAL_NUM_TILES];
 tTileOffset tileBelow[TOTAL_NUM_TILES];
 tTileOffset tileLeft[TOTAL_NUM_TILES];
 tTileOffset tileRight[TOTAL_NUM_TILES];
+word tileBitOffset[NUM_GAME_TILES];
+word tileBitMask[NUM_GAME_TILES];
 
 tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 word numDirtyNonGameTiles;
@@ -70,6 +72,8 @@ void initTiles(void)
     word tileY;
     word lastOffset;
     word tileIndex = 0;
+    word bitOffset = 0;
+    word bitMask = 1;
     word rhsTileIndex = RHS_FIRST_TILE;
     word lhsTileIndex = LHS_FIRST_TILE;
     
@@ -113,6 +117,8 @@ void initTiles(void)
             tileDirty[tileIndex] = 0;
             tileScreenOffset[tileIndex] = lastOffset;
             tileType[tileIndex] = TILE_EMPTY;
+            tileBitOffset[tileIndex] = bitOffset;
+            tileBitMask[tileIndex] = bitMask;
             
             if (tileY == 0)
                 tileAbove[tileIndex] = INVALID_TILE_NUM;
@@ -135,6 +141,16 @@ void initTiles(void)
                 tileRight[tileIndex] = GAME_X_Y_TO_TILE_OFFSET(tileX + 1, tileY);
             
             tileIndex++;
+            
+            if ((tileIndex % (sizeof(word) * 2)) == 0)
+            {
+                bitOffset += sizeof(word);
+                bitMask = 1;
+            }
+            else
+            {
+                bitMask <<= 1;
+            }
             
             lastOffset += 4;
         }

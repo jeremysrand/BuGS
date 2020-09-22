@@ -295,8 +295,8 @@ checkKey_slow anop
         jmp setScorpionSpeed
 
 checkKey_centipede anop
-        jsl addHeadSegment
-        jsl addBodySegment
+		jsl addFastHeadSegment
+        jsl addSlowHeadSegment
         jsl addBodySegment
         jsl addBodySegment
         jsl addBodySegment

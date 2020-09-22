@@ -526,6 +526,22 @@ updateSegmentLeftSlow_done anop
         
         
 updateSegmentDownLeftFast entry
+		lda segmentScreenOffsets,y
+		cmp #$2000-(7*SCREEN_BYTES_PER_ROW)
+		bge updateSegmentDownLeftFast_notOffscreen
+		lda segmentPixelOffset
+		cmp #7
+		beq updateSegmentDownLeftFast_moveOnScreen
+		rts
+
+updateSegmentDownLeftFast_moveOnScreen anop
+		lda segmentScreenOffsets,y
+		clc
+		adc #2*SCREEN_BYTES_PER_ROW
+		sta segmentScreenOffsets,y
+		rts
+
+updateSegmentDownLeftFast_notOffscreen anop
         lda segmentVerticalDir,y
         beq updateSegmentDownLeftFast_down
         lda segmentScreenOffsets,y
@@ -706,6 +722,22 @@ updateSegmentDownSlow_done anop
  
  
 updateSegmentDownRightFast entry
+		lda segmentScreenOffsets,y
+		cmp #$2000-(7*SCREEN_BYTES_PER_ROW)
+		bge updateSegmentDownRightFast_notOffscreen
+		lda segmentPixelOffset
+		cmp #7
+		beq updateSegmentDownRightFast_moveOnScreen
+		rts
+
+updateSegmentDownRightFast_moveOnScreen anop
+		lda segmentScreenOffsets,y
+		clc
+		adc #2*SCREEN_BYTES_PER_ROW
+		sta segmentScreenOffsets,y
+		rts
+
+updateSegmentDownRightFast_notOffscreen anop
         lda segmentVerticalDir,y
         beq updateSegmentDownRightFast_down
         lda segmentScreenOffsets,y
@@ -1208,7 +1240,7 @@ addBodySegment_slow anop
         rtl
         
         
-addHeadSegment entry
+addSlowHeadSegment entry
         lda #SEGMENT_MAX_NUM-1
         sec
         sbc numSegments
@@ -1238,6 +1270,9 @@ addHeadSegment entry
         lda #SEGMENT_FACING_DOWN_LEFT
         sta segmentFacing,y
         
+		txa
+		asl a
+		tax
         lda tileScreenOffset,x
         sec
         sbc #SCREEN_BYTES_PER_ROW*7+2
@@ -1255,6 +1290,58 @@ addHeadSegment entry
         sta segmentPixelOffset
         
         rtl
+
+
+addFastHeadSegment entry
+		lda #SEGMENT_MAX_NUM-1
+		sec
+		sbc numSegments
+		asl a
+		tax
+		
+		lda #SEGMENT_STATE_HEAD
+		sta segmentStates,x
+		
+		lda #SEGMENT_SPEED_FAST
+		sta segmentSpeed,x
+		
+		lda numSegments
+		asl a
+		asl a
+		asl a
+		asl a
+		sta segmentPosOffset,x
+		tay
+		
+		lda #SEGMENT_DIR_RIGHT
+		sta segmentHorizontalDir,y
+		
+		lda #SEGMENT_DIR_DOWN
+		sta segmentVerticalDir,y
+		
+		lda #SEGMENT_FACING_DOWN_LEFT
+		sta segmentFacing,y
+
+		txa
+		asl a
+		tax
+		lda tileScreenOffset,x
+		sec
+		sbc #SCREEN_BYTES_PER_ROW*8+2
+		sta segmentScreenOffsets,y
+		
+		txa
+		sta segmentTileOffsetsUL,y
+		sta segmentTileOffsetsLL,y
+		lda tileRight,x
+		sta segmentTileOffsetsUR,y
+		sta segmentTileOffsetsLR,y
+		
+		inc numSegments
+		lda #5
+		sta segmentPixelOffset
+		
+		rtl
         
 
 shootSegment entry

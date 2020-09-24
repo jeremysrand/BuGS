@@ -304,7 +304,7 @@ updateSegmentLeftFast entry
         lda segmentTileOffsetsUL,y
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        jmp updateSegmentLeftFast_done
+		rts
         
 updateSegmentLeftFast_nextOffset anop
         cmp #1
@@ -315,28 +315,30 @@ updateSegmentLeftFast_nextOffset anop
         lda tileLeft,x
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        
-        jmp updateSegmentLeftFast_done
+		rts
 
 updateSegmentLeftFast_nextOffset2 anop
         cmp #3
         beq updateSegmentLeftFast_checkDir
-        jmp updateSegmentLeftFast_done
+		rts
 
 updateSegmentLeftFast_checkDir anop
         ldx segmentBeingUpdated
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentLeftFast_changeDir
-        lda segmentTileOffsetsUL,y
-        tax
+        ldx segmentTileOffsetsUL,y
+		cpx #LHS_FIRST_TILE_OFFSET
+		bge updateSegmentLeftFast_changeDir
+		lda tileType,x
+		bne updateSegmentLeftFast_checkPoison
         lda tileLeft,x
         cmp #LHS_FIRST_TILE_OFFSET
         bge updateSegmentLeftFast_changeDir
         tax
         lda tileType,x
         bne updateSegmentLeftFast_checkPoison
-        jmp updateSegmentLeftFast_done
+		rts
 updateSegmentLeftFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
         blt updateSegmentLeftFast_changeDir
@@ -374,7 +376,7 @@ updateSegmentLeftFast_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
-        bra updateSegmentLeftFast_done
+        rts
         
 updateSegmentLeftFast_dirDown anop
         lda segmentTileOffsetsUR,y
@@ -403,8 +405,6 @@ updateSegmentLeftFast_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
-        
-updateSegmentLeftFast_done anop
         rts
 
         
@@ -421,7 +421,7 @@ updateSegmentLeftSlow_skipDec anop
         lda segmentTileOffsetsUL,y
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        jmp updateSegmentLeftSlow_done
+        rts
         
 updateSegmentLeftSlow_nextOffset anop
         cmp #1
@@ -432,28 +432,30 @@ updateSegmentLeftSlow_nextOffset anop
         lda tileLeft,x
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        
-        jmp updateSegmentLeftSlow_done
+		rts
 
 updateSegmentLeftSlow_nextOffset2 anop
         cmp #5
         beq updateSegmentLeftSlow_checkDir
-        jmp updateSegmentLeftSlow_done
+        rts
 
 updateSegmentLeftSlow_checkDir anop
         ldx segmentBeingUpdated
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentLeftSlow_changeDir
-        lda segmentTileOffsetsUL,y
-        tax
+        ldx segmentTileOffsetsUL,y
+		cpx #LHS_FIRST_TILE_OFFSET
+		bge updateSegmentLeftSlow_changeDir
+		lda tileType,x
+		bne updateSegmentLeftSlow_checkPoison
         lda tileLeft,x
         cmp #LHS_FIRST_TILE_OFFSET
         bge updateSegmentLeftSlow_changeDir
         tax
         lda tileType,x
         bne updateSegmentLeftSlow_checkPoison
-        jmp updateSegmentLeftSlow_done
+        rts
 updateSegmentLeftSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
         blt updateSegmentLeftSlow_changeDir
@@ -491,7 +493,7 @@ updateSegmentLeftSlow_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
-        bra updateSegmentLeftSlow_done
+        rts
         
 updateSegmentLeftSlow_dirDown anop
         lda segmentTileOffsetsUR,y
@@ -520,8 +522,6 @@ updateSegmentLeftSlow_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
-        
-updateSegmentLeftSlow_done anop
         rts
         
         
@@ -570,20 +570,18 @@ updateSegmentDownLeftFast_cont anop
         sta segmentTileOffsetsLL,y
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        bra updateSegmentDownLeftFast_done
+		rts
         
 updateSegmentDownLeftFast_tilesDown anop
         lda segmentTileOffsetsLL,y
         sta segmentTileOffsetsUL,y
         lda segmentTileOffsetsLR,y
         sta segmentTileOffsetsUR,y
-        bra updateSegmentDownLeftFast_done
+        rts
         
 updateSegmentDownLeftFast_nextOffset anop
         lda #SEGMENT_FACING_DOWN
         sta segmentFacing,y
-        
-updateSegmentDownLeftFast_done anop
         rts
         
         
@@ -624,14 +622,14 @@ updateSegmentDownLeftSlow_cont anop
         sta segmentTileOffsetsLL,y
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        bra updateSegmentDownLeftSlow_done
+        rts
         
 updateSegmentDownLeftSlow_tilesDown anop
         lda segmentTileOffsetsLL,y
         sta segmentTileOffsetsUL,y
         lda segmentTileOffsetsLR,y
         sta segmentTileOffsetsUR,y
-        bra updateSegmentDownLeftSlow_done
+        rts
         
 updateSegmentDownLeftSlow_nextOffset anop
         cmp #7
@@ -709,7 +707,7 @@ updateSegmentDownSlow_cont anop
         sta segmentFacing,y
         tyx
         inc segmentScreenOffsets,x
-        bra updateSegmentDownSlow_done
+        rts
         
 updateSegmentDownSlow_left anop
         lda #SEGMENT_FACING_DOWN_LEFT
@@ -766,20 +764,18 @@ updateSegmentDownRightFast_cont anop
         sta segmentTileOffsetsLL,y
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        bra updateSegmentDownRightFast_done
+        rts
         
 updateSegmentDownRightFast_tilesDown anop
         lda segmentTileOffsetsLL,y
         sta segmentTileOffsetsUL,y
         lda segmentTileOffsetsLR,y
         sta segmentTileOffsetsUR,y
-        bra updateSegmentDownRightFast_done
+        rts
         
 updateSegmentDownRightFast_nextOffset anop
         lda #SEGMENT_FACING_DOWN
         sta segmentFacing,y
-        
-updateSegmentDownRightFast_done anop
         rts
         
         
@@ -820,14 +816,14 @@ updateSegmentDownRightSlow_cont anop
         sta segmentTileOffsetsLL,y
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        bra updateSegmentDownRightSlow_done
+        rts
         
 updateSegmentDownRightSlow_tilesDown anop
         lda segmentTileOffsetsLL,y
         sta segmentTileOffsetsUL,y
         lda segmentTileOffsetsLR,y
         sta segmentTileOffsetsUR,y
-        bra updateSegmentDownRightSlow_done
+        rts
         
 updateSegmentDownRightSlow_nextOffset anop
         cmp #7
@@ -849,7 +845,7 @@ updateSegmentRightFast entry
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        jmp updateSegmentRightFast_done
+        rts
         
 updateSegmentRightFast_nextOffset anop
         cmp #1
@@ -864,22 +860,25 @@ updateSegmentRightFast_nextOffset anop
 updateSegmentRightFast_nextOffset2 anop
         cmp #3
         beq updateSegmentRightFast_checkDir
-        jmp updateSegmentRightFast_done
+        rts
         
 updateSegmentRightFast_checkDir anop
         ldx segmentBeingUpdated
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentRightFast_changeDir
-        lda segmentTileOffsetsUR,y
-        tax
+        ldx segmentTileOffsetsUR,y
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updateSegmentRightFast_changeDir
+		lda tileType,x
+		bne updateSegmentRightFast_checkPoison
         lda tileRight,x
         cmp #RHS_FIRST_TILE_OFFSET
         bge updateSegmentRightFast_changeDir
         tax
         lda tileType,x
         bne updateSegmentRightFast_checkPoison
-        jmp updateSegmentRightFast_done
+        rts
 updateSegmentRightFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
         blt updateSegmentRightFast_changeDir
@@ -917,7 +916,7 @@ updateSegmentRightFast_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
-        bra updateSegmentRightFast_done
+        rts
         
 updateSegmentRightFast_dirDown anop
         lda segmentTileOffsetsUR,y
@@ -946,8 +945,6 @@ updateSegmentRightFast_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
-        
-updateSegmentRightFast_done anop
         rts
         
 
@@ -964,7 +961,7 @@ updateSegmentRightSlow_skipInc anop
         lda segmentTileOffsetsUR,y
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
-        jmp updateSegmentRightSlow_done
+        rts
         
 updateSegmentRightSlow_nextOffset anop
         cmp #1
@@ -975,28 +972,30 @@ updateSegmentRightSlow_nextOffset anop
         lda tileRight,x
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
-        
-        jmp updateSegmentRightSlow_done
+        rts
 
 updateSegmentRightSlow_nextOffset2 anop
         cmp #5
         beq updateSegmentRightSlow_checkDir
-        jmp updateSegmentRightSlow_done
+        rts
 
 updateSegmentRightSlow_checkDir anop
         ldx segmentBeingUpdated
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentRightSlow_changeDir
-        lda segmentTileOffsetsUR,y
-        tax
+        ldx segmentTileOffsetsUR,y
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updateSegmentRightSlow_changeDir
+		lda tileType,x
+		bne updateSegmentRightSlow_checkPoison
         lda tileRight,x
         cmp #RHS_FIRST_TILE_OFFSET
         bge updateSegmentRightSlow_changeDir
         tax
         lda tileType,x
         bne updateSegmentRightSlow_checkPoison
-        jmp updateSegmentRightSlow_done
+        rts
 updateSegmentRightSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
         blt updateSegmentRightSlow_changeDir
@@ -1034,7 +1033,7 @@ updateSegmentRightSlow_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
-        bra updateSegmentRightSlow_done
+        rts
         
 updateSegmentRightSlow_dirDown anop
         lda segmentTileOffsetsUR,y
@@ -1063,8 +1062,6 @@ updateSegmentRightSlow_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
-        
-updateSegmentRightSlow_done anop
         rts
         
 

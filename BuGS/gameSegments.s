@@ -168,6 +168,48 @@ segmentBodyJump_jumpInst anop
         nop
         
 updateSegments entry
+; Clear the segment mask to start.
+		stz segmentTileMask+0
+		stz segmentTileMask+2
+		stz segmentTileMask+4
+		stz segmentTileMask+6
+		stz segmentTileMask+8
+		stz segmentTileMask+10
+		stz segmentTileMask+12
+		stz segmentTileMask+14
+		stz segmentTileMask+16
+		stz segmentTileMask+18
+		stz segmentTileMask+20
+		stz segmentTileMask+22
+		stz segmentTileMask+24
+		stz segmentTileMask+26
+		stz segmentTileMask+28
+		stz segmentTileMask+30
+		stz segmentTileMask+32
+		stz segmentTileMask+34
+		stz segmentTileMask+36
+		stz segmentTileMask+38
+		stz segmentTileMask+40
+		stz segmentTileMask+42
+		stz segmentTileMask+44
+		stz segmentTileMask+46
+		stz segmentTileMask+48
+		stz segmentTileMask+50
+		stz segmentTileMask+52
+		stz segmentTileMask+54
+		stz segmentTileMask+56
+		stz segmentTileMask+58
+		stz segmentTileMask+60
+		stz segmentTileMask+62
+		stz segmentTileMask+64
+		stz segmentTileMask+66
+		stz segmentTileMask+78
+		stz segmentTileMask+70
+		stz segmentTileMask+72
+		stz segmentTileMask+74
+		stz segmentTileMask+76
+		stz segmentTileMask+78
+
         lda segmentPixelOffset
         inc a
         and #TILE_PIXEL_WIDTH-1
@@ -238,6 +280,8 @@ updateSegments_headWrapPos anop
         sta segmentTileOffsetsLL+SEGMENT_MAX_POSITION_OFFSET
         lda segmentTileOffsetsLR
         sta segmentTileOffsetsLR+SEGMENT_MAX_POSITION_OFFSET
+		lda segmentCurrentTile
+		sta segmentCurrentTile+SEGMENT_MAX_POSITION_OFFSET
         
 ; Important - Do facing last because we use that to index into the jump
 ; table for update.
@@ -261,6 +305,8 @@ updateSegments_headNoWrap anop
         sta segmentTileOffsetsLL,y
         lda segmentTileOffsetsLR+2,y
         sta segmentTileOffsetsLR,y
+		lda segmentCurrentTile+2,y
+		sta segmentCurrentTile,y
         
 ; Important - Do facing last because we use that to index into the jump
 ; table for update.
@@ -1066,9 +1112,7 @@ updateSegmentRightSlow_doDown anop
         
 
 addBodySegment entry
-        lda #SEGMENT_MAX_NUM-1
-        sec
-        sbc numSegments
+        lda numSegments
         asl a
         tax
         
@@ -1077,14 +1121,14 @@ addBodySegment entry
         lda #SEGMENT_STATE_BODY
         sta segmentStates,x
         
-        lda segmentSpeed+2,x
+        lda segmentSpeed-2,x
         sta segmentSpeed,x
         
         beq addBodySegment_fast
         jmp addBodySegment_slow
 
 addBodySegment_fast anop
-        lda segmentPosOffset+2,x
+        lda segmentPosOffset-2,x
         clc
         adc #8
         sta segmentPosOffset,x
@@ -1144,7 +1188,7 @@ addBodySegment_fast anop
 
         rtl
 addBodySegment_slow anop
-        lda segmentPosOffset+2,x
+        lda segmentPosOffset-2,x
         clc
         adc #16
         sta segmentPosOffset,x
@@ -1238,9 +1282,7 @@ addBodySegment_slow anop
         
         
 addSlowHeadSegment entry
-        lda #SEGMENT_MAX_NUM-1
-        sec
-        sbc numSegments
+        lda numSegments
         asl a
         tax
         
@@ -1250,8 +1292,7 @@ addSlowHeadSegment entry
         lda #SEGMENT_SPEED_SLOW
         sta segmentSpeed,x
         
-        lda numSegments
-        asl a
+        txa
         asl a
         asl a
         asl a
@@ -1267,9 +1308,7 @@ addSlowHeadSegment entry
         lda #SEGMENT_FACING_DOWN_LEFT
         sta segmentFacing,y
         
-		txa
-		asl a
-		tax
+		ldx #16
         lda tileScreenOffset,x
         sec
         sbc #SCREEN_BYTES_PER_ROW*7+2
@@ -1290,9 +1329,7 @@ addSlowHeadSegment entry
 
 
 addFastHeadSegment entry
-		lda #SEGMENT_MAX_NUM-1
-		sec
-		sbc numSegments
+		lda numSegments
 		asl a
 		tax
 		
@@ -1302,8 +1339,7 @@ addFastHeadSegment entry
 		lda #SEGMENT_SPEED_FAST
 		sta segmentSpeed,x
 		
-		lda numSegments
-		asl a
+		txa
 		asl a
 		asl a
 		asl a
@@ -1319,9 +1355,7 @@ addFastHeadSegment entry
 		lda #SEGMENT_FACING_DOWN_LEFT
 		sta segmentFacing,y
 
-		txa
-		asl a
-		tax
+		ldx #32
 		lda tileScreenOffset,x
 		sec
 		sbc #SCREEN_BYTES_PER_ROW*8+2
@@ -1370,6 +1404,9 @@ segmentTileOffsetsUL    dc 96i2'0'
 segmentTileOffsetsUR    dc 96i2'0'
 segmentTileOffsetsLL    dc 96i2'0'
 segmentTileOffsetsLR    dc 96i2'0'
+segmentCurrentTile      dc 96i2'0'
+
+segmentTileMask         dc 40i2'0'
 
 SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'0'

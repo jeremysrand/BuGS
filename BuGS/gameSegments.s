@@ -1382,7 +1382,7 @@ addSlowHeadSegment entry
         lda #SEGMENT_FACING_DOWN_LEFT
         sta segmentFacing,y
         
-		ldx #16
+		ldx #32
         lda tileScreenOffset,x
         sec
         sbc #SCREEN_BYTES_PER_ROW*7+2
@@ -1430,7 +1430,7 @@ addFastHeadSegment entry
 		lda #SEGMENT_FACING_DOWN_LEFT
 		sta segmentFacing,y
 
-		ldx #32
+		ldx #16
 		lda tileScreenOffset,x
 		sec
 		sbc #SCREEN_BYTES_PER_ROW*8+2

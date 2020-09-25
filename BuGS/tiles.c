@@ -142,7 +142,7 @@ void initTiles(void)
             
             tileIndex++;
             
-            if ((tileIndex % (sizeof(word) * 2)) == 0)
+            if (bitMask == 0x8000)
             {
                 bitOffset += sizeof(word);
                 bitMask = 1;

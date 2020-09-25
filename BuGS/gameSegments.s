@@ -243,12 +243,21 @@ updateSegments_cont anop
         dec a
         dec a
         sta segmentPosOffset,x
-        jmp updateSegments_skipSegment
+        bra updateSegments_bodyMarkTile
 updateSegments_bodyWrapPos anop
         lda #SEGMENT_MAX_POSITION_OFFSET
         sta segmentPosOffset,x
+updateSegments_bodyMarkTile anop
+		phx
+		tay
+		ldx segmentCurrentTile,y
+		ldy tileBitOffset,x
+		lda tileBitMask,x
+		ora segmentTileMask,y
+		sta segmentTileMask,y
+		plx
         jmp updateSegments_skipSegment
-        
+
 updateSegments_head anop
 ;        jsl waitForKey
         lda segmentPosOffset,x
@@ -330,7 +339,12 @@ updateSegments_headCont anop
         stx segmentBeingUpdated
         tax
         jsr (segmentUpdateJumpTable,x)
-        ldx segmentBeingUpdated
+		ldx segmentCurrentTile,y
+		ldy tileBitOffset,x
+		lda tileBitMask,x
+		ora segmentTileMask,y
+		sta segmentTileMask,y
+		ldx segmentBeingUpdated
 updateSegments_skipSegment anop
         dex
         dex
@@ -361,6 +375,7 @@ updateSegmentLeftFast_nextOffset anop
         lda tileLeft,x
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
 		rts
 
 updateSegmentLeftFast_nextOffset2 anop
@@ -384,6 +399,13 @@ updateSegmentLeftFast_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentLeftFast_checkPoison
+		phy
+		txy
+        ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentLeftFast_changeDir
 		rts
 updateSegmentLeftFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
@@ -422,6 +444,7 @@ updateSegmentLeftFast_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
+		sta segmentCurrentTile,y
         rts
         
 updateSegmentLeftFast_dirDown anop
@@ -451,6 +474,7 @@ updateSegmentLeftFast_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
         rts
 
         
@@ -478,6 +502,7 @@ updateSegmentLeftSlow_nextOffset anop
         lda tileLeft,x
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
 		rts
 
 updateSegmentLeftSlow_nextOffset2 anop
@@ -501,6 +526,13 @@ updateSegmentLeftSlow_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentLeftSlow_checkPoison
+		phy
+		txy
+		ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentLeftSlow_changeDir
         rts
 updateSegmentLeftSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
@@ -539,6 +571,7 @@ updateSegmentLeftSlow_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUL,y
+		sta segmentCurrentTile,y
         rts
         
 updateSegmentLeftSlow_dirDown anop
@@ -568,6 +601,7 @@ updateSegmentLeftSlow_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
         rts
         
         
@@ -902,6 +936,7 @@ updateSegmentRightFast_nextOffset anop
         lda tileRight,x
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
         
 updateSegmentRightFast_nextOffset2 anop
         cmp #3
@@ -924,6 +959,13 @@ updateSegmentRightFast_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentRightFast_checkPoison
+		phy
+		txy
+		ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentRightFast_changeDir
         rts
 updateSegmentRightFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
@@ -957,6 +999,7 @@ updateSegmentRightFast_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUR,y
+		sta segmentCurrentTile,y
         
         lda segmentTileOffsetsLL,y
         tax
@@ -986,6 +1029,7 @@ updateSegmentRightFast_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
         
         lda segmentTileOffsetsUL,y
         tax
@@ -1018,6 +1062,7 @@ updateSegmentRightSlow_nextOffset anop
         lda tileRight,x
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
         rts
 
 updateSegmentRightSlow_nextOffset2 anop
@@ -1041,6 +1086,13 @@ updateSegmentRightSlow_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentRightSlow_checkPoison
+		phy
+		txy
+		ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentRightSlow_changeDir
         rts
 updateSegmentRightSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
@@ -1074,6 +1126,7 @@ updateSegmentRightSlow_doUp anop
         tax
         lda tileAbove,x
         sta segmentTileOffsetsUR,y
+		sta segmentCurrentTile,y
         
         lda segmentTileOffsetsLL,y
         tax
@@ -1103,6 +1156,7 @@ updateSegmentRightSlow_doDown anop
         tax
         lda tileBelow,x
         sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
         
         lda segmentTileOffsetsUL,y
         tax
@@ -1184,7 +1238,16 @@ addBodySegment_fast anop
         sta segmentTileOffsetsLR-4,y
         sta segmentTileOffsetsLR-2,y
         sta segmentTileOffsetsLR,y
-        sta segmentTileOffsetsLR,y
+
+; This is a bit weird but we pretend the body segment is in the bottom RHS tile while it is offscreen.
+; We have to put in a valid game tile here and it doesn't matter if body segments "collide".  But we
+; don't want head segments to collide with a off-screen body segment.  Since the head segments always
+; appear at the top, it is safe to just tuck the body segments away at the bottom RHS.
+		lda #NUM_GAME_TILES-1
+		sta segmentCurrentTile-6,y
+		sta segmentCurrentTile-4,y
+		sta segmentCurrentTile-2,y
+		sta segmentCurrentTile,y
 
         rtl
 addBodySegment_slow anop
@@ -1278,6 +1341,17 @@ addBodySegment_slow anop
         sta segmentTileOffsetsLR,y
         sta segmentTileOffsetsLR,y
 
+; See the comment above why we pretend the body segment is at the bottom RHS tile.
+		lda #NUM_GAME_TILES-1
+		sta segmentCurrentTile-14,y
+		sta segmentCurrentTile-12,y
+		sta segmentCurrentTile-10,y
+		sta segmentCurrentTile-8,y
+		sta segmentCurrentTile-6,y
+		sta segmentCurrentTile-4,y
+		sta segmentCurrentTile-2,y
+		sta segmentCurrentTile,y
+
         rtl
         
         
@@ -1317,6 +1391,7 @@ addSlowHeadSegment entry
         txa
         sta segmentTileOffsetsUL,y
         sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
         lda tileRight,x
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
@@ -1364,6 +1439,7 @@ addFastHeadSegment entry
 		txa
 		sta segmentTileOffsetsUL,y
 		sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
 		lda tileRight,x
 		sta segmentTileOffsetsUR,y
 		sta segmentTileOffsetsLR,y

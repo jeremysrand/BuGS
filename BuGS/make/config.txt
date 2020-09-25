@@ -8,7 +8,6 @@ s6d2 =
 
 s7d1 = /Users/jrand/Library/Developer/Xcode/DerivedData/BuGS-bffpexoblaghkzcbtjtzxeulnuto/Build/Products/Debug/BuGS.2mg
 
-g_limit_speed = 0
 
 
 bram1[00] = 00 00 00 01 00 00 0d 06 02 01 01 00 01 00 00 00

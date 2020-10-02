@@ -545,7 +545,15 @@ updateSegmentLeftSlow_skipDec anop
         lda segmentTileOffsetsUL,y
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
+		lda numSegments
+		cmp #1
+		beq updateSegmentsLeftSlow_lastSegment
         rts
+updateSegmentsLeftSlow_lastSegment anop
+		ldx segmentBeingUpdated
+		lda #SEGMENT_SPEED_FAST
+		sta segmentSpeed,x
+		rts
         
 updateSegmentLeftSlow_nextOffset anop
         cmp #1
@@ -1117,7 +1125,15 @@ updateSegmentRightSlow_nextOffset anop
         sta segmentTileOffsetsUR,y
         sta segmentTileOffsetsLR,y
 		sta segmentCurrentTile,y
-        rts
+		lda numSegments
+		cmp #1
+		beq updateSegmentsRightSlow_lastSegment
+		rts
+updateSegmentsRightSlow_lastSegment anop
+		ldx segmentBeingUpdated
+		lda #SEGMENT_SPEED_FAST
+		sta segmentSpeed,x
+		rts
 
 updateSegmentRightSlow_nextOffset2 anop
         cmp #5

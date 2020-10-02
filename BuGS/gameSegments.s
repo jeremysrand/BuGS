@@ -18,9 +18,10 @@ SEGMENT_MAX_NUM     equ 12
 SEGMENT_MAX_OFFSET  equ SEGMENT_MAX_NUM*2-2
 
 SEGMENT_STATE_NONE          equ 0
-SEGMENT_STATE_HEAD          equ 1
-SEGMENT_STATE_POISONED_HEAD equ 2
-SEGMENT_STATE_BODY          equ 3
+SEGMENT_STATE_EXPLODING     equ 1
+SEGMENT_STATE_HEAD          equ 2
+SEGMENT_STATE_POISONED_HEAD equ 3
+SEGMENT_STATE_BODY          equ 4
 
 SEGMENT_DIR_LEFT    equ 0
 SEGMENT_DIR_RIGHT   equ 1
@@ -59,11 +60,17 @@ drawSegments_nextSegment anop
 
 drawSegments_cont anop
         phx
+		cmp #SEGMENT_STATE_EXPLODING
+		beq drawSegments_exploding
         cmp #SEGMENT_STATE_BODY
         bne drawSegments_head
         jsl segmentBodyJump
         bra drawSegments_handleTiles
-        
+		
+drawSegments_exploding anop
+		jsl segmentExplodingJump
+		bra drawSegments_handleTiles
+	
 drawSegments_head anop
         jsl segmentHeadJump
         
@@ -91,7 +98,20 @@ drawSegments_skipSegment anop
         
 drawSegments_done anop
         rtl
-        
+      
+segmentExplodingJump entry
+		lda segmentPosOffset,x
+		tax
+		ldy segmentFacing,x
+		lda explosionJumpTable,y
+		sta segmentExplodingJump_jumpInst+1
+		lda explosionJumpTable+2,y
+		sta segmentExplodingJump_jumpInst+3
+		ldy segmentScreenOffsets,x
+		
+segmentExplodingJump_jumpInst anop
+		jmp >leftHead1
+		nop
         
 segmentHeadJump entry
         lda segmentPixelOffset
@@ -236,7 +256,7 @@ updateSegments_nextSegment anop
         jmp updateSegments_skipSegment
 updateSegments_cont anop
         cmp #SEGMENT_STATE_BODY
-        bne updateSegments_head
+        bne updateSegments_headOrExploding
         
         lda segmentPosOffset,x
         beq updateSegments_bodyWrapPos
@@ -258,8 +278,7 @@ updateSegments_bodyMarkTile anop
 		plx
         jmp updateSegments_skipSegment
 
-updateSegments_head anop
-;        jsl waitForKey
+updateSegments_headOrExploding anop
         lda segmentPosOffset,x
         beq updateSegments_headWrapPos
         dec a
@@ -292,6 +311,14 @@ updateSegments_headWrapPos anop
 		lda segmentCurrentTile
 		sta segmentCurrentTile+SEGMENT_MAX_POSITION_OFFSET
         
+; We could be in exploding state and if so, we want to skip the rest of the
+; code for update head segments.
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_EXPLODING
+		bne updateSegments_notExplodingWrap
+		jsr updateSegmentExplodingWrap
+		bra updateSegments_skipSegment
+updateSegments_notExplodingWrap anop
 ; Important - Do facing last because we use that to index into the jump
 ; table for update.
         lda segmentFacing
@@ -316,7 +343,15 @@ updateSegments_headNoWrap anop
         sta segmentTileOffsetsLR,y
 		lda segmentCurrentTile+2,y
 		sta segmentCurrentTile,y
-        
+		
+; We could be in exploding state and if so, we want to skip the rest of the
+; code for update head segments.
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_EXPLODING
+		bne updateSegments_notExplodingNoWrap
+		jsr updateSegmentExplodingNoWrap
+		bra updateSegments_skipSegment
+updateSegments_notExplodingNoWrap anop
 ; Important - Do facing last because we use that to index into the jump
 ; table for update.
         lda segmentFacing+2,y
@@ -352,8 +387,27 @@ updateSegments_skipSegment anop
         jmp updateSegments_nextSegment
 updateSegments_done anop
         rtl
+
+		
+updateSegmentExplodingNoWrap entry
+		lda segmentFacing+2,y
+		bra updateSegmentExploding_common
+		
+updateSegmentExplodingWrap	entry
+		lda segmentFacing
+updateSegmentExploding_common anop
+		beq updateSegmentExploding_done
+		sec
+		sbc #$4
+		sta segmentFacing,y
+		rts
+		
+updateSegmentExploding_done anop
+		lda #SEGMENT_STATE_NONE
+		sta segmentStates,x
+		rts
         
-        
+
 updateSegmentLeftFast entry
         tyx
         dec segmentScreenOffsets,x
@@ -1451,9 +1505,61 @@ addFastHeadSegment entry
 		rtl
         
 
+; Call this with the segment num * 2 in the X register
 shootSegment entry
-; Write this code...
+		dec numSegments
+		lda #SEGMENT_STATE_EXPLODING
+		sta segmentStates,x
+		ldy segmentPosOffset,x
+		
+; We take over the segmentFacing value when exploding to be an explosion sprite offset
+		lda #EXPLOSION_LAST_OFFSET
+		sta segmentFacing,y
+		
+		lda segmentCurrentTile,y
+		cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
+		bge shootSegment_skipMushroom
+		tay
+		lda tileType,y
+		beq shootSegment_normalMushroom
+		cmp #TILE_POISON_MUSHROOM1
+		bge shootSegment_poisonMushroom
+shootSegment_normalMushroom anop
+		lda #TILE_MUSHROOM4
+		bra shootSegment_dirtyTile
+shootSegment_poisonMushroom anop
+		lda #TILE_POISON_MUSHROOM4
+shootSegment_dirtyTile anop
+		sta tileType,y
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,y
+shootSegment_skipMushroom anop
+; If this is the last segment, then do not look for a following body segment
+		cpx #22
+		bge shootSegment_done
+; If the segment after this is a body segment, then it is now a head segment
+		lda segmentStates+2,x
+		cmp #SEGMENT_STATE_BODY
+		bne shootSegment_done
+		lda #SEGMENT_STATE_HEAD
+		sta segmentStates+2,x
+shootSegment_done anop
         rtl
+		
+		
+shootRandomSegment entry
+		lda numSegments
+		bne shootRandomSegment_hasSegments
+		rtl
+shootRandomSegment_hasSegments anop
+		lda #12
+		jsl randN
+		asl a
+		tax
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_HEAD
+		blt shootRandomSegment_hasSegments
+		jmp shootSegment
 
 
 numSegments     dc i2'0'

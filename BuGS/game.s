@@ -243,6 +243,8 @@ checkKey_loop2 anop
         
         cmp #'c'
         beq checkKey_centipede
+		cmp #'C'
+		beq checkKey_shootCentipede
         
         lda colourPalette
         inc a
@@ -273,6 +275,9 @@ checkKey_addSpider anop
         
 checkKey_shootSpider anop
         jmp shootSpider
+		
+checkKey_shootCentipede anop
+		jmp shootRandomSegment
                 
 checkKey_quit anop
         stz shouldQuit

@@ -249,11 +249,23 @@ updateSegments_spriteOffsetCont anop
         sta segmentSpriteOffset
 
 updateSegments_skipSpriteOffset anop
+		lda #SEGMENT_MAX_OFFSET+2
+		sta segmentEmptyOffset
         ldx #SEGMENT_MAX_OFFSET
 updateSegments_nextSegment anop
         lda segmentStates,x
         bne updateSegments_cont
+		stx segmentEmptyOffset
+		lda segmentPosOffset,x
+		beq updateSegments_emptyWrapPos
+		dec a
+		dec a
+		sta segmentPosOffset,x
         jmp updateSegments_skipSegment
+updateSegments_emptyWrapPos anop
+		lda #SEGMENT_MAX_POSITION_OFFSET
+		sta segmentPosOffset,x
+		jmp updateSegments_skipSegment
 updateSegments_cont anop
         cmp #SEGMENT_STATE_BODY
         bne updateSegments_headOrExploding
@@ -383,11 +395,89 @@ updateSegments_headCont anop
 updateSegments_skipSegment anop
         dex
         dex
-        bmi updateSegments_done
+        bmi updateSegments_maybeAdd
         jmp updateSegments_nextSegment
+updateSegments_maybeAdd anop
+		lda segmentsAddEnabled
+		bne updateSegments_done
+		lda segmentEmptyOffset
+		cmp #SEGMENT_MAX_OFFSET+2
+		bge updateSegments_done
+		lda numSegments
+		beq updateSegments_done
+		cmp #SEGMENT_MAX_NUM
+		bge updateSegments_done
+		lda segmentPixelOffset
+		and #3
+		cmp #1
+		bne updateSegments_done
+		jsl rand0_to_65534
+		and #31
+		bne updateSegments_done
+		jmp updateSegmentAddSegment
 updateSegments_done anop
         rtl
 
+updateSegmentAddSegment entry
+		inc numSegments
+		ldx segmentEmptyOffset
+		
+		lda #SEGMENT_STATE_HEAD
+		sta segmentStates,x
+		
+		lda #SEGMENT_SPEED_FAST
+		sta segmentSpeed,x
+		
+		ldy segmentPosOffset,x
+		
+		lda #SEGMENT_DIR_DOWN
+		sta segmentVerticalDir,y
+		
+		jsl rand0_to_65534
+		and #$0080
+		beq updateSegmentAddSegment_leftSide
+		
+		lda #SEGMENT_DIR_LEFT
+		sta segmentHorizontalDir,y
+		
+		lda #SEGMENT_FACING_LEFT
+		sta segmentFacing,y
+		
+		ldx #((GAME_NUM_TILES_WIDE*(GAME_NUM_TILES_TALL-6))-1)*SIZEOF_TILE_INFO
+		
+		lda tileScreenOffset,x
+		sta segmentScreenOffsets,y
+		
+		txa
+		sta segmentTileOffsetsUL,y
+		sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
+		lda tileRight,x
+		sta segmentTileOffsetsUR,y
+		sta segmentTileOffsetsLR,y
+		rtl
+		
+updateSegmentAddSegment_leftSide anop
+		lda #SEGMENT_DIR_RIGHT
+		sta segmentHorizontalDir,y
+
+		lda #SEGMENT_FACING_RIGHT
+		sta segmentFacing,y
+
+		ldx #(GAME_NUM_TILES_WIDE*(GAME_NUM_TILES_TALL-7))*SIZEOF_TILE_INFO
+		lda tileScreenOffset,x
+		sec
+		sbc #6
+		sta segmentScreenOffsets,y
+		
+		txa
+		sta segmentTileOffsetsUR,y
+		sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
+		lda tileLeft,x
+		sta segmentTileOffsetsUL,y
+		sta segmentTileOffsetsLL,y
+		rtl
 		
 updateSegmentExplodingNoWrap entry
 		lda segmentFacing+2,y
@@ -506,12 +596,18 @@ updateSegmentLeftFast_dirDown anop
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentLeftFast_doDown
 ; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+		lda #SEGMENT_DIR_UP
+		sta segmentVerticalDir,y
         ldx segmentBeingUpdated
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_HEAD
+		beq updateSegmentLeftFast_notPoisoned
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
-        lda #SEGMENT_DIR_UP
-        sta segmentVerticalDir,y
         bra updateSegmentLeftFast_doUp
+updateSegmentLeftFast_notPoisoned anop
+		stz segmentsAddEnabled
+		bra updateSegmentLeftFast_doUp
         
 updateSegmentLeftFast_doDown anop
         lda segmentScreenOffsets,y
@@ -641,12 +737,18 @@ updateSegmentLeftSlow_dirDown anop
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentLeftSlow_doDown
 ; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+		lda #SEGMENT_DIR_UP
+		sta segmentVerticalDir,y
         ldx segmentBeingUpdated
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_HEAD
+		beq updateSegmentLeftSlow_notPoisoned
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
-        lda #SEGMENT_DIR_UP
-        sta segmentVerticalDir,y
         bra updateSegmentLeftSlow_doUp
+updateSegmentLeftSlow_notPoisoned anop
+		stz segmentsAddEnabled
+		bra updateSegmentLeftSlow_doUp
         
 updateSegmentLeftSlow_doDown anop
         lda segmentScreenOffsets,y
@@ -1074,12 +1176,18 @@ updateSegmentRightFast_dirDown anop
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentRightFast_doDown
 ; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
+		lda #SEGMENT_DIR_UP
+		sta segmentVerticalDir,y
         ldx segmentBeingUpdated
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_HEAD
+		beq updateSegmentRightFast_notPoisoned
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
-        lda #SEGMENT_DIR_UP
-        sta segmentVerticalDir,y
         bra updateSegmentRightFast_doUp
+updateSegmentRightFast_notPoisoned anop
+		stz segmentsAddEnabled
+		bra updateSegmentRightFast_doUp
         
 updateSegmentRightFast_doDown anop
         lda segmentScreenOffsets,y
@@ -1209,11 +1317,17 @@ updateSegmentRightSlow_dirDown anop
         cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
         blt updateSegmentRightSlow_doDown
 ; If the head segment was poisoned, it is no longer poisoned once the head is going up again.
-        ldx segmentBeingUpdated
+		lda #SEGMENT_DIR_UP
+		sta segmentVerticalDir,y
+		ldx segmentBeingUpdated
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_HEAD
+		beq updateSegmentRightSlow_notPoisoned
         lda #SEGMENT_STATE_HEAD
         sta segmentStates,x
-        lda #SEGMENT_DIR_UP
-        sta segmentVerticalDir,y
+		bra updateSegmentRightSlow_doUp
+updateSegmentRightSlow_notPoisoned anop
+		stz segmentsAddEnabled
         bra updateSegmentRightSlow_doUp
         
 updateSegmentRightSlow_doDown anop
@@ -1469,6 +1583,8 @@ addSlowHeadSegment entry
         inc numSegments
         lda #5
         sta segmentPixelOffset
+		lda #1
+		sta segmentsAddEnabled
         
         rtl
 
@@ -1517,6 +1633,8 @@ addFastHeadSegment entry
 		inc numSegments
 		lda #5
 		sta segmentPixelOffset
+		lda #1
+		sta segmentsAddEnabled
 		
 		rtl
         
@@ -1579,6 +1697,7 @@ shootRandomSegment_hasSegments anop
 
 
 numSegments     dc i2'0'
+segmentsAddEnabled	dc i2'1'
 
 ; The method used to track a segments position and other details on the screen are a bit
 ; funky.  In order to have body segments follow a head segment, we keep information from
@@ -1610,6 +1729,7 @@ SEGMENT_SPRITE_LAST_OFFSET  gequ 7*4
 segmentSpriteOffset dc i2'0'
 segmentPixelOffset  dc i2'0'
 segmentBeingUpdated dc i2'0'
+segmentEmptyOffset 	dc i2'0'
 
 
 headJumpTable anop

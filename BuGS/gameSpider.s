@@ -696,6 +696,7 @@ shootSpider entry
 ; 300, 600 or 900 points depending on the distance from the player.
         lda #SPIDER_SCORE_900
         sta spiderScoreType
+		jmp scoreAddNineHundred
         
 shootSpider_done anop
         rtl

@@ -314,7 +314,7 @@ shootScorpion entry
         inc a
         inc a
         sta scorpionScreenOffset
-; TODO - Increment the score
+		jmp scoreAddOneThousand
         
 shootScorpion_done anop
         rtl

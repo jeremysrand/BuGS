@@ -208,7 +208,6 @@ setFleaSpeed_fast anop
 
         
 shootFlea entry
-; TODO - Increment the score
         lda fleaState
         cmp #FLEA_STATE_FALLING
         bne shootFlea_done
@@ -223,7 +222,7 @@ shootFlea entry
         lda #EXPLOSION_LAST_OFFSET
         sta fleaSprite
 
-        rtl
+		jmp scoreAddTwoHundred
         
 shootFlea_faster anop
         jsl setFleaSpeed_fast

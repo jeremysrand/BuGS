@@ -118,3 +118,23 @@ _dirtyGameTile_nonGame&SYSCNT anop
         
 _dirtyGameTile_skip&SYSCNT anop
         mend
+        
+
+; Pass the tile offset to mark as dirty in the X register
+        macro
+        _dirtyNonGameTile
+        
+        lda tileDirty,x
+        bne _dirtyNonGameTile_skip&SYSCNT
+        lda #TILE_STATE_DIRTY
+        sta tileDirty,x
+        
+        ldy numDirtyNonGameTiles
+        txa
+        sta dirtyNonGameTiles,y
+        iny
+        iny
+        sty numDirtyNonGameTiles
+        
+_dirtyNonGameTile_skip&SYSCNT anop
+        mend

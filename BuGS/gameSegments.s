@@ -1642,6 +1642,14 @@ addFastHeadSegment entry
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
 		dec numSegments
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_BODY
+		beq shootSegment_body
+		jsl scoreAddOneHundred
+		bra shootSegment_doneScore
+shootSegment_body anop
+		jsl scoreAddTen
+shootSegment_doneScore anop
 		lda #SEGMENT_STATE_EXPLODING
 		sta segmentStates,x
 		ldy segmentPosOffset,x

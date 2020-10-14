@@ -691,9 +691,21 @@ shootSpider entry
         lda spiderScreenOffset
         inc a
         sta spiderScreenOffset
-        
-; TODO - Increase the score and set the spiderScoreType to 0, 4 or 8 for
-; 300, 600 or 900 points depending on the distance from the player.
+
+; TODO - Set the spiderScoreType to 0, 4 or 8 for 300, 600 or 900 points depending on the distance from the player.
+; For now, just hard code 900.
+		bra shootSpider_900
+		
+		lda #SPIDER_SCORE_300
+		sta spiderScoreType
+		jmp scoreAddThreeHundred
+		
+shootSpider_600 anop
+		lda #SPIDER_SCORE_600
+		sta spiderScoreType
+		jmp scoreAddSixHundred
+		
+shootSpider_900 anop
         lda #SPIDER_SCORE_900
         sta spiderScoreType
 		jmp scoreAddNineHundred

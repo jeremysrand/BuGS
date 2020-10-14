@@ -96,6 +96,15 @@ scoreStartGame entry
 
 
 ; The score tile to increment is in the X register
+; Note that this function and the next one do no sanitization
+; of the value in the X register.  That also means that if
+; someone scores several trillion in a single game, we will
+; keep adding digits to the score displayed, eventually
+; occupying tiles on the previous line on the LHS.
+;
+; But it is kind of classic for these arcade games to act
+; weird if people do something deemed impossible by the
+; author.  So, I challenge you to get such a score!
 scoreAddOneToTile entry
 		_dirtyNonGameTile
 		lda tileType,x

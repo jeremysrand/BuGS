@@ -16,6 +16,18 @@ globals start
 
 globalData data
 
+
+SEGMENT_DIR_LEFT    equ 0
+SEGMENT_DIR_RIGHT   equ 1
+
+; The code uses segmentPixelOffset and the segment speed to figure out whether to draw the shifted sprite
+; or the regular sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted sprite.
+; If the result is non-zero, we want a shifted sprite.  Then, we just need a per segment speed instead of a
+; per position offset screen shift.  Similarly, the same result can be used to figure out whether we need
+; to increment/decrement the screen offset when updating segment position.
+SEGMENT_SPEED_FAST      equ 0
+SEGMENT_SPEED_SLOW      equ 1
+
 SCREEN_BYTES_PER_ROW    gequ 160
 
 SIZEOF_TILE_INFO        gequ 2

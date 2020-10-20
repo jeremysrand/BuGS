@@ -14,13 +14,69 @@ level start
 		using globalData
 
 
+levelInit entry
+		stz centipedeLevelNum
+		stz colourLevelNum
+		rtl
+
+
+levelStart entry
+		lda colourLevelNum
+		jsl setColour
+		
+		ldx centipedeLevelNum
+		lda levelTable,x
+		tax
+		lda |$0,x
+		sta centipedeNum
+		inx
+		inx
+levelStart_loop anop
+		jsl addCentipede
+		dec centipedeNum
+		beq levelStart_done
+		txa
+		clc
+		adc #8
+		tax
+		bra levelStart_loop
+levelStart_done anop
+		rtl
+
+
+levelNext entry
+		lda colourLevelNum
+		inc a
+		cmp #NUM_COLOUR_PALETTES
+		blt levelNext_skip
+		lda #0
+levelNext_skip anop
+		sta colourLevelNum
+
+		lda centipedeLevelNum
+		cmp #LEVEL_TABLE_LAST_OFFSET
+		bge levelNext_wrap
+		inc a
+		inc a
+		bra levelNext_noWrap
+levelNext_wrap anop
+		lda #LEVEL_TABLE_REPEAT_OFFSET
+levelNext_noWrap anop
+		sta centipedeLevelNum
+		rtl
+
+
+centipedeLevelNum	dc i2'0'
+colourLevelNum		dc i2'0'
+centipedeNum 		dc i2'0'
+
 ; The level structure looks like this:
 ;    number of independent centipedes (2 bytes)
 ;    { (for each independent centipede)
 ;        segment speed (2 bytes)
 ;        segment direction (2 bytes)
 ;        tile offset where it appears (2 bytes)
-;        number of body segments
+;        number of body segments (2 bytes)
 ;    }
 levelOne	dc i2'1'
 			dc i2'SEGMENT_SPEED_FAST'
@@ -638,6 +694,12 @@ levelTwentySix	dc i2'7'
 			dc i2'46'					; Tile offset
 			dc i2'0'						; Number of body segments
 
+; Once we reach level 26 of the centipede levels, we go back to level 15.  This is because
+; we only have fast speed centipedes, with one more head at the start and one less body
+; segment until they are all head segments and then back to a single 12 segment centipede at
+; fast speed.  By looping back from 26th level to the 15th level, we do this.
+LEVEL_TABLE_LAST_OFFSET	gequ 25*2
+LEVEL_TABLE_REPEAT_OFFSET	gequ 14*2
 levelTable	dc i2'levelOne'
 			dc i2'levelTwo'
 			dc i2'levelThree'

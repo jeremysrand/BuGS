@@ -240,7 +240,10 @@ checkKey_loop2 anop
         beq checkKey_fast
         cmp #'-'
         beq checkKey_slow
-        
+
+		cmp #'g'
+		beq checkKey_game
+
         cmp #'c'
         beq checkKey_centipede
 		cmp #'C'
@@ -298,6 +301,10 @@ checkKey_slow anop
         jsl setSpiderSpeed
         lda #SPRITE_SPEED_SLOW
         jmp setScorpionSpeed
+
+checkKey_game anop
+		jsl levelInit
+		jmp levelStart
 
 checkKey_centipede anop
 		jsl addFastHeadSegment

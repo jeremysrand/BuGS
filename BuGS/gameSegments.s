@@ -1627,6 +1627,126 @@ addFastHeadSegment entry
 		sta segmentsAddEnabled
 		
 		rtl
+
+
+; This method is called with X register pointing to a structure which has the following info in it:
+;		- segment speed (2 bytes)
+;		- segment direction (2 bytes)
+; 		- tile offset (2 bytes)
+; 		- number of body segments (2 bytes)
+;
+; It reads this info and sets up the appropriate centipede segments.  Also, it is expected to
+; preserve the X register.
+addCentipede entry
+		lda numSegments
+		asl a
+		tay
+	  
+		lda #SEGMENT_STATE_HEAD
+		sta segmentStates,y
+
+		lda |$0,x
+	 	sta segmentSpeed,y
+
+		tya
+		asl a
+		asl a
+		asl a
+		sta segmentPosOffset,y
+		tay
+
+		lda #SEGMENT_DIR_DOWN
+		sta segmentVerticalDir,y
+
+		lda |$2,x
+		sta segmentHorizontalDir,y
+
+		phx
+		lda |$4,x
+		tax
+		lda tileScreenOffset,x
+; We will correct this later to adjust for speed and direction.
+		sta segmentScreenOffsets,y
+
+		lda segmentHorizontalDir,y
+		beq addCentipede_left anop
+
+		txa
+		sta segmentTileOffsetsUL,y
+		sta segmentTileOffsetsLL,y
+		sta segmentCurrentTile,y
+		lda tileRight,x
+		sta segmentTileOffsetsUR,y
+		sta segmentTileOffsetsLR,y
+		
+		plx
+		lda |$0,x
+		beq addCentipede_rightFast anop
+
+		lda segmentScreenOffsets,y
+		sec
+		sbc #SCREEN_BYTES_PER_ROW*7+2
+		bra addCentipede_rightFacing
+		
+addCentipede_rightFast anop
+		lda segmentScreenOffsets,y
+		sec
+		sbc #SCREEN_BYTES_PER_ROW*8+2
+
+addCentipede_rightFacing anop
+		sta segmentScreenOffsets,y
+		lda #SEGMENT_FACING_DOWN_LEFT
+		bra addCentipede_facing
+
+addCentipede_left anop
+		txa
+		sta segmentTileOffsetsUR,y
+		sta segmentTileOffsetsLR,y
+		sta segmentCurrentTile,y
+		lda tileLeft,x
+		sta segmentTileOffsetsUL,y
+		sta segmentTileOffsetsLL,y
+		
+		plx
+
+		lda |$0,x
+		beq addCentipede_leftFast anop
+
+		lda segmentScreenOffsets,y
+		sec
+		sbc #SCREEN_BYTES_PER_ROW*7+4
+		bra addCentipede_leftFacing
+
+addCentipede_leftFast anop
+		lda segmentScreenOffsets,y
+		sec
+		sbc #SCREEN_BYTES_PER_ROW*8+4
+
+addCentipede_leftFacing anop
+		sta segmentScreenOffsets,y
+		lda #SEGMENT_FACING_DOWN_RIGHT
+
+addCentipede_facing anop
+		sta segmentFacing,y
+
+		inc numSegments
+		lda #5
+		sta segmentPixelOffset
+		lda #1
+		sta segmentsAddEnabled
+
+		ldy |$6,x
+		beq addCentipede_done
+		phx
+addCentipede_body anop
+		phy
+		jsl addBodySegment
+		ply
+		dey
+		bne addCentipede_body
+		plx
+addCentipede_done anop
+		rtl
         
 
 ; Call this with the segment num * 2 in the X register

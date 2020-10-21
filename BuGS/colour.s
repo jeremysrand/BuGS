@@ -48,243 +48,253 @@ colour1 anop
         dc i2'$00f0'        ; $d - 1101 - Green
         dc i2'$00f0'        ; $e - 1110 - Green
         dc i2'$00f0'        ; $f - 1111 - Green
-        
+
 
 colour2 anop
-        dc i2'$0000'        ; Black
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        
-        
+		dc i2'$0000'        ; Black
+		dc i2'$0f0c'        ; Light Violet
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0fc0'        ; Orange
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0f0c'        ; Light Violet
+		dc i2'$0f0c'        ; Light Violet
+		dc i2'$0f0c'        ; Light Violet
+		dc i2'$0f0c'        ; Light Violet
+
+
 colour3 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0f0f'        ; Violet
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0f00'        ; Red
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        
-        
+		dc i2'$0000'        ; Black
+		dc i2'$0f00'        ; Red
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+
+
 colour4 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0f0c'        ; Light Violet
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0fc0'        ; Orange
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0f0c'        ; Light Violet
-        dc i2'$0f0c'        ; Light Violet
-        dc i2'$0f0c'        ; Light Violet
-        dc i2'$0f0c'        ; Light Violet
-        
-        
+		dc i2'$0000'        ; Black
+		dc i2'$0fc0'        ; Orange
+		dc i2'$000f'        ; Blue
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$000f'        ; Blue
+		dc i2'$000f'        ; Blue
+		dc i2'$000f'        ; Blue
+		dc i2'$000f'        ; Blue
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+		dc i2'$0fc0'        ; Orange
+
+
 colour5 anop
         dc i2'$0000'        ; Black
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$0fc0'        ; Orange
-        dc i2'$000f'        ; Blue
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$0f0f'        ; Violet
+        dc i2'$0ff0'        ; Yellow
+        dc i2'$0f0f'        ; Violet
+        dc i2'$0f0f'        ; Violet
+        dc i2'$0f0f'        ; Violet
+        dc i2'$0f0f'        ; Violet
+        dc i2'$0ff0'        ; Yellow
+        dc i2'$0ff0'        ; Yellow
+        dc i2'$0ff0'        ; Yellow
+        dc i2'$0ff0'        ; Yellow
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        
 
 colour6 anop
         dc i2'$0000'        ; Black
+        dc i2'$00ff'        ; Tourquiose
         dc i2'$0fc0'        ; Orange
         dc i2'$000f'        ; Blue
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
         dc i2'$0fc0'        ; Orange
         dc i2'$0fc0'        ; Orange
         dc i2'$0fc0'        ; Orange
         dc i2'$0fc0'        ; Orange
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$00ff'        ; Tourquiose
+        dc i2'$00ff'        ; Tourquiose
+        dc i2'$00ff'        ; Tourquiose
+        dc i2'$00ff'        ; Tourquiose
+
 
 colour7 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0f00'        ; Red
-        dc i2'$000f'        ; Blue
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
+		dc i2'$0000'        ; Black
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0f0f'        ; Violet
+		dc i2'$00f0'        ; Green
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+
 
 colour8 anop
+		dc i2'$0000'        ; Black
+		dc i2'$00ff'        ; Tourquiose
+		dc i2'$0f00'        ; Red
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$0ff0'        ; Yellow
+		dc i2'$00ff'        ; Tourquiose
+		dc i2'$00ff'        ; Tourquiose
+		dc i2'$00ff'        ; Tourquiose
+		dc i2'$00ff'        ; Tourquiose
+
+
+colour9 anop
+		dc i2'$0000'        ; Black
+		dc i2'$0f0f'        ; Violet
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0f00'        ; Red
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+
+
+colour10 anop
+        dc i2'$0000'        ; Black
+        dc i2'$0fc0'        ; Orange
+        dc i2'$000f'        ; Blue
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$0fc0'        ; Orange
+        dc i2'$0fc0'        ; Orange
+        dc i2'$0fc0'        ; Orange
+        dc i2'$0fc0'        ; Orange
+
+
+colour11 anop
+		dc i2'$0000'        ; Black
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$0f00'        ; Red
+		dc i2'$0ffc'        ; Off-white
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0ffc'        ; Off-white
+		dc i2'$0ffc'        ; Off-white
+		dc i2'$0ffc'        ; Off-white
+		dc i2'$0ffc'        ; Off-white
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+		dc i2'$00fc'        ; Light Tourquiose
+
+
+colour12 anop
+		dc i2'$0000'        ; Black
+		dc i2'$00f0'        ; Green
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f00'        ; Red
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f0f'        ; Violet
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$0f00'        ; Red
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+		dc i2'$00f0'        ; Green
+
+
+colour13 anop
         dc i2'$0000'        ; Black
         dc i2'$0f00'        ; Red
+        dc i2'$000f'        ; Blue
         dc i2'$0ff0'        ; Yellow
-        dc i2'$00fc'        ; Light Tourquiose
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
+        dc i2'$000f'        ; Blue
         dc i2'$0ff0'        ; Yellow
         dc i2'$0ff0'        ; Yellow
         dc i2'$0ff0'        ; Yellow
         dc i2'$0ff0'        ; Yellow
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
         dc i2'$0f00'        ; Red
         dc i2'$0f00'        ; Red
         dc i2'$0f00'        ; Red
         dc i2'$0f00'        ; Red
 
-colour9 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0f0f'        ; Violet
-        dc i2'$00f0'        ; Green
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        
-colour10 anop
-        dc i2'$0000'        ; Black
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0f00'        ; Red
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        
-colour11 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0f0f'        ; Violet
-        dc i2'$00f0'        ; Green
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$00f0'        ; Green
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        dc i2'$0ffc'        ; Off-white
-        
-colour12 anop
-        dc i2'$0000'        ; Black
-        dc i2'$0fc0'        ; Orange
-        dc i2'$000f'        ; Blue
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$000f'        ; Blue
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$00fc'        ; Light Tourquiose
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-        dc i2'$0fc0'        ; Orange
-         anop
-colour13 anop
-        dc i2'$0000'        ; Black
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$0f00'        ; Red
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$0ff0'        ; Yellow
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
-        dc i2'$00ff'        ; Tourquiose
-        
+
 colour14 anop
         dc i2'$0000'        ; Black
+        dc i2'$0ffc'        ; Off-white
+        dc i2'$0f0f'        ; Violet
         dc i2'$00f0'        ; Green
         dc i2'$0f0f'        ; Violet
-        dc i2'$0f00'        ; Red
         dc i2'$0f0f'        ; Violet
         dc i2'$0f0f'        ; Violet
         dc i2'$0f0f'        ; Violet
-        dc i2'$0f0f'        ; Violet
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
-        dc i2'$0f00'        ; Red
         dc i2'$00f0'        ; Green
         dc i2'$00f0'        ; Green
         dc i2'$00f0'        ; Green
         dc i2'$00f0'        ; Green
+        dc i2'$0ffc'        ; Off-white
+        dc i2'$0ffc'        ; Off-white
+        dc i2'$0ffc'        ; Off-white
+        dc i2'$0ffc'        ; Off-white
+        
 
         end

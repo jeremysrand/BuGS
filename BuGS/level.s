@@ -13,6 +13,8 @@
 level start
 		using globalData
 
+NEXT_LEVEL_FRAME_COUNT equ 60
+
 
 levelInit entry
 		stz centipedeLevelNum
@@ -44,6 +46,24 @@ levelStart_done anop
 		rtl
 
 
+updateLevel entry
+		lda gameRunning
+		bne updateLevel_done
+		lda nextLevelFrameCount
+		beq updateLevel_checkSegments
+		dec a
+		sta nextLevelFrameCount
+		bne updateLevel_done
+		jsl levelNext
+		jmp levelStart
+updateLevel_checkSegments anop
+		lda numSegments
+		bne updateLevel_done
+		lda #NEXT_LEVEL_FRAME_COUNT
+		sta nextLevelFrameCount
+updateLevel_done anop
+		rtl
+
 levelNext entry
 		lda colourLevelNum
 		inc a
@@ -69,6 +89,7 @@ levelNext_noWrap anop
 centipedeLevelNum	dc i2'0'
 colourLevelNum		dc i2'0'
 centipedeNum 		dc i2'0'
+nextLevelFrameCount dc i2'0'
 
 ; The level structure looks like this:
 ;    number of independent centipedes (2 bytes)

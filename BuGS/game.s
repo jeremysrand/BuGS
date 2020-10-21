@@ -26,7 +26,7 @@ game    start
         
         jsl setupScreen
         
-        lda colourPalette
+        lda #0
         jsl setColour
 
 gameLoop anop
@@ -108,6 +108,7 @@ gameLoop anop
         jsl updateSpider
         jsl updateFlea
         jsl updateSegments
+		jsl updateLevel
         jsl checkKeyboard
         
         jsl waitForVbl
@@ -203,6 +204,11 @@ nextWord anop
         
         rtl
         
+startGame entry
+		stz gameRunning
+		stz numSegments
+		jsl levelInit
+		jmp levelStart
 
 
 checkKeyboard entry
@@ -243,20 +249,10 @@ checkKey_loop2 anop
 
 		cmp #'g'
 		beq checkKey_game
-
-        cmp #'c'
-        beq checkKey_centipede
+		cmp #'c'
+		beq checkKey_shootCentipede
 		cmp #'C'
 		beq checkKey_shootCentipede
-        
-        lda colourPalette
-        inc a
-        cmp #NUM_COLOUR_PALETTES
-        blt checkKey_skip
-        lda #$0000
-checkKey_skip anop
-        sta colourPalette
-        jmp setColour
         
 checkKey_done anop
         rtl
@@ -303,22 +299,7 @@ checkKey_slow anop
         jmp setScorpionSpeed
 
 checkKey_game anop
-		jsl levelInit
-		jmp levelStart
-
-checkKey_centipede anop
-		jsl addFastHeadSegment
-        jsl addSlowHeadSegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jsl addBodySegment
-        jmp addBodySegment
+		jmp startGame
 
 
 waitForKey entry
@@ -347,7 +328,6 @@ vblLoop anop
         rtl
         
         
-colourPalette       dc i2'0'
 shouldQuit          dc i2'1'
 borderColour        dc i2'0'
 

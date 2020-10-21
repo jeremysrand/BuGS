@@ -136,6 +136,8 @@ BORDER_COLOUR_REGISTER  gequ $e0c034
 STATE_REGISTER          gequ $e1c068
 VERTICAL_COUNTER        gequ $e0c02e
 
+gameRunning	dc i2'1'
+numSegments dc i2'0'
 
 backupStack dc i2'0'
 

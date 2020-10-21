@@ -39,8 +39,7 @@ SEGMENT_FACING_RIGHT        equ 128
 
 SEGMENT_MAX_POSITION_OFFSET     equ TILE_PIXEL_WIDTH*SEGMENT_MAX_NUM*2-2
 
-        
-        
+                
 drawSegments entry
         ldx #SEGMENT_MAX_OFFSET
 drawSegments_nextSegment anop
@@ -1527,106 +1526,6 @@ addBodySegment_slow anop
 		sta segmentCurrentTile,y
 
         rtl
-        
-        
-addSlowHeadSegment entry
-        lda numSegments
-        asl a
-        tax
-        
-        lda #SEGMENT_STATE_HEAD
-        sta segmentStates,x
-        
-        lda #SEGMENT_SPEED_SLOW
-        sta segmentSpeed,x
-        
-        txa
-        asl a
-        asl a
-        asl a
-        sta segmentPosOffset,x
-        tay
-        
-        lda #SEGMENT_DIR_RIGHT
-        sta segmentHorizontalDir,y
-        
-        lda #SEGMENT_DIR_DOWN
-        sta segmentVerticalDir,y
-        
-        lda #SEGMENT_FACING_DOWN_LEFT
-        sta segmentFacing,y
-        
-		ldx #32
-        lda tileScreenOffset,x
-        sec
-        sbc #SCREEN_BYTES_PER_ROW*7+2
-        sta segmentScreenOffsets,y
-        
-        txa
-        sta segmentTileOffsetsUL,y
-        sta segmentTileOffsetsLL,y
-		sta segmentCurrentTile,y
-        lda tileRight,x
-        sta segmentTileOffsetsUR,y
-        sta segmentTileOffsetsLR,y
-        
-        inc numSegments
-        lda #5
-        sta segmentPixelOffset
-		lda #1
-		sta segmentsAddEnabled
-        
-        rtl
-
-
-addFastHeadSegment entry
-		lda numSegments
-		asl a
-		tax
-		
-		lda #SEGMENT_STATE_HEAD
-		sta segmentStates,x
-		
-		lda #SEGMENT_SPEED_FAST
-		sta segmentSpeed,x
-		
-		txa
-		asl a
-		asl a
-		asl a
-		sta segmentPosOffset,x
-		tay
-		
-		lda #SEGMENT_DIR_RIGHT
-		sta segmentHorizontalDir,y
-		
-		lda #SEGMENT_DIR_DOWN
-		sta segmentVerticalDir,y
-		
-		lda #SEGMENT_FACING_DOWN_LEFT
-		sta segmentFacing,y
-
-		ldx #16
-		lda tileScreenOffset,x
-		sec
-		sbc #SCREEN_BYTES_PER_ROW*8+2
-		sta segmentScreenOffsets,y
-		
-		txa
-		sta segmentTileOffsetsUL,y
-		sta segmentTileOffsetsLL,y
-		sta segmentCurrentTile,y
-		lda tileRight,x
-		sta segmentTileOffsetsUR,y
-		sta segmentTileOffsetsLR,y
-		
-		inc numSegments
-		lda #5
-		sta segmentPixelOffset
-		lda #1
-		sta segmentsAddEnabled
-		
-		rtl
 
 
 ; This method is called with X register pointing to a structure which has the following info in it:
@@ -1816,7 +1715,6 @@ shootRandomSegment_hasSegments anop
 		jmp shootSegment
 
 
-numSegments     dc i2'0'
 segmentsAddEnabled	dc i2'1'
 
 ; The method used to track a segments position and other details on the screen are a bit

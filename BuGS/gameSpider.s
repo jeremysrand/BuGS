@@ -60,6 +60,16 @@ SPIDER_LEFT_SCREEN_SHIFT_FAST   equ 0
 SPIDER_RIGHT_SCREEN_SHIFT_SLOW   equ 0
 SPIDER_RIGHT_SCREEN_SHIFT_FAST   equ 1
 
+; Two seconds or 120 frames after a spider disappears, a spider is added.
+SPIDER_ADD_TIME		equ 120
+
+
+spiderInitGame entry
+		stz spiderAddTime
+		stz spiderState
+		lda #SPRITE_SPEED_SLOW
+		jmp setSpiderSpeed
+		
 
 drawSpider entry
         lda spiderState
@@ -266,7 +276,23 @@ updateSpider_leftDiagDown_cont anop
         jmp updateSpider_tilesLeft
 
 updateSpider_done anop
-        rtl
+		rtl
+		
+updateSpider_maybeAdd anop
+		lda gameRunning
+		bne updateSpider_done
+		lda spiderAddTime
+		bne updateSpider_waitForAdd
+		lda #SPIDER_ADD_TIME
+		sta spiderAddTime
+		rtl
+		
+updateSpider_waitForAdd anop
+		dec a
+		sta spiderAddTime
+		bne updateSpider_done
+		jmp addSpider
+
         
 updateSpider_leftDiagUp anop
         lda spiderScreenOffset
@@ -521,9 +547,21 @@ updateSpider_offScreen anop
         
 addSpider entry
         lda spiderState
-        beq addSpider_doit
+        beq addSpider_checkSpeed
         rtl
         
+addSpider_checkSpeed anop
+		lda gameScore+2
+		bne addSpider_fast
+		lda gameScore
+		cmp #5000
+		blt addSpider_doit
+addSpider_fast anop
+		lda #SPRITE_SPEED_FAST
+		cmp spiderSpeed
+		beq addSpider_doit
+		jsl setSpiderSpeed
+
 addSpider_doit anop
         lda spiderStartingShift
         sta spiderShiftInTile
@@ -616,6 +654,7 @@ addSpider_right anop
         
         
 setSpiderSpeed entry
+		sta spiderSpeed
         cmp #SPRITE_SPEED_FAST
         beq setSpiderSpeed_fast
         
@@ -715,11 +754,13 @@ shootSpider_done anop
         
         
 spiderState         dc i2'SPIDER_STATE_NONE'
+spiderSpeed			dc i2'SPRITE_SPEED_SLOW'
 spiderSprite        dc i2'0'
 spiderSpriteRefresh dc i2'0'
 spiderScreenOffset  dc i2'0'
 spiderScreenShift   dc i2'0'
 spiderShiftInTile   dc i2'0'
+spiderAddTime       dc i2'0'
 
 spiderCurrentRow    dc i2'0'
 spiderTargetRow     dc i2'0'
@@ -764,7 +805,7 @@ spiderShiftJumpTable dc i4'spider7s'
                      dc i4'spider1s'
                      
                      
-spiderUpdateJumpTable dc i2'updateSpider_done'
+spiderUpdateJumpTable dc i2'updateSpider_maybeAdd'
                       dc i2'updateSpider_exploding'
                       dc i2'updateSpider_score'
                       dc i2'updateSpider_leftDiagDown'

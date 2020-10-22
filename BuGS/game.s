@@ -207,6 +207,7 @@ nextWord anop
 startGame entry
 		stz gameRunning
 		stz numSegments
+		jsl spiderInitGame
 		jsl levelInit
 		jmp levelStart
 
@@ -238,7 +239,7 @@ checkKey_loop2 anop
         beq checkKey_shootScorpion
         
         cmp #'p'
-        beq checkKey_addSpider
+        beq checkKey_shootSpider
         cmp #'P'
         beq checkKey_shootSpider
         
@@ -249,6 +250,7 @@ checkKey_loop2 anop
 
 		cmp #'g'
 		beq checkKey_game
+		
 		cmp #'c'
 		beq checkKey_shootCentipede
 		cmp #'C'
@@ -269,9 +271,6 @@ checkKey_addScorpion anop
 checkKey_shootScorpion anop
         jmp shootScorpion
         
-checkKey_addSpider anop
-        jmp addSpider
-        
 checkKey_shootSpider anop
         jmp shootSpider
 		
@@ -286,15 +285,11 @@ checkKey_fast anop
         lda #SPRITE_SPEED_FAST
         jsl setFleaSpeed
         lda #SPRITE_SPEED_FAST
-        jsl setSpiderSpeed
-        lda #SPRITE_SPEED_FAST
         jmp setScorpionSpeed
 
 checkKey_slow anop
         lda #SPRITE_SPEED_SLOW
         jsl setFleaSpeed
-        lda #SPRITE_SPEED_SLOW
-        jsl setSpiderSpeed
         lda #SPRITE_SPEED_SLOW
         jmp setScorpionSpeed
 

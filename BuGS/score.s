@@ -366,6 +366,5 @@ scoreAddOneThousand_skipZeroHundreds anop
 
 
 highScore	dc i4'0'
-gameScore  	dc i4'0'
 
         end

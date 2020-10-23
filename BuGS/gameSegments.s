@@ -212,7 +212,7 @@ updateSegments entry
 		stz segmentTileMask+62
 		stz segmentTileMask+64
 		stz segmentTileMask+66
-		stz segmentTileMask+78
+		stz segmentTileMask+68
 		stz segmentTileMask+70
 		stz segmentTileMask+72
 		stz segmentTileMask+74
@@ -526,6 +526,15 @@ updateSegmentLeftFast_checkDir anop
 		bge updateSegmentLeftFast_changeDir
 		lda tileType,x
 		bne updateSegmentLeftFast_checkPoison
+		phy
+		txy
+		ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentLeftFast_changeDir
+		ldx segmentTileOffsetsUL,y
+
         lda tileLeft,x
         cmp #LHS_FIRST_TILE_OFFSET
         bge updateSegmentLeftFast_changeDir
@@ -540,6 +549,7 @@ updateSegmentLeftFast_checkDir anop
 		and segmentTileMask,x
 		bne updateSegmentLeftFast_changeDir
 		rts
+		
 updateSegmentLeftFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
         blt updateSegmentLeftFast_changeDir
@@ -673,13 +683,10 @@ updateSegmentLeftSlow_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentLeftSlow_checkPoison
-		phy
-		txy
-		ldx tileBitOffset,y
-		lda tileBitMask,y
-		ply
-		and segmentTileMask,x
-		bne updateSegmentLeftSlow_changeDir
+; Don't bother looking for collisions on slow moving head segments.  The only
+; slow moving head segments are calculated first in update and never collide with
+; other segemnts.  Fast head segments collide with other fast segments or other
+; slow segments.
         rts
 updateSegmentLeftSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1
@@ -1106,6 +1113,15 @@ updateSegmentRightFast_checkDir anop
 		bge updateSegmentRightFast_changeDir
 		lda tileType,x
 		bne updateSegmentRightFast_checkPoison
+		phy
+		txy
+		ldx tileBitOffset,y
+		lda tileBitMask,y
+		ply
+		and segmentTileMask,x
+		bne updateSegmentRightFast_changeDir
+		ldx segmentTileOffsetsUR,y
+
         lda tileRight,x
         cmp #RHS_FIRST_TILE_OFFSET
         bge updateSegmentRightFast_changeDir
@@ -1253,13 +1269,10 @@ updateSegmentRightSlow_checkDir anop
         tax
         lda tileType,x
         bne updateSegmentRightSlow_checkPoison
-		phy
-		txy
-		ldx tileBitOffset,y
-		lda tileBitMask,y
-		ply
-		and segmentTileMask,x
-		bne updateSegmentRightSlow_changeDir
+; Don't bother looking for collisions on slow moving head segments.  The only
+; slow moving head segments are calculated first in update and never collide with
+; other segemnts.  Fast head segments collide with other fast segments or other
+; slow segments.
         rts
 updateSegmentRightSlow_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1

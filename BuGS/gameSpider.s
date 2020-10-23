@@ -505,6 +505,7 @@ updateSpider_tilesDownCont anop
 updateSpider_downChangeDir anop
         lda spiderTargetRow
         sec
+; TODO - The actual top row of the spider changes as the score goes up.  Need to handle that.
         sbc #SPIDER_TOP_ROW
         jsl randN
         inc a
@@ -540,8 +541,6 @@ updateSpider_downChangeDirDiagRight anop
         
 updateSpider_offScreen anop
         stz spiderState
-; Uncomment the following line to continuously add
-;        jsl addSpider
         rtl
         
         

@@ -79,7 +79,15 @@ jumpInst jmp >leftScorpion1
 updateScorpion entry
         lda scorpionState
         bne updateScorpion_cont
-        rtl
+		lda gameLevel
+		cmp #3
+		blt updateScorpion_doNotAdd
+		jsl rand0_to_65534
+		and #$3ff
+		bne updateScorpion_doNotAdd
+		jmp addScorpion
+updateScorpion_doNotAdd anop
+		rtl
         
 updateScorpion_cont anop
         cmp #SCORPION_STATE_EXPLODING
@@ -173,8 +181,6 @@ updateScorpion_done anop
         
 updateScorpion_offScreen anop
         stz scorpionState
-; Uncomment the following line to continuously add scorpions
-;        jsl addScorpion
         rtl
 
 updateScorpion_exploding anop
@@ -239,12 +245,32 @@ addScorpion entry
         rtl
         
 addScorpion_doit anop
+		lda gameScore+2
+		bne addScorpion_randomSpeed
+		lda gameScore
+		cmp #20000
+		bge addScorpion_randomSpeed
+addScorpion_slow anop
+		lda #SPRITE_SPEED_SLOW
+		bra addScorpion_setSpeed
+addScorpion_randomSpeed anop
+		jsl rand0_to_65534
+; We test the higher bits because we have already decided to add this scorpion because the bottom
+; bits are all zero.  Because we shift bits in our "random" code, the bottom bits are guaranteed
+; to still be zero.  So, look at a pair of upper bits to test for 1/4 of the time slow, 3/4 of the
+; time fast.  Similarly for the L/R decision later on.
+		and #$0c00
+		beq addScorpion_slow
+		lda #SPRITE_SPEED_FAST
+addScorpion_setSpeed anop
+		jsl setScorpionSpeed
+		
         jsl rand0_to_14
         asl a
         tay
         
         jsl rand0_to_65534
-        and #1
+        and #$1000
         beq addScorpion_right
         
         lda #SCORPION_STATE_LEFT

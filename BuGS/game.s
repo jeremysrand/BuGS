@@ -234,7 +234,7 @@ checkKey_loop2 anop
         beq checkKey_shootFlea
         
         cmp #'s'
-        beq checkKey_addScorpion
+        beq checkKey_shootScorpion
         cmp #'S'
         beq checkKey_shootScorpion
         
@@ -264,9 +264,6 @@ checkKey_addFlea anop
         
 checkKey_shootFlea anop
         jmp shootFlea
-        
-checkKey_addScorpion anop
-        jmp addScorpion
         
 checkKey_shootScorpion anop
         jmp shootScorpion

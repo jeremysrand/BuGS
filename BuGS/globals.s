@@ -138,6 +138,7 @@ VERTICAL_COUNTER        gequ $e0c02e
 
 gameRunning	dc i2'1'
 numSegments dc i2'0'
+gameLevel   dc i2'0'
 gameScore  	dc i4'0'
 
 backupStack dc i2'0'

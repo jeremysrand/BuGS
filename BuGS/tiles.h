@@ -117,6 +117,7 @@ extern word tileBitMask[NUM_GAME_TILES];
 
 extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 extern word numDirtyNonGameTiles;
+extern word numInfieldMushrooms;
 
 
 /* API */

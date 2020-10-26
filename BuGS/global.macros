@@ -138,3 +138,38 @@ _dirtyGameTile_skip&SYSCNT anop
         
 _dirtyNonGameTile_skip&SYSCNT anop
         mend
+
+
+; Update the score
+        macro
+        _incrementScore &increment
+        lda #&increment
+        clc
+        adc gameScore
+        sta gameScore
+        bcc _incrementScore_noCarry&SYSCNT
+        inc gameScore+2
+_incrementScore_noCarry&SYSCNT anop
+        lda #&increment
+        clc
+        adc scoreWithin12000
+        cmp #12000
+        blt _incrementScore_noExtraMan&SYSCNT
+        sec
+        sbc #12000
+        pha
+        jsl addPlayer
+        pla
+_incrementScore_noExtraMan&SYSCNT anop
+        sta scoreWithin12000
+        lda #&increment
+        clc
+        adc scoreWithin20000
+        cmp #20000
+        blt _incrementScore_no2000&SYSCNT
+        sec
+        sbc #20000
+        inc scoreNum20000
+_incrementScore_no2000&SYSCNT anop
+        sta scoreWithin20000
+        mend

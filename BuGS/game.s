@@ -161,6 +161,10 @@ drawTile entry
         
 jumpInst jmp >mushroom1
         nop
+		
+addPlayer entry
+; TODO - Write code to add a new life.
+		rtl
 
         
 setupScreen entry
@@ -229,7 +233,7 @@ checkKey_loop2 anop
         beq checkKey_quit
         
         cmp #'f'
-        beq checkKey_addFlea
+        beq checkKey_shootFlea
         cmp #'F'
         beq checkKey_shootFlea
         
@@ -244,9 +248,7 @@ checkKey_loop2 anop
         beq checkKey_shootSpider
         
         cmp #'+'
-        beq checkKey_fast
-        cmp #'-'
-        beq checkKey_slow
+        beq checkKey_scoreAdd
 
 		cmp #'g'
 		beq checkKey_game
@@ -259,9 +261,6 @@ checkKey_loop2 anop
 checkKey_done anop
         rtl
         
-checkKey_addFlea anop
-        jmp addFlea
-        
 checkKey_shootFlea anop
         jmp shootFlea
         
@@ -273,18 +272,13 @@ checkKey_shootSpider anop
 		
 checkKey_shootCentipede anop
 		jmp shootRandomSegment
+		
+checkKey_scoreAdd anop
+		jmp scoreAddTwentyThousand
                 
 checkKey_quit anop
         stz shouldQuit
         rtl
-        
-checkKey_fast anop
-        lda #SPRITE_SPEED_FAST
-        jsl setFleaSpeed
-
-checkKey_slow anop
-        lda #SPRITE_SPEED_SLOW
-        jsl setFleaSpeed
 
 checkKey_game anop
 		jmp startGame

@@ -64,11 +64,10 @@ jumpInst jmp >flea1
         
 updateFlea entry
         lda fleaState
-        bne updateFlea_cont
-
-updateFlea_cont anop
+        beq updateFlea_maybeAdd
+		
         cmp #FLEA_STATE_FALLING
-        beq updateFlea_cont2
+        beq updateFlea_cont
 
 ; Handle explosion
         lda fleaSprite
@@ -81,8 +80,39 @@ updateFlea_cont anop
 updateFlea_explosionDone anop
         stz fleaState
         rtl
+
+updateFlea_maybeAdd anop
+		lda gameRunning
+		bne updateFlea_doNotAdd
+		lda gameLevel
+		beq updateFlea_doNotAdd
+		lda scoreNum20000
+		bne updateFlea_moreThan20000
+; Below 20000 points, 5 or more mushrooms do not result in a flea
+		lda #4
+		bra updateFlea_checkNumMushrooms
+updateFlea_moreThan20000 anop
+		cmp #6
+		bge updateFlea_moreThan120000
+; Between 20000 and 120000, 9 or more mushrooms do not result in a flea
+		lda #8
+		bra updateFlea_checkNumMushrooms
+updateFlea_moreThan120000 anop
+; Above 120000, 15 or more mushrooms do not result in a flea and for every
+; 20000 more points, this goes up by 1 more mushroom.  So, the accumulator
+; has 6 in it for scores from 120000 to 139999.  Add 8 to that to get 14
+; which is the threshold at which fleas appear.
+		clc
+		adc #8
+updateFlea_checkNumMushrooms anop
+		cmp numInfieldMushrooms
+		blt updateFlea_doNotAdd
+		jmp addFlea
+		
+updateFlea_doNotAdd anop
+		rtl
         
-updateFlea_cont2 anop
+updateFlea_cont anop
         lda fleaHeightInTile
         beq updateFlea_nextTile
         dec a
@@ -133,7 +163,9 @@ updateFlea_nextTile anop
         bne updateFlea_nextAction
         lda #TILE_MUSHROOM4
         sta tileType,x
-        
+		cpx #SPIDER_TOP_ROW_OFFSET
+		blt updateFlea_nextAction
+        inc numInfieldMushrooms
         bra updateFlea_nextAction
         
 updateFlea_bottom anop
@@ -155,8 +187,16 @@ updateFlea_done anop
 addFlea entry
         lda fleaState
         bne addFlea_done
-        
-        lda fleaSpriteSpeed
+		
+		lda scoreNum20000
+		cmp #3
+		bge addFlea_fast
+		lda #SEGMENT_SPEED_SLOW
+		bra addFlea_setSpeed
+addFlea_fast anop
+		lda #SEGMENT_SPEED_FAST
+addFlea_setSpeed anop
+        sta fleaSpriteSpeed
         jsl setFleaSpeed
         
         lda #FLEA_STATE_FALLING

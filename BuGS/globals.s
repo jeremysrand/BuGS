@@ -28,6 +28,11 @@ SEGMENT_DIR_RIGHT   equ 1
 SEGMENT_SPEED_FAST      equ 0
 SEGMENT_SPEED_SLOW      equ 1
 
+; A spider only travels in the bottom N rows.  This defines that number.
+SPIDER_NUM_POSSIBLE_ROWS    equ 10
+SPIDER_TOP_ROW              equ GAME_NUM_TILES_TALL-SPIDER_NUM_POSSIBLE_ROWS
+SPIDER_TOP_ROW_OFFSET       equ SPIDER_TOP_ROW*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO
+
 SCREEN_BYTES_PER_ROW    gequ 160
 
 SIZEOF_TILE_INFO        gequ 2
@@ -140,6 +145,7 @@ gameRunning	dc i2'1'
 numSegments dc i2'0'
 gameLevel   dc i2'0'
 gameScore  	dc i4'0'
+scoreNum20000	dc i2'0'
 
 backupStack dc i2'0'
 

@@ -245,11 +245,8 @@ addScorpion entry
         rtl
         
 addScorpion_doit anop
-		lda gameScore+2
+		lda scoreNum20000
 		bne addScorpion_randomSpeed
-		lda gameScore
-		cmp #20000
-		bge addScorpion_randomSpeed
 addScorpion_slow anop
 		lda #SPRITE_SPEED_SLOW
 		bra addScorpion_setSpeed

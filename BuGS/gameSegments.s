@@ -1687,14 +1687,17 @@ shootSegment_doneScore anop
 		bge shootSegment_skipMushroom
 		tay
 		lda tileType,y
-		beq shootSegment_normalMushroom
+		beq shootSegment_noMushroom
 		cmp #TILE_POISON_MUSHROOM1
-		bge shootSegment_poisonMushroom
+		blt shootSegment_normalMushroom
+		lda #TILE_POISON_MUSHROOM4
+		bra shootSegment_dirtyTile
+shootSegment_noMushroom anop
+		cpy #SPIDER_TOP_ROW_OFFSET
+		blt shootSegment_normalMushroom
+		inc numInfieldMushrooms
 shootSegment_normalMushroom anop
 		lda #TILE_MUSHROOM4
-		bra shootSegment_dirtyTile
-shootSegment_poisonMushroom anop
-		lda #TILE_POISON_MUSHROOM4
 shootSegment_dirtyTile anop
 		sta tileType,y
 		lda #TILE_STATE_DIRTY

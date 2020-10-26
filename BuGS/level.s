@@ -95,10 +95,8 @@ levelNext_skip anop
 		sta colourLevelNum
 		inc gameLevel
 		
-		lda gameScore+2
-		bne levelNext_fastOnly
-		lda gameScore
-		cmp #40000
+		lda scoreNum20000
+		cmp #2
 		bge levelNext_fastOnly
 		
 		ldy centipedeLevelNum

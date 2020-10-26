@@ -26,10 +26,6 @@ SPIDER_STATE_RIGHT_DOWN         equ 9
 SPIDER_STATE_RIGHT_UP           equ 10
 
 
-; A spider only travels in the bottom N rows.  This defines that number.
-SPIDER_NUM_POSSIBLE_ROWS    equ 10
-SPIDER_TOP_ROW              equ GAME_NUM_TILES_TALL-SPIDER_NUM_POSSIBLE_ROWS
-SPIDER_TOP_ROW_OFFSET       equ SPIDER_TOP_ROW*GAME_NUM_TILES_WIDE*SIZEOF_TILE_INFO
 SPIDER_LHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET
 SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO
 
@@ -422,6 +418,9 @@ updateSpider_tilesUp anop
         beq updateSpider_tilesUpCont
         lda #TILE_EMPTY
         sta tileType,x
+		cpx #SPIDER_TOP_ROW_OFFSET
+		blt updateSpider_tilesUpCont
+		dec numInfieldMushrooms
         
 updateSpider_tilesUpCont anop
         ldx spiderTileOffsets+10
@@ -494,6 +493,9 @@ updateSpider_tilesDown anop
         beq updateSpider_tilesDownCont
         lda #TILE_EMPTY
         sta tileType,x
+		cpx #SPIDER_TOP_ROW_OFFSET
+		blt updateSpider_tilesDownCont
+		dec numInfieldMushrooms
         
 updateSpider_tilesDownCont anop
         ldx spiderTileOffsets+8

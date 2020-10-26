@@ -19,10 +19,14 @@ TILE_SCORE_ONES_OFFSET		equ TILE_SCORE_ONES*SIZEOF_TILE_INFO
 TILE_SCORE_TENS_OFFSET		equ TILE_SCORE_ONES_OFFSET-SIZEOF_TILE_INFO
 TILE_SCORE_HUNDREDS_OFFSET	equ TILE_SCORE_TENS_OFFSET-SIZEOF_TILE_INFO
 TILE_SCORE_THOUSANDS_OFFSET	equ TILE_SCORE_HUNDREDS_OFFSET-SIZEOF_TILE_INFO
+TILE_SCORE_TEN_THOUSANDS_OFFSET	equ TILE_SCORE_THOUSANDS_OFFSET-SIZEOF_TILE_INFO
 
 scoreStartGame entry
 		stz gameScore
 		stz gameScore+2
+		stz scoreWithin12000
+		stz scoreWithin20000
+		stz scoreNum20000
 		
 		ldx #TILE_SCORE_ONES_OFFSET
 		lda #TILE_NUMBER_0
@@ -158,35 +162,20 @@ scoreAddToTile_done anop
 		
 		
 scoreAddOne entry
-		inc gameScore
-		bne scoreAddOne_noCarry
-		inc gameScore+2
-scoreAddOne_noCarry anop
+		_incrementScore 1
 		ldx #TILE_SCORE_ONES_OFFSET
 		jmp scoreAddOneToTile
 
 
 scoreAddFive entry
-		lda #5
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddFive_noCarry
-		inc gameScore+2
-scoreAddFive_noCarry anop
+		_incrementScore 5
 		ldx #TILE_SCORE_ONES_OFFSET
 		lda #5*4
 		jmp scoreAddToTile
 
 
 scoreAddTen entry
-		lda #10
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddTen_noCarry
-		inc gameScore+2
-scoreAddTen_noCarry anop
+		_incrementScore 10
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddTen_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -199,13 +188,7 @@ scoreAddTen_skipZeroOnes anop
 
 
 scoreAddOneHundred entry
-		lda #100
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddHundred_noCarry
-		inc gameScore+2
-scoreAddHundred_noCarry anop
+		_incrementScore 100
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -225,13 +208,7 @@ scoreAddHundred_skipZeroTens anop
 
 
 scoreAddTwoHundred entry
-		lda #200
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddTwoHundred_noCarry
-		inc gameScore+2
-scoreAddTwoHundred_noCarry anop
+		_incrementScore 200
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddTwoHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -252,13 +229,7 @@ scoreAddTwoHundred_skipZeroTens anop
 
 
 scoreAddThreeHundred entry
-		lda #300
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddThreeHundred_noCarry
-		inc gameScore+2
-scoreAddThreeHundred_noCarry anop
+		_incrementScore 300
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddThreeHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -279,13 +250,7 @@ scoreAddThreeHundred_skipZeroTens anop
 
 
 scoreAddSixHundred entry
-		lda #600
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddSixHundred_noCarry
-		inc gameScore+2
-scoreAddSixHundred_noCarry anop
+		_incrementScore 600
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddSixHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -306,13 +271,7 @@ scoreAddSixHundred_skipZeroTens anop
 
 
 scoreAddNineHundred entry
-		lda #900
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddNineHundred_noCarry
-		inc gameScore+2
-scoreAddNineHundred_noCarry anop
+		_incrementScore 900
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddNineHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -333,13 +292,7 @@ scoreAddNineHundred_skipZeroTens anop
 
 
 scoreAddOneThousand entry
-		lda #1000
-		clc
-		adc gameScore
-		sta gameScore
-		bcc scoreAddOneThousand_noCarry
-		inc gameScore+2
-scoreAddOneThousand_noCarry anop
+		_incrementScore 1000
 		lda tileType+TILE_SCORE_ONES_OFFSET
 		bne scoreAddOneThousand_skipZeroOnes
 		lda #TILE_NUMBER_0
@@ -363,8 +316,21 @@ scoreAddOneThousand_skipZeroTens anop
 scoreAddOneThousand_skipZeroHundreds anop
 		ldx #TILE_SCORE_THOUSANDS_OFFSET
 		jmp scoreAddOneToTile
+		
 
+; This function is used purely for debug to test high score threshold stuff.  It
+; doesn't do all the right things though to update the score on the display so I am
+; cheating a bit here.
+scoreAddTwentyThousand entry
+		_incrementScore 20000
+		ldx #TILE_SCORE_TEN_THOUSANDS_OFFSET
+		lda #2*4
+		jmp scoreAddToTile
+		
+		
 
 highScore	dc i4'0'
+scoreWithin12000	dc i2'0'
+scoreWithin20000	dc i2'0'
 
         end

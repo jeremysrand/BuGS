@@ -63,6 +63,8 @@ word numDirtyNonGameTiles;
 
 word numPlayers;
 
+word numInfieldMushrooms;
+
 
 /* Implementation */
 
@@ -282,6 +284,7 @@ void addStartingMushrooms(void)
 {
     tTileNum tileNum;
     unsigned int numMushrooms = 0;
+    numInfieldMushrooms = 0;
     
     while (numMushrooms < STARTING_NUM_MUSHROOMS)
     {
@@ -294,5 +297,7 @@ void addStartingMushrooms(void)
         tileType[tileNum] = TILE_MUSHROOM4;
         ADD_DIRTY_GAME_TILE(tileNum);
         numMushrooms++;
+        if ((tileNum / GAME_NUM_TILES_WIDE) >= GAME_NUM_TILES_TALL - 10)
+            numInfieldMushrooms++;
     }
 }

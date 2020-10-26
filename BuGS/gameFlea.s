@@ -191,12 +191,11 @@ addFlea entry
 		lda scoreNum20000
 		cmp #3
 		bge addFlea_fast
-		lda #SEGMENT_SPEED_SLOW
+		lda #SPRITE_SPEED_SLOW
 		bra addFlea_setSpeed
 addFlea_fast anop
-		lda #SEGMENT_SPEED_FAST
+		lda #SPRITE_SPEED_FAST
 addFlea_setSpeed anop
-        sta fleaSpriteSpeed
         jsl setFleaSpeed
         
         lda #FLEA_STATE_FALLING

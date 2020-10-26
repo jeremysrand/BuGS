@@ -507,7 +507,12 @@ updateSpider_tilesDownCont anop
 updateSpider_downChangeDir anop
         lda spiderTargetRow
         sec
-; TODO - The actual top row of the spider changes as the score goes up.  Need to handle that.
+; TODO - The actual top row of the spider changes as the score goes up.
+; The top row of the spider based on the score is:
+;   0 to 119,000       - 10th row
+;   120,000 to 139,999 - 9th row
+;   140,000 to 159,999 - 8th row
+;   160,000 to ...	 - 7th row
         sbc #SPIDER_TOP_ROW
         jsl randN
         inc a

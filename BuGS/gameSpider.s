@@ -26,8 +26,8 @@ SPIDER_STATE_RIGHT_DOWN         equ 9
 SPIDER_STATE_RIGHT_UP           equ 10
 
 
-SPIDER_LHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET
-SPIDER_RHS_TILE_OFFSET      equ SPIDER_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO
+SPIDER_LHS_TILE_OFFSET      equ SPIDER_STARTING_TOP_ROW_OFFSET
+SPIDER_RHS_TILE_OFFSET      equ SPIDER_STARTING_TOP_ROW_OFFSET+(GAME_NUM_TILES_WIDE-1)*SIZEOF_TILE_INFO
 
 ; The spider starts 2 pixel rows above the top row offset so it can slide in on the edge of
 ; the screen on a diagonal and hit the centre of the tiles with the middle of its body.
@@ -63,6 +63,8 @@ SPIDER_ADD_TIME		equ 120
 spiderInitGame entry
 		stz spiderAddTime
 		stz spiderState
+		lda #SPIDER_STARTING_TOP_ROW
+		sta spiderTopRow
 		lda #SPRITE_SPEED_SLOW
 		jmp setSpiderSpeed
 		
@@ -418,7 +420,7 @@ updateSpider_tilesUp anop
         beq updateSpider_tilesUpCont
         lda #TILE_EMPTY
         sta tileType,x
-		cpx #SPIDER_TOP_ROW_OFFSET
+		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesUpCont
 		dec numInfieldMushrooms
         
@@ -493,7 +495,7 @@ updateSpider_tilesDown anop
         beq updateSpider_tilesDownCont
         lda #TILE_EMPTY
         sta tileType,x
-		cpx #SPIDER_TOP_ROW_OFFSET
+		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesDownCont
 		dec numInfieldMushrooms
         
@@ -507,17 +509,10 @@ updateSpider_tilesDownCont anop
 updateSpider_downChangeDir anop
         lda spiderTargetRow
         sec
-; TODO - The actual top row of the spider changes as the score goes up.
-; The top row of the spider based on the score is:
-;   0 to 119,000       - 10th row
-;   120,000 to 139,999 - 9th row
-;   140,000 to 159,999 - 8th row
-;   160,000 to ...	 - 7th row
-        sbc #SPIDER_TOP_ROW
+        sbc spiderTopRow
         jsl randN
-        inc a
         clc
-        adc #SPIDER_TOP_ROW-1
+        adc spiderTopRow
         sta spiderTargetRow
         
         jsl rand0_to_65534
@@ -561,14 +556,42 @@ addSpider_checkSpeed anop
 		bne addSpider_fast
 		lda gameScore
 		cmp #5000
-		blt addSpider_doit
+		bge addSpider_fast
+		lda #SPRITE_SPEED_SLOW
+		bra addSpider_setSpeed
 addSpider_fast anop
 		lda #SPRITE_SPEED_FAST
+addSpider_setSpeed anop
 		cmp spiderSpeed
-		beq addSpider_doit
+		beq addSpider_setHeight
 		jsl setSpiderSpeed
 
-addSpider_doit anop
+addSpider_setHeight anop
+; The actual top row of the spider changes as the score goes up.
+; The top row of the spider based on the score is:
+;   0 to 119,000       - 10th row from bottom
+;   120,000 to 139,999 - 9th row from bottom
+;   140,000 to 159,999 - 8th row from bottom
+;   160,000 to ...	 - 7th row from bottom
+		lda scoreNum20000
+		cmp #6
+		blt addSpider_height10
+		beq addSpider_height9
+		cmp #7
+		beq addSpider_height8
+		lda #SPIDER_STARTING_TOP_ROW+3
+		bra addSpider_doneHeight
+addSpider_height10 anop
+		lda #SPIDER_STARTING_TOP_ROW
+		bra addSpider_doneHeight
+addSpider_height9 anop
+		lda #SPIDER_STARTING_TOP_ROW+1
+		bra addSpider_doneHeight
+addSpider_height8 anop
+		lda #SPIDER_STARTING_TOP_ROW+2
+addSpider_doneHeight anop
+		sta spiderTopRow
+
         lda spiderStartingShift
         sta spiderShiftInTile
         
@@ -578,12 +601,18 @@ addSpider_doit anop
         lda #SPIDER_SPRITE_REFRESH_COUNT
         sta spiderSpriteRefresh
         
-        lda #SPIDER_TOP_ROW-1
+        lda #SPIDER_STARTING_TOP_ROW-1
         sta spiderCurrentRow
         
-        lda #SPIDER_NUM_POSSIBLE_ROWS-1
+		lda #GAME_NUM_TILES_TALL-1
+		sec
+		sbc spiderTopRow
         jsl randN
-        adc #SPIDER_TOP_ROW+1
+; We intentionally set carry before adding here.  I want to add (spiderTopRow + 1) to the
+; random number we already got.  That way, the target row is (spiderTopRow + 1) to
+; (GAME_NUM_TILES_TALL - 1)
+		sec
+        adc spiderTopRow
         sta spiderTargetRow
         
         jsl rand0_to_65534
@@ -768,6 +797,7 @@ spiderScreenShift   dc i2'0'
 spiderShiftInTile   dc i2'0'
 spiderAddTime       dc i2'0'
 
+spiderTopRow		dc i2'SPIDER_STARTING_TOP_ROW'
 spiderCurrentRow    dc i2'0'
 spiderTargetRow     dc i2'0'
 

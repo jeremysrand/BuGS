@@ -163,7 +163,7 @@ updateFlea_nextTile anop
         bne updateFlea_nextAction
         lda #TILE_MUSHROOM4
         sta tileType,x
-		cpx #SPIDER_TOP_ROW_OFFSET
+		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateFlea_nextAction
         inc numInfieldMushrooms
         bra updateFlea_nextAction

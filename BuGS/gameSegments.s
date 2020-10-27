@@ -1693,7 +1693,7 @@ shootSegment_doneScore anop
 		lda #TILE_POISON_MUSHROOM4
 		bra shootSegment_dirtyTile
 shootSegment_noMushroom anop
-		cpy #SPIDER_TOP_ROW_OFFSET
+		cpy #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt shootSegment_normalMushroom
 		inc numInfieldMushrooms
 shootSegment_normalMushroom anop

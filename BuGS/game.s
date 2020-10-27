@@ -161,10 +161,6 @@ drawTile entry
         
 jumpInst jmp >mushroom1
         nop
-		
-addPlayer entry
-; TODO - Write code to add a new life.
-		rtl
 
         
 setupScreen entry

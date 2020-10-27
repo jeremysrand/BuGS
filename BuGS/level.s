@@ -144,8 +144,6 @@ levelNext_fastNoWrap anop
 		rtl
 
 
-centipedeLevelNum	dc i2'0'
-colourLevelNum		dc i2'0'
 centipedeNum 		dc i2'0'
 nextLevelFrameCount dc i2'0'
 

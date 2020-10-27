@@ -328,9 +328,11 @@ scoreAddTwentyThousand entry
 		jmp scoreAddToTile
 		
 		
-
+scoreEvery12000 entry
+; TODO - Write code to add a new life.
+		rtl
+		
+		
 highScore	dc i4'0'
-scoreWithin12000	dc i2'0'
-scoreWithin20000	dc i2'0'
 
         end

@@ -78,6 +78,7 @@
 		9D3396FF24AED09D003222B3 /* sprites.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = sprites.md; sourceTree = "<group>"; };
 		9D33970024AEFBF2003222B3 /* segments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
+		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 				9DB1505124C6875C00558B87 /* gameScorpion.s */,
 				9DB1505324C9E54C00558B87 /* gameSpider.s */,
 				9DB1505424D3BF6C00558B87 /* gameSegments.s */,
+				9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */,
 				9D8AF0B72535542400C10E3C /* level.s */,
 				9D8AF0B82535543000C10E3C /* score.s */,
 				9D62AF3B249871A300348F45 /* colour.s */,

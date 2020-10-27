@@ -11,8 +11,7 @@
         keep globals
 
 globals start
-        rtl
-        end
+		end
 
 globalData data
 

@@ -100,6 +100,9 @@ typedef enum {
     TILE_SOLID3 = 51 * 4,
     
     TILE_PLAYER = 52 * 4,
+    TILE_LETTER_WHITE_U = 53 * 4,
+    TILE_LETTER_GREEN_G = 54 * 4,
+    TILE_LETTER_GREEN_S = 55 * 4,
 } tTileType;
 
 

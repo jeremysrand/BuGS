@@ -123,6 +123,9 @@ TILE_SOLID2             gequ 50*4
 TILE_SOLID3             gequ 51*4
 
 TILE_PLAYER             gequ 52*4
+TILE_LETTER_WHITE_U     gequ 53*4
+TILE_LETTER_GREEN_G     gequ 54*4
+TILE_LETTER_GREEN_S     gequ 55*4
 
 TILE_POISON_A_MUSHROOM  gequ TILE_POISON_MUSHROOM4-TILE_MUSHROOM4
 
@@ -213,6 +216,9 @@ tileJumpTable dc a4'solid0'
               dc a4'solid2'
               dc a4'solid3'
               dc a4'drawPlayer'
+              dc a4'letterWhiteU'
+              dc a4'letterGreenG'
+              dc a4'letterGreenS'
 
 
 EXPLOSION_LAST_OFFSET   gequ 20

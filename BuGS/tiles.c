@@ -197,15 +197,53 @@ void initNonGameTiles(void)
 {
     unsigned int i;
     tTileNum tileNum;
-    numPlayers = STARTING_NUM_PLAYERS;
-    for (i = 0; i < numPlayers; i++)
-    {
-        tileNum = RHS_FIRST_TILE + i;
-        tileType[tileNum] = TILE_PLAYER;
-        ADD_DIRTY_NON_GAME_TILE(tileNum);
-    }
     
-    tileNum = LHS_FIRST_TILE + (1 * LHS_NUM_TILES_WIDE) + 6;
+    tileNum = LHS_FIRST_TILE + (LHS_NUM_TILES_WIDE / 2);
+    tileType[tileNum] = TILE_LETTER_B;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_WHITE_U;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_GREEN_G;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_GREEN_S;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (3 * LHS_NUM_TILES_WIDE);
+    tileType[tileNum] = TILE_LETTER_P;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_L;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_A;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_Y;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_E;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_R;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileNum++;
+    tileType[tileNum] = TILE_NUMBER_1;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (5 * LHS_NUM_TILES_WIDE) + 2;
     tileType[tileNum] = TILE_LETTER_S;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
@@ -229,11 +267,44 @@ void initNonGameTiles(void)
     tileType[tileNum] = TILE_SYMBOL_COLON;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
-    tileNum = LHS_FIRST_TILE + (4 * LHS_NUM_TILES_WIDE) - 2;
+    tileNum = LHS_FIRST_TILE + (7 * LHS_NUM_TILES_WIDE) - 2;
     tileType[tileNum] = TILE_NUMBER_0;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
-    tileNum = LHS_FIRST_TILE + (12 * LHS_NUM_TILES_WIDE) + 1;
+    tileNum = LHS_FIRST_TILE + (8 * LHS_NUM_TILES_WIDE) + 2;
+    tileType[tileNum] = TILE_LETTER_L;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_I;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_V;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_E;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_S;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_SYMBOL_COLON;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    numPlayers = STARTING_NUM_PLAYERS;
+    tileNum = LHS_FIRST_TILE + (10 * LHS_NUM_TILES_WIDE) - 2;
+    for (i = 0; i < numPlayers; i++)
+    {
+        tileType[tileNum] = TILE_PLAYER;
+        ADD_DIRTY_NON_GAME_TILE(tileNum);
+        tileNum--;
+    }
+    
+    tileNum = LHS_FIRST_TILE + (12 * LHS_NUM_TILES_WIDE);
     tileType[tileNum] = TILE_LETTER_H;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
@@ -274,9 +345,99 @@ void initNonGameTiles(void)
     tileType[tileNum] = TILE_SYMBOL_COLON;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
-    tileNum = LHS_FIRST_TILE + (15 * LHS_NUM_TILES_WIDE) - 2;
+    tileNum = LHS_FIRST_TILE + (14 * LHS_NUM_TILES_WIDE) - 2;
     tileType[tileNum] = TILE_NUMBER_0;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (16 * LHS_NUM_TILES_WIDE);
+    tileType[tileNum] = TILE_LETTER_P;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_L;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_A;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_Y;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_E;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_R;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileNum++;
+    tileType[tileNum] = TILE_NUMBER_2;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (18 * LHS_NUM_TILES_WIDE) + 2;
+    tileType[tileNum] = TILE_LETTER_S;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_C;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_O;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_R;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_E;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_SYMBOL_COLON;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (20 * LHS_NUM_TILES_WIDE) - 2;
+    tileType[tileNum] = TILE_NUMBER_0;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum = LHS_FIRST_TILE + (21 * LHS_NUM_TILES_WIDE) + 2;
+    tileType[tileNum] = TILE_LETTER_L;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_I;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_V;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_E;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_LETTER_S;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    tileNum++;
+    tileType[tileNum] = TILE_SYMBOL_COLON;
+    ADD_DIRTY_NON_GAME_TILE(tileNum);
+    
+    numPlayers = STARTING_NUM_PLAYERS;
+    tileNum = LHS_FIRST_TILE + (23 * LHS_NUM_TILES_WIDE) - 2;
+    for (i = 0; i < numPlayers; i++)
+    {
+        tileType[tileNum] = TILE_PLAYER;
+        ADD_DIRTY_NON_GAME_TILE(tileNum);
+        tileNum--;
+    }
 }
 
 

@@ -1609,4 +1609,181 @@ letterZ entry
         _spriteFooter
         rtl
 
+		
+		
+letterWhiteU entry
+		_spriteHeader
+		
+		ldx #$0000      ; Black, Black, Black, Black
+		ldy #$3003      ; Black, Off-white, Off-white, Black
+		
+		phx
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phx
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phx
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $0033
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $0033
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $0033
+		
+		adc #$00a0
+		tcs
+		
+		pea $3033
+		pea $3033
+		
+		adc #$00a0
+		tcs
+		
+		pea $3030
+		pea $3303
+		
+		_spriteFooter
+		rtl
+	
+	
+letterGreenG entry
+		_spriteHeader
+		
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$1100 - Black, Black, Green, Green (x2)
+;         #$1011 - Green, Green, Red, Black (x3)
+;         #$1001 - Black, Green, Green, Black (x4)
+;         #$0011 - Green, Green, Black, Black (x3)
+;
+		ldx #$1001      ; Black, Green, Green, Black
+		ldy #$0000      ; Black, Black, Black, Black
+		
+		phy
+		phy
+		
+		adc #$00a0
+		tcs
+		
+		pea $1011
+		pea $1100
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $0011
+		
+		adc #$00a0
+		tcs
+		
+		pea $1011
+		pea $0011
+		
+		adc #$00a0
+		tcs
+		
+		phx
+		pea $0011
+		
+		adc #$00a0
+		tcs
+		
+		phx
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		pea $1011
+		pea $1100
+		
+		_spriteFooter
+		rtl
+
+letterGreenS entry
+		_spriteHeader
+		
+; Colours #$0000 - Black, Black, Black, Black (x4)
+;         #$1101 - Black, Green, Green, Green (x3)
+;         #$0010 - Green, Black, Black, Black (x1)
+;         #$0011 - Green, Green, Black, Black (x6)
+;         #$1001 - Black, Red, Green, Black (x2)
+;
+		ldx #$0000      ; Black, Black, Black, Black
+		ldy #$0011      ; Green, Green, Black, Black
+		
+		phx
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		pea $0010
+		pea $1101
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phy
+		
+		adc #$00a0
+		tcs
+		
+		phx
+		phy
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $1101
+		
+		adc #$00a0
+		tcs
+		
+		pea $1001
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		pea $1001
+		phy
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		pea $1101
+		
+		_spriteFooter
+		rtl
+		
         end

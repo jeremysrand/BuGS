@@ -104,6 +104,7 @@ gameLoop anop
         sta >BORDER_COLOUR_REGISTER
         long i,m
         
+		jsl updatePlayer
         jsl updateScorpion
         jsl updateSpider
         jsl updateFlea

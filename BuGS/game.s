@@ -208,6 +208,7 @@ nextWord anop
 startGame entry
 		stz gameRunning
 		stz numSegments
+		jsl initPlayer
 		jsl spiderInitGame
 		jsl levelInit
 		jmp levelStart

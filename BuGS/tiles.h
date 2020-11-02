@@ -126,7 +126,6 @@ extern word numInfieldMushrooms;
 /* API */
 
 extern void initTiles(void);
-extern void initPlayer(void);
 extern void addStartingMushrooms(void);
 
 

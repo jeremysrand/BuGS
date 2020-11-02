@@ -62,8 +62,6 @@ int main(void)
     
     InitMouse(0);
     SetMouse(transparent);
-    ClampMouse(0, (GAME_NUM_TILES_WIDE - 1) * 8, 0, 8 * 5);
-    PosMouse(GAME_NUM_TILES_WIDE * 4, 8 * 5);
     
     initTiles();
     initNonGameTiles();

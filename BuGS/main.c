@@ -34,6 +34,14 @@ unsigned int randomSeed;
 /* Implementation */
 
 
+tTileOffset randomMushroomOffset(void)
+{
+    /* We do not put mushrooms in the bottom tile so we subtract the width here to find
+        a tile number above that last line */
+    return (rand() % (NUM_GAME_TILES - GAME_NUM_TILES_WIDE)) * sizeof(word);
+}
+
+
 int main(void)
 {
     int event;
@@ -65,7 +73,6 @@ int main(void)
     
     initTiles();
     initNonGameTiles();
-    addStartingMushrooms();
     
     game();
     

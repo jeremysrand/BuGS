@@ -34,10 +34,7 @@
 #define SCREEN_ADDRESS_FOR_TILE_AT_X_Y(X, Y) \
     (0x2000 + (0xa0 * (Y)) + ((X) / 2) + 3)
 
-#define STARTING_NUM_MUSHROOMS 30
 #define STARTING_NUM_PLAYERS 3
-
-#define ADD_DIRTY_GAME_TILE(tileNum) tileDirty[tileNum] = 1;
 
 #define ADD_DIRTY_NON_GAME_TILE(tileNum)                                          \
     if (!tileDirty[tileNum]) {                                                    \
@@ -60,10 +57,6 @@ word tileBitMask[NUM_GAME_TILES];
 
 tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 word numDirtyNonGameTiles;
-
-word numPlayers;
-
-word numInfieldMushrooms;
 
 
 /* Implementation */
@@ -295,9 +288,8 @@ void initNonGameTiles(void)
     tileType[tileNum] = TILE_SYMBOL_COLON;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
-    numPlayers = STARTING_NUM_PLAYERS;
     tileNum = LHS_FIRST_TILE + (10 * LHS_NUM_TILES_WIDE) - 2;
-    for (i = 0; i < numPlayers; i++)
+    for (i = 0; i < STARTING_NUM_PLAYERS; i++)
     {
         tileType[tileNum] = TILE_PLAYER;
         ADD_DIRTY_NON_GAME_TILE(tileNum);
@@ -430,35 +422,11 @@ void initNonGameTiles(void)
     tileType[tileNum] = TILE_SYMBOL_COLON;
     ADD_DIRTY_NON_GAME_TILE(tileNum);
     
-    numPlayers = STARTING_NUM_PLAYERS;
     tileNum = LHS_FIRST_TILE + (23 * LHS_NUM_TILES_WIDE) - 2;
-    for (i = 0; i < numPlayers; i++)
+    for (i = 0; i < STARTING_NUM_PLAYERS; i++)
     {
         tileType[tileNum] = TILE_PLAYER;
         ADD_DIRTY_NON_GAME_TILE(tileNum);
         tileNum--;
-    }
-}
-
-
-void addStartingMushrooms(void)
-{
-    tTileNum tileNum;
-    unsigned int numMushrooms = 0;
-    numInfieldMushrooms = 0;
-    
-    while (numMushrooms < STARTING_NUM_MUSHROOMS)
-    {
-        /* We do not put mushrooms in the bottom tile so we subtract the width here to find
-            a tile number above that last line */
-        tileNum = rand() % (NUM_GAME_TILES - GAME_NUM_TILES_WIDE);
-        if (tileType[tileNum] != TILE_EMPTY)
-            continue;
-        
-        tileType[tileNum] = TILE_MUSHROOM4;
-        ADD_DIRTY_GAME_TILE(tileNum);
-        numMushrooms++;
-        if ((tileNum / GAME_NUM_TILES_WIDE) >= GAME_NUM_TILES_TALL - 10)
-            numInfieldMushrooms++;
     }
 }

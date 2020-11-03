@@ -120,13 +120,11 @@ extern word tileBitMask[NUM_GAME_TILES];
 
 extern tTileOffset dirtyNonGameTiles[NUM_NON_GAME_TILES];
 extern word numDirtyNonGameTiles;
-extern word numInfieldMushrooms;
 
 
 /* API */
 
 extern void initTiles(void);
-extern void addStartingMushrooms(void);
 
 
 #endif /* define _GUARD_PROJECTBuGS_FILEtiles_ */

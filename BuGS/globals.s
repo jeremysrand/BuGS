@@ -159,7 +159,7 @@ scoreWithin20000	dc i2'0'
 scoreNum20000		dc i2'0'
 centipedeLevelNum	dc i2'0'
 colourLevelNum		dc i2'0'
-; numInfieldMushrooms
+numInfieldMushrooms dc i2'0'
 ; tileType
 
 

@@ -117,8 +117,8 @@ updatePlayer_skipDeltas anop
 		
 updatePlayer_shift anop
 		adc mouseYAddress,y
-		sta mouseAddress
 		dec a
+		sta mouseAddress
 		tay
 		jsl drawShipShift
 		bra updatePlayer_dirty
@@ -127,19 +127,27 @@ updatePlayer_dirty anop
 		lda mouseAddress
 		sec
 		sbc #SCREEN_ADDRESS
-		and #$fff8
+		and #$fffc
 		tax
 		lda >screenToTileOffset,x
 		tax
 		lda #TILE_STATE_DIRTY
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updatePlayer_tileOffscreen1
 		sta tileDirty,x
+updatePlayer_tileOffscreen1 anop
 		ldy tileRight,x
+		cpy #RHS_FIRST_TILE_OFFSET
+		bge updatePlayer_tileOffscreen2
 		sta tileDirty,y
+updatePlayer_tileOffscreen2 anop
 		ldy tileBelow,x
 		cpy #INVALID_TILE_NUM
 		beq updatePlayer_done
 		sta tileDirty,y
 		ldx tileRight,y
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updatePlayer_done
 		sta tileDirty,x
 		
 updatePlayer_done anop

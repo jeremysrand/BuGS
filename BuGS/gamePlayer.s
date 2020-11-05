@@ -13,14 +13,7 @@
 gamePlayer start
 		using globalData
 		using tileData
-
-PLAYER_TILES_HIGH	equ 7
-
-MOUSE_MAX_X		equ GAME_NUM_TILES_WIDE*TILE_PIXEL_WIDTH-TILE_PIXEL_WIDTH
-MOUSE_MAX_Y		equ GAME_NUM_TILES_TALL*TILE_PIXEL_HEIGHT-TILE_PIXEL_HEIGHT
-
-STARTING_MOUSE_X	equ GAME_NUM_TILES_WIDE*TILE_PIXEL_WIDTH/2
-STARTING_MOUSE_Y	equ MOUSE_MAX_Y
+		using screenData
 		
 initPlayer entry
 		lda #STARTING_MOUSE_X
@@ -110,51 +103,51 @@ updatePlayer_doneY anop
 		sta mouseDown
 
 updatePlayer_skipDeltas anop
+		lda mouseY
+		asl a
+		tay
 		lda mouseX
 		lsr a
 		bcs updatePlayer_shift
-		adc #$9834
+		adc mouseYAddress,y
+		sta mouseAddress
 		tay
 		jsl drawShip
 		bra updatePlayer_dirty
 		
 updatePlayer_shift anop
-		adc #$9833
+		adc mouseYAddress,y
+		sta mouseAddress
+		dec a
 		tay
 		jsl drawShipShift
 		bra updatePlayer_dirty
 		
 updatePlayer_dirty anop
+		lda mouseAddress
+		sec
+		sbc #SCREEN_ADDRESS
+		and #$fff8
+		tax
+		lda >screenToTileOffset,x
+		tax
 		lda #TILE_STATE_DIRTY
-		sta tileDirty+1200
-		sta tileDirty+1202
-		sta tileDirty+1204
-		sta tileDirty+1206
-		sta tileDirty+1208
-		sta tileDirty+1210
-		sta tileDirty+1212
-		sta tileDirty+1214
-		sta tileDirty+1216
-		sta tileDirty+1218
-		sta tileDirty+1220
-		sta tileDirty+1222
-		sta tileDirty+1224
-		sta tileDirty+1226
-		sta tileDirty+1228
-		sta tileDirty+1230
-		sta tileDirty+1232
-		sta tileDirty+1234
-		sta tileDirty+1236
-		sta tileDirty+1238
-		sta tileDirty+1240
-		sta tileDirty+1242
-		sta tileDirty+1244
-		sta tileDirty+1246
-		sta tileDirty+1248
+		sta tileDirty,x
+		ldy tileRight,x
+		sta tileDirty,y
+		ldy tileBelow,x
+		cpy #INVALID_TILE_NUM
+		beq updatePlayer_done
+		sta tileDirty,y
+		ldx tileRight,y
+		sta tileDirty,x
+		
+updatePlayer_done anop
 		rtl
 
 mouseX		dc i2'0'
 mouseY 		dc i2'0'
 mouseDown   dc i2'0'
+mouseAddress	dc i2'0'
 
         end

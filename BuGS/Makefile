@@ -122,7 +122,7 @@ $(GENDIR)/tileData.s: tileData.pl Makefile
 # add rules in genclean to remove those generated files when you
 # clean your build.
 genclean:
-	$(RM) $(GENDIR)/tileData.s $(GENDIR)/tileData.h
+	$(RM) $(GENDIR)/tileData.s $(GENDIR)/screenData.s $(GENDIR)/tileData.h
 
 # Do not change anything else below here...
 include make/tail.mk

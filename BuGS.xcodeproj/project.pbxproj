@@ -78,7 +78,7 @@
 		9D33970024AEFBF2003222B3 /* segments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
-		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; };
+		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CCBA25525C1A00CDA5CB /* tileData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = tileData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };

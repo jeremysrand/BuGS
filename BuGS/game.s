@@ -23,6 +23,7 @@
 
 game    start
         using globalData
+		using tileData
         
         jsl setupScreen
         

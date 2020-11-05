@@ -12,6 +12,7 @@
 
 gameSegments start
         using globalData
+		using tileData
         
         
 SEGMENT_MAX_NUM     equ 12

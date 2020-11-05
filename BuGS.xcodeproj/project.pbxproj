@@ -20,7 +20,6 @@
 		9D1716A52491C49300C83148 /* system601.2mg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A42491C49300C83148 /* system601.2mg */; };
 		9D1716A72491C49300C83148 /* tail.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A62491C49300C83148 /* tail.mk */; };
 		9D1716AA2491C49300C83148 /* BuGS.xcscheme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A92491C49300C83148 /* BuGS.xcscheme */; };
-		9DC4D7C124BE9F7100BACF4B /* tiles.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4D7C024BE9F7100BACF4B /* tiles.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +79,7 @@
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
 		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; };
+		9D47CCBA25525C1A00CDA5CB /* tileData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = tileData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -87,6 +87,7 @@
 		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		9D9F07F92553AB3800875B29 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		9DB1505024C3801100558B87 /* gameFlea.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameFlea.s; sourceTree = "<group>"; };
 		9DB1505124C6875C00558B87 /* gameScorpion.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameScorpion.s; sourceTree = "<group>"; };
 		9DB1505224C7495400558B87 /* globals.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
@@ -95,8 +96,6 @@
 		9DB1505524D3BFCE00558B87 /* global.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = global.macros; sourceTree = "<group>"; };
 		9DC4D7BD24B7652100BACF4B /* ship.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
 		9DC4D7BE24B80C9600BACF4B /* shot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
-		9DC4D7BF24BE9F7100BACF4B /* tiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiles.h; sourceTree = "<group>"; };
-		9DC4D7C024BE9F7100BACF4B /* tiles.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tiles.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +114,7 @@
 			children = (
 				9D62AF3F2499CD1E00348F45 /* LICENSE */,
 				9D62AF402499CD3A00348F45 /* README.md */,
+				9D9F07F92553AB3800875B29 /* TODO.md */,
 				9D17168D2491C49300C83148 /* BuGS */,
 				9D1716852491C49300C83148 /* Products */,
 			);
@@ -135,8 +135,6 @@
 			children = (
 				9D17168E2491C49300C83148 /* main.c */,
 				9D1716902491C49300C83148 /* main.h */,
-				9DC4D7BF24BE9F7100BACF4B /* tiles.h */,
-				9DC4D7C024BE9F7100BACF4B /* tiles.c */,
 				9D8FFC602491CA28005C9327 /* game.s */,
 				9D8FFC612491CAF0005C9327 /* game.h */,
 				9DB1505024C3801100558B87 /* gameFlea.s */,
@@ -151,6 +149,7 @@
 				9D2FF6DA24C4C79A000181E5 /* random.s */,
 				9DB1505224C7495400558B87 /* globals.s */,
 				9DB1505524D3BFCE00558B87 /* global.macros */,
+				9D47CCBA25525C1A00CDA5CB /* tileData.pl */,
 				9D3396F324AECACC003222B3 /* sprites */,
 				9D1716912491C49300C83148 /* main.rez */,
 				9D1716932491C49300C83148 /* Makefile */,
@@ -319,7 +318,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DC4D7C124BE9F7100BACF4B /* tiles.c in Sources */,
 				9D1716942491C49300C83148 /* Makefile in Sources */,
 				9D17168F2491C49300C83148 /* main.c in Sources */,
 			);

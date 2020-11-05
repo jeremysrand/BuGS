@@ -12,6 +12,7 @@
 
 gameScorpion start
         using globalData
+		using tileData
 
 
 SCORPION_STATE_NONE      equ 0

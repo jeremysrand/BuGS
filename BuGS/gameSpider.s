@@ -12,6 +12,7 @@
 
 gameSpider start
         using globalData
+		using tileData
 
 SPIDER_STATE_NONE               equ 0
 SPIDER_STATE_EXPLODING          equ 1

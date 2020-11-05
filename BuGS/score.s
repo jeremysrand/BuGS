@@ -13,6 +13,7 @@
 
 score start
 		using globalData
+		using tileData
 
 TILE_SCORE_7TH_ROW		equ LHS_FIRST_TILE+7*LHS_NUM_TILES_WIDE
 TILE_SCORE_ONES 		equ TILE_SCORE_7TH_ROW-2

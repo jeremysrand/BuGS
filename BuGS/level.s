@@ -12,6 +12,7 @@
 
 level start
 		using globalData
+		using tileData
 
 NEXT_LEVEL_FRAME_COUNT equ 60
 

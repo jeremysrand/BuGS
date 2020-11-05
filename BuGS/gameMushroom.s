@@ -12,6 +12,7 @@
 
 gameMushroom start
         using globalData
+		using tileData
 		
 		
 STARTING_NUM_MUSHROOMS	equ 30

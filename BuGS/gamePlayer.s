@@ -12,6 +12,7 @@
 
 gamePlayer start
 		using globalData
+		using tileData
 
 PLAYER_TILES_HIGH	equ 7
 

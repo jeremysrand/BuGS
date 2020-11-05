@@ -12,6 +12,7 @@
 
 gameFlea start
         using globalData
+		using tileData
 
 FLEA_STATE_NONE         equ 0
 FLEA_STATE_FALLING      equ 1

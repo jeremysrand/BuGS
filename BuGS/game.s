@@ -210,10 +210,15 @@ startGame entry
 		stz gameRunning
 		stz numSegments
 		jsl addRandomMushrooms
+		jsl scoreStartGame
 		jsl initPlayer
 		jsl spiderInitGame
 		jsl levelInit
+; Fall through intentionally here...
+startLevel entry
+		jsl playerLevelStart
 		jmp levelStart
+		
 
 
 checkKeyboard entry
@@ -251,9 +256,6 @@ checkKey_loop2 anop
 		beq checkKey_shootMushroom
 		cmp #'M'
 		beq checkKey_shootMushroom
-		
-        cmp #'+'
-        beq checkKey_scoreAdd
 
 		cmp #'g'
 		beq checkKey_game
@@ -280,9 +282,6 @@ checkKey_shootCentipede anop
 		
 checkKey_shootMushroom anop
 		jmp shootRandomMushroom
-		
-checkKey_scoreAdd anop
-		jmp scoreAddTwentyThousand
                 
 checkKey_quit anop
         stz shouldQuit

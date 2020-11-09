@@ -766,10 +766,21 @@ shootSpider entry
         lda spiderScreenOffset
         inc a
         sta spiderScreenOffset
+		cmp mouseAddress
+		blt shootSpider_playerBelow
+		sec
+		sbc mouseAddress
+		bra shootSpider_testDistance
+shootSpider_playerBelow anop
+		lda mouseAddress
+		sec
+		sbc spiderScreenOffset
 
-; TODO - Set the spiderScoreType to 0, 4 or 8 for 300, 600 or 900 points depending on the distance from the player.
-; For now, just hard code 900.
-		bra shootSpider_900
+shootSpider_testDistance anop
+		cmp #SPIDER_DISTANCE_900
+		blt shootSpider_900
+		cmp #SPIDER_DISTANCE_600
+		blt shootSpider_600
 		
 		lda #SPIDER_SCORE_300
 		sta spiderScoreType

@@ -158,7 +158,7 @@ _incrementScore_noCarry&SYSCNT anop
         sec
         sbc #12000
         pha
-        jsl scoreEvery12000
+        jsl playerAddLife
         pla
 _incrementScore_noExtraMan&SYSCNT anop
         sta scoreWithin12000

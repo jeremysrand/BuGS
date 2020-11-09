@@ -34,33 +34,33 @@ score300 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         lda $a0,s
-;        and #$f0ff
-        ora #$0800
+        and #$f0ff
+        ora #$0300
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -68,33 +68,33 @@ score300 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $2,s
         
         lda $4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $4,s
         
         lda $a0,s
-;        and #$f0ff
-        ora #$0800
+        and #$f0ff
+        ora #$0300
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -102,18 +102,18 @@ score300 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         _spriteFooter
@@ -142,33 +142,33 @@ score600 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         lda $a0,s
-;        and #$fff0
-        ora #$0008
+        and #$fff0
+        ora #$0003
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -176,33 +176,33 @@ score600 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $2,s
         
         lda $4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $4,s
         
         lda $a0,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -210,18 +210,18 @@ score600 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         _spriteFooter
@@ -250,33 +250,33 @@ score900 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         lda $a0,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -284,33 +284,33 @@ score900 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $2,s
         
         lda $4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $4,s
         
         lda $a0,s
-;        and #$f0ff
-        ora #$0800
+        and #$f0ff
+        ora #$0300
         sta $a0,s
         
         lda $a2,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a2,s
         
         lda $a4,s
-;        and #$f0f0
-        ora #$0808
+        and #$f0f0
+        ora #$0303
         sta $a4,s
         
         tsc
@@ -318,18 +318,18 @@ score900 entry
         tcs
         
         lda $0,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $0,s
         
         lda $2,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $2,s
         
         lda $4,s
-;        and #$00f0
-        ora #$8808
+        and #$00f0
+        ora #$3303
         sta $4,s
         
         _spriteFooter

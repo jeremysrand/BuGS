@@ -188,11 +188,11 @@ drawShipShift entry
         and #$0f00
         ora #$4084
         sta $2,s
-        
+
         lda $a0,s
         _collision #$cc0c
         and #$00f0
-        lda #$4408
+        ora #$4408
         sta $a0,s
         
         lda $a2,s
@@ -204,10 +204,10 @@ drawShipShift entry
         adc #$140
         tcs
 
-        lda $a0,s
+        lda $0,s
         _collision #$cc0c
         and #$00f0
-        lda #$8808
+        ora #$8808
         sta $0,s
 
         lda $2,s

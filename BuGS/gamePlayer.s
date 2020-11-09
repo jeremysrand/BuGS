@@ -16,10 +16,51 @@ gamePlayer start
 		using screenData
 		
 initPlayer entry
+		ldy #STARTING_NUM_LIVES
+		sty numLives
+		ldx #P1_LIVES_OFFSET
+initPlayer_loop anop
+		lda #TILE_PLAYER
+		sta tileType,x
+		phy
+		_dirtyNonGameTile
+		ply
+		dex
+		dex
+		dey
+		bne initPlayer_loop
+		rtl
+		
+		
+playerLevelStart entry
 		lda #STARTING_MOUSE_X
 		sta mouseX
 		lda #STARTING_MOUSE_Y
 		sta mouseY
+		dec numLives
+		lda #P1_LIVES_OFFSET
+		sec
+		sbc numLives
+		sec
+		sbc numLives
+		tax
+		lda #TILE_EMPTY
+		sta tileType,x
+		_dirtyNonGameTile
+		rtl
+		
+		
+playerAddLife entry
+		lda #P1_LIVES_OFFSET
+		sec
+		sbc numLives
+		sec
+		sbc numLives
+		tax
+		inc numLives
+		lda #TILE_PLAYER
+		sta tileType,x
+		_dirtyNonGameTile
 		rtl
 		
 
@@ -124,6 +165,10 @@ updatePlayer_shift anop
 		bra updatePlayer_dirty
 		
 updatePlayer_dirty anop
+		beq updatePlayer_noCollision
+; Player collision here...
+;		brk $00
+updatePlayer_noCollision anop
 		lda mouseAddress
 		sec
 		sbc #SCREEN_ADDRESS
@@ -156,6 +201,5 @@ updatePlayer_done anop
 mouseX		dc i2'0'
 mouseY 		dc i2'0'
 mouseDown   dc i2'0'
-mouseAddress	dc i2'0'
 
         end

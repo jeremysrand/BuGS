@@ -33,7 +33,7 @@ loop    lda colour1,y
         
 colour1 anop
         dc i2'$0000'        ; $0 - 0000 - Black
-        dc i2'$00f0'        ; $1 - 0001 - Green    Mushrooms ($1 to $3)
+        dc i2'$00f0'        ; $1 - 0001 - Green    Mushrooms  and spider scores ($1 to $3)
         dc i2'$0f00'        ; $2 - 0010 - Red
         dc i2'$0ffc'        ; $3 - 0011 - Off-white
         dc i2'$0f00'        ; $4 - 0100 - Red

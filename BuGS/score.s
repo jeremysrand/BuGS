@@ -14,14 +14,7 @@
 score start
 		using globalData
 		using tileData
-
-TILE_SCORE_7TH_ROW		equ LHS_FIRST_TILE+7*LHS_NUM_TILES_WIDE
-TILE_SCORE_ONES 		equ TILE_SCORE_7TH_ROW-2
-TILE_SCORE_ONES_OFFSET		equ TILE_SCORE_ONES*SIZEOF_TILE_INFO
-TILE_SCORE_TENS_OFFSET		equ TILE_SCORE_ONES_OFFSET-SIZEOF_TILE_INFO
-TILE_SCORE_HUNDREDS_OFFSET	equ TILE_SCORE_TENS_OFFSET-SIZEOF_TILE_INFO
-TILE_SCORE_THOUSANDS_OFFSET	equ TILE_SCORE_HUNDREDS_OFFSET-SIZEOF_TILE_INFO
-TILE_SCORE_TEN_THOUSANDS_OFFSET	equ TILE_SCORE_THOUSANDS_OFFSET-SIZEOF_TILE_INFO
+		
 
 scoreStartGame entry
 		stz gameScore
@@ -30,73 +23,19 @@ scoreStartGame entry
 		stz scoreWithin20000
 		stz scoreNum20000
 		
-		ldx #TILE_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		lda #TILE_NUMBER_0
 		sta tileType,x
 		_dirtyNonGameTile
-
-; Tens
+		
+scoreStartGame_loop anop
 		dex
 		dex
 		lda #TILE_EMPTY
 		sta tileType,x
 		_dirtyNonGameTile
-
-; Hundreds
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Thousands
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Tens of Thousands
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Hundreds of Thousands
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Millions
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Tens of Millions
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Hundreds of Millions
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
-
-; Billions
-		dex
-		dex
-		lda #TILE_EMPTY
-		sta tileType,x
-		_dirtyNonGameTile
+		cpx #P1_SCORE_FIRST_OFFSET
+		bne scoreStartGame_loop
 
 		rtl
 
@@ -165,174 +104,159 @@ scoreAddToTile_done anop
 		
 scoreAddOne entry
 		_incrementScore 1
-		ldx #TILE_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		jmp scoreAddOneToTile
 
 
 scoreAddFive entry
 		_incrementScore 5
-		ldx #TILE_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		lda #5*4
 		jmp scoreAddToTile
 
 
 scoreAddTen entry
 		_incrementScore 10
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddTen_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddTen_skipZeroOnes anop
-		ldx #TILE_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		jmp scoreAddOneToTile
 
 
 scoreAddOneHundred entry
 		_incrementScore 100
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddHundred_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddHundred_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddHundred_skipZeroTens anop
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		jmp scoreAddOneToTile
 
 
 scoreAddTwoHundred entry
 		_incrementScore 200
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddTwoHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddTwoHundred_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddTwoHundred_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddTwoHundred_skipZeroTens anop
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		lda #2*4
 		jmp scoreAddToTile
 
 
 scoreAddThreeHundred entry
 		_incrementScore 300
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddThreeHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddThreeHundred_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddThreeHundred_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddThreeHundred_skipZeroTens anop
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		lda #3*4
 		jmp scoreAddToTile
 
 
 scoreAddSixHundred entry
 		_incrementScore 600
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddSixHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddSixHundred_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddSixHundred_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddSixHundred_skipZeroTens anop
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		lda #6*4
 		jmp scoreAddToTile
 
 
 scoreAddNineHundred entry
 		_incrementScore 900
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddNineHundred_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddNineHundred_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddNineHundred_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddNineHundred_skipZeroTens anop
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		lda #9*4
 		jmp scoreAddToTile
 
 
 scoreAddOneThousand entry
 		_incrementScore 1000
-		lda tileType+TILE_SCORE_ONES_OFFSET
+		lda tileType+P1_SCORE_ONES_OFFSET
 		bne scoreAddOneThousand_skipZeroOnes
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_ONES_OFFSET
-		ldx #TILE_SCORE_ONES_OFFSET
+		sta tileType+P1_SCORE_ONES_OFFSET
+		ldx #P1_SCORE_ONES_OFFSET
 		_dirtyNonGameTile
 scoreAddOneThousand_skipZeroOnes anop
-		lda tileType+TILE_SCORE_TENS_OFFSET
+		lda tileType+P1_SCORE_TENS_OFFSET
 		bne scoreAddOneThousand_skipZeroTens
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_TENS_OFFSET
-		ldx #TILE_SCORE_TENS_OFFSET
+		sta tileType+P1_SCORE_TENS_OFFSET
+		ldx #P1_SCORE_TENS_OFFSET
 		_dirtyNonGameTile
 scoreAddOneThousand_skipZeroTens anop
-		lda tileType+TILE_SCORE_HUNDREDS_OFFSET
+		lda tileType+P1_SCORE_HUNDREDS_OFFSET
 		bne scoreAddOneThousand_skipZeroHundreds
 		lda #TILE_NUMBER_0
-		sta tileType+TILE_SCORE_HUNDREDS_OFFSET
-		ldx #TILE_SCORE_HUNDREDS_OFFSET
+		sta tileType+P1_SCORE_HUNDREDS_OFFSET
+		ldx #P1_SCORE_HUNDREDS_OFFSET
 		_dirtyNonGameTile
 scoreAddOneThousand_skipZeroHundreds anop
-		ldx #TILE_SCORE_THOUSANDS_OFFSET
+		ldx #P1_SCORE_THOUSANDS_OFFSET
 		jmp scoreAddOneToTile
-		
-
-; This function is used purely for debug to test high score threshold stuff.  It
-; doesn't do all the right things though to update the score on the display so I am
-; cheating a bit here.
-scoreAddTwentyThousand entry
-		_incrementScore 20000
-		ldx #TILE_SCORE_TEN_THOUSANDS_OFFSET
-		lda #2*4
-		jmp scoreAddToTile
-		
-		
-scoreEvery12000 entry
-; TODO - Write code to add a new life.
-		rtl
 		
 		
 highScore	dc i4'0'

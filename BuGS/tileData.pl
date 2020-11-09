@@ -54,12 +54,32 @@ $gEquates{"NUM_NON_GAME_TILES"} = $gEquates{"NUM_RHS_NON_GAMES_TILES"} + $gEquat
 $gEquates{"SPIDER_MAX_NUM_POSSIBLE_ROWS"} = 10;
 $gEquates{"SPIDER_STARTING_TOP_ROW"} = $gEquates{"GAME_NUM_TILES_TALL"} - $gEquates{"SPIDER_MAX_NUM_POSSIBLE_ROWS"};
 $gEquates{"SPIDER_STARTING_TOP_ROW_OFFSET"} = $gEquates{"SPIDER_STARTING_TOP_ROW"} * $gEquates{"GAME_NUM_TILES_WIDE"} * $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"SPIDER_DISTANCE_900"} = $gEquates{"SCREEN_BYTES_PER_ROW"} * $gEquates{"TILE_PIXEL_HEIGHT"} * 2;
+$gEquates{"SPIDER_DISTANCE_600"} = $gEquates{"SCREEN_BYTES_PER_ROW"} * $gEquates{"TILE_PIXEL_HEIGHT"} * 5;
 
 $gEquates{"PLAYER_TILES_HIGH"} = 7;
 $gEquates{"MOUSE_MAX_X"} = (($gEquates{"GAME_NUM_TILES_WIDE"} - 1) * $gEquates{"TILE_PIXEL_WIDTH"}) + 1;
 $gEquates{"MOUSE_MAX_Y"} = (($gEquates{"PLAYER_TILES_HIGH"} - 1) * $gEquates{"TILE_PIXEL_HEIGHT"}) + 1;
 $gEquates{"STARTING_MOUSE_X"} = $gEquates{"MOUSE_MAX_X"} / 2;
 $gEquates{"STARTING_MOUSE_Y"} = $gEquates{"MOUSE_MAX_Y"} - 1;
+
+$gEquates{"P1_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 6) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P1_SCORE_TENS_OFFSET"} = $gEquates{"P1_SCORE_ONES_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P1_SCORE_HUNDREDS_OFFSET"} = $gEquates{"P1_SCORE_TENS_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P1_SCORE_THOUSANDS_OFFSET"} = $gEquates{"P1_SCORE_HUNDREDS_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P1_SCORE_FIRST_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 6)) * $gEquates{"SIZEOF_TILE_INFO"};
+
+$gEquates{"P1_LIVES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 9) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
+
+$gEquates{"P2_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 19) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P2_SCORE_TENS_OFFSET"} = $gEquates{"P2_SCORE_ONES_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P2_SCORE_HUNDREDS_OFFSET"} = $gEquates{"P2_SCORE_TENS_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P2_SCORE_THOUSANDS_OFFSET"} = $gEquates{"P2_SCORE_HUNDREDS_OFFSET"} - $gEquates{"SIZEOF_TILE_INFO"};
+$gEquates{"P2_SCORE_FIRST_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 19)) * $gEquates{"SIZEOF_TILE_INFO"};
+
+$gEquates{"P2_LIVES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 22) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
+
+$gEquates{"HIGH_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 13) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
 
 
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
@@ -371,21 +391,9 @@ sub initNonGameTiles
     $y = 5;
     addLhsGameString($x, $y, "SCORE:");
     
-    $x = $gEquates{"LHS_NUM_TILES_WIDE"} - 2;
-    $y = 6;
-    addLhsGameString($x, $y, "0");
-    
     $x = 2;
     $y = 8;
     addLhsGameString($x, $y, "LIVES:");
-    
-    $x = $gEquates{"LHS_NUM_TILES_WIDE"} - 2;
-    $y = 9;
-    for (my $i = 0; $i < 3; $i++)
-    {
-        addLhsGameTile($x, $y, "TILE_PLAYER");
-        $x--;
-    }
     
     $x = 0;
     $y = 12;
@@ -403,21 +411,9 @@ sub initNonGameTiles
     $y = 18;
     addLhsGameString($x, $y, "SCORE:");
     
-    $x = $gEquates{"LHS_NUM_TILES_WIDE"} - 2;
-    $y = 19;
-    addLhsGameString($x, $y, "0");
-    
     $x = 2;
     $y = 21;
     addLhsGameString($x, $y, "LIVES:");
-    
-    $x = $gEquates{"LHS_NUM_TILES_WIDE"} - 2;
-    $y = 22;
-    for (my $i = 0; $i < 3; $i++)
-    {
-        addLhsGameTile($x, $y, "TILE_PLAYER");
-        $x--;
-    }
 }
 
 

@@ -27,6 +27,8 @@ SEGMENT_DIR_RIGHT   equ 1
 SEGMENT_SPEED_FAST      equ 0
 SEGMENT_SPEED_SLOW      equ 1
 
+STARTING_NUM_LIVES		gequ 3
+
 INVALID_TILE_NUM        gequ $ffff
 
 TILE_STATE_CLEAN        gequ 0
@@ -119,6 +121,7 @@ gameRunning	dc i2'1'
 ; this information will need to be copied to a backup location when the player
 ; switches.
 numSegments 		dc i2'0'
+numLives			dc i2'0'
 gameLevel   		dc i2'0'
 gameScore  			dc i4'0'
 scoreWithin12000	dc i2'0'
@@ -130,6 +133,7 @@ numInfieldMushrooms dc i2'0'
 ; tileType
 
 
+mouseAddress	dc i2'0'
 backupStack dc i2'0'
 
 tileJumpTable dc a4'solid0'

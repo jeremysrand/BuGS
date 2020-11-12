@@ -62,12 +62,15 @@ SPIDER_ADD_TIME		equ 120
 
 
 spiderInitGame entry
-		stz spiderAddTime
-		stz spiderState
 		lda #SPIDER_STARTING_TOP_ROW
 		sta spiderTopRow
 		lda #SPRITE_SPEED_SLOW
 		jmp setSpiderSpeed
+		
+spiderInitLevel entry
+		stz spiderAddTime
+		stz spiderState
+		rtl
 		
 
 drawSpider entry
@@ -135,6 +138,11 @@ jumpInst jmp >spider1
         
         
 updateSpider entry
+		lda playerState
+		cmp #PLAYER_STATE_ONSCREEN
+		beq updateSpider_cont
+		rtl
+updateSpider_cont anop
         ldx spiderState
         cpx #SPIDER_STATE_LEFT_DIAG_DOWN
         blt updateSpider_testState

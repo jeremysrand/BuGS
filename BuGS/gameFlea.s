@@ -23,6 +23,9 @@ FLEA_SCREEN_SPEED_FAST      equ 4*SCREEN_BYTES_PER_ROW
 FLEA_SLOW_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/2-1
 FLEA_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_HEIGHT/4-1
 
+fleaInitLevel entry
+		stz fleaState
+		rtl
 
 drawFlea entry
         lda fleaState
@@ -64,6 +67,12 @@ jumpInst jmp >flea1
         
         
 updateFlea entry
+		lda playerState
+		cmp #PLAYER_STATE_ONSCREEN
+		beq updateFlea_playerOnscreen
+		rtl
+		
+updateFlea_playerOnscreen anop
         lda fleaState
         beq updateFlea_maybeAdd
 		
@@ -171,8 +180,6 @@ updateFlea_nextTile anop
         
 updateFlea_bottom anop
         stz fleaState
-; Uncomment the next line to continuously display fleas.
-;        jsl addFlea
         rtl
 
 updateFlea_nextAction anop

@@ -15,6 +15,10 @@ gamePlayer start
 		using tileData
 		using screenData
 		
+PLAYER_EXPLOSION_FRAME_COUNT	equ 4
+PLAYER_RESTART_LEVEL_FRAME_COUNT	equ 20
+		
+		
 initPlayer entry
 		ldy #STARTING_NUM_LIVES
 		sty numLives
@@ -33,6 +37,8 @@ initPlayer_loop anop
 		
 		
 playerLevelStart entry
+		lda #PLAYER_STATE_ONSCREEN
+		sta playerState
 		lda #STARTING_MOUSE_X
 		sta mouseX
 		lda #STARTING_MOUSE_Y
@@ -69,6 +75,84 @@ updatePlayer entry
 		beq updatePlayer_gameRunning
 		rtl
 updatePlayer_gameRunning anop
+		lda playerState
+		cmp #PLAYER_STATE_NONE
+		bne updatePlayer_notNone
+		lda playerFrameCount
+		bne updatePlayer_wait
+		lda numLives
+		beq updatePlayer_gameOver
+		jmp startLevel
+updatePlayer_gameOver anop
+		jmp gameOver
+updatePlayer_wait anop
+		dec a
+		sta playerFrameCount
+		rtl
+updatePlayer_notNone anop
+		cmp #PLAYER_STATE_EXPLODING
+		beq updatePlayer_exploding
+		jmp updatePlayer_notExploding
+updatePlayer_exploding anop
+		lda playerFrameCount
+		beq updatePlayer_nextExplosion
+		dec a
+		sta playerFrameCount
+		bra updatePlayer_drawExplosion
+updatePlayer_nextExplosion anop
+		lda playerExplosionOffset
+		beq updatePlayer_doneExplosion
+		sec
+		sbc #4
+		sta playerExplosionOffset
+		bra updatePlayer_drawExplosion
+updatePlayer_doneExplosion anop
+		lda #PLAYER_RESTART_LEVEL_FRAME_COUNT
+		sta playerFrameCount
+		lda #PLAYER_STATE_NONE
+		sta playerState
+		rtl
+
+updatePlayer_drawExplosion anop
+		lda mouseAddress
+		sec
+		sbc #SCREEN_ADDRESS
+		and #$fffc
+		tax
+		lda >screenToTileOffset,x
+		tax
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+		ldy tileBelow,x
+		cpy #INVALID_TILE_NUM
+		beq updatePlayer_drawExplosionSkipBelow1
+		sta tileDirty,y
+updatePlayer_drawExplosionSkipBelow1 anop
+		ldy tileRight,x
+		sta tileDirty,y
+		ldx tileBelow,y
+		cpx #INVALID_TILE_NUM
+		beq updatePlayer_drawExplosionSkipBelow2
+		sta tileDirty,x
+updatePlayer_drawExplosionSkipBelow2 anop
+		ldx tileRight,y
+		sta tileDirty,x
+		ldy tileBelow,x
+		cpy #INVALID_TILE_NUM
+		beq updatePlayer_drawExplosionSkipBelow3
+		sta tileDirty,y
+updatePlayer_drawExplosionSkipBelow3 anop
+		ldy mouseAddress
+		ldx playerExplosionOffset
+		lda shipExplosionJumpTable,x
+		sta jumpInst+1
+		lda shipExplosionJumpTable+2,x
+		sta jumpInst+3
+jumpInst anop
+		jmp >shipExplosion1
+		nop
+		
+updatePlayer_notExploding anop
 		ldx #0
 		ldy #0
 ; This code for reading the mouse data is based on some code which John Brooks helpfully provided, although I did things
@@ -166,8 +250,44 @@ updatePlayer_shift anop
 		
 updatePlayer_dirty anop
 		beq updatePlayer_noCollision
-; Player collision here...
-;		brk $00
+		lda #PLAYER_STATE_EXPLODING
+		sta playerState
+		lda mouseAddress
+		sec
+		sbc #TILE_BYTE_WIDTH/2
+		sta mouseAddress
+		sec
+		sbc #SCREEN_ADDRESS
+		and #$fffc
+		tax
+		lda >screenToTileOffset,x
+		cmp #RHS_FIRST_TILE_OFFSET
+		bge updatePlayer_explosionOffLeft
+		tay
+		ldx tileRight,y
+		ldy tileRight,x
+		cpy #RHS_FIRST_TILE_OFFSET
+		blt updatePlayer_contCollision
+		lda mouseAddress
+		dec a
+		and #$fffc
+		sta mouseAddress
+		bra updatePlayer_contCollision
+		
+updatePlayer_explosionOffLeft anop
+		lda mouseAddress
+		clc
+		adc #TILE_BYTE_WIDTH
+		and #$fffc
+		sta mouseAddress
+		
+updatePlayer_contCollision anop
+		lda #PLAYER_EXPLOSION_FRAME_COUNT-1
+		sta playerFrameCount
+		lda #SHIP_EXPLOSION_LAST_OFFSET
+		sta playerExplosionOffset
+		jmp updatePlayer_exploding
+		
 updatePlayer_noCollision anop
 		lda mouseAddress
 		sec
@@ -201,5 +321,23 @@ updatePlayer_done anop
 mouseX		dc i2'0'
 mouseY 		dc i2'0'
 mouseDown   dc i2'0'
+
+
+playerFrameCount 		dc i2'0'
+playerExplosionOffset	dc i2'0'
+
+
+SHIP_EXPLOSION_LAST_OFFSET	equ 7*4
+
+shipExplosionJumpTable anop
+		dc i4'shipExplosion8'
+		dc i4'shipExplosion7'
+		dc i4'shipExplosion6'
+		dc i4'shipExplosion5'
+		dc i4'shipExplosion4'
+		dc i4'shipExplosion3'
+		dc i4'shipExplosion2'
+		dc i4'shipExplosion1'
+
 
         end

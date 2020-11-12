@@ -258,6 +258,10 @@ scoreAddOneThousand_skipZeroHundreds anop
 		ldx #P1_SCORE_THOUSANDS_OFFSET
 		jmp scoreAddOneToTile
 		
+
+checkHighScore entry
+; TODO - Write this code
+		rtl
 		
 highScore	dc i4'0'
 

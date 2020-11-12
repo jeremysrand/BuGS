@@ -40,6 +40,18 @@ SEGMENT_FACING_RIGHT        equ 128
 
 SEGMENT_MAX_POSITION_OFFSET     equ TILE_PIXEL_WIDTH*SEGMENT_MAX_NUM*2-2
 
+
+segmentsInitLevel entry
+		stz numSegments
+		ldx #SEGMENT_MAX_OFFSET
+		lda #SEGMENT_STATE_NONE
+segmentsInitLevel_loop anop
+		sta segmentStates,x
+		dex
+		dex
+		bpl segmentsInitLevel_loop
+		rtl
+
                 
 drawSegments entry
         ldx #SEGMENT_MAX_OFFSET
@@ -178,6 +190,11 @@ segmentBodyJump_jumpInst anop
         nop
         
 updateSegments entry
+		lda playerState
+		cmp #PLAYER_STATE_ONSCREEN
+		beq updateSegments_playerOnscreen
+		rtl
+updateSegments_playerOnscreen anop
 ; Clear the segment mask to start.
 		stz segmentTileMask+0
 		stz segmentTileMask+2

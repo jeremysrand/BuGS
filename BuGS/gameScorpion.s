@@ -27,6 +27,11 @@ SCORPION_FAST_UPDATES_PER_TILE  equ TILE_PIXEL_WIDTH/2-1
 SCORPION_NUM_POSSIBLE_ROWS      equ 15
 
 
+scorpionInitLevel entry
+		stz scorpionState
+		rtl
+
+
 drawScorpion entry
         lda scorpionState
         bne drawScorpion_cont
@@ -78,6 +83,11 @@ jumpInst jmp >leftScorpion1
 
 
 updateScorpion entry
+		lda playerState
+		cmp #PLAYER_STATE_ONSCREEN
+		beq updateScorpion_playerOnscreen
+		rtl
+updateScorpion_playerOnscreen anop
         lda scorpionState
         bne updateScorpion_cont
 		lda gameLevel

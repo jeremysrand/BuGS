@@ -208,7 +208,6 @@ nextWord anop
         
 startGame entry
 		stz gameRunning
-		stz numSegments
 		jsl addRandomMushrooms
 		jsl scoreStartGame
 		jsl initPlayer
@@ -216,10 +215,37 @@ startGame entry
 		jsl levelInit
 ; Fall through intentionally here...
 startLevel entry
+		jsl segmentsInitLevel
+		jsl scorpionInitLevel
+		jsl spiderInitLevel
+		jsl fleaInitLevel
 		jsl playerLevelStart
 		jmp levelStart
 		
 
+gameOver entry
+		lda #1
+		sta gameRunning
+		jsl segmentsInitLevel
+		jsl scorpionInitLevel
+		jsl spiderInitLevel
+		jsl fleaInitLevel
+		
+		ldx #0
+gameOver_loop anop
+		lda tileType,x
+		beq gameOver_tileEmpty
+		stz tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+gameOver_tileEmpty anop
+		inx
+		inx
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt gameOver_loop
+		
+		jmp checkHighScore
+		
 
 checkKeyboard entry
 checkKey_loop2 anop

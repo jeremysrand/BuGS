@@ -19,6 +19,10 @@ globalData data
 SEGMENT_DIR_LEFT    equ 0
 SEGMENT_DIR_RIGHT   equ 1
 
+PLAYER_STATE_NONE		equ 0
+PLAYER_STATE_EXPLODING	equ 1
+PLAYER_STATE_ONSCREEN	equ 2
+
 ; The code uses segmentPixelOffset and the segment speed to figure out whether to draw the shifted sprite
 ; or the regular sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted sprite.
 ; If the result is non-zero, we want a shifted sprite.  Then, we just need a per segment speed instead of a
@@ -133,6 +137,7 @@ numInfieldMushrooms dc i2'0'
 ; tileType
 
 
+playerState	dc i2'PLAYER_STATE_NONE'
 mouseAddress	dc i2'0'
 backupStack dc i2'0'
 

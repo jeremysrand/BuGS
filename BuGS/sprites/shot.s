@@ -20,23 +20,18 @@ drawHalfShot entry
 ; $4 - Red
 ; $8 - Off-white
 ;
-; ....|....
-; ....|....
-; ....|....
-; ....|....
-; ....|....
-; ...R|....
-; ...R|....
-; ...R|....
+; .R..
+; .R..
+; .R..
         
-        tsc
-        adc #$280
-        tcs
+		lda $0,s
+		and #$fff0
+		ora #$0004
+		sta $0,s
         
         lda $a0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        and #$fff0
+        ora #$0004
         sta $a0,s
         
         tsc
@@ -44,20 +39,11 @@ drawHalfShot entry
         tcs
         
         lda $0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        and #$fff0
+        ora #$0004
         sta $0,s
         
-        lda $a0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
-        sta $a0,s
-        
         _spriteFooter
-        
-        lda collision
         rtl
         
         
@@ -68,44 +54,30 @@ drawHalfShotShift entry
 ; $4 - Red
 ; $8 - Off-white
 ;
-; ....|....
-; ....|....
-; ....|....
-; ....|....
-; ....|....
-; ....|R...
-; ....|R...
-; ....|R...
+; R...
+; R...
+; R...
 
-        tsc
-        adc #$280
-        tcs
+		lda $0,s
+		and #$ff0f
+		ora #$0040
+		sta $0,s
 
-        lda $a2,s
-        _collision #$00f0
+        lda $a0,s
         and #$ff0f
         ora #$0040
-        sta $a2,s
+        sta $a0,s
 
         tsc
         adc #$140
         tcs
 
-        lda $2,s
-        _collision #$00f0
+        lda $0,s
         and #$ff0f
         ora #$0040
-        sta $2,s
-
-        lda $a2,s
-        _collision #$00f0
-        and #$ff0f
-        ora #$0040
-        sta $a2,s
+        sta $0,s
         
         _spriteFooter
-
-        lda collision
         rtl
         
     
@@ -116,29 +88,25 @@ drawShot entry
 ; $4 - Red
 ; $8 - Off-white
 ;
-; ....|....
-; ....|....
-; ...R|....
-; ...R|....
-; ...R|....
-; ...R|....
-; ...R|....
-; ...R|....
+; .R..
+; .R..
+; .R..
+; .R..
+; .R..
+; .R..
         
-        tsc
-        adc #$140
-        tcs
+		stz collision
         
         lda $0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$0
+        and #$fff0
+        ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$a0
+        and #$fff0
+        ora #$0004
         sta $a0,s
         
         tsc
@@ -146,15 +114,15 @@ drawShot entry
         tcs
         
         lda $0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$0
+        and #$fff0
+        ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$a0
+        and #$fff0
+        ora #$0004
         sta $a0,s
         
         tsc
@@ -162,19 +130,20 @@ drawShot entry
         tcs
         
         lda $0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$0
+        and #$fff0
+        ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$0f00
-        and #$f0ff
-        ora #$0400
+        _collision #$000f,#$a0
+        and #$fff0
+        ora #$0004
         sta $a0,s
         
         _spriteFooter
-
+		
+		ldx collisionAddr
         lda collision
         rtl
         
@@ -186,69 +155,67 @@ drawShotShift entry
 ; $4 - Red
 ; $8 - Off-white
 ;
-; ....|....
-; ....|....
-; ....|R...
-; ....|R...
-; ....|R...
-; ....|R...
-; ....|R...
-; ....|R...
+; R...
+; R...
+; R...
+; R...
+; R...
+; R...
 
-        tsc
-        adc #$140
-        tcs
+		stz collision
 
-        lda $2,s
-        _collision #$00f0
+        lda $0,s
+        _collision #$00f0,#$0
         and #$ff0f
         ora #$0040
-        sta $2,s
+        sta $0,s
 
-        lda $a2,s
-        _collision #$00f0
+        lda $a0,s
+        _collision #$00f0,#$a0
         and #$ff0f
         ora #$0040
-        sta $a2,s
+        sta $a0,s
         
         tsc
         adc #$140
         tcs
 
-        lda $2,s
-        _collision #$00f0
+        lda $0,s
+        _collision #$00f0,#$0
         and #$ff0f
         ora #$0040
-        sta $2,s
+        sta $0,s
 
-        lda $a2,s
-        _collision #$00f0
+        lda $a0,s
+        _collision #$00f0,#$a0
         and #$ff0f
         ora #$0040
-        sta $a2,s
+        sta $a0,s
 
         tsc
         adc #$140
         tcs
 
-        lda $2,s
-        _collision #$00f0
+        lda $0,s
+        _collision #$00f0,#$0
         and #$ff0f
         ora #$0040
-        sta $2,s
+        sta $0,s
 
-        lda $a2,s
-        _collision #$00f0
+        lda $a0,s
+        _collision #$00f0,#$a0
         and #$ff0f
         ora #$0040
-        sta $a2,s
+        sta $a0,s
         
         _spriteFooter
 
+		ldx collisionAddr
         lda collision
         rtl
         
         
 collision   dc i2'0'
+collisionAddr	dc i2'0'
 
         end

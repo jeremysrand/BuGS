@@ -106,6 +106,7 @@ gameLoop anop
         long i,m
         
 		jsl updatePlayer
+		jsl updateShot
         jsl updateScorpion
         jsl updateSpider
         jsl updateFlea
@@ -219,6 +220,7 @@ startLevel entry
 		jsl scorpionInitLevel
 		jsl spiderInitLevel
 		jsl fleaInitLevel
+		jsl shotInitLevel
 		jsl playerLevelStart
 		jmp levelStart
 		

@@ -32,19 +32,19 @@ drawShip entry
         stz collision
         
         lda $0,s
-        _collision #$0c00
+        _collision #$0c00,#$0
         and #$f0ff
         ora #$0800
         sta $0,s
         
         lda $a0,s
-        _collision #$cc00
+        _collision #$cc00,#$a0
         and #$00ff
         ora #$8800
         sta $a0,s
         
         lda $a2,s
-        _collision #$00c0
+        _collision #$00c0,#$a2
         and #$ff0f
         ora #$0080
         sta $a2,s
@@ -54,24 +54,24 @@ drawShip entry
         tcs
 
         lda $0,s
-        _collision #$cc0c
+        _collision #$cc0c,#$0
         and #$00f0
         ora #$4804
         sta $0,s
 
         lda $2,s
-        _collision #$00cc
+        _collision #$00cc,#$2
         and #$ff00
         ora #$0044
         sta $2,s
         
         lda $a0,s
-        _collision #$cccc
+        _collision #$cccc,#$a0
         lda #$4884
         sta $a0,s
         
         lda $a2,s
-        _collision #$c0cc
+        _collision #$c0cc,#$a2
         and #$0f00
         ora #$8044
         sta $a2,s
@@ -81,24 +81,24 @@ drawShip entry
         tcs
 
         lda $a0,s
-        _collision #$cccc
+        _collision #$cccc,#$a0
         lda #$8888
         sta $0,s
 
         lda $2,s
-        _collision #$c0cc
+        _collision #$c0cc,#$2
         and #$0f00
         ora #$8088
         sta $2,s
         
         lda $a0,s
-        _collision #$cc0c
+        _collision #$cc0c,#$a0
         and #$00f0
         ora #$8808
         sta $a0,s
         
         lda $a2,s
-        _collision #$00cc
+        _collision #$00cc,#$a2
         and #$ff00
         ora #$0088
         sta $a2,s
@@ -108,32 +108,33 @@ drawShip entry
         tcs
 
         lda $0,s
-        _collision #$cc00
+        _collision #$cc00,#$0
         and #$00ff
         ora #$8800
         sta $0,s
 
         lda $2,s
-        _collision #$00c0
+        _collision #$00c0,#$2
         and #$ff0f
         ora #$0080
         sta $2,s
         
         lda $a0,s
-        _collision #$cc00
+        _collision #$cc00,#$a0
         and #$00ff
         ora #$8800
         sta $a0,s
         
         lda $a2,s
-        _collision #$00c0
+        _collision #$00c0,#$a2
         and #$ff0f
         ora #$0080
         sta $a2,s
 
         _spriteFooter
         
-        lda collision
+		ldx collisionAddr
+		lda collision
         rtl
         
 
@@ -156,19 +157,19 @@ drawShipShift entry
         stz collision
 
         lda $2,s
-        _collision #$00c0
+        _collision #$00c0,#$2
         and #$ff0f
         ora #$0080
         sta $2,s
         
         lda $a0,s
-        _collision #$0c00
+        _collision #$0c00,#$a0
         and #$f0ff
         ora #$0800
         sta $a0,s
         
         lda $a2,s
-        _collision #$00cc
+        _collision #$00cc,#$a2
         and #$ff00
         ora #$0088
         sta $a2,s
@@ -178,25 +179,25 @@ drawShipShift entry
         tcs
 
         lda $0,s
-        _collision #$cc00
+        _collision #$cc00,#$0
         and #$00ff
         ora #$4400
         sta $0,s
 
         lda $2,s
-        _collision #$c0cc
+        _collision #$c0cc,#$2
         and #$0f00
         ora #$4084
         sta $2,s
 
         lda $a0,s
-        _collision #$cc0c
+        _collision #$cc0c,#$a0
         and #$00f0
         ora #$4408
         sta $a0,s
         
         lda $a2,s
-        _collision #$cccc
+        _collision #$cccc,#$a2
         lda #$4884
         sta $a2,s
         
@@ -205,24 +206,24 @@ drawShipShift entry
         tcs
 
         lda $0,s
-        _collision #$cc0c
+        _collision #$cc0c,#$0
         and #$00f0
         ora #$8808
         sta $0,s
 
         lda $2,s
-        _collision #$cccc
+        _collision #$cccc,#$2
         lda #$8888
         sta $2,s
         
         lda $a0,s
-        _collision #$cc00
+        _collision #$cc00,#$a0
         and #$00ff
         ora #$8800
         sta $a0,s
         
         lda $a2,s
-        _collision #$c0cc
+        _collision #$c0cc,#$a2
         and #$0f00
         ora #$8088
         sta $a2,s
@@ -232,31 +233,32 @@ drawShipShift entry
         tcs
 
         lda $0,s
-        _collision #$0c00
+        _collision #$0c00,#$0
         and #$f0ff
         ora #$0800
         sta $0,s
 
         lda $2,s
-        _collision #$00cc
+        _collision #$00cc,#$2
         and #$ff00
         ora #$0088
         sta $2,s
         
         lda $a0,s
-        _collision #$0c00
+        _collision #$0c00,#$a0
         and #$f0ff
         ora #$0800
         sta $a0,s
         
         lda $a2,s
-        _collision #$00cc
+        _collision #$00cc,#$a2
         and #$ff00
         ora #$0088
         sta $a2,s
 
         _spriteFooter
-        
+
+		ldx collisionAddr
         lda collision
         rtl
         
@@ -342,5 +344,6 @@ drawPlayer entry
         
         
 collision   dc i2'0'
+collisionAddr	dc i2'0'
         
         end

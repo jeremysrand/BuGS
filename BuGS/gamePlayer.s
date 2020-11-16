@@ -221,11 +221,16 @@ updatePlayer_negY anop
 updatePlayer_doneY anop
 		sta mouseY
 
-; The Y register also has a bit in it which indicates whether the
-; mouse is down or not.
+; The X and Y register also has a bit in each which indicates whether a
+; mouse button is down or not.
+		txa
+		and #$0080
+		beq updatePlayer_mouseDown
 		tya
 		and #$0080
-		sta mouseDown
+		bne updatePlayer_skipDeltas
+updatePlayer_mouseDown anop
+		jsl maybeShoot
 
 updatePlayer_skipDeltas anop
 		lda mouseY
@@ -317,10 +322,6 @@ updatePlayer_tileOffscreen2 anop
 		
 updatePlayer_done anop
 		rtl
-
-mouseX		dc i2'0'
-mouseY 		dc i2'0'
-mouseDown   dc i2'0'
 
 
 playerFrameCount 		dc i2'0'

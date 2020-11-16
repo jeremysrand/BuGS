@@ -138,6 +138,8 @@ numInfieldMushrooms dc i2'0'
 
 
 playerState	dc i2'PLAYER_STATE_NONE'
+mouseX		dc i2'0'
+mouseY 		dc i2'0'
 mouseAddress	dc i2'0'
 backupStack dc i2'0'
 

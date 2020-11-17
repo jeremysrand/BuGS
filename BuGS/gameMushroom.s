@@ -56,12 +56,17 @@ shootMushroom entry
 		sbc #4
 		sta tileType,x
 		bne shootMushroom_done
-		jmp scoreAddOne
+		bra shootMushroom_empty
 		
 shootMushroom_poisoned anop
 		bne shootMushroom_poisonedNoScore
 		lda #TILE_EMPTY
 		sta tileType,x
+shootMushroom_empty anop
+		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
+		blt shootMushrom_notInfield
+		dec numInfieldMushrooms
+shootMushrom_notInfield anop
 		jmp scoreAddOne
 		
 shootMushroom_poisonedNoScore anop
@@ -72,25 +77,5 @@ shootMushroom_poisonedNoScore anop
 		
 shootMushroom_done anop
 		rtl
-		
-		
-shootRandomMushroom entry
-		lda prevRandomMushroom
-		cmp #RHS_FIRST_TILE_OFFSET
-		bge shootRandomMushroom_doRandom
-		tax
-		bra shootRandomMushroom_testTile
-		
-shootRandomMushroom_doRandom anop
-		jsl randomMushroomOffset
-		tax
-shootRandomMushroom_testTile anop
-		lda tileType,x
-		beq shootRandomMushroom_doRandom
-		stx prevRandomMushroom
-		jmp shootMushroom
-		
-		
-prevRandomMushroom dc i2'RHS_FIRST_TILE_OFFSET'
 
 		end

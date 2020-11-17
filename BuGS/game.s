@@ -279,11 +279,6 @@ checkKey_loop2 anop
         beq checkKey_shootSpider
         cmp #'P'
         beq checkKey_shootSpider
-		
-		cmp #'m'
-		beq checkKey_shootMushroom
-		cmp #'M'
-		beq checkKey_shootMushroom
 
 		cmp #'g'
 		beq checkKey_game
@@ -307,9 +302,6 @@ checkKey_shootSpider anop
 		
 checkKey_shootCentipede anop
 		jmp shootRandomSegment
-		
-checkKey_shootMushroom anop
-		jmp shootRandomMushroom
                 
 checkKey_quit anop
         stz shouldQuit

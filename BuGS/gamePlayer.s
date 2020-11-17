@@ -43,6 +43,8 @@ playerLevelStart entry
 		sta mouseX
 		lda #STARTING_MOUSE_Y
 		sta mouseY
+		lda #1
+		sta mouseDown
 		dec numLives
 		lda #P1_LIVES_OFFSET
 		sec
@@ -223,16 +225,24 @@ updatePlayer_doneY anop
 
 ; The X and Y register also has a bit in each which indicates whether a
 ; mouse button is down or not.
+		
 		txa
 		and #$0080
 		beq updatePlayer_mouseDown
 		tya
 		and #$0080
-		bne updatePlayer_skipDeltas
+		beq updatePlayer_mouseDown
+		lda #1
+		sta mouseDown
+		bra updatePlayer_skipDeltas
 updatePlayer_mouseDown anop
-		jsl maybeShoot
+		stz mouseDown
 
 updatePlayer_skipDeltas anop
+		lda mouseDown
+		bne updatePlayer_notShooting
+		jsl maybeShoot
+updatePlayer_notShooting anop
 		lda mouseY
 		asl a
 		tay
@@ -326,6 +336,7 @@ updatePlayer_done anop
 
 playerFrameCount 		dc i2'0'
 playerExplosionOffset	dc i2'0'
+mouseDown	dc i2'0'
 
 
 SHIP_EXPLOSION_LAST_OFFSET	equ 7*4

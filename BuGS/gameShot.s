@@ -140,6 +140,8 @@ updateShot_checkCollision anop
 		bne updateShot_collision
 		rtl
 updateShot_collision anop
+		cpx #SCREEN_ADDRESS
+		blt updateShot_done
 		and #$3333
 		bne updateShot_maybeMushroom
 		

@@ -758,7 +758,44 @@ setSpiderSpeed_fast anop
         long i,m
         
         rtl
-        
+
+
+; The accumulator has the tile where the collision occurred.
+; The y register has the address where the collision occurred.
+; This routine is expected to preserve the y register and the
+; accummulator.  It can change the x register.
+;
+; For now, the implementation is very rough and just looks to see if
+; collision is in a tile overlapping with the spider.  It would be
+; better to look closely at the address and try to figure out if it
+; really collided.
+;
+; The result here is returned in the C bit of the processor status
+; register
+isSpiderCollision entry
+		ldx spiderState
+		cpx #SPIDER_STATE_LEFT_DIAG_DOWN
+		bge isSpiderCollision_test
+isSpiderCollision_returnFalse anop
+		clc
+		rtl
+isSpiderCollision_test anop
+		cmp spiderTileOffsets
+		beq isSpiderCollision_returnTrue
+		cmp spiderTileOffsets+2
+		beq isSpiderCollision_returnTrue
+		cmp spiderTileOffsets+4
+		beq isSpiderCollision_returnTrue
+		cmp spiderTileOffsets+6
+		beq isSpiderCollision_returnTrue
+		cmp spiderTileOffsets+8
+		beq isSpiderCollision_returnTrue
+		cmp spiderTileOffsets+10
+		bne isSpiderCollision_returnFalse
+isSpiderCollision_returnTrue anop
+		sec
+		rtl
+		
         
 shootSpider entry
         lda spiderState

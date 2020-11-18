@@ -264,44 +264,12 @@ checkKey_loop2 anop
         beq checkKey_quit
         cmp #$001b
         beq checkKey_quit
-        
-        cmp #'f'
-        beq checkKey_shootFlea
-        cmp #'F'
-        beq checkKey_shootFlea
-        
-        cmp #'s'
-        beq checkKey_shootScorpion
-        cmp #'S'
-        beq checkKey_shootScorpion
-        
-        cmp #'p'
-        beq checkKey_shootSpider
-        cmp #'P'
-        beq checkKey_shootSpider
 
 		cmp #'g'
 		beq checkKey_game
-		
-		cmp #'c'
-		beq checkKey_shootCentipede
-		cmp #'C'
-		beq checkKey_shootCentipede
         
 checkKey_done anop
         rtl
-        
-checkKey_shootFlea anop
-        jmp shootFlea
-        
-checkKey_shootScorpion anop
-        jmp shootScorpion
-        
-checkKey_shootSpider anop
-        jmp shootSpider
-		
-checkKey_shootCentipede anop
-		jmp shootRandomSegment
                 
 checkKey_quit anop
         stz shouldQuit

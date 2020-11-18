@@ -142,8 +142,42 @@ updateShot_checkCollision anop
 updateShot_collision anop
 		and #$3333
 		bne updateShot_maybeMushroom
-; TODO - Write the code to test for a collision with fleas, spiders, scorpions or centipede segments
-		bra updateShot_done
+		
+		txy
+		txa
+		sec
+		sbc #SCREEN_ADDRESS
+		and #$fffc
+		tax
+		lda >screenToTileOffset,x
+		cmp #SPIDER_STARTING_TOP_ROW_OFFSET
+		blt updateShot_maybeScorpion
+		jsl isSpiderCollision
+		bcc updateShot_notSpiderOrScorpion
+		lda #SHOT_STATE_NONE
+		sta shotState
+		jmp shootSpider
+
+updateShot_maybeScorpion anop
+		jsl isScorpionCollision
+		bcc updateShot_notSpiderOrScorpion
+		lda #SHOT_STATE_NONE
+		sta shotState
+		jmp shootScorpion
+
+updateShot_notSpiderOrScorpion anop
+		jsl isFleaCollision
+		bcc updateShot_maybeSegment
+		lda #SHOT_STATE_NONE
+		sta shotState
+		jmp shootFlea
+
+updateShot_maybeSegment anop
+		jsl isSegmentCollision
+		bcc updateShot_done
+		lda #SHOT_STATE_NONE
+		sta shotState
+		jmp shootSegment
 
 updateShot_maybeMushroom anop
 		txa

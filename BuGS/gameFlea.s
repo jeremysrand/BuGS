@@ -253,6 +253,27 @@ setFleaSpeed_fast anop
         sta fleaUpdatePerTile
         rtl
 
+
+; See the isSpiderCollision for info about the requirements and limitations of this routine
+isFleaCollision entry
+		ldx fleaState
+		cpx #FLEA_STATE_FALLING
+		bne isFleaCollision_returnFalse
+		cmp fleaTileOffsets
+		beq isFleaCollision_returnTrue
+		cmp fleaTileOffsets+2
+		beq isFleaCollision_returnTrue
+		cmp fleaTileOffsets+4
+		beq isFleaCollision_returnTrue
+		cmp fleaTileOffsets+6
+		bne isFleaCollision_returnFalse
+isFleaCollision_returnTrue anop
+		sec
+		rtl
+isFleaCollision_returnFalse anop
+		clc
+		rtl
+
         
 shootFlea entry
         lda fleaState

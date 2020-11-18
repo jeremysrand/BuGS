@@ -1677,8 +1677,46 @@ addCentipede_body anop
 		plx
 addCentipede_done anop
 		rtl
-        
+    
 
+; The accummulator has the tile offset where the collision happened
+; The y register has the address where the collision happened
+;
+; The result is a clear carry if there is no collision found or
+; a set carry and the segment num * 2 in the X register
+isSegmentCollision entry
+		ldy numSegments
+		beq isSegmentCollision_returnFalse
+		
+		ldx #SEGMENT_MAX_OFFSET
+isSegmentCollision_loop anop
+		ldy segmentStates,x
+		beq isSegmentCollision_nextSegment
+		cpy #SEGMENT_STATE_EXPLODING
+		beq isSegmentCollision_nextSegment
+		ldy segmentPosOffset,x
+		cmp segmentTileOffsetsLL,y
+		beq isSegmentCollision_returnTrue
+		cmp segmentTileOffsetsLR,y
+		beq isSegmentCollision_returnTrue
+		cmp segmentTileOffsetsUL,y
+		beq isSegmentCollision_returnTrue
+		cmp segmentTileOffsetsUR,y
+		beq isSegmentCollision_returnTrue
+isSegmentCollision_nextSegment anop
+		dex
+		dex
+		bpl isSegmentCollision_loop
+	
+isSegmentCollision_returnFalse anop
+		clc
+		rtl
+		
+isSegmentCollision_returnTrue anop
+		sec
+		rtl
+
+		
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
 		dec numSegments
@@ -1732,21 +1770,6 @@ shootSegment_skipMushroom anop
 		sta segmentStates+2,x
 shootSegment_done anop
         rtl
-		
-		
-shootRandomSegment entry
-		lda numSegments
-		bne shootRandomSegment_hasSegments
-		rtl
-shootRandomSegment_hasSegments anop
-		lda #12
-		jsl randN
-		asl a
-		tax
-		lda segmentStates,x
-		cmp #SEGMENT_STATE_HEAD
-		blt shootRandomSegment_hasSegments
-		jmp shootSegment
 
 
 segmentsAddEnabled	dc i2'1'

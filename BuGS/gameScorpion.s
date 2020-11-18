@@ -332,6 +332,29 @@ addScorpion_done anop
         rtl
         
 
+; See isSpiderCollision for the requirements of this routine and
+; for info about its limitation
+isScorpionCollision entry
+		ldx scorpionState
+		beq isScorpionCollision_returnFalse
+		cpx #SCORPION_STATE_EXPLODING
+		bne isScorpionCollision_test
+isScorpionCollision_returnFalse anop
+		clc
+		rtl
+		
+isScorpionCollision_test anop
+		cmp scorpionTileOffsets
+		beq isScorpionCollision_returnTrue
+		cmp scorpionTileOffsets+2
+		beq isScorpionCollision_returnTrue
+		cmp scorpionTileOffsets+4
+		bne isScorpionCollision_returnFalse
+isScorpionCollision_returnTrue anop
+		sec
+		rtl
+		
+
 shootScorpion entry
         lda scorpionState
         beq shootScorpion_done

@@ -78,9 +78,10 @@
 		9D33970024AEFBF2003222B3 /* segments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
-		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; };
+		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CCBA25525C1A00CDA5CB /* tileData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = tileData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
 		9D53E5B32562320300E10169 /* gameShot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
+		9D53E6472565939300E10169 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -116,6 +117,7 @@
 				9D62AF3F2499CD1E00348F45 /* LICENSE */,
 				9D62AF402499CD3A00348F45 /* README.md */,
 				9D9F07F92553AB3800875B29 /* TODO.md */,
+				9D53E6472565939300E10169 /* BUGS.md */,
 				9D17168D2491C49300C83148 /* BuGS */,
 				9D1716852491C49300C83148 /* Products */,
 			);

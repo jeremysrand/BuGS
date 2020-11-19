@@ -42,9 +42,10 @@ SPIDER_SPRITE_REFRESH_COUNT     equ 4
 
 SPIDER_SCORE_NUM_FRAMES         equ 120
 
-SPIDER_SCORE_300                equ 0
-SPIDER_SCORE_600                equ 4
-SPIDER_SCORE_900                equ 8
+SPIDER_SCORE_300    equ 0
+SPIDER_SCORE_600    equ 4
+SPIDER_SCORE_900    equ 8
+SPIDER_SCORE_NONE	equ $ffff
 
 SPIDER_VERT_SPEED_SLOW          equ SCREEN_BYTES_PER_ROW
 SPIDER_VERT_SPEED_FAST          equ SCREEN_BYTES_PER_ROW*2
@@ -141,6 +142,9 @@ updateSpider entry
 		lda playerState
 		cmp #PLAYER_STATE_ONSCREEN
 		beq updateSpider_cont
+		ldx spiderState
+		cmp #SPIDER_STATE_EXPLODING
+		beq updateSpider_testState
 		rtl
 updateSpider_cont anop
         ldx spiderState
@@ -182,6 +186,10 @@ updateSpider_exploding anop
         rtl
                 
 updateSpider_explosionDone anop
+		lda spiderScoreType
+		bmi updateSpider_scoreDone
+		
+updateSpider_explosionShowScore anop
         lda #SPIDER_STATE_SCORE
         sta spiderState
         
@@ -802,15 +810,7 @@ shootSpider entry
         cmp #SPIDER_STATE_LEFT_DIAG_DOWN
         blt shootSpider_done
         
-        lda #SPIDER_STATE_EXPLODING
-        sta spiderState
-        
-        lda #EXPLOSION_LAST_OFFSET
-        sta spiderSprite
-        
-        lda spiderScreenOffset
-        inc a
-        sta spiderScreenOffset
+        jsl explodeSpider
 		cmp mouseAddress
 		blt shootSpider_playerBelow
 		sec
@@ -843,7 +843,27 @@ shootSpider_900 anop
         
 shootSpider_done anop
         rtl
-        
+		
+
+explodeSpider entry
+		lda #SPIDER_SCORE_NONE
+		sta spiderScoreType
+		lda spiderState
+		cmp #SPIDER_STATE_LEFT_DIAG_DOWN
+		blt explodeSpider_done
+
+		lda #SPIDER_STATE_EXPLODING
+		sta spiderState
+
+		lda #EXPLOSION_LAST_OFFSET
+		sta spiderSprite
+
+		lda spiderScreenOffset
+		inc a
+		sta spiderScreenOffset
+explodeSpider_done anop
+		rtl
+		
         
 spiderState         dc i2'SPIDER_STATE_NONE'
 spiderSpeed			dc i2'SPRITE_SPEED_SLOW'

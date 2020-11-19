@@ -84,6 +84,10 @@ updatePlayer_gameRunning anop
 		bne updatePlayer_wait
 		lda numLives
 		beq updatePlayer_gameOver
+		lda numSegments
+		bne updatePlayer_notNextLevel
+		jsl levelNext
+updatePlayer_notNextLevel anop
 		jmp startLevel
 updatePlayer_gameOver anop
 		jmp gameOver
@@ -264,9 +268,36 @@ updatePlayer_shift anop
 		bra updatePlayer_dirty
 		
 updatePlayer_dirty anop
-		beq updatePlayer_noCollision
+		bne updatePlayer_collision
+		jmp updatePlayer_noCollision
+updatePlayer_collision anop
 		lda #PLAYER_STATE_EXPLODING
 		sta playerState
+
+; Figure out which kind of bug collided with the player and cause it to
+; explode.
+		txa
+		sec
+		sbc #SCREEN_ADDRESS
+		and #$fffc
+		tax
+		lda >screenToTileOffset,x
+		jsl isSpiderCollision
+		bcc updatePlayer_notSpiderCollision
+		jsl explodeSpider
+		bra updatePlayer_explode
+updatePlayer_notSpiderCollision anop
+		jsl isFleaCollision
+		bcc updatePlayer_notFleaCollision
+		jsl explodeFlea
+		bra updatePlayer_explode
+		
+updatePlayer_notFleaCollision anop
+		jsl isSegmentCollision
+		bcc updatePlayer_explode
+		jsl explodeSegment
+		
+updatePlayer_explode anop
 		lda mouseAddress
 		sec
 		sbc #TILE_BYTE_WIDTH/2

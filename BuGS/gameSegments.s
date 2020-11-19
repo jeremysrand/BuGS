@@ -193,7 +193,28 @@ updateSegments entry
 		lda playerState
 		cmp #PLAYER_STATE_ONSCREEN
 		beq updateSegments_playerOnscreen
+; Even when the player is offscreen, we need to update any segments which are exploding
+		ldx #SEGMENT_MAX_OFFSET
+updateSegments_explodeOnlyLoop anop
+		lda segmentStates,x
+		cmp #SEGMENT_STATE_EXPLODING
+		bne updateSegments_explodeOnlyNext
+		ldy segmentPosOffset,x
+		lda segmentFacing,y
+		beq updateSegments_explodeOnlyDone
+		sec
+		sbc #$4
+		sta segmentFacing,y
+		bra updateSegments_explodeOnlyNext
+updateSegments_explodeOnlyDone anop
+		lda #SEGMENT_STATE_NONE
+		sta segmentStates,x
+updateSegments_explodeOnlyNext anop
+		dex
+		dex
+		bpl updateSegments_explodeOnlyLoop
 		rtl
+		
 updateSegments_playerOnscreen anop
 ; Clear the segment mask to start.
 		stz segmentTileMask+0
@@ -1719,7 +1740,7 @@ isSegmentCollision_returnTrue anop
 		
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
-		dec numSegments
+		jsl explodeSegment
 		phx
 		lda segmentStates,x
 		cmp #SEGMENT_STATE_BODY
@@ -1730,17 +1751,11 @@ shootSegment_body anop
 		jsl scoreAddTen
 shootSegment_doneScore anop
 		plx
-		lda #SEGMENT_STATE_EXPLODING
-		sta segmentStates,x
 		ldy segmentPosOffset,x
-		
-; We take over the segmentFacing value when exploding to be an explosion sprite offset
-		lda #EXPLOSION_LAST_OFFSET
-		sta segmentFacing,y
 		
 		lda segmentCurrentTile,y
 		cmp #(NUM_GAME_TILES-GAME_NUM_TILES_WIDE)*SIZEOF_TILE_INFO
-		bge shootSegment_skipMushroom
+		bge shootSegment_done
 		tay
 		lda tileType,y
 		beq shootSegment_noMushroom
@@ -1758,18 +1773,32 @@ shootSegment_dirtyTile anop
 		sta tileType,y
 		lda #TILE_STATE_DIRTY
 		sta tileDirty,y
-shootSegment_skipMushroom anop
+shootSegment_done anop
+        rtl
+	
+	
+; Call this with the segment num * 2 in the X register
+explodeSegment entry
+		dec numSegments
+		lda #SEGMENT_STATE_EXPLODING
+		sta segmentStates,x
+		ldy segmentPosOffset,x
+		
+; We take over the segmentFacing value when exploding to be an explosion sprite offset
+		lda #EXPLOSION_LAST_OFFSET
+		sta segmentFacing,y
+		
 ; If this is the last segment, then do not look for a following body segment
 		cpx #22
 		bge shootSegment_done
 ; If the segment after this is a body segment, then it is now a head segment
 		lda segmentStates+2,x
 		cmp #SEGMENT_STATE_BODY
-		bne shootSegment_done
+		bne explodeSegment_done
 		lda #SEGMENT_STATE_HEAD
 		sta segmentStates+2,x
-shootSegment_done anop
-        rtl
+explodeSegment_done anop
+		rtl
 
 
 segmentsAddEnabled	dc i2'1'

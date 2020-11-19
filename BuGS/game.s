@@ -206,8 +206,15 @@ nextWord anop
         cli
         
         rtl
-        
+
+		
+; The accumulator has a 0 in it when starting a one player game, 1 when
+; starting a two player game.
 startGame entry
+		ldx gameRunning
+		bne startGame_notRunning
+		rtl
+startGame_notRunning anop
 		stz gameRunning
 		jsl addRandomMushrooms
 		jsl scoreStartGame
@@ -225,6 +232,11 @@ startLevel entry
 		jmp levelStart
 		
 
+pauseGame entry
+; TODO - Write this code...
+		rtl
+		
+		
 gameOver entry
 		lda #1
 		sta gameRunning
@@ -262,20 +274,33 @@ checkKey_loop2 anop
         beq checkKey_quit
         cmp #'Q'
         beq checkKey_quit
+		
+		cmp #'p'
+		beq checkKey_pause
+		cmp #'P'
+		beq checkKey_pause
         cmp #$001b
-        beq checkKey_quit
+        beq checkKey_pause
 
-		cmp #'g'
+		cmp #'1'
+		beq checkKey_game
+		
+		cmp #'2'
 		beq checkKey_game
         
 checkKey_done anop
         rtl
+		
+checkKey_pause anop
+		jmp pauseGame
                 
 checkKey_quit anop
         stz shouldQuit
         rtl
 
 checkKey_game anop
+		sec
+		sbc #'1'
 		jmp startGame
 
 

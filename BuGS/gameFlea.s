@@ -70,6 +70,9 @@ updateFlea entry
 		lda playerState
 		cmp #PLAYER_STATE_ONSCREEN
 		beq updateFlea_playerOnscreen
+		lda fleaState
+		cmp #FLEA_STATE_EXPLODING
+		beq updateFlea_playerOnscreen
 		rtl
 		
 updateFlea_playerOnscreen anop
@@ -284,11 +287,7 @@ shootFlea entry
         cmp #FLEA_SCREEN_SPEED_SLOW
         beq shootFlea_faster
         
-        lda #FLEA_STATE_EXPLODING
-        sta fleaState
-        
-        lda #EXPLOSION_LAST_OFFSET
-        sta fleaSprite
+        jsl explodeFlea
 
 		jmp scoreAddTwoHundred
         
@@ -307,7 +306,16 @@ shootFlea_faster anop
         
 shootFlea_done anop
         rtl
-        
+		
+		
+explodeFlea entry
+		lda #FLEA_STATE_EXPLODING
+		sta fleaState
+
+		lda #EXPLOSION_LAST_OFFSET
+		sta fleaSprite
+		rtl
+		
         
 fleaState        dc i2'FLEA_STATE_NONE'
 fleaScreenOffset dc i2'0'

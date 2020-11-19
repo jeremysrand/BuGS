@@ -94,6 +94,8 @@ drawShot entry
 ; .R..
 ; .R..
 ; .R..
+; ....
+; ....
         
 		stz collision
         
@@ -161,6 +163,8 @@ drawShotShift entry
 ; R...
 ; R...
 ; R...
+; ....
+; ....
 
 		stz collision
 
@@ -207,6 +211,16 @@ drawShotShift entry
         and #$ff0f
         ora #$0040
         sta $a0,s
+
+		tsc
+		adc #$140
+		tcs
+
+		lda $0,s
+		_collision #$00f0,#$0
+
+		lda $a0,s
+		_collision #$00f0,#$a0
         
         _spriteFooter
 

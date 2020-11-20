@@ -1740,7 +1740,6 @@ isSegmentCollision_returnTrue anop
 		
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
-		jsl explodeSegment
 		phx
 		lda segmentStates,x
 		cmp #SEGMENT_STATE_BODY
@@ -1751,6 +1750,7 @@ shootSegment_body anop
 		jsl scoreAddTen
 shootSegment_doneScore anop
 		plx
+		jsl explodeSegment
 		ldy segmentPosOffset,x
 		
 		lda segmentCurrentTile,y

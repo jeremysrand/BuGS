@@ -86,7 +86,8 @@ updatePlayer_gameRunning anop
 		beq updatePlayer_gameOver
 		lda numSegments
 		bne updatePlayer_notNextLevel
-		jsl levelNext
+; If we are going to the next level, let updateLevel handle that for us.
+		rtl
 updatePlayer_notNextLevel anop
 		jmp startLevel
 updatePlayer_gameOver anop

@@ -260,7 +260,36 @@ scoreAddOneThousand_skipZeroHundreds anop
 		
 
 checkHighScore entry
-; TODO - Write this code
+		lda gameScore+2
+		cmp highScore+2
+		blt checkHighScore_done
+		bne checkHighScore_isHighScore
+		lda gameScore
+		cmp highScore
+		blt checkHighScore_done
+checkHighScore_isHighScore anop
+		sta highScore
+		lda gameScore+2
+		sta highScore+2
+		
+		
+		ldy #P1_SCORE_ONES_OFFSET
+		ldx #HIGH_SCORE_ONES_OFFSET
+		
+checkHighScore_loop anop
+		lda tileType,y
+		sta tileType,x
+		phy
+		_dirtyNonGameTile
+		ply
+		dex
+		dex
+		dey
+		dey
+		cpy #P1_SCORE_FIRST_OFFSET
+		bne checkHighScore_loop
+	
+checkHighScore_done anop
 		rtl
 		
 highScore	dc i4'0'

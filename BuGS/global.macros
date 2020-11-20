@@ -9,11 +9,6 @@
 
         macro
         _drawDirtyGameRow &rowNum
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        and #$f0
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
 _drawDirtyGameRow_wait&rowNum anop
 ; This code loads into the accumulator the line currently being drawn to the
 ; screen by HW.  It allows code to race just behind the beam and redraw the
@@ -40,12 +35,6 @@ _drawDirtyGameRow_wait&rowNum anop
 &scanLineNum seta &scanLineNum+264
         cmp #&scanLineNum
         blt _drawDirtyGameRow_wait&rowNum
-        
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        ora #$0f
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
         
         lcla &tileOffset
 &tileOffset seta &rowNum*50

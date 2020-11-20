@@ -48,12 +48,6 @@ gameLoop anop
         _drawDirtyGameRow 13
         _drawDirtyGameRow 14
         
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        and #$f7
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
-        
         jsl drawScorpion
         
         _drawDirtyGameRow 15
@@ -67,43 +61,10 @@ gameLoop anop
         _drawDirtyGameRow 23
         _drawDirtyGameRow 24
         
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        and #$f3
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
-        
         jsl drawSpider
-        
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        and #$f1
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
-        
         jsl drawFlea
-        
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        ora #$08
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
-        
         jsl drawSegments
-        
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        ora #$04
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
-        
         jsl drawDirtyNonGameTiles
-        
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        ora #$02
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
         
 		jsl updatePlayer
 		jsl updateShot
@@ -112,6 +73,7 @@ gameLoop anop
         jsl updateFlea
         jsl updateSegments
 		jsl updateLevel
+		
         jsl checkKeyboard
         
         jsl waitForVbl
@@ -178,6 +140,12 @@ setupScreen entry
         long i,m
         and #$000f
         sta borderColour
+		
+		short i,m
+		lda >BORDER_COLOUR_REGISTER
+		and #$f0
+		sta >BORDER_COLOUR_REGISTER
+		long i,m
         
         sei
         phd
@@ -289,6 +257,7 @@ checkKey_loop2 anop
 		beq checkKey_game
         
 checkKey_done anop
+		long i,m
         rtl
 		
 checkKey_pause anop
@@ -315,11 +284,6 @@ waitForKey_loop anop
 
 
 waitForVbl entry
-        short i,m
-        lda >BORDER_COLOUR_REGISTER
-        and #$f0
-        sta >BORDER_COLOUR_REGISTER
-        long i,m
 vblLoop anop
         lda >VERTICAL_COUNTER     ; load the counter value
         and #$80ff                ; mask out the VBL bits

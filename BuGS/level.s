@@ -71,6 +71,11 @@ levelStart_done anop
 updateLevel entry
 		lda gameRunning
 		bne updateLevel_done
+		lda playerState
+		cmp #PLAYER_STATE_EXPLODING
+		beq updateLevel_done
+		cmp #PLAYER_STATE_MUSHROOMS
+		beq updateLevel_done
 		lda nextLevelFrameCount
 		beq updateLevel_checkSegments
 		dec a
@@ -79,6 +84,7 @@ updateLevel entry
 		jsl levelNext
 		jmp levelStart
 updateLevel_checkSegments anop
+		bne updateLevel_done
 		lda numSegments
 		bne updateLevel_done
 		lda #NEXT_LEVEL_FRAME_COUNT

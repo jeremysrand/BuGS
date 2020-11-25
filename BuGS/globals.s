@@ -21,7 +21,8 @@ SEGMENT_DIR_RIGHT   equ 1
 
 PLAYER_STATE_NONE		equ 0
 PLAYER_STATE_EXPLODING	equ 1
-PLAYER_STATE_ONSCREEN	equ 2
+PLAYER_STATE_MUSHROOMS  equ 2
+PLAYER_STATE_ONSCREEN	equ 3
 
 ; The code uses segmentPixelOffset and the segment speed to figure out whether to draw the shifted sprite
 ; or the regular sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted sprite.

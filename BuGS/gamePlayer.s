@@ -114,9 +114,7 @@ updatePlayer_nextExplosion anop
 		sta playerExplosionOffset
 		bra updatePlayer_drawExplosion
 updatePlayer_doneExplosion anop
-		lda #PLAYER_RESTART_LEVEL_FRAME_COUNT
-		sta playerFrameCount
-		lda #PLAYER_STATE_NONE
+		lda #PLAYER_STATE_MUSHROOMS
 		sta playerState
 		rtl
 
@@ -160,6 +158,20 @@ jumpInst anop
 		nop
 		
 updatePlayer_notExploding anop
+		cmp #PLAYER_STATE_MUSHROOMS
+		bne updatePlayer_notMushrooms
+		jsl resetMushrooms
+		bcc updatePlayer_doneMushrooms
+		rtl
+		
+updatePlayer_doneMushrooms anop
+		lda #PLAYER_RESTART_LEVEL_FRAME_COUNT
+		sta playerFrameCount
+		lda #PLAYER_STATE_NONE
+		sta playerState
+		rtl
+		
+updatePlayer_notMushrooms anop
 		ldx #0
 		ldy #0
 ; This code for reading the mouse data is based on some code which John Brooks helpfully provided, although I did things
@@ -193,6 +205,12 @@ updatePlayer_handleDeltas anop
 		bit #$40
 		bne updatePlayer_negX
 		and #$3f
+		inc a
+		lsr a
+		cmp #9
+		blt updatePlayer_posXNoClamp
+		lda #8
+updatePlayer_posXNoClamp anop
 		clc
 		adc mouseX
 		cmp #MOUSE_MAX_X
@@ -201,6 +219,13 @@ updatePlayer_handleDeltas anop
 		bra updatePlayer_doneX
 updatePlayer_negX anop
 		ora #$ffc0
+		dec a
+		lsr a
+		ora #$8000
+		cmp #$fff8
+		bge updatePlayer_negXNoClamp
+		lda #$fff8
+updatePlayer_negXNoClamp anop
 		clc
 		adc mouseX
 		bpl updatePlayer_doneX
@@ -213,6 +238,12 @@ updatePlayer_doneX anop
 		bit #$40
 		bne updatePlayer_negY
 		and #$3f
+		inc a
+		lsr a
+		cmp #9
+		blt updatePlayer_posYNoClamp
+		lda #8
+updatePlayer_posYNoClamp anop
 		clc
 		adc mouseY
 		cmp #MOUSE_MAX_Y
@@ -221,6 +252,13 @@ updatePlayer_doneX anop
 		bra updatePlayer_doneY
 updatePlayer_negY anop
 		ora #$ffc0
+		dec a
+		lsr a
+		ora #$8000
+		cmp #$fff8
+		bge updatePlayer_negYNoClamp
+		lda #$fff8
+updatePlayer_negYNoClamp anop
 		clc
 		adc mouseY
 		bpl updatePlayer_doneY

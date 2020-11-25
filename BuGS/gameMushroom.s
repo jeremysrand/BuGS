@@ -17,6 +17,11 @@ gameMushroom start
 		
 STARTING_NUM_MUSHROOMS	equ 30
 		
+
+resetMushrooms entry
+; TODO - Write this code...
+		clc
+		rtl
 		
 addRandomMushrooms entry
 		stz numInfieldMushrooms

@@ -7,6 +7,7 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 * Sometimes centipede segments seem to be stacked one on top of another.  You think there is just one left but you shoot it and there is one underneath it.  This should not happen.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
+* If you die holding the mouse button down, your next game will start shooting without pressing the mouse button.
 
 
 

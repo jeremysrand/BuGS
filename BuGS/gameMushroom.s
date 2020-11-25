@@ -19,12 +19,75 @@ STARTING_NUM_MUSHROOMS	equ 30
 		
 
 resetMushrooms entry
-; TODO - Write this code...
+		lda mushroomToRefresh
+		cmp #INVALID_TILE_NUM
+		beq resetMushrooms_startFromBeginning
+		tax
+		lda mushroomExplosionSprite
+		beq resetMushrooms_doneReset
+		sec
+		sbc #4
+		
+resetMushrooms_explode anop
+		sta mushroomExplosionSprite
+		tay
+		lda explosionJumpTable,y
+		sta resetMushrooms_jumpInst+1
+		lda explosionJumpTable+2,y
+		sta resetMushrooms_jumpInst+3
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+		lda tileScreenOffset,x
+		sec
+		sbc #3
+		tay
+		jsl resetMushrooms_jumpInst
+		sec
+		rtl
+	
+resetMushrooms_jumpInst anop
+		jmp >explosion1
+		nop
+
+resetMushrooms_doneReset anop
+		txa
+		inx
+		inx
+		bra resetMushrooms_loop
+resetMushrooms_startFromBeginning anop
+		ldx #0
+
+resetMushrooms_loop anop
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt resetMushrooms_keepChecking
+		lda #INVALID_TILE_NUM
+		sta mushroomToRefresh
 		clc
 		rtl
+
+resetMushrooms_keepChecking anop
+		lda tileType,x
+		beq resetMushrooms_next
+		cmp #TILE_MUSHROOM4
+		beq resetMushrooms_next
+		stx mushroomToRefresh
+		lda #TILE_MUSHROOM4
+		sta tileType,x
+		jsl scoreAddFive
+		ldx mushroomToRefresh
+		lda #EXPLOSION_LAST_OFFSET
+		bra resetMushrooms_explode
+
+resetMushrooms_next anop
+		inx
+		inx
+		bra resetMushrooms_loop
+		
 		
 addRandomMushrooms entry
 		stz numInfieldMushrooms
+		lda #INVALID_TILE_NUM
+		sta mushroomToRefresh
 		ldy #STARTING_NUM_MUSHROOMS
 		
 addRandomMushrooms_loop anop
@@ -82,5 +145,10 @@ shootMushroom_poisonedNoScore anop
 		
 shootMushroom_done anop
 		rtl
+
+
+mushroomToRefresh	dc i2'INVALID_TILE_NUM'
+mushroomExplosionSprite	dc i2'0'
+
 
 		end

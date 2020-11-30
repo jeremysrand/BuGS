@@ -27,11 +27,15 @@ sed -i "" "s:^s7d1 *=.*$:s7d1 = $DISKIMAGE:" config.txt
 
 # This magic ensure that clicking stop in Xcode results in the emulator terminating.
 
+if true
+then
 $EMULATORPATH -fullscreen -mem 1572864 &
 PID=$!
-#cd "/Users/jrand/Library/Application Support/Ample"
-#/Applications/Ample.app/Contents/MacOS/mame64 apple2gs -skip_gameinfo -mouse -window -resolution 1408x1056 -ramsize 4M -sl7 cffa202 -hard1 "$DISKIMAGE" &
-#PID=$!
+else
+cd "/Users/jrand/Library/Application Support/Ample"
+/Applications/Ample.app/Contents/MacOS/mame64 apple2gs -skip_gameinfo -mouse -window -resolution 1408x1056 -ramsize 4M -sl7 cffa202 -hard1 "$DISKIMAGE" &
+PID=$!
+fi
 
 trap 'kill $PID' SIGTERM SIGINT SIGHUP EXIT
 wait

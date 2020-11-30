@@ -95,6 +95,10 @@ our @gDirtyNonGameTiles = ("INVALID_TILE_NUM") x $gEquates{"NUM_NON_GAME_TILES"}
 our $gNumDirtyNonGameTiles = 0;
 
 our @gMouseYAddress = (0) x $gEquates{"MOUSE_MAX_Y"};
+our @gMouseYTileAbove = (0) x $gEquates{"MOUSE_MAX_Y"};
+our @gMouseYTileBelow = (0) x $gEquates{"MOUSE_MAX_Y"};
+our @gMouseXTileLeft = (0) x $gEquates{"MOUSE_MAX_X"};
+our @gMouseXTileRight = (0) x $gEquates{"MOUSE_MAX_X"};
 our @gScreenToTileOffset = (0) x ($gEquates{"SCREEN_PIXELS_TALL"} * $gEquates{"SCREEN_BYTES_PER_ROW"} / $gEquates{"SIZEOF_TILE_INFO"});
 
 
@@ -360,10 +364,47 @@ sub initTiles
     
 # Calculate the memory address of the 0th row of the player's mouse position.
     $lastOffset = $gEquates{"SCREEN_ADDRESS"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * $gEquates{"TILE_BYTE_WIDTH"}) + (($gEquates{"GAME_NUM_TILES_TALL"} - $gEquates{"PLAYER_TILES_HIGH"}) * $gEquates{"TILE_PIXEL_HEIGHT"} * $gEquates{"SCREEN_BYTES_PER_ROW"});
+    $tileX = 0;
+    $tileY = $gEquates{"GAME_NUM_TILES_TALL"} - $gEquates{"PLAYER_TILES_HIGH"} - 1;
     for (my $y = 0; $y < $gEquates{"MOUSE_MAX_Y"}; $y++)
     {
         $gMouseYAddress[$y] = $lastOffset;
         $lastOffset += $gEquates{"SCREEN_BYTES_PER_ROW"};
+        
+        if (($y % $gEquates{"TILE_PIXEL_HEIGHT"}) == 0)
+        {
+            $tileY++;
+        }
+        
+        $gMouseYTileAbove[$y] = gameXYToTileOffset($tileX, $tileY);
+        if (($y % $gEquates{"TILE_PIXEL_HEIGHT"}) == 0)
+        {
+            $gMouseYTileBelow[$y] = gameXYToTileOffset($tileX, $tileY);
+        }
+        else
+        {
+            $gMouseYTileBelow[$y] = gameXYToTileOffset($tileX, $tileY + 1);
+        }
+    }
+    
+    $tileX = -1;
+    $tileY = 0;
+    for (my $x = 0; $x < $gEquates{"MOUSE_MAX_X"}; $x++)
+    {
+        if (($x % $gEquates{"TILE_PIXEL_WIDTH"}) == 0)
+        {
+            $tileX++;
+        }
+        
+        $gMouseXTileLeft[$x] = gameXYToTileOffset($tileX, $tileY);
+        if (($x % $gEquates{"TILE_PIXEL_WIDTH"}) == 0)
+        {
+            $gMouseXTileRight[$x] = gameXYToTileOffset($tileX, $tileY);
+        }
+        else
+        {
+            $gMouseXTileRight[$x] = gameXYToTileOffset($tileX + 1, $tileY);
+        }
     }
 }
 
@@ -449,6 +490,10 @@ printTileData($fh, "tileBitOffset", @gTileBitOffset);
 printTileData($fh, "tileBitMask", @gTileBitMask);
 printTileData($fh, "dirtyNonGameTiles", @gDirtyNonGameTiles);
 printTileData($fh, "mouseYAddress", @gMouseYAddress);
+printTileData($fh, "mouseYTileAbove", @gMouseYTileAbove);
+printTileData($fh, "mouseYTileBelow", @gMouseYTileBelow);
+printTileData($fh, "mouseXTileLeft", @gMouseXTileLeft);
+printTileData($fh, "mouseXTileRight", @gMouseXTileRight);
 
 
 $text = << "EOF";

@@ -200,39 +200,21 @@ updatePlayer_noMousePoll anop
 		jmp updatePlayer_skipDeltas
 		
 updatePlayer_handleDeltas anop
-; The X register has the deltaX
+; The X and Y register also has a bit in each which indicates whether a
+; mouse button is down or not.
 		txa
-		bit #$40
-		bne updatePlayer_negX
-		and #$3f
-		inc a
-		lsr a
-		cmp #9
-		blt updatePlayer_posXNoClamp
-		lda #8
-updatePlayer_posXNoClamp anop
-		clc
-		adc mouseX
-		cmp #MOUSE_MAX_X
-		blt updatePlayer_doneX
-		lda #MOUSE_MAX_X-1
-		bra updatePlayer_doneX
-updatePlayer_negX anop
-		ora #$ffc0
-		dec a
-		lsr a
-		ora #$8000
-		cmp #$fff8
-		bge updatePlayer_negXNoClamp
-		lda #$fff8
-updatePlayer_negXNoClamp anop
-		clc
-		adc mouseX
-		bpl updatePlayer_doneX
-		lda #0
-updatePlayer_doneX anop
-		sta mouseX
-		
+		and #$0080
+		beq updatePlayer_mouseDown
+		tya
+		and #$0080
+		beq updatePlayer_mouseDown
+		lda #1
+		sta mouseDown
+		bra updatePlayer_doY
+updatePlayer_mouseDown anop
+		stz mouseDown
+
+updatePlayer_doY anop
 ; The Y register has the deltaY
 		tya
 		bit #$40
@@ -240,6 +222,7 @@ updatePlayer_doneX anop
 		and #$3f
 		inc a
 		lsr a
+		beq updatePlayer_doX
 		cmp #9
 		blt updatePlayer_posYNoClamp
 		lda #8
@@ -266,20 +249,40 @@ updatePlayer_negYNoClamp anop
 updatePlayer_doneY anop
 		sta mouseY
 
-; The X and Y register also has a bit in each which indicates whether a
-; mouse button is down or not.
-		
+updatePlayer_doX anop
+; The X register has the deltaX
 		txa
-		and #$0080
-		beq updatePlayer_mouseDown
-		tya
-		and #$0080
-		beq updatePlayer_mouseDown
-		lda #1
-		sta mouseDown
-		bra updatePlayer_skipDeltas
-updatePlayer_mouseDown anop
-		stz mouseDown
+		bit #$40
+		bne updatePlayer_negX
+		and #$3f
+		inc a
+		lsr a
+		beq updatePlayer_skipDeltas
+		cmp #9
+		blt updatePlayer_posXNoClamp
+		lda #8
+updatePlayer_posXNoClamp anop
+		clc
+		adc mouseX
+		cmp #MOUSE_MAX_X
+		blt updatePlayer_doneX
+		lda #MOUSE_MAX_X-1
+		bra updatePlayer_doneX
+updatePlayer_negX anop
+		ora #$ffc0
+		dec a
+		lsr a
+		ora #$8000
+		cmp #$fff8
+		bge updatePlayer_negXNoClamp
+		lda #$fff8
+updatePlayer_negXNoClamp anop
+		clc
+		adc mouseX
+		bpl updatePlayer_doneX
+		lda #0
+updatePlayer_doneX anop
+		sta mouseX
 
 updatePlayer_skipDeltas anop
 		lda mouseDown

@@ -222,7 +222,9 @@ updatePlayer_doY anop
 		and #$3f
 		inc a
 		lsr a
-		beq updatePlayer_doX
+		bne updatePlayer_hasPosY
+		jmp updatePlayer_doX
+updatePlayer_hasPosY anop
 		cmp #9
 		blt updatePlayer_posYNoClamp
 		lda #8
@@ -230,9 +232,40 @@ updatePlayer_posYNoClamp anop
 		clc
 		adc mouseY
 		cmp #MOUSE_MAX_Y
-		blt updatePlayer_doneY
+		blt updatePlayer_checkBelow
 		lda #MOUSE_MAX_Y-1
-		bra updatePlayer_doneY
+updatePlayer_checkBelow anop
+		sta mouseY
+		asl a
+		tay
+		lda mouseYTileBelow,y
+		sta mouseTemp
+		lda mouseX
+		asl a
+		tay
+		lda mouseXTileLeft,y
+		clc
+		adc mouseTemp
+		phx
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedBelow
+		lda mouseXTileRight,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedBelow
+		plx
+		bra updatePlayer_doX
+updatePlayer_blockedBelow anop
+		plx
+		lda mouseY
+		dec a
+		and #$fff8
+		sta mouseY
+		bra updatePlayer_doX
+		
 updatePlayer_negY anop
 		ora #$ffc0
 		dec a
@@ -244,9 +277,38 @@ updatePlayer_negY anop
 updatePlayer_negYNoClamp anop
 		clc
 		adc mouseY
-		bpl updatePlayer_doneY
+		bpl updatePlayer_checkAbove
 		lda #0
-updatePlayer_doneY anop
+updatePlayer_checkAbove anop
+		sta mouseY
+		asl a
+		tay
+		lda mouseYTileAbove,y
+		sta mouseTemp
+		lda mouseX
+		asl a
+		tay
+		lda mouseXTileLeft,y
+		clc
+		adc mouseTemp
+		phx
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedAbove
+		lda mouseXTileRight,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedAbove
+		plx
+		bra updatePlayer_doX
+updatePlayer_blockedAbove anop
+		plx
+		lda mouseY
+		clc
+		adc #TILE_PIXEL_HEIGHT
+		and #$fff8
 		sta mouseY
 
 updatePlayer_doX anop
@@ -257,7 +319,9 @@ updatePlayer_doX anop
 		and #$3f
 		inc a
 		lsr a
-		beq updatePlayer_skipDeltas
+		bne updatePlayer_hasPosX
+		jmp updatePlayer_skipDeltas
+updatePlayer_hasPosX anop
 		cmp #9
 		blt updatePlayer_posXNoClamp
 		lda #8
@@ -265,9 +329,36 @@ updatePlayer_posXNoClamp anop
 		clc
 		adc mouseX
 		cmp #MOUSE_MAX_X
-		blt updatePlayer_doneX
+		blt updatePlayer_checkRight
 		lda #MOUSE_MAX_X-1
-		bra updatePlayer_doneX
+updatePlayer_checkRight anop
+		sta mouseX
+		asl a
+		tay
+		lda mouseXTileRight,y
+		sta mouseTemp
+		lda mouseY
+		asl a
+		tay
+		lda mouseYTileAbove,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedRight
+		lda mouseYTileBelow,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		beq updatePlayer_skipDeltas
+updatePlayer_blockedRight anop
+		lda mouseX
+		dec a
+		and #$fff8
+		sta mouseX
+		bra updatePlayer_skipDeltas
+		
 updatePlayer_negX anop
 		ora #$ffc0
 		dec a
@@ -279,9 +370,34 @@ updatePlayer_negX anop
 updatePlayer_negXNoClamp anop
 		clc
 		adc mouseX
-		bpl updatePlayer_doneX
+		bpl updatePlayer_checkLeft
 		lda #0
-updatePlayer_doneX anop
+updatePlayer_checkLeft anop
+		sta mouseX
+		asl a
+		tay
+		lda mouseXTileLeft,y
+		sta mouseTemp
+		lda mouseY
+		asl a
+		tay
+		lda mouseYTileAbove,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		bne updatePlayer_blockedLeft
+		lda mouseYTileBelow,y
+		clc
+		adc mouseTemp
+		tax
+		lda tileType,x
+		beq updatePlayer_skipDeltas
+updatePlayer_blockedLeft anop
+		lda mouseX
+		clc
+		adc #TILE_PIXEL_WIDTH
+		and #$fff8
 		sta mouseX
 
 updatePlayer_skipDeltas anop
@@ -410,6 +526,7 @@ updatePlayer_done anop
 playerFrameCount 		dc i2'0'
 playerExplosionOffset	dc i2'0'
 mouseDown	dc i2'0'
+mouseTemp 	dc i2'0'
 
 
 SHIP_EXPLOSION_LAST_OFFSET	equ 7*4

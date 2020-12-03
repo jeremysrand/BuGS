@@ -560,6 +560,13 @@ updateSegmentLeftFast_checkDir anop
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentLeftFast_changeDir
+; This is a important special case.  When we add segments on the side, we don't want a mushroom
+; right on the edge or near the edge to cause a turn and make the segment head off-screen.  This
+; special case is there only for fast head segments because we only add fast head segments on the
+; right and left.
+		ldx segmentTileOffsetsUR,y
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updateSegmentLeftFast_noChangeDir
         ldx segmentTileOffsetsUL,y
 		cpx #LHS_FIRST_TILE_OFFSET
 		bge updateSegmentLeftFast_changeDir
@@ -587,6 +594,7 @@ updateSegmentLeftFast_checkDir anop
 		ply
 		and segmentTileMask,x
 		bne updateSegmentLeftFast_changeDir
+updateSegmentLeftFast_noChangeDir anop
 		rts
 		
 updateSegmentLeftFast_checkPoison anop
@@ -1147,6 +1155,13 @@ updateSegmentRightFast_checkDir anop
         lda segmentStates,x
         cmp #SEGMENT_STATE_POISONED_HEAD
         beq updateSegmentRightFast_changeDir
+; This is a important special case.  When we add segments on the side, we don't want a mushroom
+; right on the edge or near the edge to cause a turn and make the segment head off-screen.  This
+; special case is there only for fast head segments because we only add fast head segments on the
+; right and left.
+		ldx segmentTileOffsetsUL,y
+		cpx #LHS_FIRST_TILE_OFFSET
+		bge updateSegmentRightFast_noChangeDir
         ldx segmentTileOffsetsUR,y
 		cpx #RHS_FIRST_TILE_OFFSET
 		bge updateSegmentRightFast_changeDir
@@ -1174,6 +1189,7 @@ updateSegmentRightFast_checkDir anop
 		ply
 		and segmentTileMask,x
 		bne updateSegmentRightFast_changeDir
+updateSegmentRightFast_noChangeDir anop
         rts
 updateSegmentRightFast_checkPoison anop
         cmp #TILE_POISON_MUSHROOM1

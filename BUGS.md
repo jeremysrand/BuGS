@@ -3,7 +3,6 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* Sometimes centipede segments seem to be stacked one on top of another.  You think there is just one left but you shoot it and there is one underneath it.  This should not happen.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
 * If you die holding the mouse button down, your next game will start shooting without pressing the mouse button.
@@ -22,3 +21,5 @@ FIXED
    * I have confirmed that we are jumping to band 22 from segmentBodyJump_jumpInst.  Not sure how a bad address is ending up in the jump table here.
    * Seems to happen pretty reliably if I die from the last segment and progress to the next level.
    * Caused by both gamePlayer.s and level.s calling start level when the last segment is the one which kills the player.  The player code now defers to the level code to handle starting the level after the player dies that way.
+* Sometimes centipede segments seem to be stacked one on top of another.  You think there is just one left but you shoot it and there is one underneath it.  This should not happen.
+    * Caused by the lack of head segment collision detection in the slow segment code paths.  I had thought that slow head segments would never collide.  But once you split a slow centipede into two separate segments, you now have slow heads that can collide.

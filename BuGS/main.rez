@@ -35,5 +35,20 @@ resource rToolStartup (TOOL_STARTUP) {
 #endif
     {
         3,  $0100,      /* Misc Tool */
+		8,  $0100,	    /* Sound Tool */
     }
 };
+
+
+/* Sounds */
+
+type rRawSound {
+	hex string;
+};
+
+read rRawSound (BONUS_SOUND) "sound/bonus.raw";
+read rRawSound (DEATH_SOUND) "sound/death.raw";
+read rRawSound (FIRE_SOUND) "sound/fire.raw";
+read rRawSound (KILL_SOUND) "sound/kill.raw";
+read rRawSound (SEGMENTS_SOUND) "sound/segments.raw";
+read rRawSound (SPIDER_SOUND) "sound/spider.raw";

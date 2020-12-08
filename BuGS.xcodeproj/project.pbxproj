@@ -46,6 +46,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
+		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
+		9D1553EA257F3E5200657188 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
+		9D1553EB257F3E5200657188 /* death.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = death.raw; sourceTree = "<group>"; };
+		9D1553EC257F3E5200657188 /* kill.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = kill.raw; sourceTree = "<group>"; };
+		9D1553ED257F3E5200657188 /* segments.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = segments.raw; sourceTree = "<group>"; };
+		9D1553EE257F3E5200657188 /* spider.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.raw; sourceTree = "<group>"; };
 		9D1716842491C49300C83148 /* BuGS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1716872491C49300C83148 /* BuGS.2mg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS.2mg; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D17168C2491C49300C83148 /* doNotBuild */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = doNotBuild; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +118,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D1553E8257F3DC600657188 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				9D1553EA257F3E5200657188 /* bonus.raw */,
+				9D1553EB257F3E5200657188 /* death.raw */,
+				9D1553E9257F3E5200657188 /* fire.raw */,
+				9D1553EC257F3E5200657188 /* kill.raw */,
+				9D1553ED257F3E5200657188 /* segments.raw */,
+				9D1553EE257F3E5200657188 /* spider.raw */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
 		9D17167D2491C49300C83148 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +138,7 @@
 				9D62AF402499CD3A00348F45 /* README.md */,
 				9D9F07F92553AB3800875B29 /* TODO.md */,
 				9D53E6472565939300E10169 /* BUGS.md */,
+				9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */,
 				9D17168D2491C49300C83148 /* BuGS */,
 				9D1716852491C49300C83148 /* Products */,
 			);
@@ -154,6 +175,7 @@
 				9DB1505224C7495400558B87 /* globals.s */,
 				9DB1505524D3BFCE00558B87 /* global.macros */,
 				9D47CCBA25525C1A00CDA5CB /* tileData.pl */,
+				9D1553E8257F3DC600657188 /* sound */,
 				9D3396F324AECACC003222B3 /* sprites */,
 				9D1716912491C49300C83148 /* main.rez */,
 				9D1716932491C49300C83148 /* Makefile */,

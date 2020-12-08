@@ -15,4 +15,14 @@
 #define TOOL_STARTUP 1
 
 
+/* Sounds */
+#define rRawSound 1
+#define BONUS_SOUND 1
+#define DEATH_SOUND 2
+#define FIRE_SOUND 3
+#define KILL_SOUND 4
+#define SEGMENTS_SOUND 5
+#define SPIDER_SOUND 6
+
+
 #endif /* defined(_GUARD_PROJECTBuGS_FILEmain_) */

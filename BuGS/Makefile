@@ -115,8 +115,8 @@ MESSAGE_CENTER=false
 # default.  Press option-tab within Xcode to insert a tab character.
 gen: $(GENDIR)/tileData.s
 
-$(GENDIR)/tileData.s: tileData.pl Makefile
-	tileData.pl "$(GENDIR)"
+$(GENDIR)/tileData.s: genData.pl Makefile
+	genData.pl "$(GENDIR)"
 
 # For any files you generated in the gen target above, you should
 # add rules in genclean to remove those generated files when you

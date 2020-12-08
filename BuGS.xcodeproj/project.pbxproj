@@ -86,7 +86,7 @@
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D47CCBA25525C1A00CDA5CB /* tileData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = tileData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
+		9D47CCBA25525C1A00CDA5CB /* genData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
 		9D53E5B32562320300E10169 /* gameShot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D53E6472565939300E10169 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 				9D2FF6DA24C4C79A000181E5 /* random.s */,
 				9DB1505224C7495400558B87 /* globals.s */,
 				9DB1505524D3BFCE00558B87 /* global.macros */,
-				9D47CCBA25525C1A00CDA5CB /* tileData.pl */,
+				9D47CCBA25525C1A00CDA5CB /* genData.pl */,
 				9D1553E8257F3DC600657188 /* sound */,
 				9D3396F324AECACC003222B3 /* sprites */,
 				9D1716912491C49300C83148 /* main.rez */,

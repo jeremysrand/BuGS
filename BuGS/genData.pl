@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#  tileData.pl
+#  genData.pl
 #  BuGS
 #
 #  Created by Jeremy Rand on 2020-11-03.

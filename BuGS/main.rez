@@ -36,6 +36,8 @@ resource rToolStartup (TOOL_STARTUP) {
     {
         3,  $0100,      /* Misc Tool */
 		8,  $0100,	    /* Sound Tool */
+		30, $0100,      /* Resource Manager */
+
     }
 };
 

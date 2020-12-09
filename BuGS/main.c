@@ -13,6 +13,10 @@
 #include <Memory.h>
 #include <Locator.h>
 #include <MiscTool.h>
+#include <Resources.h>
+#include <Sound.h>
+
+#include <string.h>
 
 #include "main.h"
 #include "game.h"
@@ -39,6 +43,50 @@ word randomMushroomOffset(void)
     /* We do not put mushrooms in the bottom tile so we subtract the width here to find
         a tile number above that last line */
     return (rand() % (NUM_GAME_TILES - GAME_NUM_TILES_WIDE)) * SIZEOF_TILE_INFO;
+}
+
+
+void setupSound(word soundNum, SoundParamBlock * soundParams, boolean looped)
+{
+    static word nextDocBuffer = 0;
+    
+    Handle handle = LoadResource(rRawSound, soundNum);
+    HLock(handle);
+    
+    word handleSize = GetHandleSize(handle);
+    
+    soundParams->freqOffset = 214;
+    soundParams->docBuffer = nextDocBuffer;
+    soundParams->volSetting = 255;
+    soundParams->waveStart = *handle;
+    soundParams->waveSize = (handleSize / 256) + 1;
+    soundParams->bufferSize = 0;
+    nextDocBuffer += (soundParams->waveSize * 256);
+    if (looped)
+        soundParams->nextWavePtr = soundParams;
+    else
+        soundParams->nextWavePtr = NULL;
+
+    FFSetUpSound((soundNum << 8) | 1, (Pointer)soundParams);
+}
+
+
+void loadSounds(void)
+{
+    static SoundParamBlock spiderSound;
+    static SoundParamBlock deathSound;
+    static SoundParamBlock segmentsSound;
+    static SoundParamBlock bonusSound;
+    static SoundParamBlock killSound;
+    static SoundParamBlock fireSound;
+    
+    setupSound(SPIDER_SOUND, &spiderSound, TRUE);
+    setupSound(DEATH_SOUND, &deathSound, FALSE);
+    setupSound(SEGMENTS_SOUND, &segmentsSound, TRUE);
+    setupSound(BONUS_SOUND, &bonusSound, FALSE);
+    setupSound(KILL_SOUND, &killSound, FALSE);
+    setupSound(FIRE_SOUND, &fireSound, FALSE);
+    // FFStartPlaying(1 << SEGMENTS_SOUND);
 }
 
 
@@ -70,6 +118,8 @@ int main(void)
     
     InitMouse(0);
     SetMouse(transparent);
+    
+    loadSounds();
 
     game();
     

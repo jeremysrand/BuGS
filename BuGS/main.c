@@ -60,8 +60,48 @@ void setupSound(word soundNum, SoundParamBlock * soundParams, boolean looped)
     soundParams->volSetting = 255;
     soundParams->waveStart = *handle;
     soundParams->waveSize = (handleSize / 256) + 1;
-    soundParams->bufferSize = 0;
-    nextDocBuffer += (soundParams->waveSize * 256);
+    
+    if (handleSize > 16384)
+    {
+        soundParams->bufferSize = 7;
+        nextDocBuffer += 32768;
+    }
+    else if (handleSize > 8192)
+    {
+        soundParams->bufferSize = 6;
+        nextDocBuffer += 16384;
+    }
+    else if (handleSize > 4096)
+    {
+        soundParams->bufferSize = 5;
+        nextDocBuffer += 8192;
+    }
+    else if (handleSize > 2048)
+    {
+        soundParams->bufferSize = 4;
+        nextDocBuffer += 4096;
+    }
+    else if (handleSize > 1024)
+    {
+        soundParams->bufferSize = 3;
+        nextDocBuffer += 2048;
+    }
+    else if (handleSize > 512)
+    {
+        soundParams->bufferSize = 2;
+        nextDocBuffer += 1024;
+    }
+    else if (handleSize > 256)
+    {
+        soundParams->bufferSize = 1;
+        nextDocBuffer += 512;
+    }
+    else
+    {
+        soundParams->bufferSize = 0;
+        nextDocBuffer += 256;
+    }
+    
     if (looped)
         soundParams->nextWavePtr = soundParams;
     else
@@ -76,17 +116,20 @@ void loadSounds(void)
     static SoundParamBlock spiderSound;
     static SoundParamBlock deathSound;
     static SoundParamBlock segmentsSound;
-    static SoundParamBlock bonusSound;
+    static SoundParamBlock bonus1Sound;
+    static SoundParamBlock bonus2Sound;
+    static SoundParamBlock bonus3Sound;
     static SoundParamBlock killSound;
     static SoundParamBlock fireSound;
     
     setupSound(SPIDER_SOUND, &spiderSound, TRUE);
     setupSound(DEATH_SOUND, &deathSound, FALSE);
     setupSound(SEGMENTS_SOUND, &segmentsSound, TRUE);
-    setupSound(BONUS_SOUND, &bonusSound, FALSE);
+    setupSound(BONUS1_SOUND, &bonus1Sound, FALSE);
+    setupSound(BONUS2_SOUND, &bonus2Sound, FALSE);
+    setupSound(BONUS3_SOUND, &bonus3Sound, FALSE);
     setupSound(KILL_SOUND, &killSound, FALSE);
     setupSound(FIRE_SOUND, &fireSound, FALSE);
-    // FFStartPlaying(1 << SEGMENTS_SOUND);
 }
 
 

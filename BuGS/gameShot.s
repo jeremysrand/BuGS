@@ -75,6 +75,13 @@ updateShot_shifted anop
 updateShot_notNone anop
 		cmp #SHOT_STATE_START_SHOOTING
 		bne updateShot_shooting
+;		pha
+;		~FFSoundDoneStatus #FIRE_SOUND_GENERATOR
+;		pla
+;		bne updateShot_noSoundPlaying
+;		~FFStopSound #FIRE_SOUND_GEN_BIT
+;updateShot_noSoundPlaying anop
+		~FFStartPlaying #FIRE_SOUND_GEN_BIT
 		lda SHOT_STATE_SHOOTING
 		sta shotState
 		lda #1
@@ -141,7 +148,9 @@ updateShot_checkCollision anop
 		rtl
 updateShot_collision anop
 		cpx #SCREEN_ADDRESS
-		blt updateShot_done
+		bge updateShot_onScreen
+		rtl
+updateShot_onScreen anop
 		and #$3333
 		bne updateShot_maybeMushroom
 		

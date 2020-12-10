@@ -809,7 +809,8 @@ shootSpider entry
         lda spiderState
         cmp #SPIDER_STATE_LEFT_DIAG_DOWN
         blt shootSpider_done
-        
+
+		~FFStartPlaying #KILL_SOUND_GEN_BIT
         jsl explodeSpider
 		cmp mouseAddress
 		blt shootSpider_playerBelow

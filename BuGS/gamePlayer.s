@@ -15,7 +15,7 @@ gamePlayer start
 		using tileData
 		using screenData
 		
-PLAYER_EXPLOSION_FRAME_COUNT	equ 4
+PLAYER_EXPLOSION_FRAME_COUNT	equ 3
 PLAYER_RESTART_LEVEL_FRAME_COUNT	equ 20
 		
 		
@@ -112,6 +112,8 @@ updatePlayer_nextExplosion anop
 		sec
 		sbc #4
 		sta playerExplosionOffset
+		lda #PLAYER_EXPLOSION_FRAME_COUNT
+		sta playerFrameCount
 		bra updatePlayer_drawExplosion
 updatePlayer_doneExplosion anop
 		lda #PLAYER_STATE_MUSHROOMS
@@ -486,10 +488,11 @@ updatePlayer_explosionOffLeft anop
 		sta mouseAddress
 		
 updatePlayer_contCollision anop
-		lda #PLAYER_EXPLOSION_FRAME_COUNT-1
+		lda #PLAYER_EXPLOSION_FRAME_COUNT
 		sta playerFrameCount
 		lda #SHIP_EXPLOSION_LAST_OFFSET
 		sta playerExplosionOffset
+		~FFStartPlaying #DEATH_SOUND_GEN_BIT
 		jmp updatePlayer_exploding
 		
 updatePlayer_noCollision anop

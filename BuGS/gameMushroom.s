@@ -50,10 +50,13 @@ resetMushrooms_jumpInst anop
 		nop
 
 resetMushrooms_doneReset anop
-		txa
-		inx
-		inx
-		bra resetMushrooms_loop
+		lda mushroomRefreshWait
+		beq resetMushrooms_next
+		dec a
+		sta mushroomRefreshWait
+		sec
+		rtl
+		
 resetMushrooms_startFromBeginning anop
 		ldx #0
 
@@ -73,10 +76,24 @@ resetMushrooms_keepChecking anop
 		stx mushroomToRefresh
 		lda #TILE_MUSHROOM4
 		sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
 		jsl scoreAddFive
+		~FFStartPlaying mushroomSound
+		lda mushroomSound
+		asl a
+		and #BONUS2_SOUND_GEN_BIT+BONUS3_SOUND_GEN_BIT
+		bne resetMushrooms_doneSound
+		lda #BONUS1_SOUND_GEN_BIT
+resetMushrooms_doneSound anop
+		sta mushroomSound
 		ldx mushroomToRefresh
 		lda #EXPLOSION_LAST_OFFSET
-		bra resetMushrooms_explode
+		sta mushroomExplosionSprite
+		lda #2
+		sta mushroomRefreshWait
+		sec
+		rtl
 
 resetMushrooms_next anop
 		inx
@@ -149,6 +166,8 @@ shootMushroom_done anop
 
 mushroomToRefresh	dc i2'INVALID_TILE_NUM'
 mushroomExplosionSprite	dc i2'0'
+mushroomSound dc i2'BONUS1_SOUND_GEN_BIT'
+mushroomRefreshWait dc i2'0'
 
 
 		end

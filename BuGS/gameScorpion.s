@@ -371,6 +371,7 @@ shootScorpion entry
         inc a
         inc a
         sta scorpionScreenOffset
+		~FFStartPlaying #KILL_SOUND_GEN_BIT
 		jmp scoreAddOneThousand
         
 shootScorpion_done anop

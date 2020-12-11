@@ -3,6 +3,7 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
+* On the latest build (0136579125034f41f8415b496d5ba706e86d65d9) on real HW, on startup I head the spider loop once and then I can play a game and finish that game.  But when I try to start a second game, I crash.  The stack looks corrupted and execution is way off in the weeds somewhere.  This isn't happening on either emulator.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
 * If you die holding the mouse button down, your next game will start shooting without pressing the mouse button.

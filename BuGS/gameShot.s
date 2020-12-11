@@ -75,13 +75,14 @@ updateShot_shifted anop
 updateShot_notNone anop
 		cmp #SHOT_STATE_START_SHOOTING
 		bne updateShot_shooting
-;		pha
-;		~FFSoundDoneStatus #FIRE_SOUND_GENERATOR
-;		pla
-;		bne updateShot_noSoundPlaying
-;		~FFStopSound #FIRE_SOUND_GEN_BIT
-;updateShot_noSoundPlaying anop
-		~FFStartPlaying #FIRE_SOUND_GEN_BIT
+		~FFStartPlaying shotSound
+		lda shotSound
+		asl a
+		and #31|FIRE1_SOUND_GENERATOR
+		bne updateShot_doneSound
+		lda #1|FIRE1_SOUND_GENERATOR
+updateShot_doneSound anop
+		sta shotSound
 		lda SHOT_STATE_SHOOTING
 		sta shotState
 		lda #1
@@ -212,5 +213,6 @@ shotShifted	dc i2'0'
 shotAddress	dc i2'0'
 shotTileOffsetAbove dc i2'0'
 shotTileOffsetBelow dc i2'0'
+shotSound   dc i2'1|FIRE1_SOUND_GENERATOR'
 
         end

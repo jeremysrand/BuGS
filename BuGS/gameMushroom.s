@@ -82,9 +82,9 @@ resetMushrooms_keepChecking anop
 		~FFStartPlaying mushroomSound
 		lda mushroomSound
 		asl a
-		and #BONUS2_SOUND_GEN_BIT+BONUS3_SOUND_GEN_BIT
+		and #7|BONUS1_SOUND_GENERATOR
 		bne resetMushrooms_doneSound
-		lda #BONUS1_SOUND_GEN_BIT
+		lda #1|BONUS1_SOUND_GENERATOR
 resetMushrooms_doneSound anop
 		sta mushroomSound
 		ldx mushroomToRefresh
@@ -166,7 +166,7 @@ shootMushroom_done anop
 
 mushroomToRefresh	dc i2'INVALID_TILE_NUM'
 mushroomExplosionSprite	dc i2'0'
-mushroomSound dc i2'BONUS1_SOUND_GEN_BIT'
+mushroomSound dc i2'1|BONUS1_SOUND_GENERATOR'
 mushroomRefreshWait dc i2'0'
 
 

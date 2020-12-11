@@ -48,9 +48,7 @@ type rRawSound {
 	hex string;
 };
 
-read rRawSound (BONUS1_SOUND) "sound/bonus.raw";
-read rRawSound (BONUS2_SOUND) "sound/bonus.raw";
-read rRawSound (BONUS3_SOUND) "sound/bonus.raw";
+read rRawSound (BONUS_SOUND) "sound/bonus.raw";
 read rRawSound (DEATH_SOUND) "sound/death.raw";
 read rRawSound (FIRE_SOUND) "sound/fire.raw";
 read rRawSound (KILL_SOUND) "sound/kill.raw";

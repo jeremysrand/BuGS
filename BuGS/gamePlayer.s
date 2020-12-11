@@ -492,7 +492,7 @@ updatePlayer_contCollision anop
 		sta playerFrameCount
 		lda #SHIP_EXPLOSION_LAST_OFFSET
 		sta playerExplosionOffset
-		~FFStartPlaying #DEATH_SOUND_GEN_BIT
+		~FFStartPlaying #1|DEATH_SOUND_GENERATOR
 		jmp updatePlayer_exploding
 		
 updatePlayer_noCollision anop

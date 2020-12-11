@@ -810,7 +810,7 @@ shootSpider entry
         cmp #SPIDER_STATE_LEFT_DIAG_DOWN
         blt shootSpider_done
 
-		~FFStartPlaying #KILL_SOUND_GEN_BIT
+		~FFStartPlaying #1|KILL_SOUND_GENERATOR
         jsl explodeSpider
 		cmp mouseAddress
 		blt shootSpider_playerBelow

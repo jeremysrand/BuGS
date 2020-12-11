@@ -1781,7 +1781,7 @@ isSegmentCollision_returnTrue anop
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
 		phx
-		~FFStartPlaying #KILL_SOUND_GEN_BIT
+		~FFStartPlaying #1|KILL_SOUND_GENERATOR
 		lda segmentStates,x
 		cmp #SEGMENT_STATE_BODY
 		beq shootSegment_body

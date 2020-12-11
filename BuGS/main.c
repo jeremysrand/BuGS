@@ -46,7 +46,7 @@ word randomMushroomOffset(void)
 }
 
 
-void setupSound(word soundNum, SoundParamBlock * soundParams, boolean looped)
+void setupSound(word soundNum, SoundParamBlock * soundParams, word genNum, word numGenerators, boolean looped)
 {
     static word nextDocBuffer = 0;
     
@@ -107,29 +107,21 @@ void setupSound(word soundNum, SoundParamBlock * soundParams, boolean looped)
     else
         soundParams->nextWavePtr = NULL;
 
-    FFSetUpSound((soundNum << 8) | 1, (Pointer)soundParams);
+    for (word i = 0; i < numGenerators; i++)
+        FFSetUpSound(((genNum + i) << 8) | 1, (Pointer)soundParams);
 }
 
 
 void loadSounds(void)
 {
-    static SoundParamBlock spiderSound;
-    static SoundParamBlock deathSound;
-    static SoundParamBlock segmentsSound;
-    static SoundParamBlock bonus1Sound;
-    static SoundParamBlock bonus2Sound;
-    static SoundParamBlock bonus3Sound;
-    static SoundParamBlock killSound;
-    static SoundParamBlock fireSound;
+    static SoundParamBlock soundParams[8];
     
-    setupSound(SPIDER_SOUND, &spiderSound, TRUE);
-    setupSound(DEATH_SOUND, &deathSound, FALSE);
-    setupSound(SEGMENTS_SOUND, &segmentsSound, TRUE);
-    setupSound(BONUS1_SOUND, &bonus1Sound, FALSE);
-    setupSound(BONUS2_SOUND, &bonus2Sound, FALSE);
-    setupSound(BONUS3_SOUND, &bonus3Sound, FALSE);
-    setupSound(KILL_SOUND, &killSound, FALSE);
-    setupSound(FIRE_SOUND, &fireSound, FALSE);
+    setupSound(SPIDER_SOUND, soundParams, SPIDER_SOUND_GENERATOR, 1, TRUE);
+    setupSound(DEATH_SOUND, soundParams, DEATH_SOUND_GENERATOR, 1, FALSE);
+    setupSound(SEGMENTS_SOUND, soundParams, SEGMENTS_SOUND_GENERATOR, 1, TRUE);
+    setupSound(BONUS_SOUND, soundParams, BONUS1_SOUND_GENERATOR, 3, FALSE);
+    setupSound(KILL_SOUND, soundParams, KILL_SOUND_GENERATOR, 1, FALSE);
+    setupSound(FIRE_SOUND, soundParams, FIRE1_SOUND_GENERATOR, 5, FALSE);
 }
 
 

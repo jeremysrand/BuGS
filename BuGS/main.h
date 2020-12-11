@@ -17,9 +17,7 @@
 
 /* Sounds */
 #define rRawSound 1
-#define BONUS1_SOUND 1
-#define BONUS2_SOUND 2
-#define BONUS3_SOUND 3
+#define BONUS_SOUND 1
 #define DEATH_SOUND 4
 #define FIRE_SOUND 5
 #define KILL_SOUND 6

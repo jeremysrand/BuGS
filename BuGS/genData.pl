@@ -81,6 +81,22 @@ $gEquates{"P2_LIVES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NU
 
 $gEquates{"HIGH_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 13) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
 
+$gEquates{"BONUS1_SOUND_GENERATOR"} = 0;
+$gEquates{"BONUS2_SOUND_GENERATOR"} = 1;
+$gEquates{"BONUS3_SOUND_GENERATOR"} = 2;
+$gEquates{"DEATH_SOUND_GENERATOR"} = 3;
+$gEquates{"KILL_SOUND_GENERATOR"} = 4;
+$gEquates{"SEGMENTS_SOUND_GENERATOR"} = 5;
+$gEquates{"SPIDER_SOUND_GENERATOR"} = 6;
+$gEquates{"FLEA_SOUND_GENERATOR"} = 7;
+$gEquates{"SCORPION_SOUND_GENERATOR"} = 8;
+$gEquates{"EXTRA_LIFE_SOUND_GENERATOR"} = 9;
+$gEquates{"FIRE1_SOUND_GENERATOR"} = 10;
+$gEquates{"FIRE2_SOUND_GENERATOR"} = 11;
+$gEquates{"FIRE3_SOUND_GENERATOR"} = 12;
+$gEquates{"FIRE4_SOUND_GENERATOR"} = 13;
+$gEquates{"FIRE5_SOUND_GENERATOR"} = 14;
+
 
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileScreenOffset = (0) x $gEquates{"TOTAL_NUM_TILES"};

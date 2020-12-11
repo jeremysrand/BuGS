@@ -288,7 +288,7 @@ shootFlea entry
         beq shootFlea_faster
         
         jsl explodeFlea
-		~FFStartPlaying #KILL_SOUND_GEN_BIT
+		~FFStartPlaying #1|KILL_SOUND_GENERATOR
 		jmp scoreAddTwoHundred
         
 shootFlea_faster anop

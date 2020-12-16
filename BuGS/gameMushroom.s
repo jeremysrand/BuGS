@@ -79,14 +79,7 @@ resetMushrooms_keepChecking anop
 		lda #TILE_STATE_DIRTY
 		sta tileDirty,x
 		jsl scoreAddFive
-		~FFStartPlaying mushroomSound
-		lda mushroomSound
-		asl a
-		and #7|BONUS1_SOUND_GENERATOR
-		bne resetMushrooms_doneSound
-		lda #1|BONUS1_SOUND_GENERATOR
-resetMushrooms_doneSound anop
-		sta mushroomSound
+		jsl playBonusSound
 		ldx mushroomToRefresh
 		lda #EXPLOSION_LAST_OFFSET
 		sta mushroomExplosionSprite
@@ -166,7 +159,6 @@ shootMushroom_done anop
 
 mushroomToRefresh	dc i2'INVALID_TILE_NUM'
 mushroomExplosionSprite	dc i2'0'
-mushroomSound dc i2'1|BONUS1_SOUND_GENERATOR'
 mushroomRefreshWait dc i2'0'
 
 

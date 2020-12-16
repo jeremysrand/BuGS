@@ -189,6 +189,7 @@ startGame_notRunning anop
 		jsl initPlayer
 		jsl spiderInitGame
 		jsl levelInit
+		jsl soundInit
 ; Fall through intentionally here...
 startLevel entry
 		jsl segmentsInitLevel

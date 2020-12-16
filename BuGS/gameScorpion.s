@@ -371,7 +371,7 @@ shootScorpion entry
         inc a
         inc a
         sta scorpionScreenOffset
-		~FFStartPlaying #1|KILL_SOUND_GENERATOR
+		jsl playKillSound
 		jmp scoreAddOneThousand
         
 shootScorpion_done anop

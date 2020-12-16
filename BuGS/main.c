@@ -109,6 +109,9 @@ void setupSound(word soundNum, SoundParamBlock * soundParams, word genNum, word 
 
     for (word i = 0; i < numGenerators; i++)
         FFSetUpSound(((genNum + i) << 8) | 1, (Pointer)soundParams);
+    
+    HUnlock(handle);
+    ReleaseResource(1, rRawSound, soundNum);
 }
 
 

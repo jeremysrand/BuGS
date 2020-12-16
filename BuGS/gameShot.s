@@ -75,14 +75,7 @@ updateShot_shifted anop
 updateShot_notNone anop
 		cmp #SHOT_STATE_START_SHOOTING
 		bne updateShot_shooting
-		~FFStartPlaying shotSound
-		lda shotSound
-		asl a
-		and #31|FIRE1_SOUND_GENERATOR
-		bne updateShot_doneSound
-		lda #1|FIRE1_SOUND_GENERATOR
-updateShot_doneSound anop
-		sta shotSound
+		jsl playFireSound
 		lda SHOT_STATE_SHOOTING
 		sta shotState
 		lda #1

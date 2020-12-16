@@ -22,6 +22,7 @@ PLAYER_RESTART_LEVEL_FRAME_COUNT	equ 20
 initPlayer entry
 		ldy #STARTING_NUM_LIVES
 		sty numLives
+		stz playerIgnoreFirstPoll
 		ldx #P1_LIVES_OFFSET
 initPlayer_loop anop
 		lda #TILE_PLAYER
@@ -37,6 +38,7 @@ initPlayer_loop anop
 		
 		
 playerLevelStart entry
+		stz playerIgnoreFirstPoll
 		lda #PLAYER_STATE_ONSCREEN
 		sta playerState
 		lda #STARTING_MOUSE_X
@@ -194,7 +196,11 @@ updatePlayer_mouseYOnly anop
 updatePlayer_doneMousePoll anop
 		plb
 		long i,m
-		bra updatePlayer_handleDeltas
+		lda playerIgnoreFirstPoll
+		bne updatePlayer_handleDeltas
+		lda #1
+		sta playerIgnoreFirstPoll
+		jmp updatePlayer_skipDeltas
 
 updatePlayer_noMousePoll anop
 		plb
@@ -528,6 +534,7 @@ updatePlayer_done anop
 
 playerFrameCount 		dc i2'0'
 playerExplosionOffset	dc i2'0'
+playerIgnoreFirstPoll   dc i2'0'
 mouseDown	dc i2'0'
 mouseTemp 	dc i2'0'
 

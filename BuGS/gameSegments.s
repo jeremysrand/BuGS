@@ -131,6 +131,18 @@ segmentHeadJump entry
         beq segmentHeadJump_noShift
         
         tay
+		
+; DEBUG - Validate the offset into the table and crash if not valid
+		and #3
+		beq segmentHeadJump_isMultipleOf4
+		brk $5
+segmentHeadJump_isMultipleOf4 anop
+		cpy #157
+		blt segmentHeadJump_isInsideTable
+		brk $6
+segmentHeadJump_isInsideTable anop
+; DEBUG - End of validation
+
         lda headShiftJumpTable,y
         sta segmentHeadJump_jumpInst+1
         lda headShiftJumpTable+2,y
@@ -141,6 +153,18 @@ segmentHeadJump entry
         
 segmentHeadJump_noShift anop
         tay
+		
+; DEBUG - Validate the offset into the table and crash if not valid
+		and #3
+		beq segmentHeadJumpShift_isMultipleOf4
+		brk $7
+segmentHeadJumpShift_isMultipleOf4 anop
+		cpy #157
+		blt segmentHeadJumpShift_isInsideTable
+		brk $8
+segmentHeadJumpShift_isInsideTable anop
+; DEBUG - End of validation
+
         lda headJumpTable,y
         sta segmentHeadJump_jumpInst+1
         lda headJumpTable+2,y
@@ -168,6 +192,17 @@ segmentBodyJump entry
         beq segmentBodyJump_noShift
         
         tay
+; DEBUG - Validate the offset into the table and crash if not valid
+		and #3
+		beq segmentBodyJump_isMultipleOf4
+		brk $1
+segmentBodyJump_isMultipleOf4 anop
+		cpy #157
+		blt segmentBodyJump_isInsideTable
+		brk $2
+segmentBodyJump_isInsideTable anop
+; DEBUG - End of validation
+		
         lda bodyShiftJumpTable,y
         sta segmentBodyJump_jumpInst+1
         lda bodyShiftJumpTable+2,y
@@ -178,7 +213,18 @@ segmentBodyJump entry
         
 segmentBodyJump_noShift anop
         tay
-        lda bodyJumpTable,y
+; DEBUG - Validate the offset into the table and crash if not valid
+		and #3
+		beq segmentBodyJumpShift_isMultipleOf4
+		brk $3
+segmentBodyJumpShift_isMultipleOf4 anop
+		cpy #157
+		blt segmentBodyJumpShift_isInsideTable
+		brk $4
+segmentBodyJumpShift_isInsideTable anop
+; DEBUG - End of validation
+
+		lda bodyJumpTable,y
         sta segmentBodyJump_jumpInst+1
         lda bodyJumpTable+2,y
         sta segmentBodyJump_jumpInst+3

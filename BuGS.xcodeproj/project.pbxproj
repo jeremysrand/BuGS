@@ -53,7 +53,7 @@
 		9D1553EC257F3E5200657188 /* kill.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = kill.raw; sourceTree = "<group>"; };
 		9D1553ED257F3E5200657188 /* segments.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = segments.raw; sourceTree = "<group>"; };
 		9D1553EE257F3E5200657188 /* spider.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.raw; sourceTree = "<group>"; };
-		9D159805258A6BCB00BA42DF /* gameSound.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSound.s; sourceTree = "<group>"; };
+		9D159805258A6BCB00BA42DF /* gameSound.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSound.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D1716842491C49300C83148 /* BuGS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1716872491C49300C83148 /* BuGS.2mg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS.2mg; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D17168C2491C49300C83148 /* doNotBuild */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = doNotBuild; sourceTree = BUILT_PRODUCTS_DIR; };

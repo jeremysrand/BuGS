@@ -206,6 +206,5 @@ shotShifted	dc i2'0'
 shotAddress	dc i2'0'
 shotTileOffsetAbove dc i2'0'
 shotTileOffsetBelow dc i2'0'
-shotSound   dc i2'1|FIRE1_SOUND_GENERATOR'
 
         end

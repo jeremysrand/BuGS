@@ -46,85 +46,57 @@ word randomMushroomOffset(void)
 }
 
 
-void setupSound(word soundNum, SoundParamBlock * soundParams, word genNum, word numGenerators, boolean looped)
+void loadSpiderSound(word addr)
 {
-    static word nextDocBuffer = 0;
-    
-    Handle handle = LoadResource(rRawSound, soundNum);
+    Handle handle = LoadResource(rRawSound, SPIDER_SOUND);
     HLock(handle);
-    
-    word handleSize = GetHandleSize(handle);
-    
-    soundParams->freqOffset = 214;
-    soundParams->docBuffer = nextDocBuffer;
-    soundParams->volSetting = 255;
-    soundParams->waveStart = *handle;
-    soundParams->waveSize = (handleSize / 256) + 1;
-    
-    if (handleSize > 16384)
-    {
-        soundParams->bufferSize = 7;
-        nextDocBuffer += 32768;
-    }
-    else if (handleSize > 8192)
-    {
-        soundParams->bufferSize = 6;
-        nextDocBuffer += 16384;
-    }
-    else if (handleSize > 4096)
-    {
-        soundParams->bufferSize = 5;
-        nextDocBuffer += 8192;
-    }
-    else if (handleSize > 2048)
-    {
-        soundParams->bufferSize = 4;
-        nextDocBuffer += 4096;
-    }
-    else if (handleSize > 1024)
-    {
-        soundParams->bufferSize = 3;
-        nextDocBuffer += 2048;
-    }
-    else if (handleSize > 512)
-    {
-        soundParams->bufferSize = 2;
-        nextDocBuffer += 1024;
-    }
-    else if (handleSize > 256)
-    {
-        soundParams->bufferSize = 1;
-        nextDocBuffer += 512;
-    }
-    else
-    {
-        soundParams->bufferSize = 0;
-        nextDocBuffer += 256;
-    }
-    
-    if (looped)
-        soundParams->nextWavePtr = soundParams;
-    else
-        soundParams->nextWavePtr = NULL;
-
-    for (word i = 0; i < numGenerators; i++)
-        FFSetUpSound(((genNum + i) << 8) | 1, (Pointer)soundParams);
-    
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
     HUnlock(handle);
-    ReleaseResource(1, rRawSound, soundNum);
 }
 
 
-void loadSounds(void)
+void loadDeathSound(word addr)
 {
-    static SoundParamBlock soundParams[8];
-    
-    setupSound(SPIDER_SOUND, soundParams, SPIDER_SOUND_GENERATOR, 1, TRUE);
-    setupSound(DEATH_SOUND, soundParams, DEATH_SOUND_GENERATOR, 1, FALSE);
-    setupSound(SEGMENTS_SOUND, soundParams, SEGMENTS_SOUND_GENERATOR, 1, TRUE);
-    setupSound(BONUS_SOUND, soundParams, BONUS1_SOUND_GENERATOR, 3, FALSE);
-    setupSound(KILL_SOUND, soundParams, KILL_SOUND_GENERATOR, 1, FALSE);
-    setupSound(FIRE_SOUND, soundParams, FIRE1_SOUND_GENERATOR, 5, FALSE);
+    Handle handle = LoadResource(rRawSound, DEATH_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
+void loadSegmentsSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, SEGMENTS_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
+void loadBonusSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, BONUS_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
+void loadKillSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, KILL_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
+void loadFireSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, FIRE_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
 }
 
 
@@ -156,8 +128,6 @@ int main(void)
     
     InitMouse(0);
     SetMouse(transparent);
-    
-    loadSounds();
 
     game();
     

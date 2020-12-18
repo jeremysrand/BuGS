@@ -12,6 +12,8 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
    * Something is trashing memory.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
+* Sometimes when you die, a spider may enter and the spider sound will start playing.  Because audio is stopped by player death and it has already happened, the spider sound ends up going on even though the spider is not moving.
+* Sometimes the spider doesn't seem to freeze when the player dies.  This may be related to the sound problem also.  If the per-frame spider update code isn't handling player death correctly, that could explain both.
 
 
 

@@ -7,7 +7,7 @@ This project would not have been a success without help from the Apple // commun
 * John Brooks who was instrumental in getting the animation algorithm performant.  He described a series of optimizations that I could persue and sure enough, implementing a couple of them got me back to 60 frames per second.  He also provided code for a fast random number generator and fast mouse polling.
 * Antoine Vignau for his technical support, especially when it came time to look at sound.  He often posted comments that warned me that the road I was going down was going to be a problem (like trying to use the toolbox for polling the mouse) and of course he was right.
 * Brutal Deluxe in general for their incredible reference information about the Apple //GS, especially their page about Mr. Sprite.  I very nearly used Mr. Sprite for this project but there were further assumptions and optimizations I could do because of the limited colour palette so I decided to hand code my sprites.  But the ideas were key to my approach and I read those webpages multiple times.
-* Jason Anderen for pointers to some low level sound routines which I could use for reference.
+* Jason Andersen for pointers to some low level sound routines which I could use for reference.
 * Dagen Brock for GSPlus and for his technical support and encouragement on slack.  GSPlus was the emulator I used primarily and when I did a "build and run", GSPlus always launched reliably and quickly so I could test the latest code.
 * Mike Westerfield and Byte Works for the ORCA tools which I have used for building this project.
 * Kelvin Sherlock for GoldenGate and Profuse which are the fundamental tools I used for building this project.

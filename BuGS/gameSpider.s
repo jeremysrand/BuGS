@@ -559,6 +559,7 @@ updateSpider_downChangeDirDiagRight anop
         rtl
         
 updateSpider_offScreen anop
+		jsl stopSpiderSound
         stz spiderState
         rtl
         
@@ -569,6 +570,7 @@ addSpider entry
         rtl
         
 addSpider_checkSpeed anop
+		jsl startSpiderSound
 		lda gameScore+2
 		bne addSpider_fast
 		lda gameScore
@@ -862,6 +864,7 @@ explodeSpider entry
 		lda spiderScreenOffset
 		inc a
 		sta spiderScreenOffset
+		jsl stopSpiderSound
 explodeSpider_done anop
 		rtl
 		

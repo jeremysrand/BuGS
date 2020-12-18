@@ -46,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D0DC8EF258C715E00DE9E87 /* extralife.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = extralife.raw; sourceTree = "<group>"; };
 		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
 		9D1553EA257F3E5200657188 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				9D1553EA257F3E5200657188 /* bonus.raw */,
+				9D0DC8EF258C715E00DE9E87 /* extralife.raw */,
 				9D1553EB257F3E5200657188 /* death.raw */,
 				9D1553E9257F3E5200657188 /* fire.raw */,
 				9D1553EC257F3E5200657188 /* kill.raw */,

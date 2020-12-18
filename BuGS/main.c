@@ -100,6 +100,15 @@ void loadFireSound(word addr)
 }
 
 
+void loadExtraLifeSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, EXTRA_LIFE_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
 int main(void)
 {
     int event;

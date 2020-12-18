@@ -7,6 +7,9 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
    * I am thinking this is the same crash as the one which follows.  I tried to reproduce this on real HW again with that debug in place but could not.
 * I reproduced a crash on GSPlus after dying and starting a new game.  From the stack, it was clear it was trying to draw a body segment but the jump instruction was set to garbage.  I am hoping this is the same crash as the one saw on real HW.
    * I have added some debug code to detect this.  I am validating that the offset into the draw table for head and body segments is "sane" and if not brk.
+   * I reproduced it and ended up at brk $4 with y set to $2270 which is much larger than the max of 156.  Also odd is that X is 1 but I think it needs to be an even number.
+   * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
+   * Something is trashing memory.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
 

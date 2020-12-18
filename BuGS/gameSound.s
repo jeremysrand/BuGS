@@ -27,7 +27,12 @@ SOUND_HALTED		equ 1
 SOUND_STARTED		equ 0
 
 SPIDER_SOUND_ADDR	equ $0000
-SPIDER_SOUND_SIZE	equ 6
+SPIDER_OSC_NUM		equ 8
+SPIDER_FREQ_HIGH	equ 0
+SPIDER_FREQ_LOW		equ 214
+SPIDER_VOLUME		equ 255
+SPIDER_CONTROL		equ 6
+SPIDER_SIZE			equ $36
 
 DEATH_SOUND_ADDR	equ $4000
 DEATH_OSC_NUM		equ 5
@@ -38,9 +43,22 @@ DEATH_CONTROL		equ 2
 DEATH_SIZE			equ $36
 
 SEGMENTS_SOUND_ADDR	equ $7000
-SEGMENTS_SOUND_SIZE	equ 4
+SEGMENTS_OSC_NUM	equ 6
+SEGMENTS_FREQ_HIGH	equ 0
+SEGMENTS_FREQ_LOW	equ 214
+SEGMENTS_VOLUME		equ 255
+SEGMENTS_CONTROL	equ 6
+SEGMENTS_SIZE		equ $24
 
-BONUS_SOUND_ADDR	equ $8000
+EXTRA_LIFE_SOUND_ADDR	equ $8000
+EXTRA_LIFE_OSC_NUM		equ 10
+EXTRA_LIFE_FREQ_HIGH	equ 0
+EXTRA_LIFE_FREQ_LOW		equ 107
+EXTRA_LIFE_VOLUME		equ 255
+EXTRA_LIFE_CONTROL		equ 2
+EXTRA_LIFE_SIZE		equ $36
+
+BONUS_SOUND_ADDR	equ $b000
 BONUS_OSC_NUM		equ 0
 BONUS_FREQ_HIGH		equ 0
 BONUS_FREQ_LOW		equ 214
@@ -48,7 +66,7 @@ BONUS_VOLUME		equ 255
 BONUS_CONTROL		equ 2
 BONUS_SIZE			equ $24
 
-KILL_SOUND_ADDR		equ $9000
+KILL_SOUND_ADDR		equ $c000
 KILL_OSC_NUM		equ 4
 KILL_FREQ_HIGH		equ 0
 KILL_FREQ_LOW		equ 214
@@ -56,7 +74,7 @@ KILL_VOLUME			equ 255
 KILL_CONTROL		equ 2
 KILL_SIZE			equ $24
 
-FIRE_SOUND_ADDR 	equ $a000
+FIRE_SOUND_ADDR 	equ $d000
 FIRE_OSC_NUM		equ 3
 FIRE_FREQ_HIGH		equ 0
 FIRE_FREQ_LOW		equ 214
@@ -135,6 +153,54 @@ soundInit_writeRegLow anop
 ; Spider sound
 		pea SPIDER_SOUND_ADDR
 		jsl loadSpiderSound
+		
+		lda #SPIDER_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_VOLUME
+		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_SIZE
+		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SPIDER_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SPIDER_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SPIDER_VOLUME
+		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SPIDER_SIZE
+		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SPIDER_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SPIDER_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
 
 		
 ; Death sound
@@ -169,6 +235,54 @@ soundInit_writeRegLow anop
 ; Segments sound
 		pea SEGMENTS_SOUND_ADDR
 		jsl loadSegmentsSound
+		
+		lda #SEGMENTS_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_VOLUME
+		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_SIZE
+		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_VOLUME
+		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_SIZE
+		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
 
 		
 ; Bonus sound
@@ -303,7 +417,35 @@ soundInit_writeRegLow anop
 		lda #FIRE_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
 		jsl writeSoundReg
-
+		
+; Extra life sound
+		pea EXTRA_LIFE_SOUND_ADDR
+		jsl loadExtraLifeSound
+		
+		lda #EXTRA_LIFE_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #EXTRA_LIFE_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #EXTRA_LIFE_VOLUME
+		ldx #SOUND_REG_VOLUME+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #EXTRA_LIFE_SIZE
+		ldx #SOUND_REG_SIZE+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #EXTRA_LIFE_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		
 		rtl
 
 
@@ -332,6 +474,11 @@ playBonusSound_noWrap anop
 
 
 playDeathSound entry
+		jsl stopSpiderSound
+		jsl stopFleaSound
+		jsl stopScorpionSound
+		jsl stopSegmentSound
+
 		lda #DEATH_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM
 		jsl writeSoundReg
@@ -353,11 +500,6 @@ playKillSound entry
 		rtl
 
 
-playExtraLifeSound entry
-; Write this code...
-		rtl
-
-
 playFireSound entry
 		lda #FIRE_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
@@ -367,15 +509,59 @@ playFireSound entry
 		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
 		jsl writeSoundReg
 		rtl
+		
 
+playExtraLifeSound entry
+		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
 
+		lda #EXTRA_LIFE_CONTROL
+		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		jsl writeSoundReg
+		rtl
+
+		
+		
+startSegmentSound entry
+		jsl stopSegmentSound
+		
+		lda #SEGMENTS_CONTROL
+		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		rtl
+		
+		
+stopSegmentSound entry
+		lda #SEGMENTS_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		jsl writeSoundReg
+		
+		lda #SEGMENTS_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+1
+		jsl writeSoundReg
+		
+		rtl
+		
+		
 startSpiderSound entry
-; Write this code...
+		jsl stopSpiderSound
+
+		lda #SPIDER_CONTROL
+		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		jsl writeSoundReg
 		rtl
 
 
 stopSpiderSound entry
-; Write this code...
+		lda #SPIDER_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		jsl writeSoundReg
+
+		lda #SPIDER_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+1
+		jsl writeSoundReg
+		
 		rtl
 
 

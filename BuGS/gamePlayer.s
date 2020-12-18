@@ -71,7 +71,7 @@ playerAddLife entry
 		lda #TILE_PLAYER
 		sta tileType,x
 		_dirtyNonGameTile
-		rtl
+		jmp playExtraLifeSound
 		
 
 updatePlayer entry

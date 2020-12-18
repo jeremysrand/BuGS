@@ -29,6 +29,7 @@ levelInit entry
 levelStart entry
 		lda colourLevelNum
 		jsl setColour
+		jsl startSegmentSound
 		
 		ldx centipedeLevelNum
 		lda levelTable,x
@@ -89,6 +90,7 @@ updateLevel_checkSegments anop
 		bne updateLevel_done
 		lda #NEXT_LEVEL_FRAME_COUNT
 		sta nextLevelFrameCount
+		jsl stopSegmentSound
 updateLevel_done anop
 		rtl
 

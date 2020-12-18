@@ -54,3 +54,4 @@ read rRawSound (FIRE_SOUND) "sound/fire.raw";
 read rRawSound (KILL_SOUND) "sound/kill.raw";
 read rRawSound (SEGMENTS_SOUND) "sound/segments.raw";
 read rRawSound (SPIDER_SOUND) "sound/spider.raw";
+read rRawSound (EXTRA_LIFE_SOUND) "sound/extralife.raw";

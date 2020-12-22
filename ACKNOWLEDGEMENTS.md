@@ -1,6 +1,6 @@
 #  Acknowledgements
 
-This project would not have been a success without help from the Apple // community, especiall the appleiigs slack channel where I got tons of help and encouragement. I have to thank some people for their support, help, contribution of code and other materials that helped make BuGS possible.  Please know that if your name is missing, that is my fault.  I should have been keeping track of this early on but I find myself writing this in the later days of the project and I am almost certainly going to make a mistake.  I apologize if I have left you off and I would encourage you to contact me and help me correct my mistake.
+This project would not have been a success without help from the Apple // community, especially the appleiigs slack channel where I got tons of help and encouragement. I have to thank some people for their support, help, contribution of code and other materials that helped make BuGS possible.  Please know that if your name is missing, that is my fault.  I should have been keeping track of this early on but I find myself writing this in the later days of the project and I am almost certainly going to make a mistake.  I apologize if I have left you off and I would encourage you to contact me and help me correct my mistake.
 
 * @fatdog on slack who provided multiple sound samples for the game including the spider, flea and the beat sound.
 * Mark Collins who pointed me to a source of sound effects and information on how to convert digital sound into a format that would work on the GS.

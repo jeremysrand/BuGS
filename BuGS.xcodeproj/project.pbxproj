@@ -94,6 +94,7 @@
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
 		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9D6DB0AE2591A67700CDBF05 /* flea.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = flea.raw; sourceTree = "<group>"; };
 		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; };
 		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
@@ -124,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				9D1553EA257F3E5200657188 /* bonus.raw */,
+				9D6DB0AE2591A67700CDBF05 /* flea.raw */,
 				9D0DC8EF258C715E00DE9E87 /* extralife.raw */,
 				9D1553EB257F3E5200657188 /* death.raw */,
 				9D1553E9257F3E5200657188 /* fire.raw */,

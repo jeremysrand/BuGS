@@ -91,6 +91,7 @@ updateFlea_playerOnscreen anop
         rtl
         
 updateFlea_explosionDone anop
+		jsl stopFleaSound
         stz fleaState
         rtl
 
@@ -182,6 +183,7 @@ updateFlea_nextTile anop
         bra updateFlea_nextAction
         
 updateFlea_bottom anop
+		jsl stopFleaSound
         stz fleaState
         rtl
 
@@ -208,6 +210,7 @@ addFlea_fast anop
 		lda #SPRITE_SPEED_FAST
 addFlea_setSpeed anop
         jsl setFleaSpeed
+		jsl startFleaSound
         
         lda #FLEA_STATE_FALLING
         sta fleaState
@@ -314,6 +317,7 @@ explodeFlea entry
 
 		lda #EXPLOSION_LAST_OFFSET
 		sta fleaSprite
+		jsl stopFleaSound
 		rtl
 		
         

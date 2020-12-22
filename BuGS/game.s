@@ -73,6 +73,7 @@ gameLoop anop
         jsl updateFlea
         jsl updateSegments
 		jsl updateLevel
+		jsl updateSounds
 		
         jsl checkKeyboard
         

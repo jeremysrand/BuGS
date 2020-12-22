@@ -109,6 +109,15 @@ void loadExtraLifeSound(word addr)
 }
 
 
+void loadFleaSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, FLEA_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
 int main(void)
 {
     int event;

@@ -81,6 +81,7 @@ $gEquates{"P2_LIVES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NU
 
 $gEquates{"HIGH_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 13) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
 
+$gEquates{"NUM_FLEA_FREQS"} = 80;
 
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileScreenOffset = (0) x $gEquates{"TOTAL_NUM_TILES"};
@@ -93,6 +94,8 @@ our @gTileBitOffset = (0) x $gEquates{"NUM_GAME_TILES"};
 our @gTileBitMask = (0) x $gEquates{"NUM_GAME_TILES"};
 our @gDirtyNonGameTiles = ("INVALID_TILE_NUM") x $gEquates{"NUM_NON_GAME_TILES"};
 our $gNumDirtyNonGameTiles = 0;
+
+our @gFleaFreqs = (0) x $gEquates{"NUM_FLEA_FREQS"};
 
 our @gMouseYAddress = (0) x $gEquates{"MOUSE_MAX_Y"};
 our @gMouseYTileAbove = (0) x $gEquates{"MOUSE_MAX_Y"};
@@ -458,8 +461,20 @@ sub initNonGameTiles
 }
 
 
+sub initFleaFreqs
+{
+    $gFleaFreqs[0] = (197 * 256 * 32) / ( 2 * 1645);
+    
+    for (my $i = 1; $i < $gEquates{"NUM_FLEA_FREQS"}; $i++)
+    {
+        $gFleaFreqs[$i] = ($gFleaFreqs[$i - 1] * 100000000) / 101161944;
+    }
+}
+
+
 initTiles();
 initNonGameTiles();
+initFleaFreqs();
 
 # Generate the tileData.s file
 open my $fh, ">", "$gGenDir/tileData.s" or die "$0: Unable to open $gGenDir/tileData.s for writing, $!";
@@ -489,6 +504,7 @@ printTileData($fh, "tileRight", @gTileRight);
 printTileData($fh, "tileBitOffset", @gTileBitOffset);
 printTileData($fh, "tileBitMask", @gTileBitMask);
 printTileData($fh, "dirtyNonGameTiles", @gDirtyNonGameTiles);
+printTileData($fh, "fleaFreqs", @gFleaFreqs);
 printTileData($fh, "mouseYAddress", @gMouseYAddress);
 printTileData($fh, "mouseYTileAbove", @gMouseYTileAbove);
 printTileData($fh, "mouseYTileBelow", @gMouseYTileBelow);

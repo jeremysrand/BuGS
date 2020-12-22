@@ -82,6 +82,13 @@ FIRE_VOLUME			equ 255
 FIRE_CONTROL		equ 2
 FIRE_SIZE			equ $1b
 
+FLEA_SOUND_ADDR		equ $3a00
+FLEA_OSC_NUM		equ 12
+FLEA_VOLUME			equ 255
+FLEA_CONTROL		equ 6
+FLEA_SIZE			equ $00
+FLEA_FRAME_COUNT	equ 5
+
 
 ; X register has the address of the register to read
 ; Accumulator contains the result of the read
@@ -104,7 +111,24 @@ writeSoundReg_jslInst anop
 		long m
 		rtl
 		
-
+; X register has the address of the register to write
+; Accumulator has the value to write
+writeConsecSoundReg entry
+		and #$ff
+		short m
+		pha
+		phx
+writeConsecSoundReg_jslInst1 anop
+		jsl writeSoundReg
+		plx
+		inx
+		pla
+writeConsecSoundReg_jslInst2 anop
+		jsl writeSoundReg
+		long m
+		rtl
+		
+		
 soundInit entry
 ;		jsl loadSounds
 		
@@ -139,6 +163,8 @@ soundInit_readRegHigh anop
 soundInit_writeRegHigh anop
 		lda >soundInit
 		sta writeSoundReg_jslInst+3
+		sta writeConsecSoundReg_jslInst1+3
+		sta writeConsecSoundReg_jslInst2+3
 		long m
 		
 soundInit_readRegLow anop
@@ -148,6 +174,8 @@ soundInit_readRegLow anop
 soundInit_writeRegLow anop
 		lda >soundInit
 		sta writeSoundReg_jslInst+1
+		sta writeConsecSoundReg_jslInst1+1
+		sta writeConsecSoundReg_jslInst2+1
 
 		
 ; Spider sound
@@ -156,51 +184,27 @@ soundInit_writeRegLow anop
 		
 		lda #SPIDER_FREQ_LOW
 		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SPIDER_FREQ_HIGH
 		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SPIDER_VOLUME
 		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SPIDER_SIZE
 		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SPIDER_SOUND_ADDR/256
 		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SPIDER_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
-		jsl writeSoundReg
-		
-		lda #SPIDER_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SPIDER_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SPIDER_VOLUME
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SPIDER_SIZE
-		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SPIDER_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SPIDER_CONTROL+SOUND_HALTED
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 
 		
 ; Death sound
@@ -238,51 +242,27 @@ soundInit_writeRegLow anop
 		
 		lda #SEGMENTS_FREQ_LOW
 		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SEGMENTS_FREQ_HIGH
 		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SEGMENTS_VOLUME
 		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SEGMENTS_SIZE
 		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SEGMENTS_SOUND_ADDR/256
 		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		lda #SEGMENTS_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_VOLUME
-		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_SIZE
-		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_CONTROL+SOUND_HALTED
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 
 		
 ; Bonus sound
@@ -446,11 +426,57 @@ soundInit_writeRegLow anop
 		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
 		jsl writeSoundReg
 		
+; Flea sound
+		pea FLEA_SOUND_ADDR
+		jsl loadFleaSound
+
+		lda #FLEA_VOLUME
+		ldx #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+
+		lda #FLEA_SIZE
+		ldx #SOUND_REG_SIZE+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+
+		lda #FLEA_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+
+		lda #FLEA_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+		
 		rtl
 
 
 updateSounds entry
-; Write this code...
+		lda gameRunning
+		bne updateSounds_done
+		lda fleaSoundIsPlaying
+		bne updateSounds_done
+		
+updateSounds_changeFreq anop
+		ldy fleaSoundFreqOffset
+		cpy #NUM_FLEA_FREQS*2
+		blt updateSounds_notDone
+		jmp stopFleaSound
+updateSounds_notDone anop
+		lda #FLEA_FRAME_COUNT
+		sta fleaSoundFrame
+		iny
+		iny
+		sty fleaSoundFreqOffset
+		
+		lda fleaFreqs,y
+		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+
+		ldy fleaSoundFreqOffset
+		lda fleaFreqs+1,y
+		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+		
+updateSounds_done anop
 		rtl
 
 
@@ -535,11 +561,7 @@ startSegmentSound entry
 stopSegmentSound entry
 		lda #SEGMENTS_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
-		
-		lda #SEGMENTS_CONTROL+SOUND_HALTED
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+1
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		rtl
 		
@@ -556,11 +578,7 @@ startSpiderSound entry
 stopSpiderSound entry
 		lda #SPIDER_CONTROL+SOUND_HALTED
 		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
-		jsl writeSoundReg
-
-		lda #SPIDER_CONTROL+SOUND_HALTED
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+1
-		jsl writeSoundReg
+		jsl writeConsecSoundReg
 		
 		rtl
 
@@ -576,16 +594,45 @@ stopScorpionSound entry
 
 
 startFleaSound entry
-; Write this code...
+		lda fleaSoundIsPlaying
+		bne startFleaSound_doIt
+		rtl
+		
+startFleaSound_doIt anop
+		stz fleaSoundIsPlaying
+		stz fleaSoundFreqOffset
+		
+		lda #FLEA_FRAME_COUNT
+		sta fleaSoundFrame
+		
+		lda fleaFreqs
+		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+
+		lda fleaFreqs+1
+		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #FLEA_CONTROL
+		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		jsl writeSoundReg
 		rtl
 
 
 stopFleaSound entry
-; Write this code...
+		lda #FLEA_CONTROL+SOUND_HALTED
+		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #1
+		sta fleaSoundIsPlaying
 		rtl
 
 
 bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
 soundTableAddr		dc i4'0'
+fleaSoundIsPlaying		dc i2'1'
+fleaSoundFreqOffset		dc i2'0'
+fleaSoundFrame			dc i2'0'
 
         end

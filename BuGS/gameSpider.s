@@ -143,7 +143,7 @@ updateSpider entry
 		cmp #PLAYER_STATE_ONSCREEN
 		beq updateSpider_cont
 		ldx spiderState
-		cmp #SPIDER_STATE_EXPLODING
+		cpx #SPIDER_STATE_EXPLODING
 		beq updateSpider_testState
 		rtl
 updateSpider_cont anop

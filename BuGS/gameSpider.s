@@ -385,7 +385,9 @@ updateSpider_tilesRight_cont anop
         stx spiderTileOffsets+4
         lda tileRight,x
         sta spiderTileOffsets
-        rtl
+		
+		ldx spiderTileOffsets+6
+		jmp updateSpiderSound
 
 updateSpider_tilesLeft anop
         ldx spiderTileOffsets+4
@@ -407,8 +409,9 @@ updateSpider_tilesLeft_cont anop
         stx spiderTileOffsets+4
         lda tileLeft,x
         sta spiderTileOffsets+8
-        
-        rtl
+		
+		ldx spiderTileOffsets+6
+		jmp updateSpiderSound
         
 updateSpider_tilesUp anop
         lda spiderMaxShiftInTile
@@ -446,7 +449,9 @@ updateSpider_tilesUpCont anop
         stx spiderTileOffsets+8
         lda tileAbove,x
         sta spiderTileOffsets+10
-        rtl
+		
+		ldx spiderTileOffsets+6
+		jmp updateSpiderSound
         
 updateSpider_upChangeDir anop
         lda #GAME_NUM_TILES_TALL-1
@@ -521,7 +526,9 @@ updateSpider_tilesDownCont anop
         stx spiderTileOffsets+10
         lda tileBelow,x
         sta spiderTileOffsets+8
-        rtl
+		
+		ldx spiderTileOffsets+6
+		jmp updateSpiderSound
         
 updateSpider_downChangeDir anop
         lda spiderTargetRow
@@ -570,7 +577,6 @@ addSpider entry
         rtl
         
 addSpider_checkSpeed anop
-		jsl startSpiderSound
 		lda gameScore+2
 		bne addSpider_fast
 		lda gameScore
@@ -669,6 +675,9 @@ addSpider_left anop
         tax
         lda tileAbove,x
         sta spiderTileOffsets+2
+		
+		ldx spiderTileOffsets+6
+		jsl startSpiderSound
         
         rtl
         
@@ -703,7 +712,10 @@ addSpider_right anop
         tax
         lda tileAbove,x
         sta spiderTileOffsets+10
-        
+		
+		ldx spiderTileOffsets+6
+		jsl startSpiderSound
+		
         rtl
         
         
@@ -812,6 +824,7 @@ shootSpider entry
         cmp #SPIDER_STATE_LEFT_DIAG_DOWN
         blt shootSpider_done
 
+		ldx spiderTileOffsets+6
 		jsl playKillSound
         jsl explodeSpider
 		cmp mouseAddress

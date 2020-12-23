@@ -1827,7 +1827,11 @@ isSegmentCollision_returnTrue anop
 ; Call this with the segment num * 2 in the X register
 shootSegment entry
 		phx
+		ldy segmentPosOffset,x
+		ldx segmentCurrentTile,y
 		jsl playKillSound
+		plx
+		phx
 		lda segmentStates,x
 		cmp #SEGMENT_STATE_BODY
 		beq shootSegment_body

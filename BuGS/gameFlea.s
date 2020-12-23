@@ -210,7 +210,6 @@ addFlea_fast anop
 		lda #SPRITE_SPEED_FAST
 addFlea_setSpeed anop
         jsl setFleaSpeed
-		jsl startFleaSound
         
         lda #FLEA_STATE_FALLING
         sta fleaState
@@ -236,6 +235,9 @@ addFlea_setSpeed anop
         sec
         sbc #6*SCREEN_BYTES_PER_ROW+3
         sta fleaScreenOffset
+		
+		ldx fleaTileOffsets
+		jsl startFleaSound
         
 addFlea_done anop
         rtl
@@ -291,6 +293,7 @@ shootFlea entry
         beq shootFlea_faster
         
         jsl explodeFlea
+		ldx fleaTileOffsets
 		jsl playKillSound
 		jmp scoreAddTwoHundred
         

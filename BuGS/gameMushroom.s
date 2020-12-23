@@ -78,8 +78,8 @@ resetMushrooms_keepChecking anop
 		sta tileType,x
 		lda #TILE_STATE_DIRTY
 		sta tileDirty,x
-		jsl scoreAddFive
 		jsl playBonusSound
+		jsl scoreAddFive
 		ldx mushroomToRefresh
 		lda #EXPLOSION_LAST_OFFSET
 		sta mushroomExplosionSprite

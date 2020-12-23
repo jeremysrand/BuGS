@@ -79,7 +79,6 @@ updateShot_shifted anop
 updateShot_notNone anop
 		cmp #SHOT_STATE_START_SHOOTING
 		bne updateShot_shooting
-		jsl playFireSound
 		lda SHOT_STATE_SHOOTING
 		sta shotState
 		lda #1
@@ -106,6 +105,7 @@ updateShot_findDirty anop
 		tax
 		lda tileBelow,x
 		sta shotTileOffsetBelow
+		jsl playFireSound
 		bra updateShot_drawShot
 
 updateShot_shooting anop

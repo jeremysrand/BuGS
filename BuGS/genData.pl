@@ -92,6 +92,7 @@ our @gTileLeft = ("INVALID_TILE_NUM") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileRight = ("INVALID_TILE_NUM") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileBitOffset = (0) x $gEquates{"NUM_GAME_TILES"};
 our @gTileBitMask = (0) x $gEquates{"NUM_GAME_TILES"};
+our @gTileRightVolume = (0) x $gEquates{"TOTAL_NUM_TILES"};
 our @gDirtyNonGameTiles = ("INVALID_TILE_NUM") x $gEquates{"NUM_NON_GAME_TILES"};
 our $gNumDirtyNonGameTiles = 0;
 
@@ -259,6 +260,8 @@ sub initTiles
                 $gTileRight[$lhsTileIndex] = lhsXYToTileOffset($tileX + 1, $tileY);
             }
             
+            $gTileRightVolume[$lhsTileIndex] = 0;
+            
             $lhsTileIndex++;
             
             $lastOffset += $gEquates{"TILE_BYTE_WIDTH"};
@@ -306,6 +309,8 @@ sub initTiles
             {
                 $gTileRight[$tileIndex] = gameXYToTileOffset($tileX + 1, $tileY);
             }
+            
+            $gTileRightVolume[$tileIndex] = $tileX * 255 / ($gEquates{"GAME_NUM_TILES_WIDE"} - 1);
             
             $tileIndex++;
             
@@ -358,6 +363,8 @@ sub initTiles
             {
                 $gTileRight[$rhsTileIndex] = rhsXYToTileOffset($tileX + 1, $tileY);
             }
+            
+            $gTileRightVolume[$rhsTileIndex] = 255;
             
             $rhsTileIndex++;
             
@@ -503,6 +510,7 @@ printTileData($fh, "tileLeft", @gTileLeft);
 printTileData($fh, "tileRight", @gTileRight);
 printTileData($fh, "tileBitOffset", @gTileBitOffset);
 printTileData($fh, "tileBitMask", @gTileBitMask);
+printTileData($fh, "tileRightVolume", @gTileRightVolume);
 printTileData($fh, "dirtyNonGameTiles", @gDirtyNonGameTiles);
 printTileData($fh, "fleaFreqs", @gFleaFreqs);
 printTileData($fh, "mouseYAddress", @gMouseYAddress);

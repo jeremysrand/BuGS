@@ -371,6 +371,7 @@ shootScorpion entry
         inc a
         inc a
         sta scorpionScreenOffset
+		ldx scorpionTileOffsets+2
 		jsl playKillSound
 		jmp scoreAddOneThousand
         

@@ -11,9 +11,6 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
    * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
    * Something is trashing memory.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
-* Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
-* Sometimes when you die, a spider may enter and the spider sound will start playing.  Because audio is stopped by player death and it has already happened, the spider sound ends up going on even though the spider is not moving.
-* Sometimes the spider doesn't seem to freeze when the player dies.  This may be related to the sound problem also.  If the per-frame spider update code isn't handling player death correctly, that could explain both.
 
 
 
@@ -21,6 +18,9 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 FIXED
 =======
 
+* Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
+* Sometimes when you die, a spider may enter and the spider sound will start playing.  Because audio is stopped by player death and it has already happened, the spider sound ends up going on even though the spider is not moving.
+* Sometimes the spider doesn't seem to freeze when the player dies.  This may be related to the sound problem also.  If the per-frame spider update code isn't handling player death correctly, that could explain both.
 * When a centipede segment is added on the right, if there is a mushroom either right at the edge or maybe on tile from the edge (not sure which), the segment seems to turn around and travel up along the edge of the screen.  Not sure if this can happen on the left side also.  This is likely a problem with the mushroom collision detection and a segment which is mostly off-screen should probably ignore blocking mushrooms until on-screen.
 * A shot is able to pass through an almost gone mushroom if lined up just right.  Best to change the sprite code for the shot to scan the two pixels below for a collision.
 * I have seen a couple of crashes.  I think an off-screen centipede segment is getting "shot" at the beginning of a level leading to a crash.  Almost definitely related to collision and shot handling.

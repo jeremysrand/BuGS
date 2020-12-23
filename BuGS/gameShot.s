@@ -56,6 +56,10 @@ updateShot_playerOnscreen anop
 		tax
 		lda #TILE_STATE_DIRTY
 		sta tileDirty,x
+		lda tileBelow,x
+		tax
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
 		jmp >drawHalfShot
 updateShot_shifted anop
 		lda mouseAddress

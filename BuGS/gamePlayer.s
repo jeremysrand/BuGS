@@ -45,6 +45,12 @@ playerLevelStart entry
 		sta mouseX
 		lda #STARTING_MOUSE_Y
 		sta mouseY
+		asl a
+		tay
+		lda mouseX
+		lsr a
+		adc mouseYAddress,y
+		sta mouseAddress
 		lda #1
 		sta mouseDown
 		dec numLives

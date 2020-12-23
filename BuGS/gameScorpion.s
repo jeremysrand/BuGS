@@ -170,6 +170,8 @@ updateScorpionLeft_nextTile anop
         stx scorpionTileOffsets+2
         lda tileLeft,x
         sta scorpionTileOffsets
+		jsl updateScorpionSound
+		ldx scorpionTileOffsets+2
         bra updateScorpion_maybePoison
         
 updateScorpionRight_notOffScreen anop
@@ -178,6 +180,8 @@ updateScorpionRight_notOffScreen anop
         stx scorpionTileOffsets+2
         lda tileRight,x
         sta scorpionTileOffsets
+		jsl updateScorpionSound
+		ldx scorpionTileOffsets+2
         
 updateScorpion_maybePoison anop
         lda tileType,x
@@ -192,6 +196,7 @@ updateScorpion_done anop
         
 updateScorpion_offScreen anop
         stz scorpionState
+		jsl stopScorpionSound
         rtl
 
 updateScorpion_exploding anop
@@ -327,6 +332,9 @@ addScorpion_common anop
         
         lda scorpionSpriteLastOffset
         sta scorpionSprite
+		
+		ldx scorpionTileOffsets
+		jsl startScorpionSound
         
 addScorpion_done anop
         rtl
@@ -372,6 +380,7 @@ shootScorpion entry
         inc a
         sta scorpionScreenOffset
 		ldx scorpionTileOffsets+2
+		jsl stopScorpionSound
 		jsl playKillSound
 		jmp scoreAddOneThousand
         

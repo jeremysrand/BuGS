@@ -56,3 +56,4 @@ read rRawSound (SEGMENTS_SOUND) "sound/segments.raw";
 read rRawSound (SPIDER_SOUND) "sound/spider.raw";
 read rRawSound (EXTRA_LIFE_SOUND) "sound/extralife.raw";
 read rRawSound (FLEA_SOUND) "sound/flea.raw";
+read rRawSound (SCORPION_SOUND) "sound/scorpion.raw";

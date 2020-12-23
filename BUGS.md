@@ -11,6 +11,7 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
    * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
    * Something is trashing memory.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
+* Sometimes at the end of the flea sound, there is a short high pitched tone.
 
 
 

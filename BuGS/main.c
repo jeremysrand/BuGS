@@ -118,6 +118,15 @@ void loadFleaSound(word addr)
 }
 
 
+void loadScorpionSound(word addr)
+{
+    Handle handle = LoadResource(rRawSound, SCORPION_SOUND);
+    HLock(handle);
+    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    HUnlock(handle);
+}
+
+
 int main(void)
 {
     int event;

@@ -38,7 +38,6 @@ SPIDER_SOUND_ADDR	equ $0000
 SPIDER_OSC_NUM		equ 16
 SPIDER_FREQ_HIGH	equ 0
 SPIDER_FREQ_LOW		equ 214
-SPIDER_VOLUME		equ 128
 SPIDER_CONTROL		equ 6
 SPIDER_SIZE			equ $36
 
@@ -47,16 +46,15 @@ DEATH_SOUND_ADDR	equ $4000
 DEATH_OSC_NUM		equ 10
 DEATH_FREQ_HIGH		equ 0
 DEATH_FREQ_LOW		equ 214
-DEATH_VOLUME		equ 80
 DEATH_CONTROL		equ 2
-DEATH_SIZE			equ $36
+DEATH_SIZE			equ $2d
 
 ; OSC 12 - 15 for L/R channels in swap mode
 SEGMENTS_SOUND_ADDR	equ $7000
 SEGMENTS_OSC_NUM	equ 12
 SEGMENTS_FREQ_HIGH	equ 0
 SEGMENTS_FREQ_LOW	equ 214
-SEGMENTS_VOLUME		equ 80
+SEGMENTS_VOLUME		equ 128
 SEGMENTS_CONTROL	equ 6
 SEGMENTS_SIZE		equ $24
 
@@ -98,6 +96,14 @@ FLEA_SOUND_ADDR		equ $3a00
 FLEA_OSC_NUM		equ 22
 FLEA_CONTROL		equ 6
 FLEA_SIZE			equ $00
+
+; OSC 26 - 30 for L/R channels in swap mode
+SCORPION_SOUND_ADDR	equ $e000
+SCORPION_OSC_NUM	equ 26
+SCORPION_FREQ_HIGH	equ 0
+SCORPION_FREQ_LOW	equ 214
+SCORPION_CONTROL	equ 6
+SCORPION_SIZE		equ $2d
 
 
 ; X register has the address of the register to read
@@ -200,10 +206,6 @@ soundInit_writeRegLow anop
 		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM
 		jsl writeConsecSoundReg
 		
-		lda #SPIDER_VOLUME
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
-		
 		lda #SPIDER_SIZE
 		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM
 		jsl writeConsecSoundReg
@@ -222,10 +224,6 @@ soundInit_writeRegLow anop
 		
 		lda #SPIDER_FREQ_HIGH
 		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SPIDER_VOLUME
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM+2
 		jsl writeConsecSoundReg
 		
 		lda #SPIDER_SIZE
@@ -251,10 +249,6 @@ soundInit_writeRegLow anop
 		
 		lda #DEATH_FREQ_HIGH
 		ldx #SOUND_REG_FREQ_HIGH+DEATH_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		lda #DEATH_VOLUME
-		ldx #SOUND_REG_VOLUME+DEATH_OSC_NUM
 		jsl writeConsecSoundReg
 		
 		lda #DEATH_SIZE
@@ -518,6 +512,51 @@ soundInit_writeRegLow anop
 
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
 		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
+		
+; Scorpion sound
+		pea SCORPION_SOUND_ADDR
+		jsl loadScorpionSound
+		
+		lda #SCORPION_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_SIZE
+		ldx #SOUND_REG_SIZE+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_FREQ_LOW
+		ldx #SOUND_REG_FREQ_LOW+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_FREQ_HIGH
+		ldx #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_SIZE
+		ldx #SOUND_REG_SIZE+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_SOUND_ADDR/256
+		ldx #SOUND_REG_POINTER+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
+		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
 		jsl writeConsecSoundReg
 		
 		rtl
@@ -811,12 +850,52 @@ stopSpiderSound entry
 
 
 startScorpionSound entry
-; Write this code...
+		lda tileRightVolume,x
+		pha
+		jsl stopSpiderSound
+
+		pla
+		pha
+		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+
+		pla
+		eor #$ff
+		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+
+		lda #SCORPION_CONTROL+SOUND_RIGHT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		jsl writeSoundReg
+
+		lda #SCORPION_CONTROL+SOUND_LEFT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
+		jsl writeSoundReg
+		rtl
+		
+		
+updateScorpionSound entry
+		lda tileRightVolume,x
+		pha
+		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+		
+		pla
+		eor #$ff
+		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+		
 		rtl
 
-
 stopScorpionSound entry
-; Write this code...
+		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		jsl writeConsecSoundReg
+
+		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
+		jsl writeConsecSoundReg
+
 		rtl
 
 

@@ -25,6 +25,7 @@
 #define SPIDER_SOUND 6
 #define EXTRA_LIFE_SOUND 7
 #define FLEA_SOUND 8
+#define SCORPION_SOUND 9
 
 
 #endif /* defined(_GUARD_PROJECTBuGS_FILEmain_) */

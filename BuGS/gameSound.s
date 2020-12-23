@@ -98,7 +98,6 @@ FLEA_SOUND_ADDR		equ $3a00
 FLEA_OSC_NUM		equ 22
 FLEA_CONTROL		equ 6
 FLEA_SIZE			equ $00
-FLEA_FRAME_COUNT	equ 5
 
 
 ; X register has the address of the register to read
@@ -536,8 +535,6 @@ updateSounds_changeFreq anop
 		blt updateSounds_notDone
 		jmp stopFleaSound
 updateSounds_notDone anop
-		lda #FLEA_FRAME_COUNT
-		sta fleaSoundFrame
 		iny
 		iny
 		sty fleaSoundFreqOffset
@@ -842,9 +839,6 @@ startFleaSound_doIt anop
 		ldx #SOUND_REG_VOLUME+FLEA_OSC_NUM+2
 		jsl writeConsecSoundReg
 		
-		lda #FLEA_FRAME_COUNT
-		sta fleaSoundFrame
-		
 		lda fleaFreqs
 		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
 		jsl writeConsecSoundReg
@@ -889,6 +883,5 @@ bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
 soundTableAddr		dc i4'0'
 fleaSoundIsPlaying		dc i2'1'
 fleaSoundFreqOffset		dc i2'0'
-fleaSoundFrame			dc i2'0'
 
         end

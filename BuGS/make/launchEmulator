@@ -27,7 +27,7 @@ sed -i "" "s:^s7d1 *=.*$:s7d1 = $DISKIMAGE:" config.txt
 
 # This magic ensure that clicking stop in Xcode results in the emulator terminating.
 
-if false
+if true
 then
 $EMULATORPATH -fullscreen -mem 1572864 &
 PID=$!

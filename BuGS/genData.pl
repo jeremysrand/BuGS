@@ -81,7 +81,7 @@ $gEquates{"P2_LIVES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NU
 
 $gEquates{"HIGH_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{"LHS_NUM_TILES_WIDE"} * 13) + ($gEquates{"LHS_NUM_TILES_WIDE"} - 2)) * $gEquates{"SIZEOF_TILE_INFO"};
 
-$gEquates{"NUM_FLEA_FREQS"} = 80;
+$gEquates{"NUM_FLEA_FREQS"} = 120;
 
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileScreenOffset = (0) x $gEquates{"TOTAL_NUM_TILES"};

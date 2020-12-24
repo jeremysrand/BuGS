@@ -11,6 +11,7 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
    * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
    * Something is trashing memory.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
+    * I have just seen it again.  I think the problem happens when the player dies on the extreme RHS of the screen (perhaps the LHS also but I have seen it on the RHS).  I think the non game tile just beyond the bounds gets marked as dirty but is not put on the dirty non-game tiles list.  So, it remains "dirty" forever and is never cleaned up.  Once that happens, then if a spider traverses the tile, it leaves behind junk.
 
 
 

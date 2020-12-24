@@ -104,460 +104,449 @@ SCORPION_FREQ_HIGH	equ 0
 SCORPION_FREQ_LOW	equ 214
 SCORPION_CONTROL	equ 6
 SCORPION_SIZE		equ $2d
-
-
-; X register has the address of the register to read
-; Accumulator contains the result of the read
-readSoundReg entry
-		short m
-readSoundReg_jslInst anop
-		jsl readSoundReg
-		long m
-		and #$ff
-		rtl
-
-
-; X register has the address of the register to write
-; Accumulator has the value to write
-writeSoundReg entry
-		and #$ff
-		short m
-writeSoundReg_jslInst anop
-		jsl writeSoundReg
-		long m
-		rtl
-		
-; X register has the address of the register to write
-; Accumulator has the value to write
-writeConsecSoundReg entry
-		and #$ff
-		short m
-		pha
-		phx
-writeConsecSoundReg_jslInst1 anop
-		jsl writeSoundReg
-		plx
-		inx
-		pla
-writeConsecSoundReg_jslInst2 anop
-		jsl writeSoundReg
-		long m
-		rtl
 		
 		
 soundInit entry
-;		jsl loadSounds
-		
-		pha
-		pha
-		~GetTableAddress
-		pla
-		sta soundInit_readRegLow+1
-		inc a
-		inc a
-		sta soundInit_readRegHigh+1
-		inc a
-		inc a
-		sta soundInit_writeRegLow+1
-		inc a
-		inc a
-		sta soundInit_writeRegHigh+1
-		pla
-		and #$ff
-		
-		short m
-		sta soundTableAddr+2
-		sta soundInit_readRegLow+3
-		sta soundInit_readRegHigh+3
-		sta soundInit_writeRegLow+3
-		sta soundInit_writeRegHigh+3
-
-soundInit_readRegHigh anop
-		lda >soundInit
-		sta readSoundReg_jslInst+3
-		  
-soundInit_writeRegHigh anop
-		lda >soundInit
-		sta writeSoundReg_jslInst+3
-		sta writeConsecSoundReg_jslInst1+3
-		sta writeConsecSoundReg_jslInst2+3
-		long m
-		
-soundInit_readRegLow anop
-		lda >soundInit
-		sta readSoundReg_jslInst+1
-		
-soundInit_writeRegLow anop
-		lda >soundInit
-		sta writeSoundReg_jslInst+1
-		sta writeConsecSoundReg_jslInst1+1
-		sta writeConsecSoundReg_jslInst2+1
-
-		
 ; Spider sound
 		pea SPIDER_SOUND_ADDR
 		jsl loadSpiderSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_SIZE
-		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		lda #SPIDER_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SPIDER_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SPIDER_SIZE
-		ldx #SOUND_REG_SIZE+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SPIDER_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 ; Death sound
 		pea DEATH_SOUND_ADDR
 		jsl loadDeathSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #DEATH_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+DEATH_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #DEATH_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+DEATH_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #DEATH_SIZE
-		ldx #SOUND_REG_SIZE+DEATH_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #DEATH_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+DEATH_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 
 		
 ; Segments sound
 		pea SEGMENTS_SOUND_ADDR
 		jsl loadSegmentsSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_VOLUME
-		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_SIZE
-		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		lda #SEGMENTS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SEGMENTS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SEGMENTS_VOLUME
-		ldx #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SEGMENTS_SIZE
-		ldx #SOUND_REG_SIZE+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SEGMENTS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 
 		
 ; Bonus sound
 		pea BONUS_SOUND_ADDR
 		jsl loadBonusSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+BONUS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+BONUS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+BONUS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+BONUS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+BONUS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_SIZE
-		ldx #SOUND_REG_SIZE+BONUS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+BONUS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+BONUS_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+BONUS_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM+1
-		jsl writeSoundReg
-		
-		lda #BONUS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+BONUS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+BONUS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_SIZE
-		ldx #SOUND_REG_SIZE+BONUS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+BONUS_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM+2
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM+3
-		jsl writeSoundReg
-		
-		lda #BONUS_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+BONUS_OSC_NUM+4
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+BONUS_OSC_NUM+4
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_SIZE
-		ldx #SOUND_REG_SIZE+BONUS_OSC_NUM+4
-		jsl writeConsecSoundReg
-		
-		lda #BONUS_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+BONUS_OSC_NUM+4
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM+4
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+BONUS_OSC_NUM+5
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		
 ; Kill sound
 		pea KILL_SOUND_ADDR
 		jsl loadKillSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+KILL_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+KILL_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_SIZE
-		ldx #SOUND_REG_SIZE+KILL_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+KILL_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #KILL_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM+1
-		jsl writeSoundReg
-		
+		long m
 		
 ; Fire sound
 		pea FIRE_SOUND_ADDR
 		jsl loadFireSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+FIRE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+FIRE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_SIZE
-		ldx #SOUND_REG_SIZE+FIRE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+FIRE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		
 ; Extra life sound
 		pea EXTRA_LIFE_SOUND_ADDR
 		jsl loadExtraLifeSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+EXTRA_LIFE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+EXTRA_LIFE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_VOLUME+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_VOLUME
-		ldx #SOUND_REG_VOLUME+EXTRA_LIFE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_SIZE
-		ldx #SOUND_REG_SIZE+EXTRA_LIFE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+EXTRA_LIFE_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		
 ; Flea sound
 		pea FLEA_SOUND_ADDR
 		jsl loadFleaSound
-
+		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_SIZE+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FLEA_SIZE
-		ldx #SOUND_REG_SIZE+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_POINTER+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FLEA_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		lda #FLEA_SIZE
-		ldx #SOUND_REG_SIZE+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-
-		lda #FLEA_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 ; Scorpion sound
 		pea SCORPION_SOUND_ADDR
 		jsl loadScorpionSound
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_SIZE+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_SIZE
-		ldx #SOUND_REG_SIZE+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_POINTER+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		lda #SCORPION_FREQ_LOW
-		ldx #SOUND_REG_FREQ_LOW+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SCORPION_FREQ_HIGH
-		ldx #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SCORPION_SIZE
-		ldx #SOUND_REG_SIZE+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
-		lda #SCORPION_SOUND_ADDR/256
-		ldx #SOUND_REG_POINTER+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 		rtl
 
@@ -578,63 +567,63 @@ updateSounds_notDone anop
 		iny
 		sty fleaSoundFreqOffset
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda fleaFreqs,y
-		pha
-		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-		pla
-		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-
-		ldy fleaSoundFreqOffset
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda fleaFreqs+1,y
-		pha
-		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-		pla
-		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 updateSounds_done anop
 		rtl
 
 
 playBonusSound entry
-		lda tileRightVolume,x
-		pha
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda bonusSoundOscReg
+		sta >SOUND_ADDR_LOW
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx bonusSoundOscReg
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx bonusSoundOscReg
-		inx
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
 		lda bonusSoundOscReg
 		and #$1f
 		ora #SOUND_REG_VOLUME
-		tax
-		pla
-		pha
-		phx
-		jsl writeSoundReg
-		
-		plx
-		inx
-		pla
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
 		eor #$ff
-		jsl writeSoundReg
-
-		lda #BONUS_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx bonusSoundOscReg
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda bonusSoundOscReg
+		sta >SOUND_ADDR_LOW
+		lda #BONUS_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
 		lda #BONUS_CONTROL+SOUND_LEFT_SPEAKER
-		ldx bonusSoundOscReg
-		inx
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		
 		lda bonusSoundOscReg
 		inc a
@@ -653,14 +642,6 @@ playDeathSound entry
 		jsl stopScorpionSound
 		jsl stopSegmentSound
 		
-		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM
-		jsl writeSoundReg
-		
-		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM+1
-		jsl writeSoundReg
-		
 		lda mouseAddress
 		sec
 		sbc #SCREEN_ADDRESS
@@ -668,106 +649,123 @@ playDeathSound entry
 		tax
 		lda >screenToTileOffset,x
 		tax
+		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		lda #DEATH_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda tileRightVolume,x
-		pha
-		ldx #SOUND_REG_VOLUME+DEATH_OSC_NUM
-		jsl writeSoundReg
-		
-		pla
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+DEATH_OSC_NUM+1
-		jsl writeSoundReg
-
-		lda #DEATH_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+DEATH_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #DEATH_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
 		lda #DEATH_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+DEATH_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
+		
 		rtl
 
 
 playKillSound entry
-		lda tileRightVolume,x
-		pha
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #KILL_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #KILL_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
-		pla
-		pha
-		ldx #SOUND_REG_VOLUME+KILL_OSC_NUM
-		jsl writeSoundReg
-		
-		pla
+		lda #SOUND_REG_VOLUME+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+KILL_OSC_NUM+1
-		jsl writeSoundReg
-	  
-		lda #KILL_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+KILL_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #KILL_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
 		lda #KILL_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+KILL_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
+		
 		rtl
 
 
 playFireSound entry
-		lda tileRightVolume,x
-		pha
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
-		pla
-		pha
-		ldx #SOUND_REG_VOLUME+FIRE_OSC_NUM
-		jsl writeSoundReg
-		
-		pla
+		lda #SOUND_REG_VOLUME+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+FIRE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+FIRE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FIRE_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #FIRE_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FIRE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		
+		long m
 		rtl
 		
 
 playExtraLifeSound entry
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
-		jsl writeSoundReg
-		
+		sta >SOUND_DATA_REG
 		lda #EXTRA_LIFE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM+1
-		jsl writeSoundReg
-
-		lda #EXTRA_LIFE_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #EXTRA_LIFE_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
 		lda #EXTRA_LIFE_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+EXTRA_LIFE_OSC_NUM+1
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		rtl
 
 		
@@ -775,126 +773,183 @@ playExtraLifeSound entry
 startSegmentSound entry
 		jsl stopSegmentSound
 		
-		lda #SEGMENTS_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
-		jsl writeSoundReg
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SEGMENTS_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+2
+		sta >SOUND_ADDR_LOW
 		lda #SEGMENTS_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+2
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		
 		rtl
 		
 		
 stopSegmentSound entry
-		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
-		jsl writeConsecSoundReg
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 		rtl
 		
 		
 startSpiderSound entry
-		lda tileRightVolume,x
-		pha
 		jsl stopSpiderSound
 		
-		pla
-		pha
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
-		pla
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-
-		lda #SPIDER_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SPIDER_CONTROL+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM+2
+		sta >SOUND_ADDR_LOW
 		lda #SPIDER_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+2
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
+		
 		rtl
 
 		
 updateSpiderSound entry
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda tileRightVolume,x
-		pha
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		pla
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		rtl
 		
 
 stopSpiderSound entry
-		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM
-		jsl writeConsecSoundReg
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SPIDER_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 		rtl
 
 
 startScorpionSound entry
-		lda tileRightVolume,x
-		pha
 		jsl stopSpiderSound
-
-		pla
-		pha
-		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
-
-		pla
+		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
-		jsl writeSoundReg
-
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		rtl
 		
 		
 updateScorpionSound entry
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda tileRightVolume,x
-		pha
-		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		pla
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 		rtl
 
 stopScorpionSound entry
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM
-		jsl writeConsecSoundReg
-
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+SCORPION_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 
 		rtl
 
@@ -908,50 +963,66 @@ startFleaSound_doIt anop
 		stz fleaSoundIsPlaying
 		stz fleaSoundFreqOffset
 		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda tileRightVolume,x
-		pha
-		ldx #SOUND_REG_VOLUME+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
-		
-		pla
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		eor #$ff
-		ldx #SOUND_REG_VOLUME+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda fleaFreqs
-		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
-		lda fleaFreqs
-		ldx #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-
+		lda #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda fleaFreqs+1
-		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
-		lda fleaFreqs+1
-		ldx #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
-		
+		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
 		lda #FLEA_CONTROL+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM+2
+		sta >SOUND_ADDR_LOW
 		lda #FLEA_CONTROL+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM+2
-		jsl writeSoundReg
+		sta >SOUND_DATA_REG
+		long m
 		rtl
 
 
 stopFleaSound entry
-		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM
-		jsl writeConsecSoundReg
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		ldx #SOUND_REG_CONTROL+FLEA_OSC_NUM+2
-		jsl writeConsecSoundReg
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
 		
 		lda #1
 		sta fleaSoundIsPlaying
@@ -959,7 +1030,6 @@ stopFleaSound entry
 
 
 bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
-soundTableAddr		dc i4'0'
 fleaSoundIsPlaying		dc i2'1'
 fleaSoundFreqOffset		dc i2'0'
 

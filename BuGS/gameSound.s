@@ -136,6 +136,14 @@ soundInit entry
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
 		lda #SOUND_REG_SIZE+SPIDER_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SPIDER_SIZE
@@ -233,7 +241,7 @@ soundInit entry
 		
 		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
 		sta >SOUND_ADDR_LOW
-		lda #SEGMENTS_VOLUME
+		lda #0
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
@@ -473,6 +481,30 @@ soundInit entry
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda fleaFreqs
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_FREQ_HIGH+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda fleaFreqs+1
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
 		lda #SOUND_REG_SIZE+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #FLEA_SIZE
@@ -520,6 +552,14 @@ soundInit entry
 		lda #SOUND_REG_FREQ_HIGH+SCORPION_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SCORPION_FREQ_HIGH
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
@@ -789,13 +829,21 @@ startSegmentSound_doIt anop
 		
 		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
 		sta >SOUND_ADDR_LOW
+		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
 		lda #SEGMENTS_CONTROL+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
-		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #SEGMENTS_CONTROL+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
-		lda #SEGMENTS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		
+		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SEGMENTS_VOLUME
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		long m
 		
@@ -816,6 +864,14 @@ stopSegmentSound_doIt anop
 		and #$0f
 		ora #$20
 		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
 		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
 		sta >SOUND_ADDR_LOW
@@ -853,15 +909,6 @@ startSpiderSound_doIt anop
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
-		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
-		sta >SOUND_ADDR_LOW
-		lda tileRightVolume,x
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		eor #$ff
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		
 		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
@@ -871,6 +918,15 @@ startSpiderSound_doIt anop
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #SPIDER_CONTROL+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		eor #$ff
+		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		long m
 		
@@ -916,6 +972,14 @@ stopSpiderSound_doIt anop
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
 		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
@@ -952,15 +1016,6 @@ startScorpionSound_doIt anop
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
-		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
-		sta >SOUND_ADDR_LOW
-		lda tileRightVolume,x
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		eor #$ff
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		
 		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
@@ -970,6 +1025,15 @@ startScorpionSound_doIt anop
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #SCORPION_CONTROL+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		eor #$ff
+		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		long m
 		rtl
@@ -1015,6 +1079,14 @@ stopScorpionSound_doIt anop
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
 		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
@@ -1052,15 +1124,6 @@ startFleaSound_doIt anop
 		ora #$20
 		sta >SOUND_CONTROL_REG
 		
-		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
-		sta >SOUND_ADDR_LOW
-		lda tileRightVolume,x
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		eor #$ff
-		sta >SOUND_DATA_REG
-		sta >SOUND_DATA_REG
-		
 		lda #SOUND_REG_FREQ_LOW+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda fleaFreqs
@@ -1087,6 +1150,15 @@ startFleaSound_doIt anop
 		sta >SOUND_DATA_REG
 		lda #FLEA_CONTROL+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda tileRightVolume,x
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		eor #$ff
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		long m
 		rtl
 
@@ -1105,6 +1177,14 @@ stopFleaSound_doIt anop
 		and #$0f
 		ora #$20
 		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
 		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW

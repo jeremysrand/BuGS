@@ -11,8 +11,8 @@ This project would not have been a success without help from the Apple // commun
 * Dagen Brock for GSPlus and for his technical support and encouragement on slack.  GSPlus was the emulator I used primarily and when I did a "build and run", GSPlus always launched reliably and quickly so I could test the latest code.
 * Mike Westerfield and Byte Works for the ORCA tools which I have used for building this project.
 * Kelvin Sherlock for GoldenGate and Profuse which are the fundamental tools I used for building this project.
-* Ken Gagne and Juiced.GS for making these tools available.
-
+* Ken Gagne and Juiced.GS for making tools like ORCA and GoldenGate available.
+* Stephen Heumann for NetDisk which I used to transfer my latest build to my real GS for testing.
 
 
 ## Apple // Forever!

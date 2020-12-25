@@ -774,7 +774,12 @@ playExtraLifeSound entry
 		
 		
 startSegmentSound entry
-		jsl stopSegmentSound
+		lda segmentSoundIsPlaying
+		bne startSegmentSound_doIt
+		rtl
+		
+startSegmentSound_doIt anop
+		stz segmentSoundIsPlaying
 		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
@@ -798,11 +803,28 @@ startSegmentSound entry
 		
 		
 stopSegmentSound entry
+		lda segmentSoundIsPlaying
+		beq stopSegmentSound_doIt
+		rtl
+		
+stopSegmentSound_doIt anop
+		lda #1
+		sta segmentSoundIsPlaying
+		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
 		ora #$20
 		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		lda #SOUND_ONE_SHOT_MODE+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
 		lda #SOUND_REG_CONTROL+SEGMENTS_OSC_NUM
 		sta >SOUND_ADDR_LOW
@@ -818,7 +840,12 @@ stopSegmentSound entry
 		
 		
 startSpiderSound entry
-		jsl stopSpiderSound
+		lda spiderSoundIsPlaying
+		bne startSpiderSound_doIt
+		rtl
+		
+startSpiderSound_doIt anop
+		stz spiderSoundIsPlaying
 		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
@@ -837,13 +864,13 @@ startSpiderSound entry
 		
 		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
 		sta >SOUND_ADDR_LOW
-		lda #SPIDER_CONTROL+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
-		lda #SPIDER_CONTROL+SOUND_LEFT_SPEAKER
+		lda #SPIDER_CONTROL+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #SPIDER_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		lda #SPIDER_CONTROL+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		long m
 		
@@ -851,6 +878,11 @@ startSpiderSound entry
 
 		
 updateSpiderSound entry
+		lda spiderSoundIsPlaying
+		beq updateSpiderSound_doIt
+		rtl
+
+updateSpiderSound_doIt anop
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
@@ -870,11 +902,28 @@ updateSpiderSound entry
 		
 
 stopSpiderSound entry
+		lda spiderSoundIsPlaying
+		beq stopSpiderSound_doIt
+		rtl
+		
+stopSpiderSound_doIt anop
+		lda #1
+		sta spiderSoundIsPlaying
+		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
 		ora #$20
 		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		lda #SOUND_ONE_SHOT_MODE+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
 		lda #SOUND_REG_CONTROL+SPIDER_OSC_NUM
 		sta >SOUND_ADDR_LOW
@@ -890,7 +939,12 @@ stopSpiderSound entry
 
 
 startScorpionSound entry
-		jsl stopSpiderSound
+		lda scorpionSoundIsPlaying
+		bne startScorpionSound_doIt
+		rtl
+		
+startScorpionSound_doIt anop
+		stz scorpionSoundIsPlaying
 		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
@@ -909,19 +963,24 @@ startScorpionSound entry
 		
 		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
 		sta >SOUND_ADDR_LOW
-		lda #SCORPION_CONTROL+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
-		lda #SCORPION_CONTROL+SOUND_LEFT_SPEAKER
+		lda #SCORPION_CONTROL+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #SCORPION_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		lda #SCORPION_CONTROL+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		long m
 		rtl
 		
 		
 updateScorpionSound entry
+		lda scorpionSoundIsPlaying
+		beq updateScorpionSound_doIt
+		rtl
+		
+updateScorpionSound_doIt anop
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
@@ -939,13 +998,31 @@ updateScorpionSound entry
 		long m
 		
 		rtl
+		
 
 stopScorpionSound entry
+		lda scorpionSoundIsPlaying
+		beq stopScorpionSound_doIt
+		rtl
+		
+stopScorpionSound_doIt anop
+		lda #1
+		sta scorpionSoundIsPlaying
+		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
 		ora #$20
 		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		lda #SOUND_ONE_SHOT_MODE+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
 		
 		lda #SOUND_REG_CONTROL+SCORPION_OSC_NUM
 		sta >SOUND_ADDR_LOW
@@ -1002,19 +1079,27 @@ startFleaSound_doIt anop
 		
 		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW
-		lda #FLEA_CONTROL+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
-		lda #FLEA_CONTROL+SOUND_LEFT_SPEAKER
+		lda #FLEA_CONTROL+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
 		lda #FLEA_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		lda #FLEA_CONTROL+SOUND_LEFT_SPEAKER
 		sta >SOUND_DATA_REG
 		long m
 		rtl
 
 
 stopFleaSound entry
+		lda fleaSoundIsPlaying
+		beq stopFleaSound_doIt
+		rtl
+		
+stopFleaSound_doIt anop
+		lda #1
+		sta fleaSoundIsPlaying
+		
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
@@ -1023,21 +1108,30 @@ stopFleaSound entry
 		
 		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW
-		lda #SOUND_ONE_SHOT_MODE+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
-		lda #SOUND_ONE_SHOT_MODE+SOUND_HALTED+SOUND_LEFT_SPEAKER
+		lda #SOUND_ONE_SHOT_MODE+SOUND_LEFT_SPEAKER
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_CONTROL+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SOUND_ONE_SHOT_MODE+SOUND_RIGHT_SPEAKER+SOUND_HALTED
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		lda #SOUND_ONE_SHOT_MODE+SOUND_LEFT_SPEAKER+SOUND_HALTED
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		long m
-		
-		lda #1
-		sta fleaSoundIsPlaying
 		rtl
 
 
 bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
 fleaSoundIsPlaying		dc i2'1'
 fleaSoundFreqOffset		dc i2'0'
+segmentSoundIsPlaying	dc i2'1'
+spiderSoundIsPlaying	dc i2'1'
+scorpionSoundIsPlaying	dc i2'1'
 
         end

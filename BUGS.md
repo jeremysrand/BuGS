@@ -17,6 +17,7 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 * I am still seeing shots go through almost gone mushrooms sometimes.  I checked more rows of pixels for collisions even though the shot doesn't draw there but it still seems to be possible.  If the height of the shot is equal to the amount it moves in one frame, it shouldn't be possible so that is worth checking.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.
     * I am not sure how much can be done about this given how collisions are detected.
+* The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
 
 
 FIXED

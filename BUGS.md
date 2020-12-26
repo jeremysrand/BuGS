@@ -3,15 +3,7 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* On the latest build (0136579125034f41f8415b496d5ba706e86d65d9) on real HW, I can play a game and finish that game.  But when I try to start a second game, I crash.  The stack looks corrupted and execution is way off in the weeds somewhere.  This isn't happening on either emulator.
-   * I am thinking this is the same crash as the one which follows.  I tried to reproduce this on real HW again with that debug in place but could not.
-* I reproduced a crash on GSPlus after dying and starting a new game.  From the stack, it was clear it was trying to draw a body segment but the jump instruction was set to garbage.  I am hoping this is the same crash as the one saw on real HW.
-   * I have added some debug code to detect this.  I am validating that the offset into the draw table for head and body segments is "sane" and if not brk.
-   * I reproduced it and ended up at brk $4 with y set to $2270 which is much larger than the max of 156.  Also odd is that X is 1 but I think it needs to be an even number.
-   * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
-   * Something is trashing memory.
-   * Just got the same crash on real HW with the same register values and everything.
-   * Based on the investigation, it looks like 24 segments have been added which means the segment data structures have all overflowed.  I am adding validation to check that the number of segments added never exceeds 12.
+
 * I have seen some mushrooms appear suddenly.  Sometimes, if I am shooting, the shot "hits" an invisible mushroom which then becomes visible.  My guess is that there is something wrong with the code which turns a centipede segment into a mushroom when shot and the tile isn't correctly marked dirty all the time.
     * In theory, there shouldn't be a collision with an invisible mushroom but what happens is that when the shot overlaps with the tile, it becomes dirty.  At that point, the mushroom will appear on the next frame and a collision can then occur.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.
@@ -21,7 +13,17 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 
 FIXED
 =======
-
+* On the latest build (0136579125034f41f8415b496d5ba706e86d65d9) on real HW, I can play a game and finish that game.  But when I try to start a second game, I crash.  The stack looks corrupted and execution is way off in the weeds somewhere.  This isn't happening on either emulator.
+   * I am thinking this is the same crash as the one which follows.  I tried to reproduce this on real HW again with that debug in place but could not.
+* I reproduced a crash on GSPlus after dying and starting a new game.  From the stack, it was clear it was trying to draw a body segment but the jump instruction was set to garbage.  I am hoping this is the same crash as the one saw on real HW.
+   * I have added some debug code to detect this.  I am validating that the offset into the draw table for head and body segments is "sane" and if not brk.
+   * I reproduced it and ended up at brk $4 with y set to $2270 which is much larger than the max of 156.  Also odd is that X is 1 but I think it needs to be an even number.
+   * In order to get the wrong value in Y, I noticed that the segmentSpriteOffset was overwritten with the pattern 70 02 70 02, etc.
+   * Something is trashing memory.
+   * Just got the same crash on real HW with the same register values and everything.
+   * Based on the investigation, it looks like 24 segments have been added which means the segment data structures have all overflowed.  I am adding validation to check that the number of segments added never exceeds 12.
+   * I can reproduce it reliably now.  The key is to die on the previous game by colliding with the last segment on a level.  When you start the next game, we will for some reason try to add the 12 segments twice.  I think the "die on the last segment so start the next level" code is somehow getting triggered on the next game and trying to add the same centipedes.
+   * Confirmed.  I have fixed the code so that when the game is over, the "die onthe last segment so start the next level code" does not get triggered.  That has fixed the crash.
 * A spider moving left to right went off screen and left garbage on the RHS as it exited.  I have only seen this once.  I think it coincided with the player dying.
     * I have just seen it again.  I think the problem happens when the player dies on the extreme RHS of the screen (perhaps the LHS also but I have seen it on the RHS).  I think the non game tile just beyond the bounds gets marked as dirty but is not put on the dirty non-game tiles list.  So, it remains "dirty" forever and is never cleaned up.  Once that happens, then if a spider traverses the tile, it leaves behind junk.
     * Confirmed.  The code which exploded the player on the RHS would mark the non game tile as dirty because it always marked three tiles in a row as dirty.  But the 3rd when right on the edge is a non-game tile.  It just needed to skip marking it as dirty.

@@ -71,7 +71,10 @@ levelStart_done anop
 
 updateLevel entry
 		lda gameRunning
-		bne updateLevel_done
+		beq updateLevel_cont
+		stz nextLevelFrameCount
+		rtl
+updateLevel_cont anop
 		lda playerState
 		cmp #PLAYER_STATE_EXPLODING
 		beq updateLevel_done

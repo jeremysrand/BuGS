@@ -440,6 +440,8 @@ updateSpider_tilesUp anop
         beq updateSpider_tilesUpCont
         lda #TILE_EMPTY
         sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesUpCont
 		dec numInfieldMushrooms
@@ -517,6 +519,8 @@ updateSpider_tilesDown anop
         beq updateSpider_tilesDownCont
         lda #TILE_EMPTY
         sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesDownCont
 		dec numInfieldMushrooms

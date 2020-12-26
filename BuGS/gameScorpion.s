@@ -127,7 +127,9 @@ updateScorpion_nextAction anop
 
 updateScorpion_nextByteTest anop
         and #$1
-        beq updateScorpion_done
+		bne updateScorpion_isNextByte
+		rtl
+updateScorpion_isNextByte anop
         lda scorpionState
         cmp #SCORPION_STATE_LEFT
         beq updateScorpion_screenLeft
@@ -191,6 +193,8 @@ updateScorpion_maybePoison anop
 
         ora #TILE_POISON_A_MUSHROOM
         sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
 updateScorpion_done anop
         rtl
         

@@ -3,8 +3,6 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* I have seen some mushrooms appear suddenly.  Sometimes, if I am shooting, the shot "hits" an invisible mushroom which then becomes visible.  My guess is that there is something wrong with the code which turns a centipede segment into a mushroom when shot and the tile isn't correctly marked dirty all the time.
-    * In theory, there shouldn't be a collision with an invisible mushroom but what happens is that when the shot overlaps with the tile, it becomes dirty.  At that point, the mushroom will appear on the next frame and a collision can then occur.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.
     * I am not sure how much can be done about this given how collisions are detected.
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
@@ -12,6 +10,9 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 
 FIXED
 =======
+
+* I have seen some mushrooms appear suddenly.  Sometimes, if I am shooting, the shot "hits" an invisible mushroom which then becomes visible.  My guess is that there is something wrong with the code which turns a centipede segment into a mushroom when shot and the tile isn't correctly marked dirty all the time.
+    * In theory, there shouldn't be a collision with an invisible mushroom but what happens is that when the shot overlaps with the tile, it becomes dirty.  At that point, the mushroom will appear on the next frame and a collision can then occur.
 * On the latest build (0136579125034f41f8415b496d5ba706e86d65d9) on real HW, I can play a game and finish that game.  But when I try to start a second game, I crash.  The stack looks corrupted and execution is way off in the weeds somewhere.  This isn't happening on either emulator.
    * I am thinking this is the same crash as the one which follows.  I tried to reproduce this on real HW again with that debug in place but could not.
 * I reproduced a crash on GSPlus after dying and starting a new game.  From the stack, it was clear it was trying to draw a body segment but the jump instruction was set to garbage.  I am hoping this is the same crash as the one saw on real HW.

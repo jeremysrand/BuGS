@@ -14,7 +14,6 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
     * I have just seen it again.  I think the problem happens when the player dies on the extreme RHS of the screen (perhaps the LHS also but I have seen it on the RHS).  I think the non game tile just beyond the bounds gets marked as dirty but is not put on the dirty non-game tiles list.  So, it remains "dirty" forever and is never cleaned up.  Once that happens, then if a spider traverses the tile, it leaves behind junk.
 * I have seen some mushrooms appear suddenly.  Sometimes, if I am shooting, the shot "hits" an invisible mushroom which then becomes visible.  My guess is that there is something wrong with the code which turns a centipede segment into a mushroom when shot and the tile isn't correctly marked dirty all the time.
     * In theory, there shouldn't be a collision with an invisible mushroom but what happens is that when the shot overlaps with the tile, it becomes dirty.  At that point, the mushroom will appear on the next frame and a collision can then occur.
-* I am still seeing shots go through almost gone mushrooms sometimes.  I checked more rows of pixels for collisions even though the shot doesn't draw there but it still seems to be possible.  If the height of the shot is equal to the amount it moves in one frame, it shouldn't be possible so that is worth checking.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.
     * I am not sure how much can be done about this given how collisions are detected.
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
@@ -23,6 +22,8 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 FIXED
 =======
 
+* I am still seeing shots go through almost gone mushrooms sometimes.  I checked more rows of pixels for collisions even though the shot doesn't draw there but it still seems to be possible.  If the height of the shot is equal to the amount it moves in one frame, it shouldn't be possible so that is worth checking.
+   * I said I already fixed this below but I only did half the job.  What I tried to implement was a collision detection for the full 8 pixel height of the shot even though the shot is only 6 pixels tall.  In the end, I just implemented that for the "shifted" shot sprite and not the unshifted version.  I have corrected that oversight and that should address this.
 * Sometimes at the end of the flea sound, there is a short high pitched tone.
 * Sometimes when the player dies, the "you can shoot" indicator is left behind as garbage on-screen.
 * Sometimes when you die, a spider may enter and the spider sound will start playing.  Because audio is stopped by player death and it has already happened, the spider sound ends up going on even though the spider is not moving.

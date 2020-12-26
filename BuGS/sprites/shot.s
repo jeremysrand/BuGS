@@ -142,6 +142,16 @@ drawShot entry
         and #$fff0
         ora #$0004
         sta $a0,s
+		
+		tsc
+		adc #$140
+		tcs
+
+		lda $0,s
+		_collision #$000f,#$0
+
+		lda $a0,s
+		_collision #$000f,#$a0
         
         _spriteFooter
 		

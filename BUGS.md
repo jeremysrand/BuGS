@@ -3,7 +3,6 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-
 * I have seen some mushrooms appear suddenly.  Sometimes, if I am shooting, the shot "hits" an invisible mushroom which then becomes visible.  My guess is that there is something wrong with the code which turns a centipede segment into a mushroom when shot and the tile isn't correctly marked dirty all the time.
     * In theory, there shouldn't be a collision with an invisible mushroom but what happens is that when the shot overlaps with the tile, it becomes dirty.  At that point, the mushroom will appear on the next frame and a collision can then occur.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.

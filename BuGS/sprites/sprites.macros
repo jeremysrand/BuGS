@@ -705,8 +705,6 @@
         
         macro
         _collision &mask,&addr
-        ldy collision
-        bne _alreadyCollided_&SYSCNT
         tax
         and &mask
         beq _noCollision_&SYSCNT
@@ -717,5 +715,4 @@
         sta collisionAddr
 _noCollision_&SYSCNT anop
         txa
-_alreadyCollided_&SYSCNT anop
         mend

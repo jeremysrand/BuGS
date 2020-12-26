@@ -1482,6 +1482,13 @@ addBodySegment entry
         tax
         
         inc numSegments
+; DEBUG - Validate the number of segments
+		lda numSegments
+		cmp #SEGMENT_MAX_NUM+1
+		blt addBodySegment_isOK
+		brk $11
+addBodySegment_isOK anop
+; DEBUG - End of validation
 
         lda #SEGMENT_STATE_BODY
         sta segmentStates,x
@@ -1676,6 +1683,12 @@ addBodySegment_slow anop
 ; preserve the X register.
 addCentipede entry
 		lda numSegments
+; DEBUG - Validate the number of segments
+		cmp #SEGMENT_MAX_NUM
+		blt addCentipede_isOK
+		brk $10
+addCentipede_isOK anop
+; DEBUG - End of validation
 		asl a
 		tay
 	  

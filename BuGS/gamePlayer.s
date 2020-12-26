@@ -151,6 +151,8 @@ updatePlayer_drawExplosionSkipBelow1 anop
 		sta tileDirty,x
 updatePlayer_drawExplosionSkipBelow2 anop
 		ldx tileRight,y
+		cpx #RHS_FIRST_TILE_OFFSET
+		bge updatePlayer_drawExplosionSkipBelow3
 		sta tileDirty,x
 		ldy tileBelow,x
 		cpy #INVALID_TILE_NUM

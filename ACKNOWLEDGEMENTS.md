@@ -2,7 +2,7 @@
 
 This project would not have been a success without help from the Apple // community, especially the appleiigs slack channel where I got tons of help and encouragement. I have to thank some people for their support, help, contribution of code and other materials that helped make BuGS possible.  Please know that if your name is missing, that is my fault.  I should have been keeping track of this early on but I find myself writing this in the later days of the project and I am almost certainly going to make a mistake.  I apologize if I have left you off and I would encourage you to contact me and help me correct my mistake.
 
-* @fatdog on slack who provided multiple sound samples for the game including the spider, flea and the beat sound.
+* @fatdog on slack who provided multiple sound samples for the game including the spider, flea and the beat sound.  As well, he provided the wonderful icon for the game.
 * Mark Collins who pointed me to a source of sound effects and information on how to convert digital sound into a format that would work on the GS.
 * John Brooks who was instrumental in getting the animation algorithm performant.  He described a series of optimizations that I could persue and sure enough, implementing a couple of them got me back to 60 frames per second.  He also provided code for a fast random number generator and fast mouse polling.
 * Antoine Vignau for his technical support, especially when it came time to look at sound.  He often posted comments that warned me that the road I was going down was going to be a problem (like trying to use the toolbox for polling the mouse) and of course he was right.

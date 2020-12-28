@@ -6,5 +6,4 @@ TODO
 * Implement the code to support pausing the game
 * Implement the code for supporting a two player game
 * Look at supporting Versions in order to support automatic SW upgrades
-* Need an icon.
 * So much more.

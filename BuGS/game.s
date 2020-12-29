@@ -29,6 +29,8 @@ game    start
         
         lda #0
         jsl setColour
+		
+		jsl gameOver
 
 gameLoop anop
         
@@ -200,148 +202,162 @@ startLevel entry
 		jsl shotInitLevel
 		jsl playerLevelStart
 		jmp levelStart
+	
+	
+overwriteGameTile entry
+		tay
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+		tya
+		ldy tileScreenOffset,x
+		phx
+		jsl drawTile
+		plx
+		inx
+		inx
+		rts
 		
 
 pauseGame entry
 		jsl pauseSound
 		
 		ldx #GAME_NUM_TILES_WIDE*4+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*6+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_P
-		_overwriteTile TILE_LETTER_A
-		_overwriteTile TILE_LETTER_U
-		_overwriteTile TILE_LETTER_S
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_LETTER_D
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_D
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*8+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*10+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_P
-		_overwriteTile TILE_LETTER_R
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_LETTER_S
-		_overwriteTile TILE_LETTER_S
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_Q
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_T
-		_overwriteTile TILE_LETTER_O
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_Q
-		_overwriteTile TILE_LETTER_U
-		_overwriteTile TILE_LETTER_I
-		_overwriteTile TILE_LETTER_T
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_Q
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_Q
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*12+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_O
-		_overwriteTile TILE_LETTER_T
-		_overwriteTile TILE_LETTER_H
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_LETTER_R
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_K
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_LETTER_Y
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_T
-		_overwriteTile TILE_LETTER_O
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_LETTER_R
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_LETTER_S
-		_overwriteTile TILE_LETTER_U
-		_overwriteTile TILE_LETTER_M
-		_overwriteTile TILE_LETTER_E
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_H
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_K
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_M
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*14+2
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
-		_overwriteTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
 		short i,m
 pauseGame_loop anop
@@ -361,6 +377,18 @@ pauseGame_quit anop
 		rtl
 		
 		
+setGameTile entry
+		cmp tileType,x
+		beq setGameTile_skip
+		sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+setGameTile_skip anop
+		inx
+		inx
+		rts
+		
+		
 gameOver entry
 		lda #1
 		sta gameRunning
@@ -369,20 +397,383 @@ gameOver entry
 		jsl spiderInitLevel
 		jsl fleaInitLevel
 		
-		ldx #0
-gameOver_loop anop
-		lda tileType,x
-		beq gameOver_tileEmpty
-		stz tileType,x
-		lda #TILE_STATE_DIRTY
-		sta tileDirty,x
-gameOver_tileEmpty anop
-		inx
-		inx
-		cpx #RHS_FIRST_TILE_OFFSET
-		blt gameOver_loop
+		jsl checkHighScore
 		
-		jmp checkHighScore
+		jsl addRandomMushrooms
+		lda #TILE_PLAYER
+		sta tileType+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
+		lda #TILE_STATE_DIRTY
+		sta tileDirty+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
+		
+		ldx #GAME_NUM_TILES_WIDE*8+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_H
+		_setGameTile TILE_LETTER_I
+		_setGameTile TILE_LETTER_G
+		_setGameTile TILE_LETTER_H
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_LETTER_C
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*10+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*12+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*14+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*16+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*18+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*20+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*22+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*24+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*26+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*28+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*30+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*32+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_P
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_SYMBOL_COLON
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*34+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_NUMBER_1
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_F
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_NUMBER_1
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_P
+		_setGameTile TILE_LETTER_L
+		_setGameTile TILE_LETTER_A
+		_setGameTile TILE_LETTER_Y
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*36+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_NUMBER_2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_F
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_NUMBER_2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_P
+		_setGameTile TILE_LETTER_L
+		_setGameTile TILE_LETTER_A
+		_setGameTile TILE_LETTER_Y
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*38+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_Q
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_T
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_Q
+		_setGameTile TILE_LETTER_U
+		_setGameTile TILE_LETTER_I
+		_setGameTile TILE_LETTER_T
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		rtl
 		
 
 checkKeyboard entry

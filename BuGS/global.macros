@@ -130,16 +130,16 @@ _dirtyNonGameTile_skip&SYSCNT anop
         
 
         macro
-        _overwriteTile &type
-        lda #TILE_STATE_DIRTY
-        sta tileDirty,x
+        _overwriteGameTile &type
         lda #&type
-        ldy tileScreenOffset,x
-        phx
-        jsl drawTile
-        plx
-        inx
-        inx
+        jsr overwriteGameTile
+        mend
+        
+        
+        macro
+        _setGameTile &type
+        lda #&type
+        jsr setGameTile
         mend
 
 

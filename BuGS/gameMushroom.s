@@ -95,9 +95,23 @@ resetMushrooms_next anop
 		
 		
 addRandomMushrooms entry
-		stz numInfieldMushrooms
 		lda #INVALID_TILE_NUM
 		sta mushroomToRefresh
+		
+		ldx #RHS_FIRST_TILE_OFFSET-2
+addRandomMushrooms_clear anop
+		lda tileType,x
+		beq addRandomMushrooms_skipClear
+		lda #TILE_EMPTY
+		sta tileType,x
+		lda #TILE_STATE_DIRTY
+		sta tileDirty,x
+addRandomMushrooms_skipClear anop
+		dex
+		dex
+		bpl addRandomMushrooms_clear
+		
+		stz numInfieldMushrooms
 		ldy #STARTING_NUM_MUSHROOMS
 		
 addRandomMushrooms_loop anop

@@ -1154,6 +1154,7 @@ startFleaSound_doIt anop
 		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
 		sta >SOUND_ADDR_LOW
 		lda tileRightVolume,x
+		sta fleaVolume
 		sta >SOUND_DATA_REG
 		sta >SOUND_DATA_REG
 		eor #$ff
@@ -1206,10 +1207,97 @@ stopFleaSound_doIt anop
 		long m
 		rtl
 
+		
+pauseSound entry
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+
+		lda #SOUND_REG_VOLUME+SPIDER_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+SCORPION_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #$0
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		
+		long m
+		rtl
+		
+		
+unpauseSound entry
+		lda segmentSoundIsPlaying
+		bne unpauseSound_skipSegment
+		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+SEGMENTS_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda #SEGMENTS_VOLUME
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
+		
+unpauseSound_skipSegment anop
+		lda fleaSoundIsPlaying
+		bne unpauseSound_skipFlea
+		
+		short m
+		lda >SOUND_SYSTEM_VOLUME
+		and #$0f
+		ora #$20
+		sta >SOUND_CONTROL_REG
+		
+		lda #SOUND_REG_VOLUME+FLEA_OSC_NUM
+		sta >SOUND_ADDR_LOW
+		lda fleaVolume
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		eor #$ff
+		sta >SOUND_DATA_REG
+		sta >SOUND_DATA_REG
+		long m
+		
+unpauseSound_skipFlea anop
+		rtl
+		
 
 bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
 fleaSoundIsPlaying		dc i2'1'
 fleaSoundFreqOffset		dc i2'0'
+fleaVolume			dc i2'0'
 segmentSoundIsPlaying	dc i2'1'
 spiderSoundIsPlaying	dc i2'1'
 scorpionSoundIsPlaying	dc i2'1'

@@ -127,6 +127,20 @@ _dirtyGameTile_skip&SYSCNT anop
         
 _dirtyNonGameTile_skip&SYSCNT anop
         mend
+        
+
+        macro
+        _overwriteTile &type
+        lda #TILE_STATE_DIRTY
+        sta tileDirty,x
+        lda #&type
+        ldy tileScreenOffset,x
+        phx
+        jsl drawTile
+        plx
+        inx
+        inx
+        mend
 
 
 ; Update the score

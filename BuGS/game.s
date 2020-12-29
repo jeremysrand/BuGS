@@ -203,7 +203,161 @@ startLevel entry
 		
 
 pauseGame entry
-; TODO - Write this code...
+		jsl pauseSound
+		
+		ldx #GAME_NUM_TILES_WIDE*4+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*6+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_P
+		_overwriteTile TILE_LETTER_A
+		_overwriteTile TILE_LETTER_U
+		_overwriteTile TILE_LETTER_S
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_LETTER_D
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*8+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*10+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_P
+		_overwriteTile TILE_LETTER_R
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_LETTER_S
+		_overwriteTile TILE_LETTER_S
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_Q
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_T
+		_overwriteTile TILE_LETTER_O
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_Q
+		_overwriteTile TILE_LETTER_U
+		_overwriteTile TILE_LETTER_I
+		_overwriteTile TILE_LETTER_T
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*12+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_O
+		_overwriteTile TILE_LETTER_T
+		_overwriteTile TILE_LETTER_H
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_LETTER_R
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_K
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_LETTER_Y
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_T
+		_overwriteTile TILE_LETTER_O
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_LETTER_R
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_LETTER_S
+		_overwriteTile TILE_LETTER_U
+		_overwriteTile TILE_LETTER_M
+		_overwriteTile TILE_LETTER_E
+		_overwriteTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*14+2
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		_overwriteTile TILE_EMPTY
+		
+		short i,m
+pauseGame_loop anop
+		lda >KEYBOARD
+		bpl pauseGame_loop
+		sta >KEYBOARD_STROBE
+		long i,m
+		and #$7f
+		cmp #'q'
+		beq pauseGame_quit
+		cmp #'Q'
+		beq pauseGame_quit
+		jsl unpauseSound
+		rtl
+pauseGame_quit anop
+		stz shouldQuit
 		rtl
 		
 		
@@ -239,18 +393,14 @@ checkKey_loop2 anop
         sta >KEYBOARD_STROBE
         long i,m
         and #$007f
+		
+		ldx gameRunning
+		beq checkKey_pause
         
         cmp #'q'
         beq checkKey_quit
         cmp #'Q'
         beq checkKey_quit
-		
-		cmp #'p'
-		beq checkKey_pause
-		cmp #'P'
-		beq checkKey_pause
-        cmp #$001b
-        beq checkKey_pause
 
 		cmp #'1'
 		beq checkKey_game

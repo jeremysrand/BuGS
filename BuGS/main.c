@@ -289,6 +289,16 @@ BOOLEAN loadSettings(void)
     }
     HUnlock(filenameHandle);
     
+    if (success)
+    {
+        if ((settings.magic[0] != 'B') ||
+            (settings.magic[1] != 'u') ||
+            (settings.magic[2] != 'G') ||
+            (settings.magic[3] != 'S') ||
+            (settings.version != 0))
+            success = FALSE;
+    }
+    
     return success;
 }
 

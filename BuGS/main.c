@@ -9,14 +9,14 @@
 
 
 #include <stdlib.h>
+#include <string.h>
 
+#include <gsos.h>
 #include <Memory.h>
 #include <Locator.h>
 #include <MiscTool.h>
 #include <Resources.h>
 #include <Sound.h>
-
-#include <string.h>
 
 #include "main.h"
 #include "game.h"
@@ -28,11 +28,32 @@
 #define TOOLFAIL(string) \
     if (toolerror()) SysFailMgr(toolerror(), "\p" string "\n\r    Error Code -> $");
 
+#define SETTINGS_FILENAME "@:BuGS.settings"
+
+
+/* Typedefs */
+
+typedef struct tHighScore
+{
+    long score;
+    char who[3];
+} tHighScore;
+
+typedef struct tSettingsData
+{
+    char magic[4];
+    int version;
+    Boolean swapStereo;
+    tHighScore highScores[NUM_HIGH_SCORES];
+} tSettingsData;
+
 
 /* Globals */
 
 unsigned int userid;
 unsigned int randomSeed;
+tSettingsData settings;
+Handle filenameHandle = NULL;
 
 
 /* Implementation */
@@ -127,6 +148,151 @@ void loadScorpionSound(word addr)
 }
 
 
+void allocateFilenameHandle(void)
+{
+    if (filenameHandle == NULL)
+    {
+        GSString255Ptr filenamePtr;
+        
+        filenameHandle = NewHandle(sizeof(GSString255), userid, 0x8000, NULL);
+        HLock(filenameHandle);
+        filenamePtr = (GSString255Ptr)(*filenameHandle);
+        filenamePtr->length = strlen(SETTINGS_FILENAME);
+        strcpy(filenamePtr->text, SETTINGS_FILENAME);
+        HUnlock(filenameHandle);
+    }
+}
+
+
+void initSettings(void)
+{
+    int i;
+    tHighScore *scorePtr;
+    
+    settings.magic[0] = 'B';
+    settings.magic[1] = 'u';
+    settings.magic[2] = 'G';
+    settings.magic[3] = 'S';
+    
+    settings.version = 0;
+    
+    settings.swapStereo = FALSE;
+    
+    scorePtr = &(settings.highScores[0]);
+    for (i = 0; i < NUM_HIGH_SCORES; i++);
+    {
+        scorePtr->score = 0;
+        scorePtr->who[0] = ' ';
+        scorePtr->who[1] = ' ';
+        scorePtr->who[2] = ' ';
+        
+        scorePtr++;
+    }
+}
+
+
+void deleteSettings(void)
+{
+    NameRecGS destroyRec;
+    
+    allocateFilenameHandle();
+    HLock(filenameHandle);
+    
+    destroyRec.pCount = 1;
+    destroyRec.pathname = (GSString255Ptr)(*filenameHandle);
+    DestroyGS(&destroyRec);
+    
+    HUnlock(filenameHandle);
+}
+
+
+void saveSettings(void)
+{
+    RefNumRecGS closeRec;
+    CreateRecGS createRec;
+    OpenRecGS openRec;
+    IORecGS writeRec;
+    BOOLEAN success = false;
+    
+    deleteSettings();
+    
+    allocateFilenameHandle();
+    HLock(filenameHandle);
+    
+    createRec.pCount = 5;
+    createRec.pathname = (GSString255Ptr)(*filenameHandle);
+    createRec.access = destroyEnable | renameEnable | readWriteEnable;
+    createRec.fileType = 0x06;
+    createRec.auxType = 0x2000;
+    createRec.storageType = seedling;
+    CreateGS(&createRec);
+    if (toolerror() != 0)
+    {
+        HUnlock(filenameHandle);
+        return;
+    }
+    
+    openRec.pCount = 3;
+    openRec.pathname = (GSString255Ptr)(*filenameHandle);
+    openRec.requestAccess = writeEnable;
+    OpenGS(&openRec);
+    if (toolerror() == 0)
+    {
+        writeRec.pCount = 4;
+        writeRec.refNum = openRec.refNum;
+        writeRec.dataBuffer = (Pointer) &settings;
+        writeRec.requestCount = sizeof(settings);
+        WriteGS(&writeRec);
+        success = (toolerror() == 0);
+        
+        closeRec.pCount = 1;
+        closeRec.refNum = openRec.refNum;
+        CloseGS(&closeRec);
+    }
+    
+    HUnlock(filenameHandle);
+    
+    if (!success)
+        deleteSettings();
+}
+
+
+BOOLEAN loadSettings(void)
+{
+    RefNumRecGS closeRec;
+    OpenRecGS openRec;
+    IORecGS readRec;
+    BOOLEAN success = FALSE;
+    
+    allocateFilenameHandle();
+    HLock(filenameHandle);
+    
+    openRec.pCount = 12;
+    openRec.requestAccess = readEnable;
+    openRec.resourceNumber = 0;
+    openRec.pathname = (GSString255Ptr)(*filenameHandle);
+    OpenGS(&openRec);
+    if (toolerror() == 0)
+    {
+        if (openRec.eof == sizeof(settings))
+        {
+            readRec.pCount = 4;
+            readRec.refNum = openRec.refNum;
+            readRec.dataBuffer = (Pointer)&settings;
+            readRec.requestCount = sizeof(tSettingsData);
+            success = (toolerror() == 0);
+        }
+        
+        closeRec.pCount = 1;
+        closeRec.refNum = openRec.refNum;
+        CloseGS(&closeRec);
+    }
+    HUnlock(filenameHandle);
+    
+    return success;
+}
+
+
 int main(void)
 {
     int event;
@@ -155,6 +321,10 @@ int main(void)
     
     InitMouse(0);
     SetMouse(transparent);
+    
+    initSettings();
+    if (!loadSettings())
+        saveSettings();
 
     game();
     

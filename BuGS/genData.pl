@@ -83,6 +83,9 @@ $gEquates{"HIGH_SCORE_ONES_OFFSET"} = ($gEquates{"LHS_FIRST_TILE"} + ($gEquates{
 
 $gEquates{"NUM_FLEA_FREQS"} = 120;
 
+$gEquates{"NUM_HIGH_SCORES"} = 10;
+
+
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileScreenOffset = (0) x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileType = ("TILE_EMPTY") x $gEquates{"TOTAL_NUM_TILES"};

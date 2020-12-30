@@ -52,11 +52,36 @@ typedef struct tSettingsData
 
 unsigned int userid;
 unsigned int randomSeed;
-tSettingsData settings;
+tSettingsData settings = {
+    { 'B', 'u', 'G', 'S' },
+    0,
+    FALSE,
+    {
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}},
+        { 0, { ' ', ' ', ' '}}
+    }
+};
+RefNumRecGS closeRec;
+OpenRecGS openRec;
+IORecGS readRec;
+CreateRecGS createRec;
+IORecGS writeRec;
+NameRecGS destroyRec;
 Handle filenameHandle = NULL;
 
 
 /* Implementation */
+
+
+extern void swapStereoChannels(void);
 
 
 word randomMushroomOffset(void)
@@ -164,37 +189,8 @@ void allocateFilenameHandle(void)
 }
 
 
-void initSettings(void)
-{
-    int i;
-    tHighScore *scorePtr;
-    
-    settings.magic[0] = 'B';
-    settings.magic[1] = 'u';
-    settings.magic[2] = 'G';
-    settings.magic[3] = 'S';
-    
-    settings.version = 0;
-    
-    settings.swapStereo = FALSE;
-    
-    scorePtr = &(settings.highScores[0]);
-    for (i = 0; i < NUM_HIGH_SCORES; i++);
-    {
-        scorePtr->score = 0;
-        scorePtr->who[0] = ' ';
-        scorePtr->who[1] = ' ';
-        scorePtr->who[2] = ' ';
-        
-        scorePtr++;
-    }
-}
-
-
 void deleteSettings(void)
 {
-    NameRecGS destroyRec;
-    
     allocateFilenameHandle();
     HLock(filenameHandle);
     
@@ -208,10 +204,6 @@ void deleteSettings(void)
 
 void saveSettings(void)
 {
-    RefNumRecGS closeRec;
-    CreateRecGS createRec;
-    OpenRecGS openRec;
-    IORecGS writeRec;
     BOOLEAN success = false;
     
     deleteSettings();
@@ -259,9 +251,6 @@ void saveSettings(void)
 
 BOOLEAN loadSettings(void)
 {
-    RefNumRecGS closeRec;
-    OpenRecGS openRec;
-    IORecGS readRec;
     BOOLEAN success = FALSE;
     
     allocateFilenameHandle();
@@ -280,6 +269,7 @@ BOOLEAN loadSettings(void)
             readRec.refNum = openRec.refNum;
             readRec.dataBuffer = (Pointer)&settings;
             readRec.requestCount = sizeof(tSettingsData);
+            ReadGS(&readRec);
             success = (toolerror() == 0);
         }
         
@@ -299,7 +289,23 @@ BOOLEAN loadSettings(void)
             success = FALSE;
     }
     
+    if (success)
+    {
+        if (settings.swapStereo)
+        {
+            swapStereoChannels();
+        }
+    }
+    
     return success;
+}
+
+
+void swapStereoSettings(void)
+{
+    swapStereoChannels();
+    settings.swapStereo = !settings.swapStereo;
+    saveSettings();
 }
 
 
@@ -332,7 +338,6 @@ int main(void)
     InitMouse(0);
     SetMouse(transparent);
     
-    initSettings();
     if (!loadSettings())
         saveSettings();
 

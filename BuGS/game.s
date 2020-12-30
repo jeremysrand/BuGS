@@ -754,6 +754,29 @@ gameOver entry
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_T
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_LETTER_W
+		_setGameTile TILE_LETTER_A
+		_setGameTile TILE_LETTER_P
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_LETTER_T
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*40+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_Q
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_T
@@ -798,6 +821,11 @@ checkKey_loop2 anop
 		
 		cmp #'2'
 		beq checkKey_game
+		
+		cmp #'s'
+		beq checkKey_swapStereo
+		cmp #'S'
+		beq checkKey_swapStereo
         
 checkKey_done anop
 		long i,m
@@ -814,6 +842,9 @@ checkKey_game anop
 		sec
 		sbc #'1'
 		jmp startGame
+		
+checkKey_swapStereo anop
+		jmp swapStereoSettings
 
 
 waitForKey entry

@@ -1293,6 +1293,19 @@ unpauseSound_skipSegment anop
 unpauseSound_skipFlea anop
 		rtl
 		
+		
+swapStereoChannels entry
+		ldx #SIZEOF_TILE_INFO*NUM_GAME_TILES-SIZEOF_TILE_INFO
+swapStereoChannels_loop anop
+		lda tileRightVolume,x
+		eor #$ff
+		sta tileRightVolume,x
+		dex
+		dex
+		bpl swapStereoChannels_loop
+
+		rtl
+		
 
 bonusSoundOscReg	dc i2'SOUND_REG_CONTROL+BONUS_OSC_NUM'
 fleaSoundIsPlaying		dc i2'1'

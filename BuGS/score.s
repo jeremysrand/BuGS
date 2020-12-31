@@ -332,38 +332,114 @@ scoreAddOneThousand_skipZeroHundreds anop
 		
 
 checkHighScore entry
-		lda gameScore+2
-		cmp highScore+2
-		blt checkHighScore_done
-		bne checkHighScore_isHighScore
-		lda gameScore
-		cmp highScore
-		blt checkHighScore_done
-checkHighScore_isHighScore anop
-		sta highScore
-		lda gameScore+2
-		sta highScore+2
-		
-		
-		ldy #P1_SCORE_ONES_OFFSET
-		ldx #HIGH_SCORE_ONES_OFFSET
-		
+		ldy #0
 checkHighScore_loop anop
-		lda tileType,y
-		sta tileType,x
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
+		cmp gameScore+2
+		blt checkHighScore_isHighScore
+		bne checkHighScore_next
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
+		cmp gameScore
+		blt checkHighScore_isHighScore
+checkHighScore_next anop
+		tya
+		clc
+		adc #SETTINGS_HIGH_SCORE_SIZE
+		tay
+		cpy #SETTINGS_HIGH_SCORE_SIZE*10
+		blt checkHighScore_loop
+		rtl
+checkHighScore_isHighScore anop
 		phy
-		_dirtyNonGameTile
+		tya
+		clc
+		adc #SETTINGS_HIGH_SCORE_SIZE
+		tax
+checkHighScore_copyLoop anop
+		cpx #SETTINGS_HIGH_SCORE_SIZE*10
+		bge checkHighScore_doneCopy
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET,y
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET,x
+		iny
+		iny
+		inx
+		inx
+		bra checkHighScore_copyLoop
+checkHighScore_doneCopy anop
 		ply
-		dex
-		dex
-		dey
-		dey
-		cpy #P1_SCORE_FIRST_OFFSET
-		bne checkHighScore_loop
-	
-checkHighScore_done anop
+		lda gameScore
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
+		lda gameScore+2
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
+		
+		ldx #P1_SCORE_ONES_OFFSET-18
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+1,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+2,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+3,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+4,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+5,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+6,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+7,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+8,y
+		
+		inx
+		inx
+		lda tileType,x
+		jsl tileTypeToAscii
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9,y
+		
+		lda #'J'
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET,y
+		lda #'S'
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET+1,y
+		lda #'R'
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET+2,y
+		
+		jsl saveSettings
 		jmp updateHighScore
 		
-highScore	dc i4'0'
 
         end

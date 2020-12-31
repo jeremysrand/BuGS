@@ -29,8 +29,8 @@ game    start
         
         lda #0
         jsl setColour
-		
 		jsl gameOver
+		jsl updateHighScore
 
 gameLoop anop
         

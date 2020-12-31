@@ -398,8 +398,11 @@ gameOver entry
 		jsl fleaInitLevel
 		
 		jsl checkHighScore
-		
 		jsl addRandomMushrooms
+		jmp staticGameBoard
+		
+		
+staticGameBoard entry
 		lda #TILE_PLAYER
 		sta tileType+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
 		lda #TILE_STATE_DIRTY
@@ -430,20 +433,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*10+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 0
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -453,20 +443,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*12+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 1
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -476,20 +453,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*14+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -499,20 +463,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*16+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 3
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -522,20 +473,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*18+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 4
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -545,20 +483,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*20+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 5
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -568,20 +493,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*22+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 6
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -591,20 +503,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*24+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 7
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -614,20 +513,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*26+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 8
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -637,20 +523,7 @@ gameOver entry
 		
 		ldx #GAME_NUM_TILES_WIDE*28+2
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
+		_highScoreRow 9
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -707,7 +580,6 @@ gameOver entry
 		ldx #GAME_NUM_TILES_WIDE*34+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
 		_setGameTile TILE_NUMBER_1
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_F
@@ -722,6 +594,7 @@ gameOver entry
 		_setGameTile TILE_LETTER_Y
 		_setGameTile TILE_LETTER_E
 		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -730,7 +603,6 @@ gameOver entry
 		ldx #GAME_NUM_TILES_WIDE*36+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
 		_setGameTile TILE_NUMBER_2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_F
@@ -749,15 +621,12 @@ gameOver entry
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*38+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_S
-		_setGameTile TILE_EMPTY
-		_setGameTile TILE_LETTER_T
-		_setGameTile TILE_LETTER_O
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_S
 		_setGameTile TILE_LETTER_W
@@ -771,10 +640,22 @@ gameOver entry
 		_setGameTile TILE_LETTER_E
 		_setGameTile TILE_LETTER_O
 		_setGameTile TILE_EMPTY
+		
+		lda settings+SETTINGS_SWAP_STEREO_OFFSET
+		bne staticGameBoard_swapped
+		_setGameTile TILE_LETTER_L
+		_setGameTile TILE_SYMBOL_COLON
+		_setGameTile TILE_LETTER_R
+		bra staticGameBoard_cont
+staticGameBoard_swapped anop
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_SYMBOL_COLON
+		_setGameTile TILE_LETTER_L
+staticGameBoard_cont anop
+		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		
 		ldx #GAME_NUM_TILES_WIDE*40+2
-		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_Q
@@ -786,6 +667,7 @@ gameOver entry
 		_setGameTile TILE_LETTER_U
 		_setGameTile TILE_LETTER_I
 		_setGameTile TILE_LETTER_T
+		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -844,7 +726,8 @@ checkKey_game anop
 		jmp startGame
 		
 checkKey_swapStereo anop
-		jmp swapStereoSettings
+		jsl swapStereoSettings
+		jmp staticGameBoard
 
 
 waitForKey entry

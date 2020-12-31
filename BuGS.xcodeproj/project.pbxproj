@@ -96,6 +96,7 @@
 		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9D6DB0AE2591A67700CDBF05 /* flea.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = flea.raw; sourceTree = "<group>"; };
 		9D6DB0B825932CA600CDBF05 /* scorpion.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = scorpion.raw; sourceTree = "<group>"; };
+		9D6DB164259D759C00CDBF05 /* tileConvert.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = tileConvert.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; };
 		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 				9D47CC14254A698900CDA5CB /* gamePlayer.s */,
 				9D53E5B32562320300E10169 /* gameShot.s */,
 				9D159805258A6BCB00BA42DF /* gameSound.s */,
+				9D6DB164259D759C00CDBF05 /* tileConvert.s */,
 				9D8AF0B72535542400C10E3C /* level.s */,
 				9D8AF0B82535543000C10E3C /* score.s */,
 				9D62AF3B249871A300348F45 /* colour.s */,

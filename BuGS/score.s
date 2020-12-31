@@ -15,6 +15,78 @@ score start
 		using globalData
 		using tileData
 		
+		
+updateHighScore entry
+		ldx #HIGH_SCORE_ONES_OFFSET
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+8
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+7
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+6
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+5
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+4
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+3
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+2
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+1
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		rtl
+		
 
 scoreStartGame entry
 		stz gameScore
@@ -290,7 +362,7 @@ checkHighScore_loop anop
 		bne checkHighScore_loop
 	
 checkHighScore_done anop
-		rtl
+		jmp updateHighScore
 		
 highScore	dc i4'0'
 

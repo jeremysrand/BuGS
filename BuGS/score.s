@@ -350,23 +350,23 @@ checkHighScore_next anop
 		blt checkHighScore_loop
 		rtl
 checkHighScore_isHighScore anop
-		phy
-		tya
-		clc
-		adc #SETTINGS_HIGH_SCORE_SIZE
-		tax
+		sty scoreIndex
+		ldx #SETTINGS_HIGH_SCORE_SIZE*10-2
+		ldy #SETTINGS_HIGH_SCORE_SIZE*9-2
+		cpy scoreIndex
+		blt checkHighScore_doneCopy
 checkHighScore_copyLoop anop
-		cpx #SETTINGS_HIGH_SCORE_SIZE*10
-		bge checkHighScore_doneCopy
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET,y
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET,x
-		iny
-		iny
-		inx
-		inx
+		cpy scoreIndex
+		beq checkHighScore_doneCopy
+		dey
+		dey
+		dex
+		dex
 		bra checkHighScore_copyLoop
 checkHighScore_doneCopy anop
-		ply
+		ldy scoreIndex
 		lda gameScore
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
 		lda gameScore+2
@@ -442,4 +442,6 @@ checkHighScore_doneCopy anop
 		jmp updateHighScore
 		
 
+scoreIndex dc i2'0'
+		
         end

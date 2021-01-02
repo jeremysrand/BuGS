@@ -431,13 +431,272 @@ checkHighScore_doneCopy anop
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9,y
 		
-		lda #'J'
-		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET,y
-		lda #'S'
-		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET+1,y
-		lda #'R'
-		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET+2,y
+		ldx #GAME_NUM_TILES_WIDE*4+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		
+		ldx #GAME_NUM_TILES_WIDE*6+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_M
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_V
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*8+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_NUMBER_1
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*10+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*12+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*14+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*16+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*18+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_SOLID2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*20+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*18+20
+checkHighScore_nextKey anop
+		jsl waitForKey
+		cmp #$08
+		beq checkHighScore_backspace
+		blt checkHighScore_isInvalid
+		cmp #$7f
+		beq checkHighScore_backspace
+		cmp #$0d
+		beq checkHighScore_isEnter
+		blt checkHighScore_isInvalid
+		cmp #'0'
+		blt checkHighScore_isInvalid
+		cmp #'9'+1
+		blt checkHighScore_isValid
+		cmp #'a'
+		blt checkHighScore_skipToUpperCase
+		sec
+		sbc #$20
+checkHighScore_skipToUpperCase anop
+		cmp #'A'
+		blt checkHighScore_isInvalid
+		cmp #'Z'+1
+		bge checkHighScore_isInvalid
+		
+checkHighScore_isValid anop
+		cpx #GAME_NUM_TILES_WIDE*18+26
+		bge checkHighScore_isInvalid
+		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET,y
+		iny
+		jsl asciiToTileType
+		jsr overwriteGameTile
+		_overwriteGameTile TILE_SOLID2
+		dex
+		dex
+		bra checkHighScore_nextKey
+
+checkHighScore_backspace anop
+		cpx #GAME_NUM_TILES_WIDE*18+21
+		blt checkHighScore_isInvalid
+		dey
+		_overwriteGameTile TILE_EMPTY
+		dex
+		dex
+		dex
+		dex
+		_overwriteGameTile TILE_SOLID2
+		dex
+		dex
+		bra checkHighScore_nextKey
+		
+checkHighScore_isEnter anop
+		cpx #GAME_NUM_TILES_WIDE*18+26
+		blt checkHighScore_isInvalid
+		bra checkHighScore_doneInitials
+checkHighScore_isInvalid anop
+		bra checkHighScore_nextKey
+		
+checkHighScore_doneInitials anop
 		jsl saveSettings
 		jmp updateHighScore
 		

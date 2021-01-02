@@ -205,6 +205,7 @@ startLevel entry
 	
 	
 overwriteGameTile entry
+		phy
 		tay
 		lda #TILE_STATE_DIRTY
 		sta tileDirty,x
@@ -215,6 +216,7 @@ overwriteGameTile entry
 		plx
 		inx
 		inx
+		ply
 		rts
 		
 
@@ -731,12 +733,13 @@ checkKey_swapStereo anop
 
 
 waitForKey entry
-        short i,m
+        short m
 waitForKey_loop anop
         lda >KEYBOARD
         bpl waitForKey_loop
         sta >KEYBOARD_STROBE
-        long i,m
+        long m
+		and #$7f
         rtl
 
 

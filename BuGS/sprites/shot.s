@@ -100,13 +100,13 @@ drawShot entry
 		stz collision
         
         lda $0,s
-        _collision #$000f,#$0
+        _collision #$00ff,#$0
         and #$fff0
         ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$000f,#$a0
+        _collision #$00ff,#$a0
         and #$fff0
         ora #$0004
         sta $a0,s
@@ -116,13 +116,13 @@ drawShot entry
         tcs
         
         lda $0,s
-        _collision #$000f,#$0
+        _collision #$00ff,#$0
         and #$fff0
         ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$000f,#$a0
+        _collision #$00ff,#$a0
         and #$fff0
         ora #$0004
         sta $a0,s
@@ -132,13 +132,13 @@ drawShot entry
         tcs
         
         lda $0,s
-        _collision #$000f,#$0
+        _collision #$00ff,#$0
         and #$fff0
         ora #$0004
         sta $0,s
         
         lda $a0,s
-        _collision #$000f,#$a0
+        _collision #$00ff,#$a0
         and #$fff0
         ora #$0004
         sta $a0,s
@@ -148,10 +148,10 @@ drawShot entry
 		tcs
 
 		lda $0,s
-		_collision #$000f,#$0
+		_collision #$00ff,#$0
 
 		lda $a0,s
-		_collision #$000f,#$a0
+		_collision #$00ff,#$a0
         
         _spriteFooter
 		
@@ -179,13 +179,13 @@ drawShotShift entry
 		stz collision
 
         lda $0,s
-        _collision #$00f0,#$0
+        _collision #$00ff,#$0
         and #$ff0f
         ora #$0040
         sta $0,s
 
         lda $a0,s
-        _collision #$00f0,#$a0
+        _collision #$00ff,#$a0
         and #$ff0f
         ora #$0040
         sta $a0,s
@@ -195,13 +195,13 @@ drawShotShift entry
         tcs
 
         lda $0,s
-        _collision #$00f0,#$0
+        _collision #$00ff,#$0
         and #$ff0f
         ora #$0040
         sta $0,s
 
         lda $a0,s
-        _collision #$00f0,#$a0
+        _collision #$00ff,#$a0
         and #$ff0f
         ora #$0040
         sta $a0,s
@@ -211,13 +211,13 @@ drawShotShift entry
         tcs
 
         lda $0,s
-        _collision #$00f0,#$0
+        _collision #$00ff,#$0
         and #$ff0f
         ora #$0040
         sta $0,s
 
         lda $a0,s
-        _collision #$00f0,#$a0
+        _collision #$00ff,#$a0
         and #$ff0f
         ora #$0040
         sta $a0,s
@@ -227,10 +227,10 @@ drawShotShift entry
 		tcs
 
 		lda $0,s
-		_collision #$00f0,#$0
+		_collision #$00ff,#$0
 
 		lda $a0,s
-		_collision #$00f0,#$a0
+		_collision #$00ff,#$a0
         
         _spriteFooter
 

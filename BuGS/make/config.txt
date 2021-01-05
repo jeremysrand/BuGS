@@ -1,12 +1,12 @@
 # GSplus configuration file version 0.14
 
-s5d1 = 
+s5d1 = /Users/jrand/Library/Developer/Xcode/DerivedData/BuGS-bffpexoblaghkzcbtjtzxeulnuto/Build/Products/Debug/BuGS.2mg
 s5d2 = 
 
 s6d1 = 
 s6d2 = 
 
-s7d1 = /Users/jrand/Library/Developer/Xcode/DerivedData/BuGS-bffpexoblaghkzcbtjtzxeulnuto/Build/Products/Debug/BuGS.2mg
+s7d1 = /Users/jrand/Coding/AppleCoding/Apple2GS/BuGS/BuGS/make/system601.2mg
 
 g_limit_speed = 3
 

@@ -3,7 +3,7 @@
 
 MOUNTDIR=/tmp/a2gs_mount.$$
 TMPDISKIMAGE=/tmp/a2gs_diskimage_$$.2mg
-TEMPLATEDISKIMAGE=make/system601.2mg
+TEMPLATEDISKIMAGE=make/BuGS.2mg
 
 if [ $# -lt 3 ]
 then

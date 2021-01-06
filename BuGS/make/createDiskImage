@@ -115,6 +115,14 @@ then
     cleanupAndExit
 fi
 
+# This is a special case for my personal build environment.  If I can find my home directory
+# and the Sites directory in it, then also put a copy of the build there also.  This makes it
+# available over http to my real GS so I can test it there also.
+if [ -d /Users/jrand/Sites ]
+then
+    cp "$TMPDISKIMAGE" /Users/jrand/Sites/BuGS.2mg
+fi
+
 rm -f "$TMPDISKIMAGE"
 rmdir "$MOUNTDIR"
 exit 0

@@ -28,8 +28,7 @@ then
     DISKIMAGE="$PWD/$DISKIMAGE"
 fi
 
-# This magic ensure that clicking stop in Xcode results in the emulator terminating.
-
+# This magic ensures that clicking stop in Xcode results in the emulator terminating.
 if true
 then
     cd make

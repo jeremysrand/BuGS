@@ -186,6 +186,7 @@ startGame entry
 		bne startGame_notRunning
 		rtl
 startGame_notRunning anop
+		sta isSinglePlayer
 		stz gameRunning
 		jsl addRandomMushrooms
 		jsl scoreStartGame

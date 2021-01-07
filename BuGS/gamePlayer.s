@@ -23,8 +23,9 @@ initPlayer entry
 		ldy #STARTING_NUM_LIVES
 		sty numLives
 		stz playerIgnoreFirstPoll
+		stz playerNum
 		ldx #P1_LIVES_OFFSET
-initPlayer_loop anop
+initPlayer_loop1 anop
 		lda #TILE_PLAYER
 		sta tileType,x
 		phy
@@ -33,9 +34,35 @@ initPlayer_loop anop
 		dex
 		dex
 		dey
-		bne initPlayer_loop
-		rtl
+		bne initPlayer_loop1
 		
+		lda isSinglePlayer
+		beq initPlayer_done
+; DEBUG
+;		lda #PLAYER_TWO
+;		sta playerNum
+; DEBUG
+		ldy #STARTING_NUM_LIVES
+		sty numLives+2
+		ldx #P2_LIVES_OFFSET
+initPlayer_loop2 anop
+		lda #TILE_PLAYER
+		sta tileType,x
+		phy
+		_dirtyNonGameTile
+		ply
+		dex
+		dex
+		dey
+		bne initPlayer_loop2
+		
+initPlayer_done anop
+		jmp playerSwitch
+
+		
+playerSwitch entry
+		jsl scoreSwitchPlayer
+		rtl
 		
 playerLevelStart entry
 		stz playerIgnoreFirstPoll
@@ -53,12 +80,19 @@ playerLevelStart entry
 		sta mouseAddress
 		lda #1
 		sta mouseDown
-		dec numLives
+		ldx playerNum
+		dec numLives,x
+		cpx #PLAYER_ONE
+		beq playerLevelStart_playerOne
+		lda #P2_LIVES_OFFSET
+		bra playerLevelStart_cont
+playerLevelStart_playerOne anop
 		lda #P1_LIVES_OFFSET
+playerLevelStart_cont anop
 		sec
-		sbc numLives
+		sbc numLives,x
 		sec
-		sbc numLives
+		sbc numLives,x
 		tax
 		lda #TILE_EMPTY
 		sta tileType,x
@@ -67,13 +101,20 @@ playerLevelStart entry
 		
 		
 playerAddLife entry
+		ldx playerNum
+		cpx #PLAYER_ONE
+		beq playerAddLife_playerOne
+		lda #P2_LIVES_OFFSET
+		bra playerAddLife_cont
+playerAddLife_playerOne anop
 		lda #P1_LIVES_OFFSET
+playerAddLife_cont anop
 		sec
 		sbc numLives
 		sec
 		sbc numLives
+		inc numLives,x
 		tax
-		inc numLives
 		lda #TILE_PLAYER
 		sta tileType,x
 		_dirtyNonGameTile
@@ -90,7 +131,8 @@ updatePlayer_gameRunning anop
 		bne updatePlayer_notNone
 		lda playerFrameCount
 		bne updatePlayer_wait
-		lda numLives
+		ldx playerNum
+		lda numLives,x
 		beq updatePlayer_gameOver
 		lda numSegments
 		bne updatePlayer_notNextLevel

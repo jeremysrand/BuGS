@@ -158,6 +158,9 @@ mouseX		dc i2'0'
 mouseY 		dc i2'0'
 mouseAddress	dc i2'0'
 backupStack dc i2'0'
+collision   dc i2'0'
+collisionAddr	dc i2'0'
+
 
 tileJumpTable dc a4'solid0'
               dc a4'mushroom4'

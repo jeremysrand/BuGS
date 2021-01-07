@@ -708,11 +708,11 @@
         tax
         and &mask
         beq _noCollision_&SYSCNT
-        sta collision
+        sta >collision
         tsc
         clc
         adc &addr
-        sta collisionAddr
+        sta >collisionAddr
 _noCollision_&SYSCNT anop
         txa
         mend

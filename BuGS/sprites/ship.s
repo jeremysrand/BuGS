@@ -29,7 +29,8 @@ drawShip entry
 ; ..OO|O...
 ; ..OO|O...
 
-        stz collision
+		lda #0
+        sta >collision
         
         lda $0,s
         _collision #$0c00,#$0
@@ -133,8 +134,9 @@ drawShip entry
 
         _spriteFooter
         
-		ldx collisionAddr
-		lda collision
+		lda >collisionAddr
+		tax
+		lda >collision
         rtl
         
 
@@ -154,7 +156,8 @@ drawShipShift entry
 ; ...O|OO..
 ; ...O|OO..
 
-        stz collision
+		lda #0
+        sta >collision
 
         lda $2,s
         _collision #$00c0,#$2
@@ -258,8 +261,9 @@ drawShipShift entry
 
         _spriteFooter
 
-		ldx collisionAddr
-        lda collision
+		lda >collisionAddr
+		tax
+        lda >collision
         rtl
         
 ; This differs from the above by being a tile draw routine for drawing the number of lives left.
@@ -341,9 +345,5 @@ drawPlayer entry
 
         _spriteFooter
         rtl
-        
-        
-collision   dc i2'0'
-collisionAddr	dc i2'0'
         
         end

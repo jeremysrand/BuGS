@@ -97,7 +97,8 @@ drawShot entry
 ; ....
 ; ....
         
-		stz collision
+		lda #0
+		sta >collision
         
         lda $0,s
         _collision #$00ff,#$0
@@ -155,8 +156,9 @@ drawShot entry
         
         _spriteFooter
 		
-		ldx collisionAddr
-        lda collision
+		lda >collisionAddr
+		tax
+        lda >collision
         rtl
         
         
@@ -176,7 +178,8 @@ drawShotShift entry
 ; ....
 ; ....
 
-		stz collision
+		lda #0
+		sta >collision
 
         lda $0,s
         _collision #$00ff,#$0
@@ -234,12 +237,9 @@ drawShotShift entry
         
         _spriteFooter
 
-		ldx collisionAddr
-        lda collision
+		lda >collisionAddr
+		tax
+        lda >collision
         rtl
-        
-        
-collision   dc i2'0'
-collisionAddr	dc i2'0'
 
         end

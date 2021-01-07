@@ -4,6 +4,7 @@ BUGS
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
+* It seems to be possible to both shoot and be killed by the spider in a single frame.  Either the spider should be killed by the shot or the spider should kill the player but not both.
 
 
 FIXED

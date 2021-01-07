@@ -153,7 +153,7 @@ setupScreen entry
         sei
         phd
         tsc
-        sta >backupStack
+        sta backupStack
         lda >STATE_REGISTER      ; Direct Page and Stack in Bank 01/
         ora #$0030
         sta >STATE_REGISTER
@@ -171,7 +171,7 @@ nextWord anop
         lda >STATE_REGISTER
         and #$ffcf
         sta >STATE_REGISTER
-        lda >backupStack
+        lda backupStack
         tcs
         pld
         cli

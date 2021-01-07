@@ -439,7 +439,6 @@ updatePlayer_shift anop
 		sta mouseAddress
 		tay
 		jsl drawShipShift
-		bra updatePlayer_dirty
 		
 updatePlayer_dirty anop
 		bne updatePlayer_collision

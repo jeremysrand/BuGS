@@ -110,9 +110,9 @@ playerAddLife_playerOne anop
 		lda #P1_LIVES_OFFSET
 playerAddLife_cont anop
 		sec
-		sbc numLives
+		sbc numLives,x
 		sec
-		sbc numLives
+		sbc numLives,x
 		inc numLives,x
 		tax
 		lda #TILE_PLAYER

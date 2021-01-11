@@ -91,9 +91,14 @@ updateHighScore entry
 scoreStartGame entry
 		stz gameScore
 		stz gameScore+2
+		stz gameScore+4
+		stz gameScore+6
 		stz scoreWithin12000
+		stz scoreWithin12000+2
 		stz scoreWithin20000
+		stz scoreWithin20000+2
 		stz scoreNum20000
+		stz scoreNum20000+2
 		
 		ldx #P1_SCORE_ONES_OFFSET
 		lda #TILE_NUMBER_0
@@ -378,12 +383,15 @@ scoreAddOneThousand_skipZeroHundreds anop
 checkHighScore entry
 		ldy #0
 checkHighScore_loop anop
+		lda playerNum
+		asl a
+		tax
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
-		cmp gameScore+2
+		cmp gameScore+2,x
 		blt checkHighScore_isHighScore
 		bne checkHighScore_next
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
-		cmp gameScore
+		cmp gameScore,x
 		blt checkHighScore_isHighScore
 checkHighScore_next anop
 		tya
@@ -411,9 +419,12 @@ checkHighScore_copyLoop anop
 		bra checkHighScore_copyLoop
 checkHighScore_doneCopy anop
 		ldy scoreIndex
-		lda gameScore
+		lda playerNum
+		asl a
+		tax
+		lda gameScore,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
-		lda gameScore+2
+		lda gameScore+2,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
 		
 		lda playerNum

@@ -19,19 +19,24 @@ NEXT_LEVEL_FRAME_COUNT equ 60
 
 levelInit entry
 		stz gameLevel
+		stz gameLevel+2
 		stz centipedeLevelNum
+		stz centipedeLevelNum+2
 		stz colourLevelNum
+		stz colourLevelNum+2
 		lda #SEGMENT_SPEED_FAST
 		sta levelOne+2
 		rtl
 
 
 levelStart entry
-		lda colourLevelNum
+		ldx playerNum
+		lda colourLevelNum,x
 		jsl setColour
 		jsl startSegmentSound
 		
-		ldx centipedeLevelNum
+		ldy playerNum
+		ldx centipedeLevelNum,y
 		lda levelTable,x
 		tax
 		lda |$0,x
@@ -50,7 +55,7 @@ levelStart entry
 		asl a
 		asl a
 		asl a
-		ldx centipedeLevelNum
+		ldx centipedeLevelNum,y
 		clc
 		adc levelTable,x
 		tax
@@ -98,20 +103,23 @@ updateLevel_done anop
 		rtl
 
 levelNext entry
-		lda colourLevelNum
+		ldx playerNum
+		lda colourLevelNum,x
 		inc a
 		cmp #NUM_COLOUR_PALETTES
 		blt levelNext_skip
 		lda #0
 levelNext_skip anop
-		sta colourLevelNum
-		inc gameLevel
+		sta colourLevelNum,x
+		ldx playerNum
+		inc gameLevel,x
 		
-		lda scoreNum20000
+		lda scoreNum20000,x
 		cmp #2
 		bge levelNext_fastOnly
 		
-		ldy centipedeLevelNum
+		ldx playerNum
+		ldy centipedeLevelNum,x
 		ldx levelTable,y
 		lda |$2,x
 		cmp #SEGMENT_SPEED_FAST
@@ -121,7 +129,8 @@ levelNext_skip anop
 		rtl
 		
 levelNext_slowIncrement anop
-		lda centipedeLevelNum
+		ldx playerNum
+		lda centipedeLevelNum,x
 		cmp #LEVEL_TABLE_LAST_OFFSET
 		bge levelNext_slowWrap
 		inc a
@@ -130,7 +139,7 @@ levelNext_slowIncrement anop
 levelNext_slowWrap anop
 		lda #0
 levelNext_slowNoWrap anop
-		sta centipedeLevelNum
+		sta centipedeLevelNum,x
 		tay
 		ldx levelTable,y
 		lda #SEGMENT_SPEED_SLOW
@@ -138,7 +147,8 @@ levelNext_slowNoWrap anop
 		rtl
 
 levelNext_fastOnly anop
-		lda centipedeLevelNum
+		ldx playerNum
+		lda centipedeLevelNum,x
 		cmp #LEVEL_TABLE_LAST_OFFSET
 		bge levelNext_fastWrap
 		inc a
@@ -147,7 +157,7 @@ levelNext_fastOnly anop
 levelNext_fastWrap anop
 		lda #0
 levelNext_fastNoWrap anop
-		sta centipedeLevelNum
+		sta centipedeLevelNum,x
 		tay
 		ldx levelTable,y
 		lda #SEGMENT_SPEED_FAST

@@ -98,9 +98,10 @@ updateFlea_explosionDone anop
 updateFlea_maybeAdd anop
 		lda gameRunning
 		bne updateFlea_doNotAdd
-		lda gameLevel
+		ldx playerNum
+		lda gameLevel,x
 		beq updateFlea_doNotAdd
-		lda scoreNum20000
+		lda scoreNum20000,x
 		bne updateFlea_moreThan20000
 ; Below 20000 points, 5 or more mushrooms do not result in a flea
 		lda #4
@@ -119,7 +120,7 @@ updateFlea_moreThan120000 anop
 		clc
 		adc #8
 updateFlea_checkNumMushrooms anop
-		cmp numInfieldMushrooms
+		cmp numInfieldMushrooms,x
 		blt updateFlea_doNotAdd
 		jmp addFlea
 		
@@ -181,7 +182,8 @@ updateFlea_nextTile anop
 		sta tileDirty,x
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateFlea_nextAction
-        inc numInfieldMushrooms
+		ldx playerNum
+        inc numInfieldMushrooms,x
         bra updateFlea_nextAction
         
 updateFlea_bottom anop
@@ -203,7 +205,8 @@ addFlea entry
         lda fleaState
         bne addFlea_done
 		
-		lda scoreNum20000
+		ldx playerNum
+		lda scoreNum20000,x
 		cmp #3
 		bge addFlea_fast
 		lda #SPRITE_SPEED_SLOW

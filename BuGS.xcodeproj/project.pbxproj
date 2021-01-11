@@ -98,7 +98,7 @@
 		9D6DB0B825932CA600CDBF05 /* scorpion.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = scorpion.raw; sourceTree = "<group>"; };
 		9D6DB164259D759C00CDBF05 /* tileConvert.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = tileConvert.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D6DB18625A411DA00CDBF05 /* BuGS.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = BuGS.2mg; sourceTree = "<group>"; };
-		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; };
+		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
 		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };

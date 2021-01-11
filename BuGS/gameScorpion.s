@@ -90,7 +90,8 @@ updateScorpion entry
 updateScorpion_playerOnscreen anop
         lda scorpionState
         bne updateScorpion_cont
-		lda gameLevel
+		ldx playerNum
+		lda gameLevel,x
 		cmp #3
 		blt updateScorpion_doNotAdd
 		jsl rand0_to_65534
@@ -265,7 +266,8 @@ addScorpion entry
         rtl
         
 addScorpion_doit anop
-		lda scoreNum20000
+		ldx playerNum
+		lda scoreNum20000,x
 		bne addScorpion_randomSpeed
 addScorpion_slow anop
 		lda #SPRITE_SPEED_SLOW

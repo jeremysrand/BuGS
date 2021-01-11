@@ -1811,7 +1811,8 @@ shootSegment_doneScore anop
 shootSegment_noMushroom anop
 		cpy #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt shootSegment_normalMushroom
-		inc numInfieldMushrooms
+		ldx playerNum
+		inc numInfieldMushrooms,x
 shootSegment_normalMushroom anop
 		lda #TILE_MUSHROOM4
 shootSegment_dirtyTile anop

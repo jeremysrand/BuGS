@@ -98,39 +98,41 @@ addRandomMushrooms entry
 		lda #INVALID_TILE_NUM
 		sta mushroomToRefresh
 		
-		ldx #RHS_FIRST_TILE_OFFSET-2
+		ldy #RHS_FIRST_TILE_OFFSET-2
 addRandomMushrooms_clear anop
-		lda tileType,x
+		lda tileType,y
 		beq addRandomMushrooms_skipClear
 		lda #TILE_EMPTY
-		sta tileType,x
+		sta tileType,y
 		lda #TILE_STATE_DIRTY
-		sta tileDirty,x
+		sta tileDirty,y
 addRandomMushrooms_skipClear anop
-		dex
-		dex
+		dey
+		dey
 		bpl addRandomMushrooms_clear
 		
-		stz numInfieldMushrooms
-		ldy #STARTING_NUM_MUSHROOMS
+		ldx playerNum
+		stz numInfieldMushrooms,x
+		ldx #STARTING_NUM_MUSHROOMS
 		
 addRandomMushrooms_loop anop
-		phy
+		phx
 addRandomMushrooms_tryAgain anop
 		jsl randomMushroomOffset
-		tax
-		lda tileType,x
+		tay
+		lda tileType,y
 		bne addRandomMushrooms_tryAgain
 		lda #TILE_MUSHROOM4
-		sta tileType,x
+		sta tileType,y
 		lda #TILE_STATE_DIRTY
-		sta tileDirty,x
-		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
+		sta tileDirty,y
+		cpy #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt addRandomMushrooms_notInfield
-		inc numInfieldMushrooms
+		ldx playerNum
+		inc numInfieldMushrooms,x
 addRandomMushrooms_notInfield anop
-		ply
-		dey
+		plx
+		dex
 		bne addRandomMushrooms_loop
 		rtl
 		
@@ -157,7 +159,8 @@ shootMushroom_poisoned anop
 shootMushroom_empty anop
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt shootMushrom_notInfield
-		dec numInfieldMushrooms
+		ldx playerNum
+		dec numInfieldMushrooms,x
 shootMushrom_notInfield anop
 		jmp scoreAddOne
 		

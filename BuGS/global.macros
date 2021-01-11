@@ -218,16 +218,20 @@ _dirtyNonGameTile_skip&SYSCNT anop
 ; Update the score
         macro
         _incrementScore &increment
+        lda playerNum
+        asl a
+        tax
         lda #&increment
         clc
-        adc gameScore
-        sta gameScore
+        adc gameScore,x
+        sta gameScore,x
         bcc _incrementScore_noCarry&SYSCNT
-        inc gameScore+2
+        inc gameScore+2,x
 _incrementScore_noCarry&SYSCNT anop
+        ldx playerNum
         lda #&increment
         clc
-        adc scoreWithin12000
+        adc scoreWithin12000,x
         cmp #12000
         blt _incrementScore_noExtraMan&SYSCNT
         sec
@@ -235,16 +239,17 @@ _incrementScore_noCarry&SYSCNT anop
         pha
         jsl playerAddLife
         pla
+        ldx playerNum
 _incrementScore_noExtraMan&SYSCNT anop
-        sta scoreWithin12000
+        sta scoreWithin12000,x
         lda #&increment
         clc
-        adc scoreWithin20000
+        adc scoreWithin20000,x
         cmp #20000
         blt _incrementScore_no2000&SYSCNT
         sec
         sbc #20000
-        inc scoreNum20000
+        inc scoreNum20000,x
 _incrementScore_no2000&SYSCNT anop
-        sta scoreWithin20000
+        sta scoreWithin20000,x
         mend

@@ -444,7 +444,10 @@ updateSpider_tilesUp anop
 		sta tileDirty,x
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesUpCont
-		dec numInfieldMushrooms
+		ldy playerNum
+		lda numInfieldMushrooms,y
+		dec a
+		sta numInfieldMushrooms,y
         
 updateSpider_tilesUpCont anop
         ldx spiderTileOffsets+10
@@ -523,7 +526,10 @@ updateSpider_tilesDown anop
 		sta tileDirty,x
 		cpx #SPIDER_STARTING_TOP_ROW_OFFSET
 		blt updateSpider_tilesDownCont
-		dec numInfieldMushrooms
+		ldy playerNum
+		lda numInfieldMushrooms,y
+		dec a
+		sta numInfieldMushrooms,y
         
 updateSpider_tilesDownCont anop
         ldx spiderTileOffsets+8
@@ -581,9 +587,12 @@ addSpider entry
         rtl
         
 addSpider_checkSpeed anop
-		lda gameScore+2
+		lda playerNum
+		asl a
+		tax
+		lda gameScore+2,x
 		bne addSpider_fast
-		lda gameScore
+		lda gameScore,x
 		cmp #5000
 		bge addSpider_fast
 		lda #SPRITE_SPEED_SLOW
@@ -602,7 +611,8 @@ addSpider_setHeight anop
 ;   120,000 to 139,999 - 9th row from bottom
 ;   140,000 to 159,999 - 8th row from bottom
 ;   160,000 to ...	 - 7th row from bottom
-		lda scoreNum20000
+		ldx playerNum
+		lda scoreNum20000,x
 		cmp #6
 		blt addSpider_height10
 		beq addSpider_height9

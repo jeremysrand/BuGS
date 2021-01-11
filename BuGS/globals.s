@@ -143,15 +143,6 @@ gameRunning	dc i2'1'
 ; The following data values hold the game state and when/if 2 player is supported,
 ; this information will need to be copied to a backup location when the player
 ; switches.
-numSegments 		dc i2'0'
-gameLevel   		dc i2'0'
-gameScore  			dc i4'0'
-scoreWithin12000	dc i2'0'
-scoreWithin20000	dc i2'0'
-scoreNum20000		dc i2'0'
-centipedeLevelNum	dc i2'0'
-colourLevelNum		dc i2'0'
-numInfieldMushrooms dc i2'0'
 scoreOnesOffset		dc i2'0'
 scoreTensOffset		dc i2'0'
 scoreHundredsOffset	dc i2'0'
@@ -159,17 +150,37 @@ scoreThousandsOffset dc i2'0'
 ; tileType
 
 
+; Two values for each of these, indexed by playerNum
+gameScore  	dc i4'0'
+			dc i4'0'
+scoreWithin12000	dc i2'0'
+			dc i2'0'
+scoreWithin20000	dc i2'0'
+			dc i2'0'
+scoreNum20000	dc i2'0'
+			dc i2'0'
+numInfieldMushrooms dc i2'0'
+			dc i2'0'
+numLives	dc i2'0'
+			dc i2'0'
+gameLevel   dc i2'0'
+			dc i2'0'
+colourLevelNum	dc i2'0'
+			dc i2'0'
+centipedeLevelNum	dc i2'0'
+			dc i2'0'
+
+
 playerState		dc i2'PLAYER_STATE_NONE'
 playerNum		dc i2'0'
 isSinglePlayer	dc i2'0'
-numLives		dc i2'0'		; Two values for this, indexed by playerNum
-			dc i2'0'
 mouseX			dc i2'0'
 mouseY 			dc i2'0'
 mouseAddress	dc i2'0'
 backupStack 	dc i2'0'
 collision   	dc i2'0'
 collisionAddr	dc i2'0'
+numSegments 	dc i2'0'
 
 
 tileJumpTable dc a4'solid0'

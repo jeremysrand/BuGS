@@ -188,9 +188,9 @@ startGame entry
 startGame_notRunning anop
 		sta isSinglePlayer
 		stz gameRunning
-		jsl addRandomMushrooms
-		jsl scoreStartGame
 		jsl initPlayer
+		jsl scoreStartGame
+		jsl addRandomMushrooms
 		jsl spiderInitGame
 		jsl levelInit
 		jsl soundInit

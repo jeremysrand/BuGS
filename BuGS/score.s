@@ -553,7 +553,13 @@ checkHighScore_saveHighScore anop
 		_overwriteGameTile TILE_LETTER_E
 		_overwriteGameTile TILE_LETTER_R
 		_overwriteGameTile TILE_EMPTY
+		lda playerNum
+		beq checkHighScore_printPlayer1
+		_overwriteGameTile TILE_NUMBER_2
+		bra checkHighScore_donePrintingPlayer
+checkHighScore_printPlayer1 anop
 		_overwriteGameTile TILE_NUMBER_1
+checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY

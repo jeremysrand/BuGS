@@ -24,6 +24,7 @@
 game    start
         using globalData
 		using tileData
+		using playerData
         
         jsl setupScreen
         
@@ -190,6 +191,15 @@ startGame_notRunning anop
 		stz gameRunning
 		jsl initPlayer
 		jsl scoreStartGame
+		lda isSinglePlayer
+		beq startGame_singlePlayer
+		lda #PLAYER_TWO
+		sta playerNum
+		jsl addRandomMushrooms
+		jsl copyToPlayer2Tiles
+		lda #PLAYER_ONE
+		sta playerNum
+startGame_singlePlayer anop
 		jsl addRandomMushrooms
 		jsl spiderInitGame
 		jsl levelInit
@@ -204,7 +214,65 @@ startLevel entry
 		jsl playerLevelStart
 		jmp levelStart
 	
-	
+
+copyToPlayer1Tiles entry
+		ldx #0
+copyToPlayer1Tiles_loop anop
+		lda tileData,x
+		sta >player1Tiles,x
+		inx
+		inx
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt copyToPlayer1Tiles_loop
+		rtl
+
+		
+copyToPlayer2Tiles entry
+		ldx #0
+copyToPlayer2Tiles_loop anop
+		lda tileData,x
+		sta >player2Tiles,x
+		inx
+		inx
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt copyToPlayer2Tiles_loop
+		rtl
+		
+		
+copyFromPlayer1Tiles entry
+		ldx #0
+copyFromPlayer1Tiles_loop anop
+		lda >player1Tiles,x
+		cmp tileData,x
+		beq copyFromPlayer1Tiles_skip
+		sta tileData,x
+		lda TILE_STATE_DIRTY
+		sta tileDirty,x
+copyFromPlayer1Tiles_skip anop
+		inx
+		inx
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt copyFromPlayer1Tiles_loop
+		rtl
+		
+		
+copyFromPlayer2Tiles entry
+		ldx #0
+copyFromPlayer2Tiles_loop anop
+		lda >player2Tiles,x
+		cmp tileData,x
+		beq copyFromPlayer2Tiles_skip
+		sta tileData,x
+		lda TILE_STATE_DIRTY
+		sta tileDirty,x
+copyFromPlayer2Tiles_skip anop
+		inx
+		inx
+		cpx #RHS_FIRST_TILE_OFFSET
+		blt copyFromPlayer2Tiles_loop
+		rtl
+		
+
 overwriteGameTile entry
 		phy
 		tay

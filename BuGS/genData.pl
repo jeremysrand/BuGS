@@ -555,6 +555,24 @@ EOF
 print $fh $text;
 close($fh);
 
+# Generate the playerData.s file
+open $fh, ">", "$gGenDir/playerData.s" or die "$0: Unable to open $gGenDir/playerData.s for writing, $!";
+my $dataSize = 2 * $gEquates{"NUM_GAME_TILES"};
+$text = << "EOF";
+        case on
+        mcopy playerData.macros
+        keep playerData
+
+playerData data playerDataSeg
+
+player1Tiles ds $dataSize
+player2Tiles ds $dataSize
+
+        end
+EOF
+print $fh $text;
+close($fh);
+
 # Generate the tileData.h file
 
 open $fh, ">", "$gGenDir/tileData.h" or die "$0: Unable to open $gGenDir/tileData.h for writing, $!";

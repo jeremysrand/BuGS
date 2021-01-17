@@ -100,7 +100,7 @@
 		9D6DB18625A411DA00CDBF05 /* BuGS.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = BuGS.2mg; sourceTree = "<group>"; };
 		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
+		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
 		9D9F07F92553AB3800875B29 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		9DB1505024C3801100558B87 /* gameFlea.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameFlea.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };

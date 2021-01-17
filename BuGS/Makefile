@@ -124,5 +124,7 @@ $(GENDIR)/tileData.s: genData.pl Makefile
 genclean:
 	$(RM) $(GENDIR)/tileData.s $(GENDIR)/screenData.s $(GENDIR)/tileData.h
 
+main.rez: $(wildcard sound/*.raw)
+
 # Do not change anything else below here...
 include make/tail.mk

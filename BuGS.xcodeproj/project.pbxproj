@@ -46,6 +46,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D0CF93D25B553430035D329 /* createRaw */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createRaw; sourceTree = "<group>"; };
+		9D0CF93E25B553CB0035D329 /* segments.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = segments.wav; sourceTree = "<group>"; };
+		9D0CF93F25B553DE0035D329 /* bonus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bonus.wav; sourceTree = "<group>"; };
+		9D0CF94025B553FE0035D329 /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = death.wav; sourceTree = "<group>"; };
+		9D0CF94125B554490035D329 /* fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fire.wav; sourceTree = "<group>"; };
+		9D0CF94225B5547B0035D329 /* kill.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kill.wav; sourceTree = "<group>"; };
+		9D0CF94325B554910035D329 /* spider.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spider.wav; sourceTree = "<group>"; };
+		9D0CF94425B554A10035D329 /* extralife.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = extralife.wav; sourceTree = "<group>"; };
+		9D0CF94525B554BC0035D329 /* flea_loop_256b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flea_loop_256b.wav; sourceTree = "<group>"; };
+		9D0CF94625B554CE0035D329 /* scorpion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = scorpion.wav; sourceTree = "<group>"; };
 		9D0DC8EF258C715E00DE9E87 /* extralife.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = extralife.raw; sourceTree = "<group>"; };
 		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
@@ -124,9 +134,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D0CF93C25B5531F0035D329 /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				9D0CF93E25B553CB0035D329 /* segments.wav */,
+				9D0CF93F25B553DE0035D329 /* bonus.wav */,
+				9D0CF94025B553FE0035D329 /* death.wav */,
+				9D0CF94125B554490035D329 /* fire.wav */,
+				9D0CF94225B5547B0035D329 /* kill.wav */,
+				9D0CF94325B554910035D329 /* spider.wav */,
+				9D0CF94425B554A10035D329 /* extralife.wav */,
+				9D0CF94525B554BC0035D329 /* flea_loop_256b.wav */,
+				9D0CF94625B554CE0035D329 /* scorpion.wav */,
+				9D0CF93D25B553430035D329 /* createRaw */,
+			);
+			path = sources;
+			sourceTree = "<group>";
+		};
 		9D1553E8257F3DC600657188 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				9D0CF93C25B5531F0035D329 /* sources */,
 				9D1553EA257F3E5200657188 /* bonus.raw */,
 				9D6DB0AE2591A67700CDBF05 /* flea.raw */,
 				9D0DC8EF258C715E00DE9E87 /* extralife.raw */,

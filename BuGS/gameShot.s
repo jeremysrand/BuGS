@@ -149,8 +149,8 @@ updateShot_collision anop
 		bge updateShot_onScreen
 		rtl
 updateShot_onScreen anop
-		and #$3333
-		bne updateShot_maybeMushroom
+		and #$cccc
+		beq updateShot_maybeMushroom
 		
 		txy
 		txa

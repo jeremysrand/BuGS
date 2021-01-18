@@ -4,12 +4,16 @@ BUGS
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
-* It seems to be possible to both shoot and be killed by the spider in a single frame.  Either the spider should be killed by the shot or the spider should kill the player but not both.
+    * I tried reducing the sampling frequency from 11025 for most of the samples to 5513 and I didn't notice any improvement in the quality of the sound on real HW.  Nor did I notice any real degredation on real HW or on an emulator.
 
 
 FIXED
 =======
 
+
+* It seems to be possible to both shoot and be killed by the spider in a single frame.  Either the spider should be killed by the shot or the spider should kill the player but not both.
+    * Based on the code, I don't think it is possible that this happened in a single frame.  Instead, I think what is happening is that the spider is being shot and then goes through a small number of explosion frames.  The colour used in those explosion frames were detected as a collision to the player.
+    * I have changed the colours of the explosion to no longer be detected as a collision for the player.
 * It is possible to shoot between two segments of a centipede.  The problem is that there are black pixels between the segments and if things are timed just right (or just wrong), the shot can slot in at those black pixels and end up missing both segments.
     * I am not sure how much can be done about this given how collisions are detected.
     * I have implemented a fix which I believe solves this problem.  The shot is a single pixel wide which allows it to slot in between a segment.  I have changed the collision code to detect a collision if it is also if there is any pixel on in the byte (ie two pixels wide).  That should ensure that the shot cannot pass through a centipede.  Note it also makes things slightly easier to hit where before it might have passed right next to.

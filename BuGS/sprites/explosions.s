@@ -16,9 +16,9 @@ explosions start spriteSeg
 explosion1 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green (c)
+; $2 - Red (4)
+; $3 - Off-white (8)
 ;
 ; ..RR|.R..
 ; .OGR|G...
@@ -32,22 +32,22 @@ explosion1 entry
         
         lda $0,s
         and #$00ff
-        ora #$4400
+        ora #$2200
         sta $0,s
         
         lda $2,s
         and #$fff0
-        ora #$0004
+        ora #$0002
         sta $2,s
         
         lda $a0,s
         and #$00f0
-        ora #$c408
+        ora #$1203
         sta $a0,s
         
         lda $a2,s
-;        and #$ff0f     not necessary with pure green
-        ora #$00c0
+        and #$ff0f
+        ora #$0010
         sta $a2,s
         
         tsc
@@ -55,22 +55,21 @@ explosion1 entry
         tcs
 
         lda $0,s
-;        and #$ff0f     not necessary with pure green
-        ora #$cc0c
+        and #$ff0f
+        ora #$1101
         sta $0,s
         
         lda $2,s
         and #$0f00
-        ora #$40cc
+        ora #$2011
         sta $2,s
         
-
-        lda #$cc4c
+        lda #$1121
         sta $a0,s
         
         lda $a2,s
         and #$0f00
-        ora #$80cc
+        ora #$3011
         sta $a2,s
         
         tsc
@@ -79,18 +78,18 @@ explosion1 entry
         
         lda $0,s
         and #$0f00
-        ora #$c04c
+        ora #$1021
         sta $0,s
         
         lda $2,s
-;        and #$fff0     not necessary with pure green
-        ora #$c0cc
+        and #$fff0
+        ora #$1011
         sta $2,s
 
-        lda #$cc8c
+        lda #$1131
         sta $a0,s
         
-        lda #$8ccc
+        lda #$3111
         sta $a0,s
         
         tsc
@@ -99,22 +98,22 @@ explosion1 entry
         
         lda $0,s
         and #$00f0
-        ora #$cc08
+        ora #$1103
         sta $0,s
         
         lda $2,s
         and #$0f00
-        ora #$804c
+        ora #$3021
         sta $2,s
         
         lda $a0,s
         and #$00f0
-        ora #$8404
+        ora #$3202
         sta $a0,s
         
         lda $a2,s
         and #$f0f0
-        ora #$0c04
+        ora #$0102
         sta $a2,s
         
         _spriteFooter
@@ -124,9 +123,9 @@ explosion1 entry
 explosion2 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
 ;
 ; ..GR|G.R.
 ; .GGG|GGRG
@@ -140,61 +139,61 @@ explosion2 entry
 
         lda $0,s
         and #$00ff
-        ora #$c400
+        ora #$1200
         sta $0,s
         
         lda $2,s
         and #$0f0f
-        ora #$40c0
+        ora #$2010
         sta $2,s
         
         lda $a0,s
-;        and #$00f0     not necessary with pure green
-        ora #$cc0c
+        and #$00f0
+        ora #$1101
         sta $a0,s
         
-        lda #$4ccc
+        lda #$2111
         sta $a2,s
         
         tsc
         adc #$143
         tcs
         
-        pea $c8cc
-        pea $cc8c
+        pea $1311
+        pea $1131
         
         adc #$a0
         tcs
         
-        pea $cc8c
-        pea $c88c
+        pea $1131
+        pea $1331
         
         adc #$a0
         tcs
         
-        pea $c88c
-        pea $c88c
+        pea $1331
+        pea $1331
         
         adc #$a0
         tcs
         
-        pea $cccc
-        pea $cc8c
+        pea $1111
+        pea $1131
         
         adc #$a0
         tcs
         
-        pea $c8cc
-        pea $c48c
+        pea $1311
+        pea $1231
         
         lda $a1,s
         and #$f0f0
-        ora #$040c
+        ora #$0201
         sta $a1,s
         
         lda $a3,s
-;        and #$f0f0         not necessary for pure green
-        ora #$000c
+        and #$f0f0
+        ora #$0001
         sta $a3,s
         
         _spriteFooter
@@ -204,9 +203,9 @@ explosion2 entry
 explosion3 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
 ;
 ; .GOG|RG..
 ; G.GG|GGGR
@@ -219,43 +218,43 @@ explosion3 entry
         
         lda $0,s
         and #$00f0
-        ora #$8c0c
+        ora #$3101
         sta $0,s
         
         lda $2,s
         and #$ff00
-        ora #$004c
+        ora #$0021
         sta $2,s
         
         lda $a0,s
-;        and #$000f     not necessary with pure green
-        ora #$ccc0
+        and #$000f
+        ora #$1110
         sta $a0,s
         
-        lda #$c4cc
+        lda #$1211
         sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda #$c8cc
+        lda #$1311
         sta $0,s
         
         lda $2,s
         and #$0f00
-        ora #$c0c8
+        ora #$1013
         sta $2,s
         
 
         lda $a0,s
         and #$0f00
-        ora #$804c
+        ora #$3021
         sta $a0,s
         
         lda $a2,s
-;        and #$00f0     not necessary with pure green
-        ora #$cc0c
+        and #$00f0
+        ora #$1101
         sta $a2,s
         
         tsc
@@ -263,41 +262,41 @@ explosion3 entry
         tcs
         
         lda $0,s
-;        and #$ff00     not necessary with pure green
-        ora #$00cc
+        and #$ff00
+        ora #$0011
         sta $0,s
         
         lda $2,s
-;        and #$fff0     not necessary with pure green
-        ora #$000c
+        and #$fff0
+        ora #$0001
         sta $2,s
 
-        lda #$4cc4
+        lda #$2112
         sta $a0,s
         
-        lda #$cc4c
+        lda #$1121
         sta $a2,s
         
         tsc
         adc #$140
         tcs
         
-        lda #$cc4c
+        lda #$1121
         sta $0,s
         
         lda $2,s
-;        and #$0f00     not necessary with pure green
-        ora #$c0cc
+        and #$0f00
+        ora #$1011
         sta $2,s
         
         lda $a0,s
         and #$0ff0
-        ora #$c008
+        ora #$1003
         sta $a0,s
         
         lda $a2,s
         and #$f0f0
-        ora #$080c
+        ora #$0301
         sta $a2,s
         
         _spriteFooter
@@ -323,22 +322,22 @@ explosion4 entry
 
         lda $0,s
         and #$000f
-        ora #$c8c0
+        ora #$1310
         sta $0,s
         
         lda $2,s
         and #$f0f0
-        ora #$0c04
+        ora #$0102
         sta $2,s
         
         lda $a0,s
         and #$f0f0
-        ora #$0c08
+        ora #$0103
         sta $a0,s
         
         lda $a2,s
-;        and #$0f0f     not necessary with pure green
-        ora #$c0c0
+        and #$0f0f
+        ora #$1010
         sta $a2,s
         
         tsc
@@ -347,22 +346,22 @@ explosion4 entry
         
         lda $0,s
         and #$f000
-        ora #$044c
+        ora #$0221
         sta $0,s
         
         lda $2,s
         and #$f0f0
-        ora #$0408
+        ora #$0203
         sta $2,s
         
         lda $a0,s
         and #$0f0f
-        ora #$40c0
+        ora #$2010
         sta $a0,s
         
         lda $a2,s
-;        and #$0fff     not necessary with pure green
-        ora #$c000
+        and #$0fff
+        ora #$1000
         sta $a2,s
         
         tsc
@@ -370,23 +369,23 @@ explosion4 entry
         tcs
         
         lda $0,s
-;        and #$ff00     not necessary with pure green
-        ora #$00cc
+        and #$ff00
+        ora #$0011
         sta $0,s
         
         lda $2,s
         and #$f0ff
-        ora #$0800
+        ora #$0300
         sta $2,s
         
         lda $a0,s
         and #$f0f0
-        ora #$0404
+        ora #$0202
         sta $a0,s
         
         lda $a2,s
         and #$00f0
-        ora #$c804
+        ora #$1302
         sta $a2,s
         
         tsc
@@ -395,22 +394,22 @@ explosion4 entry
 
         lda $0,s
         and #$0f0f
-        ora #$4080
+        ora #$2030
         sta $0,s
         
         lda $2,s
         and #$000f
-        ora #$c440
+        ora #$1220
         sta $2,s
         
         lda $a0,s
         and #$f000
-        ora #$0c4c
+        ora #$0121
         sta $a0,s
         
         lda $a2,s
         and #$0f00
-        ora #$80cc
+        ora #$3011
         sta $a2,s
         
         _spriteFooter
@@ -435,23 +434,23 @@ explosion5 entry
 ;
         
         lda $0,s
-;        and #$000f     not necessary with pure green
-        ora #$000c
+        and #$000f
+        ora #$0001
         sta $0,s
         
         lda $2,s
-;        and #$f0f0     not necessary with pure green
-        ora #$c0c0
+        and #$f0f0
+        ora #$1010
         sta $2,s
         
         lda $a0,s
         and #$00f0
-        ora #$8c04
+        ora #$3102
         sta $a0,s
         
         lda $a2,s
         and #$0ff0
-        ora #$c004
+        ora #$1002
         sta $a2,s
         
         tsc
@@ -460,22 +459,22 @@ explosion5 entry
         
         lda $0,s
         and #$ff00
-        ora #$00c8
+        ora #$0013
         sta $0,s
         
         lda $2,s
         and #$f00f
-        ora #$08c0
+        ora #$0310
         sta $2,s
         
         lda $a0,s
         and #$fff0
-        ora #$0004
+        ora #$0002
         sta $a0,s
         
         lda $a2,s
         and #$0fff
-        ora #$4000
+        ora #$2000
         sta $a2,s
         
         tsc
@@ -484,22 +483,22 @@ explosion5 entry
         
         lda $0,s
         and #$0f0f
-        ora #$40c0
+        ora #$2010
         sta $0,s
         
         lda $2,s
         and #$f0f0
-        ora #$0404
+        ora #$0202
         sta $2,s
         
         lda $a0,s
         and #$f0f0
-        ora #$0c08
+        ora #$0103
         sta $a0,s
         
         lda $a2,s
         and #$0ff0
-        ora #$800c
+        ora #$3001
         sta $a2,s
         
         tsc
@@ -508,22 +507,22 @@ explosion5 entry
 
         lda $0,s
         and #$0f00
-        ora #$404c
+        ora #$2021
         sta $0,s
         
         lda $2,s
-;        and #$0fff     not necessary with pure green
-        ora #$c000
+        and #$0fff
+        ora #$1000
         sta $2,s
         
         lda $a0,s
-;        and #$f0f0     not necessary with pure green
-        ora #$0c0c
+        and #$f0f0
+        ora #$0101
         sta $a0,s
         
         lda $a2,s
         and #$ff00
-        ora #$0084
+        ora #$0032
         sta $a2,s
         
         _spriteFooter
@@ -549,22 +548,22 @@ explosion6 entry
         
         lda $0,s
         and #$f0f0
-        ora #$0c08
+        ora #$0103
         sta $0,s
         
         lda $2,s
-;        and #$0fff     not necessary with pure green
-        ora #$c000
+        and #$0fff
+        ora #$1000
         sta $2,s
         
         lda $a0,s
         and #$0f0f
-        ora #$c040
+        ora #$1020
         sta $a0,s
         
         lda $a2,s
         and #$f000
-        ora #$0484
+        ora #$0232
         sta $a2,s
         
         tsc
@@ -572,37 +571,37 @@ explosion6 entry
         tcs
 
         lda $a0,s
-;        and #$ff0f     not necessary with pure green
-        ora #$00c0
-        sta $a0,s
-        
-        lda $a2,s
-;        and #$0fff     not necessary with pure green
-        ora #$c000
-        sta $a2,s
-        
-        tsc
-        adc #$140
-        tcs
-        
-        lda $0,s
-        and #$fff0
-        ora #$0008
-        sta $0,s
-        
-        lda $2,s
-;        and #$f0ff     not necessary with pure green
-        ora #$0c00
-        sta $2,s
-        
-        lda $a0,s
-        and #$fff0
-        ora #$0008
+        and #$ff0f
+        ora #$0010
         sta $a0,s
         
         lda $a2,s
         and #$0fff
-        ora #$8000
+        ora #$1000
+        sta $a2,s
+        
+        tsc
+        adc #$140
+        tcs
+        
+        lda $0,s
+        and #$fff0
+        ora #$0003
+        sta $0,s
+        
+        lda $2,s
+        and #$f0ff
+        ora #$0100
+        sta $2,s
+        
+        lda $a0,s
+        and #$fff0
+        ora #$0003
+        sta $a0,s
+        
+        lda $a2,s
+        and #$0fff
+        ora #$3000
         sta $a2,s
         
         tsc
@@ -611,22 +610,22 @@ explosion6 entry
 
         lda $0,s
         and #$0f0f
-        ora #$c040
+        ora #$1020
         sta $0,s
         
         lda $2,s
-;        and #$f0ff     not necessary with pure green
-        ora #$0c00
+        and #$f0ff
+        ora #$0100
         sta $2,s
         
         lda $a0,s
         and #$f0f0
-        ora #$0808
+        ora #$0303
         sta $a0,s
         
         lda $a2,s
         and #$0f0f
-        ora #$4040
+        ora #$2020
         sta $a2,s
         
         _spriteFooter

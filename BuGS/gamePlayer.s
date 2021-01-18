@@ -57,12 +57,8 @@ initPlayer_loop2 anop
 		bne initPlayer_loop2
 		
 initPlayer_done anop
-		jmp playerSwitch
-
+		jmp scoreSwitchPlayer
 		
-playerSwitch entry
-		jsl scoreSwitchPlayer
-		rtl
 		
 playerLevelStart entry
 		stz playerIgnoreFirstPoll

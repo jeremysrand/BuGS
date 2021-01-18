@@ -16,9 +16,9 @@ scores start spriteSeg
 score300 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....
@@ -123,9 +123,9 @@ score300 entry
 score600 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....
@@ -231,9 +231,9 @@ score600 entry
 score900 entry
         _spriteHeader
  
-; $c - Green
-; $4 - Red
-; $8 - Off-white
+; $1 - Green
+; $2 - Red
+; $3 - Off-white
 ;
 ; ....|....|....
 ; ....|....|....

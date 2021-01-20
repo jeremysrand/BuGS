@@ -38,10 +38,6 @@ initPlayer_loop1 anop
 		
 		lda isSinglePlayer
 		beq initPlayer_done
-; DEBUG
-;		lda #PLAYER_TWO
-;		sta playerNum
-; DEBUG
 		ldy #STARTING_NUM_LIVES
 		sty numLives+2
 		ldx #P2_LIVES_OFFSET
@@ -118,34 +114,18 @@ playerAddLife_cont anop
 		
 
 updatePlayer entry
-		lda gameRunning
-		beq updatePlayer_gameRunning
+		lda gameState
+		bne updatePlayer_gameRunning
 		rtl
 updatePlayer_gameRunning anop
 		lda playerState
 		cmp #PLAYER_STATE_NONE
 		bne updatePlayer_notNone
-		lda playerFrameCount
-		bne updatePlayer_wait
-		ldx playerNum
-		lda numLives,x
-		beq updatePlayer_gameOver
-		lda numSegments
-		bne updatePlayer_notNextLevel
-; If we are going to the next level, let updateLevel handle that for us.
-		rtl
-updatePlayer_notNextLevel anop
-		jmp startLevel
-updatePlayer_gameOver anop
-		jmp gameOver
-updatePlayer_wait anop
-		dec a
-		sta playerFrameCount
 		rtl
 updatePlayer_notNone anop
 		cmp #PLAYER_STATE_EXPLODING
 		beq updatePlayer_exploding
-		jmp updatePlayer_notExploding
+		jmp updatePlayer_onScreen
 updatePlayer_exploding anop
 		lda playerFrameCount
 		beq updatePlayer_nextExplosion
@@ -162,7 +142,7 @@ updatePlayer_nextExplosion anop
 		sta playerFrameCount
 		bra updatePlayer_drawExplosion
 updatePlayer_doneExplosion anop
-		lda #PLAYER_STATE_MUSHROOMS
+		lda #PLAYER_STATE_NONE
 		sta playerState
 		rtl
 
@@ -207,21 +187,7 @@ jumpInst anop
 		jmp >shipExplosion1
 		nop
 		
-updatePlayer_notExploding anop
-		cmp #PLAYER_STATE_MUSHROOMS
-		bne updatePlayer_notMushrooms
-		jsl resetMushrooms
-		bcc updatePlayer_doneMushrooms
-		rtl
-		
-updatePlayer_doneMushrooms anop
-		lda #PLAYER_RESTART_LEVEL_FRAME_COUNT
-		sta playerFrameCount
-		lda #PLAYER_STATE_NONE
-		sta playerState
-		rtl
-		
-updatePlayer_notMushrooms anop
+updatePlayer_onScreen anop
 		ldx #0
 		ldy #0
 ; This code for reading the mouse data is based on some code which John Brooks helpfully provided, although I did things

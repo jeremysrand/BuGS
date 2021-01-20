@@ -96,8 +96,8 @@ updateFlea_explosionDone anop
         rtl
 
 updateFlea_maybeAdd anop
-		lda gameRunning
-		bne updateFlea_doNotAdd
+		lda gameState
+		beq updateFlea_doNotAdd
 		ldx playerNum
 		lda gameLevel,x
 		beq updateFlea_doNotAdd

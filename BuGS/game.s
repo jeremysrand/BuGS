@@ -26,11 +26,19 @@ game    start
 		using tileData
 		using playerData
         
-        jsl setupScreen
+
+PLAYER_DEATH_FRAME_COUNT	equ 30
+NEXT_LEVEL_FRAME_COUNT 	equ 60
+NEXT_PLAYER_FRAME_COUNT	equ 180
+GAME_OVER_FRAME_COUNT	equ 180
+RESTART_LEVEL_FRAME_COUNT	equ 20
+
+
+		jsl setupScreen
         
         lda #0
         jsl setColour
-		jsl gameOver
+		jsl setGameNotRunning
 		jsl updateHighScore
 
 gameLoop anop
@@ -71,11 +79,11 @@ gameLoop anop
         
 		jsl updatePlayer
 		jsl updateShot
+		jsl updateGameState
         jsl updateScorpion
         jsl updateSpider
         jsl updateFlea
         jsl updateSegments
-		jsl updateLevel
 		jsl updateSounds
 		
         jsl checkKeyboard
@@ -183,12 +191,13 @@ nextWord anop
 ; The accumulator has a 0 in it when starting a one player game, 1 when
 ; starting a two player game.
 startGame entry
-		ldx gameRunning
-		bne startGame_notRunning
+		ldx gameState
+		beq startGame_notRunning
 		rtl
 startGame_notRunning anop
 		sta isSinglePlayer
-		stz gameRunning
+		lda #GAME_STATE_LEVEL
+		sta gameState
 		jsl initPlayer
 		jsl scoreStartGame
 		lda isSinglePlayer
@@ -213,12 +222,209 @@ startLevel entry
 		jsl shotInitLevel
 		jsl playerLevelStart
 		jmp levelStart
-	
 
+
+updateGameState entry
+		lda gameState
+		beq updateGameState_none
+		cmp #GAME_STATE_LEVEL
+		beq updateGameState_level
+		cmp #GAME_STATE_NEXT_LEVEL
+		beq updateGameState_nextLevel
+		cmp #GAME_STATE_PLAYER_DYING
+		beq updateGameState_playerDying
+		cmp #GAME_STATE_BONUS
+		beq updateGameState_bonus
+		jmp updateGameState_moreStates
+updateGameState_none anop
+		stz frameCount
+		rtl
+		
+updateGameState_level anop
+		lda numSegments
+		bne updateGameState_levelNotDone
+		jsl levelNext
+		lda #GAME_STATE_NEXT_LEVEL
+		sta gameState
+		lda #NEXT_LEVEL_FRAME_COUNT
+		sta frameCount
+		jsl stopSegmentSound
+updateGameState_levelNotDone anop
+		lda playerState
+		cmp #PLAYER_STATE_EXPLODING
+		bne updateGameState_levelPlayerNotDying
+		lda #GAME_STATE_PLAYER_DYING
+		sta gameState
+		lda #PLAYER_DEATH_FRAME_COUNT
+		sta frameCount
+updateGameState_levelPlayerNotDying anop
+		rtl
+		
+updateGameState_nextLevel anop
+		lda playerState
+		cmp #PLAYER_STATE_EXPLODING
+		bne updateGameState_nextLevelPlayerNotDying
+		lda #GAME_STATE_PLAYER_DYING
+		sta gameState
+		lda #PLAYER_DEATH_FRAME_COUNT
+		sta frameCount
+		rtl
+updateGameState_nextLevelPlayerNotDying anop
+		lda frameCount
+		beq updateGameState_startLevel
+		dec a
+		sta frameCount
+		rtl
+updateGameState_startLevel anop
+		lda #GAME_STATE_LEVEL
+		sta gameState
+		jmp levelStart
+	
+updateGameState_playerDying anop
+		lda frameCount
+		beq updateGameState_playerDead
+		dec a
+		sta frameCount
+		rtl
+updateGameState_playerDead anop
+		lda #GAME_STATE_BONUS
+		sta gameState
+		jsl segmentsInitLevel
+		jsl scorpionInitLevel
+		jsl spiderInitLevel
+		jsl fleaInitLevel
+		rtl
+		
+updateGameState_bonus anop
+		jsl resetMushrooms
+		bcc updateGameState_doneBonus
+		rtl
+updateGameState_doneBonus anop
+		ldx playerNum
+		lda numLives,x
+		bne updateGameState_gameNotOver
+		jsl checkHighScore
+		bcc updateGameState_notHighScore
+		lda isSinglePlayer
+		beq updateGameState_isSinglePlayer
+		stz isSinglePlayer
+		bra updateGameState_twoPlayer
+updateGameState_isSinglePlayer anop
+		jmp setGameNotRunning
+updateGameState_notHighScore anop
+		lda isSinglePlayer
+		beq updateGameState_isSinglePlayer
+		lda #GAME_STATE_GAME_OVER
+		sta gameState
+		lda #GAME_OVER_FRAME_COUNT
+		rtl
+updateGameState_gameNotOver anop
+		jsl segmentsInitLevel
+		jsl scorpionInitLevel
+		jsl spiderInitLevel
+		jsl fleaInitLevel
+		lda isSinglePlayer
+		bne updateGameState_twoPlayer
+		lda #GAME_STATE_NEXT_LIFE
+		sta gameState
+		lda #RESTART_LEVEL_FRAME_COUNT
+		sta frameCount
+		rtl
+updateGameState_twoPlayer anop
+		lda #GAME_STATE_NEXT_PLAYER
+		sta gameState
+		lda #NEXT_PLAYER_FRAME_COUNT
+		sta frameCount
+		lda playerNum
+		eor #PLAYER_TWO
+		sta playerNum
+		jsl scoreSwitchPlayer
+		ldx playerNum
+		lda colourLevelNum,x
+		jsl setColour
+		lda playerNum
+		beq updateGameState_toPlayer1
+		jsl copyToPlayer1Tiles
+		jmp copyFromPlayer2Tiles
+updateGameState_toPlayer1 anop
+		jsl copyToPlayer2Tiles
+		jmp copyFromPlayer1Tiles
+		
+updateGameState_moreStates anop
+		cmp #GAME_STATE_NEXT_LIFE
+		beq updateGameState_nextLife
+		cmp #GAME_STATE_NEXT_PLAYER
+		beq updateGameState_nextPlayer
+		cmp #GAME_STATE_GAME_OVER
+		beq updateGameState_gameOver
+		rtl
+		
+updateGameState_nextLife anop
+		lda frameCount
+		bne updateGameState_nextLifeWait
+		lda #GAME_STATE_LEVEL
+		sta gameState
+		jmp startLevel
+updateGameState_nextLifeWait anop
+		dec a
+		sta frameCount
+		rtl
+
+updateGameState_nextPlayer anop
+		lda frameCount
+		bne updateGameState_nextPlayerWait
+		lda #GAME_STATE_LEVEL
+		sta gameState
+		jmp startLevel
+updateGameState_nextPlayerWait anop
+		dec a
+		sta frameCount
+updateGameState_printPlayerNumber anop
+		ldx #GAME_NUM_TILES_WIDE*12+16
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		lda playerNum
+		beq updateGameState_displayPlayer1
+		_overwriteGameTile TILE_NUMBER_2
+		rtl
+updateGameState_displayPlayer1 anop
+		_overwriteGameTile TILE_NUMBER_1
+		rtl
+		
+updateGameState_gameOver anop
+		lda frameCount
+		bne updateGameState_gameOverWait
+		stz isSinglePlayer
+		jmp updateGameState_twoPlayer
+		
+updateGameState_gameOverWait anop
+		dec a
+		sta frameCount
+		ldx #GAME_NUM_TILES_WIDE*11+12
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_M
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_V
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		jmp updateGameState_printPlayerNumber
+	
+	
 copyToPlayer1Tiles entry
 		ldx #0
 copyToPlayer1Tiles_loop anop
-		lda tileData,x
+		lda tileType,x
 		sta >player1Tiles,x
 		inx
 		inx
@@ -230,7 +436,7 @@ copyToPlayer1Tiles_loop anop
 copyToPlayer2Tiles entry
 		ldx #0
 copyToPlayer2Tiles_loop anop
-		lda tileData,x
+		lda tileType,x
 		sta >player2Tiles,x
 		inx
 		inx
@@ -243,9 +449,9 @@ copyFromPlayer1Tiles entry
 		ldx #0
 copyFromPlayer1Tiles_loop anop
 		lda >player1Tiles,x
-		cmp tileData,x
+		cmp tileType,x
 		beq copyFromPlayer1Tiles_skip
-		sta tileData,x
+		sta tileType,x
 		lda TILE_STATE_DIRTY
 		sta tileDirty,x
 copyFromPlayer1Tiles_skip anop
@@ -260,9 +466,9 @@ copyFromPlayer2Tiles entry
 		ldx #0
 copyFromPlayer2Tiles_loop anop
 		lda >player2Tiles,x
-		cmp tileData,x
+		cmp tileType,x
 		beq copyFromPlayer2Tiles_skip
-		sta tileData,x
+		sta tileType,x
 		lda TILE_STATE_DIRTY
 		sta tileDirty,x
 copyFromPlayer2Tiles_skip anop
@@ -460,15 +666,13 @@ setGameTile_skip anop
 		rts
 		
 		
-gameOver entry
-		lda #1
-		sta gameRunning
+setGameNotRunning entry
+		lda #GAME_STATE_NOT_RUNNING
+		sta gameState
 		jsl segmentsInitLevel
 		jsl scorpionInitLevel
 		jsl spiderInitLevel
 		jsl fleaInitLevel
-		
-		jsl checkHighScore
 		jsl addRandomMushrooms
 		jmp staticGameBoard
 		
@@ -761,8 +965,8 @@ checkKey_loop2 anop
         long i,m
         and #$007f
 		
-		ldx gameRunning
-		beq checkKey_pause
+		ldx gameState
+		bne checkKey_pause
         
         cmp #'q'
         beq checkKey_quit
@@ -823,7 +1027,8 @@ vblLoop anop
         rtl
         
         
-shouldQuit          dc i2'1'
-borderColour        dc i2'0'
+shouldQuit      dc i2'1'
+borderColour    dc i2'0'
+frameCount 		dc i2'0'
 
         end

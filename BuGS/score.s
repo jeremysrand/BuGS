@@ -400,6 +400,7 @@ checkHighScore_next anop
 		tay
 		cpy #SETTINGS_HIGH_SCORE_SIZE*10
 		blt checkHighScore_loop
+		clc
 		rtl
 checkHighScore_isHighScore anop
 		sty scoreIndex
@@ -766,7 +767,9 @@ checkHighScore_isInvalid anop
 		
 checkHighScore_doneInitials anop
 		jsl saveSettings
-		jmp updateHighScore
+		jsl updateHighScore
+		sec
+		rtl
 		
 
 scoreIndex dc i2'0'

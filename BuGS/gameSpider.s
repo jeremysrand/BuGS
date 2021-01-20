@@ -294,8 +294,8 @@ updateSpider_done anop
 		rtl
 		
 updateSpider_maybeAdd anop
-		lda gameRunning
-		bne updateSpider_done
+		lda gameState
+		beq updateSpider_done
 		lda spiderAddTime
 		bne updateSpider_waitForAdd
 		lda #SPIDER_ADD_TIME

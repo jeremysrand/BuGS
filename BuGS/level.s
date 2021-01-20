@@ -14,8 +14,6 @@ level start
 		using globalData
 		using tileData
 
-NEXT_LEVEL_FRAME_COUNT equ 60
-
 
 levelInit entry
 		stz gameLevel
@@ -25,7 +23,8 @@ levelInit entry
 		stz colourLevelNum
 		stz colourLevelNum+2
 		lda #SEGMENT_SPEED_FAST
-		sta levelOne+2
+		sta levelSpeed
+		sta levelSpeed+2
 		rtl
 
 
@@ -39,6 +38,8 @@ levelStart entry
 		ldx centipedeLevelNum,y
 		lda levelTable,x
 		tax
+		lda levelSpeed,y
+		sta |$2,x
 		lda |$0,x
 		sta centipedeNum
 ; We add centipedes in reverse order which means we need to load X up with the address
@@ -72,35 +73,7 @@ levelStart_loop anop
 		bra levelStart_loop
 levelStart_done anop
 		rtl
-
-
-updateLevel entry
-		lda gameRunning
-		beq updateLevel_cont
-		stz nextLevelFrameCount
-		rtl
-updateLevel_cont anop
-		lda playerState
-		cmp #PLAYER_STATE_EXPLODING
-		beq updateLevel_done
-		cmp #PLAYER_STATE_MUSHROOMS
-		beq updateLevel_done
-		lda nextLevelFrameCount
-		beq updateLevel_checkSegments
-		dec a
-		sta nextLevelFrameCount
-		bne updateLevel_done
-		jsl levelNext
-		jmp levelStart
-updateLevel_checkSegments anop
-		bne updateLevel_done
-		lda numSegments
-		bne updateLevel_done
-		lda #NEXT_LEVEL_FRAME_COUNT
-		sta nextLevelFrameCount
-		jsl stopSegmentSound
-updateLevel_done anop
-		rtl
+		
 
 levelNext entry
 		ldx playerNum
@@ -119,17 +92,16 @@ levelNext_skip anop
 		bge levelNext_fastOnly
 		
 		ldx playerNum
-		ldy centipedeLevelNum,x
-		ldx levelTable,y
-		lda |$2,x
+		lda levelSpeed,x
 		cmp #SEGMENT_SPEED_FAST
 		beq levelNext_slowIncrement
 		lda #SEGMENT_SPEED_FAST
-		sta |$2,x
+		sta levelSpeed,x
 		rtl
-		
+
 levelNext_slowIncrement anop
-		ldx playerNum
+		lda #SEGMENT_SPEED_SLOW
+		sta levelSpeed,x
 		lda centipedeLevelNum,x
 		cmp #LEVEL_TABLE_LAST_OFFSET
 		bge levelNext_slowWrap
@@ -140,14 +112,12 @@ levelNext_slowWrap anop
 		lda #0
 levelNext_slowNoWrap anop
 		sta centipedeLevelNum,x
-		tay
-		ldx levelTable,y
-		lda #SEGMENT_SPEED_SLOW
-		sta |$2,x
 		rtl
 
 levelNext_fastOnly anop
 		ldx playerNum
+		lda #SEGMENT_SPEED_FAST
+		sta levelSpeed,x
 		lda centipedeLevelNum,x
 		cmp #LEVEL_TABLE_LAST_OFFSET
 		bge levelNext_fastWrap
@@ -158,16 +128,12 @@ levelNext_fastWrap anop
 		lda #0
 levelNext_fastNoWrap anop
 		sta centipedeLevelNum,x
-		tay
-		ldx levelTable,y
-		lda #SEGMENT_SPEED_FAST
-		sta |$2,x
-		
 		rtl
 
 
-centipedeNum 		dc i2'0'
-nextLevelFrameCount dc i2'0'
+centipedeNum 	dc i2'0'
+levelSpeed	dc i2'SEGMENT_SPEED_FAST'
+			dc i2'SEGMENT_SPEED_FAST'
 
 ; The level structure looks like this:
 ;    number of independent centipedes (2 bytes)

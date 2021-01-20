@@ -5,6 +5,7 @@ This is a list of the software bugs (as opposed to the bugs in the game that you
 
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
     * I tried reducing the sampling frequency from 11025 for most of the samples to 5513 and I didn't notice any improvement in the quality of the sound on real HW.  Nor did I notice any real degredation on real HW or on an emulator.
+* The flea appears before the second level actually begins, in the time before the level starts if you have too few mushrooms at the bottom.  This is due to the way that levels are incremented now in the game state machine.
 
 
 FIXED

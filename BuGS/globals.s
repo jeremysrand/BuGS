@@ -21,8 +21,16 @@ SEGMENT_DIR_RIGHT   equ 1
 
 PLAYER_STATE_NONE		equ 0
 PLAYER_STATE_EXPLODING	equ 1
-PLAYER_STATE_MUSHROOMS  equ 2
-PLAYER_STATE_ONSCREEN	equ 3
+PLAYER_STATE_ONSCREEN	equ 2
+
+GAME_STATE_NOT_RUNNING	equ 0
+GAME_STATE_LEVEL		equ 1
+GAME_STATE_NEXT_LEVEL	equ 2
+GAME_STATE_PLAYER_DYING	equ 3
+GAME_STATE_BONUS		equ 4
+GAME_STATE_NEXT_LIFE	equ 5
+GAME_STATE_NEXT_PLAYER	equ 6
+GAME_STATE_GAME_OVER	equ 7
 
 ; The code uses segmentPixelOffset and the segment speed to figure out whether to draw the shifted sprite
 ; or the regular sprite.  By AND-ing with the speed, if the result is 0, then we want a non-shifted sprite.
@@ -138,7 +146,7 @@ PLAYER_ONE		gequ 0
 PLAYER_TWO		gequ 2
 
 
-gameRunning	dc i2'1'
+gameState	dc i2'GAME_STATE_NOT_RUNNING'
 
 ; The following data values hold the game state and when/if 2 player is supported,
 ; this information will need to be copied to a backup location when the player

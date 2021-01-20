@@ -595,8 +595,8 @@ soundInit entry
 
 
 updateSounds entry
-		lda gameRunning
-		bne updateSounds_done
+		lda gameState
+		beq updateSounds_done
 		lda fleaSoundIsPlaying
 		bne updateSounds_done
 		

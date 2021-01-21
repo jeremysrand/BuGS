@@ -22,7 +22,7 @@ resource rVersion (1) {
     },
     verUS,
     "BuGS",
-    "Copyright \$A9 2020 Jeremy Rand"
+    "Copyright \$A9 2021 Jeremy Rand"
 };
 
 

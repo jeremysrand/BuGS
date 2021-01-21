@@ -18,6 +18,8 @@ level start
 levelInit entry
 		stz gameLevel
 		stz gameLevel+2
+		stz nextGameLevel
+		stz nextGameLevel+2
 		stz centipedeLevelNum
 		stz centipedeLevelNum+2
 		stz colourLevelNum
@@ -35,6 +37,8 @@ levelStart entry
 		jsl startSegmentSound
 		
 		ldy playerNum
+		lda nextGameLevel,y
+		sta gameLevel,y
 		ldx centipedeLevelNum,y
 		lda levelTable,x
 		tax
@@ -85,7 +89,7 @@ levelNext entry
 levelNext_skip anop
 		sta colourLevelNum,x
 		ldx playerNum
-		inc gameLevel,x
+		inc nextGameLevel,x
 		
 		lda scoreNum20000,x
 		cmp #2

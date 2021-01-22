@@ -253,3 +253,18 @@ _incrementScore_noExtraMan&SYSCNT anop
 _incrementScore_no2000&SYSCNT anop
         sta scoreWithin20000,x
         mend
+
+; Wait for the DOC to be ready
+        macro
+        _docWait
+_docWait_&SYSCNT anop
+        lda >SOUND_CONTROL_REG
+        bmi _docWait_&SYSCNT
+        mend
+        
+        macro
+        _writeReg &reg,&value
+        ldy &reg
+        lda &value
+        jsr writeReg
+        mend

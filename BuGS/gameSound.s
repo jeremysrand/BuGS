@@ -108,6 +108,27 @@ SCORPION_FREQ_LOW	equ 214
 SCORPION_CONTROL	equ SOUND_SWAP_MODE
 SCORPION_SIZE		equ $2d
 		
+	
+; Y has the register to write to (16 bit mode)
+; A has the value to write (8 bit mode)
+; Assuming not in increment mode
+writeReg entry
+		sta registerValue
+writeReg_loop anop
+		tya
+		sta >SOUND_ADDR_LOW
+		_docWait
+		lda registerValue
+		sta >SOUND_DATA_REG
+		tya
+		sta >SOUND_ADDR_LOW
+		_docWait
+		lda >SOUND_DATA_REG
+		lda >SOUND_DATA_REG
+		cmp registerValue
+		bne writeReg_loop
+		rts
+
 		
 soundInit entry
 ; Spider sound
@@ -641,31 +662,28 @@ playBonusSound entry
 		short m
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
-		ora #$20
 		sta >SOUND_CONTROL_REG
 		
-		lda bonusSoundOscReg
-		sta >SOUND_ADDR_LOW
-		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
+		_writeReg bonusSoundOscReg,#BONUS_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		iny
 		lda #BONUS_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		sta >SOUND_DATA_REG
+		jsr writeReg
 		
 		lda bonusSoundOscReg
 		and #$1f
 		ora #SOUND_REG_VOLUME
-		sta >SOUND_ADDR_LOW
+		tay
 		lda tileRightVolume,x
-		sta >SOUND_DATA_REG
+		jsr writeReg
+		iny
+		lda tileRightVolume,x
 		eor #$ff
-		sta >SOUND_DATA_REG
+		jsr writeReg
 		
-		lda bonusSoundOscReg
-		sta >SOUND_ADDR_LOW
-		lda #BONUS_CONTROL+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
+		_writeReg bonusSoundOscReg,#BONUS_CONTROL+SOUND_RIGHT_SPEAKER
+		iny
 		lda #BONUS_CONTROL+SOUND_LEFT_SPEAKER
-		sta >SOUND_DATA_REG
+		jsr writeReg
 		long m
 		
 		lda bonusSoundOscReg
@@ -758,31 +776,25 @@ playKillSound entry
 
 playFireSound entry
 		short m
+		_docWait
+		
 		lda >SOUND_SYSTEM_VOLUME
 		and #$0f
-		ora #$20
 		sta >SOUND_CONTROL_REG
 		
-		lda #SOUND_REG_CONTROL+FIRE_OSC_NUM
-		sta >SOUND_ADDR_LOW
-		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
-		lda #FIRE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
-		sta >SOUND_DATA_REG
+		_writeReg #SOUND_REG_CONTROL+FIRE_OSC_NUM,#FIRE_CONTROL+SOUND_HALTED+SOUND_RIGHT_SPEAKER
+		_writeReg #SOUND_REG_CONTROL+FIRE_OSC_NUM+1,#FIRE_CONTROL+SOUND_HALTED+SOUND_LEFT_SPEAKER
 		
-		lda #SOUND_REG_VOLUME+FIRE_OSC_NUM
-		sta >SOUND_ADDR_LOW
+		ldy #SOUND_REG_VOLUME+FIRE_OSC_NUM
 		lda tileRightVolume,x
-		sta >SOUND_DATA_REG
+		jsr writeReg
+		ldy #SOUND_REG_VOLUME+FIRE_OSC_NUM+1
+		lda tileRightVolume,x
 		eor #$ff
-		sta >SOUND_DATA_REG
+		jsr writeReg
 		
-		lda #SOUND_REG_CONTROL+FIRE_OSC_NUM
-		sta >SOUND_ADDR_LOW
-		lda #FIRE_CONTROL+SOUND_RIGHT_SPEAKER
-		sta >SOUND_DATA_REG
-		lda #FIRE_CONTROL+SOUND_LEFT_SPEAKER
-		sta >SOUND_DATA_REG
+		_writeReg #SOUND_REG_CONTROL+FIRE_OSC_NUM,#FIRE_CONTROL+SOUND_RIGHT_SPEAKER
+		_writeReg #SOUND_REG_CONTROL+FIRE_OSC_NUM+1,#FIRE_CONTROL+SOUND_LEFT_SPEAKER
 		
 		long m
 		rtl
@@ -1314,5 +1326,6 @@ fleaVolume			dc i2'0'
 segmentSoundIsPlaying	dc i2'1'
 spiderSoundIsPlaying	dc i2'1'
 scorpionSoundIsPlaying	dc i2'1'
+registerValue		dc i2'0'
 
         end

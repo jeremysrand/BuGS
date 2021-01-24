@@ -130,6 +130,19 @@ writeReg_loop anop
 		rts
 
 		
+; Y has the register to write to (16 bit mode)
+; A has the value to write (8 bit mode)
+; Assuming not in increment mode
+writeRegNoRead entry
+		sta registerValue
+		tya
+		sta >SOUND_ADDR_LOW
+		_docWait
+		lda registerValue
+		sta >SOUND_DATA_REG
+		rts
+
+		
 soundInit entry
 ; Spider sound
 		pea SPIDER_SOUND_ADDR
@@ -176,9 +189,10 @@ soundInit entry
 		
 		ldx #soundRegDefaults
 soundInit_loop anop
-		ldy |$0,x
+		lda |$0,x
+		tay
 		lda |$1,x
-		jsr writeReg
+		jsr writeRegNoRead
 		inx
 		inx
 		cpx #soundRegDefaultsEnd

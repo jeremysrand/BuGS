@@ -3,14 +3,15 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
-    * I tried reducing the sampling frequency from 11025 for most of the samples to 5513 and I didn't notice any improvement in the quality of the sound on real HW.  Nor did I notice any real degredation on real HW or on an emulator.
 * Sometimes a mushroom seems to appear out of nowhere.  I usually see that happen in the middle of the playfield but I don't know if that is the only place that can happen.  What makes it appear is something coming along and marking that tile as dirty and suddenly it is refreshed and the mushoom is visible.
+    * I added code in the main loop to detect mushrooms which exist in the tile data structures but are not on screen.  If it found one, it would issue a brk instruction.  It never happened.  That means the problem is not with sometihng going into the tile data without being marked dirty.
 
 
 FIXED
 =======
 
+* The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
+    * I tried reducing the sampling frequency from 11025 for most of the samples to 5513 and I didn't notice any improvement in the quality of the sound on real HW.  Nor did I notice any real degredation on real HW or on an emulator.
 * The flea appears before the second level actually begins, in the time before the level starts if you have too few mushrooms at the bottom.  This is due to the way that levels are incremented now in the game state machine.  Similar will probably happen also for the scorpion which randomly appears above a particular level.
 * It seems to be possible to both shoot and be killed by the spider in a single frame.  Either the spider should be killed by the shot or the spider should kill the player but not both.
     * Based on the code, I don't think it is possible that this happened in a single frame.  Instead, I think what is happening is that the spider is being shot and then goes through a small number of explosion frames.  The colour used in those explosion frames were detected as a collision to the player.

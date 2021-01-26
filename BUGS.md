@@ -3,13 +3,16 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* Sometimes a mushroom seems to appear out of nowhere.  I usually see that happen in the middle of the playfield but I don't know if that is the only place that can happen.  What makes it appear is something coming along and marking that tile as dirty and suddenly it is refreshed and the mushoom is visible.
-    * I added code in the main loop to detect mushrooms which exist in the tile data structures but are not on screen.  If it found one, it would issue a brk instruction.  It never happened.  That means the problem is not with sometihng going into the tile data without being marked dirty.
-
+* None known at this time.
 
 FIXED
 =======
 
+* Sometimes a mushroom seems to appear out of nowhere.  I usually see that happen in the middle of the playfield but I don't know if that is the only place that can happen.  What makes it appear is something coming along and marking that tile as dirty and suddenly it is refreshed and the mushoom is visible.
+    * I added code in the main loop to detect mushrooms which exist in the tile data structures but are not on screen.  If it found one, it would issue a brk instruction.  It never happened.  That means the problem is not with sometihng going into the tile data without being marked dirty.
+    * I just saw a mushroom appear at (12,12).  That makes it tile # 312 which is tile offset 624.  This is the absolute centre of the game board.
+    * PLAN - Modify the random mushroom code to never put a mushroom at offset 624.  Then, add debug at all places in the code where a mushroom is added to test for 624 and brk if it happens.
+    * Using that plan, I have found the bug.  When centipede segments are added offscreen, the intention was to mark them as being beyond the game board.  But, I ended up using NUM_GAME_TILES -1 which is 624.  I should have used RHS_FIRST_TILE_OFFSET.
 * The sound is muddy at times on real HW.  Especially when lots of stuff is going on, the sound ends up coming out garbled.  This isn't happening on emulators where everything is always quite clear.  Perhaps I am reaching some limit of the Ensoniq.  Do I need to reduce some sampling frequencies perhaps?
     * I tried reducing the sampling frequency from 11025 for most of the samples to 5513 and I didn't notice any improvement in the quality of the sound on real HW.  Nor did I notice any real degredation on real HW or on an emulator.
 * The flea appears before the second level actually begins, in the time before the level starts if you have too few mushrooms at the bottom.  This is due to the way that levels are incremented now in the game state machine.  Similar will probably happen also for the scorpion which randomly appears above a particular level.

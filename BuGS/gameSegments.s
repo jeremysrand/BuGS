@@ -1607,7 +1607,7 @@ addBodySegment_slow anop
         sta segmentTileOffsetsLR,y
 
 ; See the comment above why we pretend the body segment is at the bottom RHS tile.
-		lda #NUM_GAME_TILES-1
+		lda #RHS_FIRST_TILE_OFFSET
 		sta segmentCurrentTile-14,y
 		sta segmentCurrentTile-12,y
 		sta segmentCurrentTile-10,y

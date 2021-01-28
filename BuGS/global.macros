@@ -23,7 +23,12 @@ _drawDirtyGameRow_wait&rowNum anop
 ; offset numbers.
 ;
 ; Also according to that technote, it looks like these numbers are different
-; in PAL mode.  TODO - Do I need something here to handle PAL correctly?
+; in PAL mode.  TODO - Do I need something here to handle PAL correctly?  I
+; switched my GS to 50Hz mode (startup/reboot with option held down to get the
+; menu) and I didnt't detect any graphics glitches at all.  I did notice that
+; the game is noticably easier because things run a bit slower.  If I do an
+; online score system, I should record whether a score was gotten at 50Hz vs
+; 60Hz.
         lda   >VERTICAL_COUNTER     ; load the counter value
         and   #$80ff                ; mask out the VBL bits
         asl   a                     ; shift the word around

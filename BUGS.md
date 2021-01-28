@@ -3,7 +3,7 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* None known at this time.
+* When the first player finishes a game in a two player game, if they do not get a high score, there is supposed to be a "GAME OVER PLAYER #" message on the screen for about 2 seconds before it switches to the other player.  I don't see any message at all when that happens, other than the notice of the switch to the other player.
 
 FIXED
 =======

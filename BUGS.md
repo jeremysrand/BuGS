@@ -3,11 +3,11 @@ BUGS
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
 
-* When the first player finishes a game in a two player game, if they do not get a high score, there is supposed to be a "GAME OVER PLAYER #" message on the screen for about 2 seconds before it switches to the other player.  I don't see any message at all when that happens, other than the notice of the switch to the other player.
 
 FIXED
 =======
 
+* When the first player finishes a game in a two player game, if they do not get a high score, there is supposed to be a "GAME OVER PLAYER #" message on the screen for about 2 seconds before it switches to the other player.  I don't see any message at all when that happens, other than the notice of the switch to the other player.
 * Sometimes a mushroom seems to appear out of nowhere.  I usually see that happen in the middle of the playfield but I don't know if that is the only place that can happen.  What makes it appear is something coming along and marking that tile as dirty and suddenly it is refreshed and the mushoom is visible.
     * I added code in the main loop to detect mushrooms which exist in the tile data structures but are not on screen.  If it found one, it would issue a brk instruction.  It never happened.  That means the problem is not with sometihng going into the tile data without being marked dirty.
     * I just saw a mushroom appear at (12,12).  That makes it tile # 312 which is tile offset 624.  This is the absolute centre of the game board.

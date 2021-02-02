@@ -9,6 +9,7 @@ This project would not have been a success without help from the Apple // commun
 * Brutal Deluxe in general for their incredible reference information about the Apple //GS, especially their page about Mr. Sprite.  I very nearly used Mr. Sprite for this project but there were further assumptions and optimizations I could do because of the limited colour palette so I decided to hand code my sprites.  But the ideas were key to my approach and I read those webpages multiple times.
 * Jason Andersen for pointers to some low level sound routines which I could use for reference.
 * Dagen Brock for GSPlus and for his technical support and encouragement on slack.  GSPlus was the emulator I used primarily and when I did a "build and run", GSPlus always launched reliably and quickly so I could test the latest code.
+* Andrew Roughan for his work testing the beta builds and helping to make the release as good as possible.
 * Mike Westerfield and Byte Works for the ORCA tools which I have used for building this project.
 * Kelvin Sherlock for GoldenGate and Profuse which are the fundamental tools I used for building this project.
 * Ken Gagne and Juiced.GS for making tools like ORCA and GoldenGate available.

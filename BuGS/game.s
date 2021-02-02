@@ -317,6 +317,7 @@ updateGameState_notHighScore anop
 		lda #GAME_STATE_GAME_OVER
 		sta gameState
 		lda #GAME_OVER_FRAME_COUNT
+		sta frameCount
 		rtl
 updateGameState_gameNotOver anop
 		jsl segmentsInitLevel
@@ -406,7 +407,7 @@ updateGameState_gameOver anop
 updateGameState_gameOverWait anop
 		dec a
 		sta frameCount
-		ldx #GAME_NUM_TILES_WIDE*11+12
+		ldx #GAME_NUM_TILES_WIDE*10+14
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_G
 		_overwriteGameTile TILE_LETTER_A

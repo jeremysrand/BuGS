@@ -15,6 +15,22 @@
 #define TOOL_STARTUP 1
 
 
+/* Update Info */
+#define UPDATE_INFO 1
+
+
+/* Strings */
+#define DISPLAY_NAME_STR        2000
+#define AUTHOR_NAME_STR         2001
+#define DOWNLOAD_URL_STR        2002
+#define ARCHIVE_STR             2003
+#define VERSIONS_DATA_FILE_STR  2004
+
+
+/* Icons */
+#define BUGS_ICON       1001
+
+
 /* Sounds */
 #define rRawSound 1
 #define BONUS_SOUND 1

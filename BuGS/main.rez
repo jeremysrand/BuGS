@@ -15,7 +15,7 @@
 #define rUpdateInfo $DEAD  /* RIP Jerry Garcia */
 /*--------------------- rUpdateInfo -------------------------*/
 type rUpdateInfo {
-	integer;				/* version must be zero */
+	integer = 0;		    /* version must be zero */
 	longint;				/* Resource ID of string holding app's display name */
 	longint;				/* ID of string holding author's name */
 	longint;				/* ID of string URL to the downloads folder */
@@ -35,12 +35,12 @@ resource rPString (AUTHOR_NAME_STR, $0000) {
 
 
 resource rPString (DOWNLOAD_URL_STR, $0000) {
-	"http://downloads.rand-emonium.com/"
+	"http://downloads.rand-emonium.com/files"
 };
 
 
 resource rPString (ARCHIVE_STR, $0000) {
-	"BuGS.0.9.4.bxy"
+	"BuGS095.bxy"
 };
 
 
@@ -50,7 +50,6 @@ resource rPString (VERSIONS_DATA_FILE_STR, $0000) {
 
 
 resource rUpdateInfo (UPDATE_INFO, $0000) {
-	0,
 	DISPLAY_NAME_STR,		// app's display name
 	AUTHOR_NAME_STR,		// author's name
 	DOWNLOAD_URL_STR,		// URL to downloads folder

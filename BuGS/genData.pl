@@ -132,11 +132,19 @@ sub gameXYToTileOffset
 }
 
 
+sub rhsXYToTileNum
+{
+    my ($x, $y) = @_;
+    
+    return $gEquates{"RHS_FIRST_TILE"} + ($y * $gEquates{"RHS_NUM_TILES_WIDE"}) + $x;
+}
+
+
 sub rhsXYToTileOffset
 {
     my ($x, $y) = @_;
     
-    return ($gEquates{"RHS_FIRST_TILE"} + ($y * $gEquates{"RHS_NUM_TILES_WIDE"}) + $x) * $gEquates{"SIZEOF_TILE_INFO"};
+    return rhsXYToTileNum($x, $y) * $gEquates{"SIZEOF_TILE_INFO"};
 }
 
 
@@ -176,6 +184,15 @@ sub addLhsGameTile
 {
     my ($x, $y, $tileType) = @_;
     my $tileNum = lhsXYToTileNum($x, $y);
+    $gTileType[$tileNum] = $tileType;
+    addDirtyNonGameTile($tileNum);
+}
+
+
+sub addRhsGameTile
+{
+    my ($x, $y, $tileType) = @_;
+    my $tileNum = rhsXYToTileNum($x, $y);
     $gTileType[$tileNum] = $tileType;
     addDirtyNonGameTile($tileNum);
 }
@@ -468,6 +485,12 @@ sub initNonGameTiles
     $x = 2;
     $y = 21;
     addLhsGameString($x, $y, "LIVES:");
+    
+    for (my $tileY = 0; $tileY < $gEquates{"TOTAL_TILES_TALL"}; $tileY++)
+    {
+        addLhsGameTile($gEquates{"LHS_NUM_TILES_WIDE"} - 1, $tileY, "TILE_RIGHT_BAR");
+        addRhsGameTile(0, $tileY, "TILE_LEFT_BAR");
+    }
 }
 
 

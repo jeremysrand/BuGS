@@ -235,5 +235,115 @@ solid3  entry
         
         _spriteFooter
         rtl
+		
+		
+rightBar entry
+		_spriteHeader
+		
+		ldx #$0000
+		ldy #$2002
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		adc #$00a0
+		tcs
+		
+		phy
+		phx
+		
+		_spriteFooter
+		rtl
+		
+		
+leftBar entry
+		_spriteHeader
+		
+		ldx #$2002
+		ldy #$0000
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		adc #$00a0
+		tcs
+
+		phy
+		phx
+
+		_spriteFooter
+		rtl
 
         end

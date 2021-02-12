@@ -1,10 +1,5 @@
 #!/bin/sh
 
-
-MOUNTDIR=/tmp/a2gs_mount.$$
-TMPDISKIMAGE=/tmp/a2gs_diskimage_$$.2mg
-TEMPLATEDISKIMAGE=make/BuGS.2mg
-
 if [ $# -lt 3 ]
 then
     echo USAGE: $0 diskimage file directory
@@ -19,9 +14,17 @@ shift
 
 DISKIMAGEDEST="$1"
 shift
-DEST="${MOUNTDIR}/${DISKIMAGEDEST}"
 
 COPYDIRS=$*
+
+PROGRAM=`basename "$FILE"`
+TMPDIR=/tmp/a2gs_mount.$$
+MOUNTDIR="${TMPDIR}/$PROGRAM"
+TMPDISKIMAGE=/tmp/a2gs_diskimage_$$.2mg
+TMPARCHIVE=/tmp/s2gs_archive_$$.shk
+TEMPLATEDISKIMAGE="make/${PROGRAM}.2mg"
+ARCHIVE=`dirname "$DISKIMAGE"`/"${PROGRAM}.shk"
+DEST="${MOUNTDIR}/${DISKIMAGEDEST}"
 
 cleanupAndExit()
 {
@@ -45,6 +48,7 @@ then
     cleanupAndExit
 fi
 
+mkdir "$TMPDIR"
 mkdir "$MOUNTDIR"
 if [ $? != 0 ]
 then
@@ -86,8 +90,16 @@ do
             cp "$FILEORDIR" "${MOUNTDIR}/$FILEORDIR"
         fi
     done
-    cd "$OLDDIR"
 done
+
+cd "$TMPDIR"
+$ORCA "$OLDDIR/make/tar" cf "$TMPARCHIVE" "$PROGRAM"
+if [ $? != 0 ]
+then
+    echo Unable to create archive.
+    cleanupAndExit
+fi
+cd "$OLDDIR"
 
 RETRIES=0
 while [ $RETRIES -lt 5 ]
@@ -115,14 +127,23 @@ then
     cleanupAndExit
 fi
 
+cp "$TMPARCHIVE" "$ARCHIVE"
+if [ $? != 0 ]
+then
+    echo Unable to copy the archive to the destination.
+    cleanupAndExit
+fi
+
 # This is a special case for my personal build environment.  If I can find my home directory
 # and the Sites directory in it, then also put a copy of the build there also.  This makes it
 # available over http to my real GS so I can test it there also.
 if [ -d /Users/jrand/Sites ]
 then
-    cp "$TMPDISKIMAGE" /Users/jrand/Sites/BuGS.2mg
+    cp "$TMPDISKIMAGE" "/Users/jrand/Sites/$PROGRAM.2mg"
+    cp "$TMPARCHIVE" "/Users/jrand/Sites/$PROGRAM.shk"
 fi
 
 rm -f "$TMPDISKIMAGE"
-rmdir "$MOUNTDIR"
+rm -f "$TMPARCHIVE"
+rm -rf "$TMPDIR"
 exit 0

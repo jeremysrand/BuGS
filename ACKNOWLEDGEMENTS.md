@@ -14,6 +14,7 @@ This project would not have been a success without help from the Apple // commun
 * Kelvin Sherlock for GoldenGate and Profuse which are the fundamental tools I used for building this project.
 * Ken Gagne and Juiced.GS for making tools like ORCA and GoldenGate available.
 * Stephen Heumann for NetDisk which I used to transfer my latest build to my real GS for testing.
+* Ewen Wannop (Speccie) for his great network tools, especially Versions which I am using to assist in pushing out fixes and new versions of BuGS.  I had a problem with the Check File Finder extension but very quickly he found the problem.  I very much appreciate his support getting that problem fixed.
 
 
 ## Apple // Forever!

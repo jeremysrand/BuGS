@@ -99,6 +99,7 @@
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CCBA25525C1A00CDA5CB /* genData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
+		9D4EF43E25D7006A001BEDB0 /* tar */ = {isa = PBXFileReference; lastKnownFileType = file; path = tar; sourceTree = "<group>"; };
 		9D53E5B32562320300E10169 /* gameShot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; };
 		9D53E6472565939300E10169 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 				9D1716962491C49300C83148 /* config.txt */,
 				9D1716982491C49300C83148 /* createDiskImage */,
 				9D17169A2491C49300C83148 /* head.mk */,
+				9D4EF43E25D7006A001BEDB0 /* tar */,
 				9D17169C2491C49300C83148 /* launchEmulator */,
 				9D6DB18625A411DA00CDBF05 /* BuGS.2mg */,
 				9D17169E2491C49300C83148 /* orca-asm */,

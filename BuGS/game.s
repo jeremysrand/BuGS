@@ -86,6 +86,12 @@ gameLoop anop
         jsl updateSegments
 		jsl updateSounds
 		
+		lda shouldPreloadSound
+		bne gameLoop_skipPreload
+		jsl preloadSound
+		lda #1
+		sta shouldPreloadSound
+gameLoop_skipPreload anop
         jsl checkKeyboard
         
         jsl waitForVbl
@@ -1031,5 +1037,6 @@ vblLoop anop
 shouldQuit      dc i2'1'
 borderColour    dc i2'0'
 frameCount 		dc i2'0'
+shouldPreloadSound	dc i2'0'
 
         end

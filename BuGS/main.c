@@ -174,6 +174,20 @@ void loadScorpionSound(word addr)
 }
 
 
+void preloadSound(void)
+{
+    LoadResource(rRawSound, SPIDER_SOUND);
+    LoadResource(rRawSound, DEATH_SOUND);
+    LoadResource(rRawSound, SEGMENTS_SOUND);
+    LoadResource(rRawSound, BONUS_SOUND);
+    LoadResource(rRawSound, KILL_SOUND);
+    LoadResource(rRawSound, FIRE_SOUND);
+    LoadResource(rRawSound, EXTRA_LIFE_SOUND);
+    LoadResource(rRawSound, FLEA_SOUND);
+    LoadResource(rRawSound, SCORPION_SOUND);
+}
+
+
 void allocateFilenameHandle(void)
 {
     if (filenameHandle == NULL)

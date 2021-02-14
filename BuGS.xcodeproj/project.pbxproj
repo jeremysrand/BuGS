@@ -100,6 +100,7 @@
 		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CCBA25525C1A00CDA5CB /* genData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
 		9D4EF43E25D7006A001BEDB0 /* tar */ = {isa = PBXFileReference; lastKnownFileType = file; path = tar; sourceTree = "<group>"; };
+		9D4EF46925D9D171001BEDB0 /* BuGS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuGS.png; sourceTree = "<group>"; };
 		9D53E5B32562320300E10169 /* gameShot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; };
 		9D53E6472565939300E10169 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
 		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 				9D62AF402499CD3A00348F45 /* README.md */,
 				9D9F07F92553AB3800875B29 /* TODO.md */,
 				9D53E6472565939300E10169 /* BUGS.md */,
+				9D4EF46925D9D171001BEDB0 /* BuGS.png */,
 				9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */,
 				9D17168D2491C49300C83148 /* BuGS */,
 				9D1716852491C49300C83148 /* Products */,

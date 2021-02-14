@@ -8,4 +8,5 @@ BuGS is an implementation of an arcade classic for the Apple //gs.  You play the
 This game runs at 60 frames per second on a standard Apple //gs without an accelerator.  It also works in some Apple //gs emulators.  The [MAME emulator](https://www.mamedev.org) is recommended because it works best however it is difficult to setup.  [Kelvin Sherlock's Ample](https://github.com/ksherlock/ample) is suggested for MacOS users looking for a simpler way to setup MAME.  The [KEGS emulator](http://kegs.sourceforge.net) also works well as of v1.05.  Please see the readme shipped in the distribution for more details about emulators, which work well with BuGS and which do not.
 
 [YouTube video of game on real HW](https://youtu.be/QcmpkEUQznM)
+
 [Video of game run on mame](https://www.rand-emonium.com/wp-content/uploads/2021/02/BuGS_video.mp4)

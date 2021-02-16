@@ -500,7 +500,7 @@ sub initFleaFreqs
     
     for (my $i = 1; $i < $gEquates{"NUM_FLEA_FREQS"}; $i++)
     {
-        $gFleaFreqs[$i] = ($gFleaFreqs[$i - 1] * 100000000) / 101161944;
+        $gFleaFreqs[$i] = ($gFleaFreqs[$i - 1] * 100000000) / 100580970;
     }
 }
 

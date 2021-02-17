@@ -40,7 +40,7 @@ resource rPString (DOWNLOAD_URL_STR, $0000) {
 
 
 resource rPString (ARCHIVE_STR, $0000) {
-	"BuGS098.shk"
+	"BuGS100.shk"
 };
 
 
@@ -61,10 +61,10 @@ resource rUpdateInfo (UPDATE_INFO, $0000) {
 /* Version resource */
 resource rVersion (1) {
     {
-        0,          /* Major version number in BCD */
-        9,          /* Minor version number in BCD */
-        8,          /* Bug version number in BCD */
-        beta,		/* Development phase */
+        1,          /* Major version number in BCD */
+        0,          /* Minor version number in BCD */
+        0,          /* Bug version number in BCD */
+        release,    /* Development phase */
         0           /* Release number */
     },
     verUS,

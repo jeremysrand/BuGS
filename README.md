@@ -10,3 +10,7 @@ This game runs at 60 frames per second on a standard Apple //gs without an accel
 [YouTube video of game on real HW](https://youtu.be/QcmpkEUQznM)
 
 [Video of game run on mame](https://www.rand-emonium.com/wp-content/uploads/2021/02/BuGS_video.mp4)
+
+[Download a disk image](https://github.com/jeremysrand/BuGS/releases/download/1.0/BuGS_100.2mg)
+
+[Download a SHK archive](https://github.com/jeremysrand/BuGS/releases/download/1.0/BuGS100.shk)

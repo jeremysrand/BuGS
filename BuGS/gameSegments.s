@@ -1507,8 +1507,8 @@ addBodySegment_fast anop
 ; This is a bit weird but we pretend the body segment is in the bottom RHS tile while it is offscreen.
 ; We have to put in a valid game tile here and it doesn't matter if body segments "collide".  But we
 ; don't want head segments to collide with a off-screen body segment.  Since the head segments always
-; appear at the top, it is safe to just tuck the body segments away at the bottom RHS.
-		lda #NUM_GAME_TILES-1
+; appear at the top, it is safe to just tuck the body segments away at the top RHS.
+		lda #RHS_FIRST_TILE_OFFSET
 		sta segmentCurrentTile-6,y
 		sta segmentCurrentTile-4,y
 		sta segmentCurrentTile-2,y
@@ -1606,7 +1606,7 @@ addBodySegment_slow anop
         sta segmentTileOffsetsLR,y
         sta segmentTileOffsetsLR,y
 
-; See the comment above why we pretend the body segment is at the bottom RHS tile.
+; See the comment above why we pretend the body segment is at the top RHS tile.
 		lda #RHS_FIRST_TILE_OFFSET
 		sta segmentCurrentTile-14,y
 		sta segmentCurrentTile-12,y

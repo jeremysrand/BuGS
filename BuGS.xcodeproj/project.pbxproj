@@ -96,6 +96,7 @@
 		9D3396FF24AED09D003222B3 /* sprites.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = sprites.md; sourceTree = "<group>"; };
 		9D33970024AEFBF2003222B3 /* segments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
 		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
+		9D40049726575A8100478FB2 /* system601_net.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601_net.2mg; sourceTree = "<group>"; };
 		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9D47CCBA25525C1A00CDA5CB /* genData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
@@ -240,6 +241,7 @@
 				9D1716A02491C49300C83148 /* orca-cc */,
 				9D1716A22491C49300C83148 /* orca-rez */,
 				9D1716A42491C49300C83148 /* system601.2mg */,
+				9D40049726575A8100478FB2 /* system601_net.2mg */,
 				9D1716A62491C49300C83148 /* tail.mk */,
 			);
 			path = make;

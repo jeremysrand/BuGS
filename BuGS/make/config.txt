@@ -6,9 +6,11 @@ s5d2 =
 s6d1 = 
 s6d2 = 
 
-s7d1 = /Users/jrand/Coding/AppleCoding/Apple2GS/BuGS/BuGS/make/system601.2mg
+s7d1 = /Users/jrand/Coding/AppleCoding/Apple2GS/BuGS/BuGS/make/system601_net.2mg
 
+g_ethernet = 1
 g_limit_speed = 3
+g_ethernet = 1
 
 
 bram1[00] = 00 00 00 01 00 00 0d 06 02 01 01 00 01 00 00 00

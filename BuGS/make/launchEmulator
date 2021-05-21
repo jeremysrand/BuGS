@@ -29,7 +29,7 @@ then
 fi
 
 # This magic ensures that clicking stop in Xcode results in the emulator terminating.
-if true
+if false
 then
     cd make
     sed -i "" "s:^s7d1 *=.*$:s7d1 = $BOOTIMAGE:
@@ -38,7 +38,7 @@ s:^s5d1 *=.*:s5d1 = $DISKIMAGE:" config.txt
     PID=$!
 else
     cd "/Users/jrand/Library/Application Support/Ample"
-    /Applications/Ample.app/Contents/MacOS/mame64 apple2gs -skip_gameinfo -mouse -window -resolution 1408x1056 -ramsize 4M -sl7 cffa202 -hard1 "$BOOTIMAGE" -flop3 "$DISKIMAGE" &
+    /Applications/Ample.app/Contents/MacOS/mame64 apple2gs -skip_gameinfo -mouse -window -resolution 1408x1056 -ramsize 4M -sl3 uthernet -sl7 cffa2 -hard1 "$BOOTIMAGE" -flop3 "$DISKIMAGE" &
     PID=$!
 fi
 

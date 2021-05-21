@@ -184,7 +184,7 @@ $(DISKIMAGE): $(TARGETDIR)/$(PGM)
 execute: $(EXECTARGET)
 
 executeGUI: all
-	make/launchEmulator make/system601.2mg $(DISKIMAGE)
+	make/launchEmulator make/system601_net.2mg $(DISKIMAGE)
 
 executeShell: all
 	$(ORCA) $(TARGETDIR)/$(PGM)

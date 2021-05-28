@@ -20,6 +20,7 @@
 		9D1716A52491C49300C83148 /* system601.2mg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A42491C49300C83148 /* system601.2mg */; };
 		9D1716A72491C49300C83148 /* tail.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A62491C49300C83148 /* tail.mk */; };
 		9D1716AA2491C49300C83148 /* BuGS.xcscheme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A92491C49300C83148 /* BuGS.xcscheme */; };
+		9DB90E80265AD04A003461C1 /* globalScores.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DB90E7F265AD04A003461C1 /* globalScores.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -122,6 +123,8 @@
 		9DB1505324C9E54C00558B87 /* gameSpider.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSpider.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9DB1505424D3BF6C00558B87 /* gameSegments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSegments.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9DB1505524D3BFCE00558B87 /* global.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = global.macros; sourceTree = "<group>"; };
+		9DB90E7E265AD04A003461C1 /* globalScores.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalScores.h; sourceTree = "<group>"; };
+		9DB90E7F265AD04A003461C1 /* globalScores.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = globalScores.c; sourceTree = "<group>"; };
 		9DC4D7BD24B7652100BACF4B /* ship.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
 		9DC4D7BE24B80C9600BACF4B /* shot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +203,8 @@
 			children = (
 				9D17168E2491C49300C83148 /* main.c */,
 				9D1716902491C49300C83148 /* main.h */,
+				9DB90E7E265AD04A003461C1 /* globalScores.h */,
+				9DB90E7F265AD04A003461C1 /* globalScores.c */,
 				9D8FFC602491CA28005C9327 /* game.s */,
 				9D8FFC612491CAF0005C9327 /* game.h */,
 				9DB1505024C3801100558B87 /* gameFlea.s */,
@@ -390,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB90E80265AD04A003461C1 /* globalScores.c in Sources */,
 				9D1716942491C49300C83148 /* Makefile in Sources */,
 				9D17168F2491C49300C83148 /* main.c in Sources */,
 			);

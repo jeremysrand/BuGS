@@ -20,6 +20,7 @@
 
 #include "main.h"
 #include "game.h"
+#include "globalScores.h"
 #include "tileData.h"
 
 
@@ -32,13 +33,6 @@
 
 
 /* Typedefs */
-
-typedef struct tHighScore
-{
-    char scoreText[10];
-    char who[4];
-    unsigned long score;
-} tHighScore;
 
 typedef struct tSettingsData
 {

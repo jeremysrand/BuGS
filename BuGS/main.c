@@ -347,10 +347,14 @@ int main(void)
     InitMouse(0);
     SetMouse(transparent);
     
+    initNetwork();
+    
     if (!loadSettings())
         saveSettings();
 
     game();
+    
+    shutdownNetwork();
     
     ShutDownTools(refIsHandle, toolStartupRef);
     TOOLFAIL("Unable to shutdown tools");

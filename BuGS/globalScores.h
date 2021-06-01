@@ -18,4 +18,9 @@ typedef struct tHighScore
 } tHighScore;
 
 
+extern void initNetwork(void);
+extern void pollNetwork(void);
+extern void shutdownNetwork(void);
+
+
 #endif /* define _GUARD_PROJECTBuGS_FILEglobalScores_ */

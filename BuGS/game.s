@@ -92,6 +92,11 @@ gameLoop anop
 		lda #1
 		sta shouldPreloadSound
 gameLoop_skipPreload anop
+		lda gameState
+		bne gameLoop_skipNetwork
+		jsl pollNetwork
+gameLoop_skipNetwork anop
+		
         jsl checkKeyboard
         
         jsl waitForVbl

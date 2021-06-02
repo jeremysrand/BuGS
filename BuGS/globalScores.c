@@ -53,7 +53,7 @@ typedef struct tSetHighScoreRequest {
     uint16_t requestType;
     char who[4];
     uint32_t score;
-    Boolean is60Hz;
+    Word is60Hz;
 } tSetHighScoreRequest;
 
 
@@ -421,6 +421,7 @@ void pollNetwork(void)
                 TCPIPLogout(ipid);
                 gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
             }
+            // TODO - I don't think we are getting out of this state successfully...
             
             globalScoreAge = 0;
             gameNetworkState = GAME_NETWORK_REQUEST_SCORES;

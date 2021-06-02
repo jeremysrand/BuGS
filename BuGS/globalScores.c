@@ -264,7 +264,7 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_UNCONNECTED:
-            TCPIPConnect(NULL);     // TODO - Perhaps no feedback here is not a good user experience and I should provide some kind of display function.
+            TCPIPConnect(NULL);     // TODO - Perhaps some feedback here would be a better user experience so maybe I should provide some kind of display function.
             if ((!toolerror()) &&
                 (TCPIPGetConnectStatus())) {
                 gameNetworkState = GAME_NETWORK_CONNECTED;
@@ -286,7 +286,6 @@ void pollNetwork(void)
                 break;
             
             if (domainNameResolution.DNRstatus != DNR_OK) {
-                // TODO - I end up in here on the emulator.  Find out why.
                 gameNetworkState = GAME_NETWORK_LOOKUP_FAILED;
                 break;
             }

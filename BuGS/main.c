@@ -45,7 +45,7 @@ typedef struct tSettingsData
 
 /* Globals */
 
-unsigned int userid;
+unsigned int myUserId;
 unsigned int randomSeed;
 tSettingsData settings = {
     { 'B', 'u', 'G', 'S' },
@@ -86,85 +86,65 @@ word randomMushroomOffset(void)
     return (rand() % (NUM_GAME_TILES - GAME_NUM_TILES_WIDE)) * SIZEOF_TILE_INFO;
 }
 
-
-void loadSpiderSound(word addr)
+void loadSound(Word addr, Word soundNum)
 {
-    Handle handle = LoadResource(rRawSound, SPIDER_SOUND);
+    Handle handle = LoadResource(rRawSound, soundNum);
     HLock(handle);
     WriteRamBlock(*handle, addr, GetHandleSize(handle));
     HUnlock(handle);
+}
+
+void loadSpiderSound(Word addr)
+{
+    loadSound(addr, SPIDER_SOUND);
 }
 
 
 void loadDeathSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, DEATH_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, DEATH_SOUND);
 }
 
 
 void loadSegmentsSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, SEGMENTS_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, SEGMENTS_SOUND);
 }
 
 
 void loadBonusSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, BONUS_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, BONUS_SOUND);
 }
 
 
 void loadKillSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, KILL_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, KILL_SOUND);
 }
 
 
 void loadFireSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, FIRE_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, FIRE_SOUND);
 }
 
 
 void loadExtraLifeSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, EXTRA_LIFE_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, EXTRA_LIFE_SOUND);
 }
 
 
 void loadFleaSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, FLEA_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, FLEA_SOUND);
 }
 
 
 void loadScorpionSound(word addr)
 {
-    Handle handle = LoadResource(rRawSound, SCORPION_SOUND);
-    HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
-    HUnlock(handle);
+    loadSound(addr, SCORPION_SOUND);
 }
 
 
@@ -188,7 +168,7 @@ void allocateFilenameHandle(void)
     {
         GSString255Ptr filenamePtr;
         
-        filenameHandle = NewHandle(sizeof(GSString255), userid, 0x8000, NULL);
+        filenameHandle = NewHandle(sizeof(GSString255), myUserId, 0x8000, NULL);
         HLock(filenameHandle);
         filenamePtr = (GSString255Ptr)(*filenameHandle);
         filenamePtr->length = strlen(SETTINGS_FILENAME);
@@ -323,19 +303,19 @@ int main(void)
     int event;
     Ref toolStartupRef;
     
-    userid = MMStartUp();
+    myUserId = MMStartUp();
     TOOLFAIL("Unable to start memory manager");
     
     TLStartUp();
     TOOLFAIL("Unable to start tool locator");
     
-    toolStartupRef = StartUpTools(userid, refIsResource, TOOL_STARTUP);
+    toolStartupRef = StartUpTools(myUserId, refIsResource, TOOL_STARTUP);
     TOOLFAIL("Unable to start tools");
     
     CompactMem();
     /* Allocate $1000 extra before the SHR screen so I can write sprites above the start of the
        screen without overwriting memory I do not own. */
-    NewHandle(0x9000, userid, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x011000);
+    NewHandle(0x9000, myUserId, attrLocked | attrFixed | attrAddr | attrBank, (Pointer)0x011000);
     TOOLFAIL("Unable to allocate SHR screen");
     
     randomSeed = (int)time(NULL);
@@ -362,6 +342,6 @@ int main(void)
     TLShutDown();
     TOOLFAIL("Unable to shutdown tool locator");
     
-    MMShutDown(userid);
+    MMShutDown(myUserId);
     TOOLFAIL("Unable to shutdown memory manager");
 }

@@ -92,10 +92,32 @@ gameLoop anop
 		lda #1
 		sta shouldPreloadSound
 gameLoop_skipPreload anop
+
+; The following is the network poll code which runs when not playing a game
 		lda gameState
 		bne gameLoop_skipNetwork
 		jsl pollNetwork
+		lda hasGlobalHighScores
+		beq gameLoop_skipNetwork
+		lda highScoreCountdown
+		beq gameLoop_swapHighScores
+		dec a
+		sta highScoreCountdown
+		bra gameLoop_skipNetwork
+gameLoop_swapHighScores anop
+		lda #10*60
+		sta highScoreCountdown
+		lda displayGlobalHighScores
+		eor #1
+		sta displayGlobalHighScores
+		jsl staticGameBoard
 gameLoop_skipNetwork anop
+	
+		lda globalScoreAge
+		beq gameLoop_skipScoreAgeDec
+		dec a
+		sta globalScoreAge
+gameLoop_skipScoreAgeDec anop
 		
         jsl checkKeyboard
         
@@ -686,6 +708,7 @@ setGameNotRunning entry
 		jsl spiderInitLevel
 		jsl fleaInitLevel
 		jsl addRandomMushrooms
+		stz displayGlobalHighScores
 		jmp staticGameBoard
 		
 		
@@ -695,6 +718,11 @@ staticGameBoard entry
 		lda #TILE_STATE_DIRTY
 		sta tileDirty+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
 		
+		lda displayGlobalHighScores
+		beq staticGameBoard_localHighScores
+		jmp staticGameBoard_globalHighScores
+
+staticGameBoard_localHighScores anop
 		ldx #GAME_NUM_TILES_WIDE*8+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -817,7 +845,133 @@ staticGameBoard entry
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+		jmp staticGameBoard_Options
+
+staticGameBoard_globalHighScores anop
+		ldx #GAME_NUM_TILES_WIDE*8+2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_G
+		_setGameTile TILE_LETTER_L
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_LETTER_B
+		_setGameTile TILE_LETTER_A
+		_setGameTile TILE_LETTER_L
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_H
+		_setGameTile TILE_LETTER_I
+		_setGameTile TILE_LETTER_G
+		_setGameTile TILE_LETTER_H
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_LETTER_C
+		_setGameTile TILE_LETTER_O
+		_setGameTile TILE_LETTER_R
+		_setGameTile TILE_LETTER_E
+		_setGameTile TILE_LETTER_S
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*10+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 0
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*12+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 1
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*14+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 2
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*16+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 3
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*18+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 4
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*20+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 5
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*22+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 6
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*24+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 7
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*26+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 8
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+		ldx #GAME_NUM_TILES_WIDE*28+2
+		_setGameTile TILE_EMPTY
+		_globalHighScoreRow 9
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+		_setGameTile TILE_EMPTY
+
+staticGameBoard_Options anop
 		ldx #GAME_NUM_TILES_WIDE*30+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -1043,5 +1197,7 @@ shouldQuit      dc i2'1'
 borderColour    dc i2'0'
 frameCount 		dc i2'0'
 shouldPreloadSound	dc i2'0'
+displayGlobalHighScores dc i2'0'
+highScoreCountdown dc i2'0'
 
         end

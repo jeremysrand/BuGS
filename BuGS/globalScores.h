@@ -17,6 +17,7 @@ typedef struct tHighScore
     unsigned long score;
 } tHighScore;
 
+extern unsigned int myUserId;
 
 extern void initNetwork(void);
 extern void pollNetwork(void);

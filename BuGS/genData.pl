@@ -8,7 +8,6 @@
 use strict;
 use integer;
 
-
 # main
 
 
@@ -86,6 +85,13 @@ $gEquates{"NUM_FLEA_FREQS"} = 120;
 $gEquates{"NUM_HIGH_SCORES"} = 10;
 
 
+our %gNetworkDefines;
+$gNetworkDefines{'NETWORK_SERVER'} = "NULL";
+$gNetworkDefines{'NETWORK_SERVERPORT'} = 0;
+$gNetworkDefines{'NETWORK_SERVERSECRET1'} = 0;
+$gNetworkDefines{'NETWORK_SERVERSECRET2'} = 0;
+
+
 our @gTileDirty = ("TILE_STATE_CLEAN") x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileScreenOffset = (0) x $gEquates{"TOTAL_NUM_TILES"};
 our @gTileType = ("TILE_EMPTY") x $gEquates{"TOTAL_NUM_TILES"};
@@ -108,6 +114,18 @@ our @gMouseXTileLeft = (0) x $gEquates{"MOUSE_MAX_X"};
 our @gMouseXTileRight = (0) x $gEquates{"MOUSE_MAX_X"};
 our @gScreenToTileOffset = (0) x ($gEquates{"SCREEN_PIXELS_TALL"} * $gEquates{"SCREEN_BYTES_PER_ROW"} / $gEquates{"SIZEOF_TILE_INFO"});
 
+
+sub loadNetworkSettings
+{
+    open my $fh, "<", $ENV{'HOME'} . "/.BuGS_scores.json" or return;
+
+    while (<$fh>)
+    {
+        if (/^\s+\"(Server\w*)\"\s+:\s+([-\"a-zA-Z0-9.]+),\s*$/) {
+            $gNetworkDefines{'NETWORK_' . uc($1)} = $2;
+        }
+    }
+}
 
 sub printTileData
 {
@@ -505,6 +523,7 @@ sub initFleaFreqs
 }
 
 
+loadNetworkSettings();
 initTiles();
 initNonGameTiles();
 initFleaFreqs();
@@ -610,6 +629,11 @@ print $fh $text;
 foreach my $equate (sort keys %gEquates)
 {
     print $fh "#define $equate " . $gEquates{$equate} . "\n";
+}
+
+foreach my $equate (sort keys %gNetworkDefines)
+{
+    print $fh "#define $equate " . $gNetworkDefines{$equate} . "\n";
 }
 
 

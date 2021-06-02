@@ -425,8 +425,10 @@ checkHighScore_doneCopy anop
 		tax
 		lda gameScore,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
+		sta setHighScoreRequest+6
 		lda gameScore+2,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
+		sta setHighScoreRequest+8
 		
 		lda playerNum
 		cmp #PLAYER_ONE
@@ -736,6 +738,7 @@ checkHighScore_isValid anop
 		cpx #GAME_NUM_TILES_WIDE*18+26
 		bge checkHighScore_isInvalid
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET,y
+		sta setHighScoreRequest+2,y
 		iny
 		jsl asciiToTileType
 		jsr overwriteGameTile
@@ -767,6 +770,7 @@ checkHighScore_isInvalid anop
 		
 checkHighScore_doneInitials anop
 		jsl saveSettings
+		jsl sendHighScore
 		jsl updateHighScore
 		sec
 		rtl

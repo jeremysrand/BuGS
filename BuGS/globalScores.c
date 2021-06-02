@@ -104,6 +104,7 @@ typedef enum tGameNetworkState {
     GAME_NETWORK_WAITING_FOR_HELLO,
     GAME_NETWORK_REQUEST_SCORES,
     GAME_NETWORK_WAITING_FOR_SCORES,
+    GAME_NETWORK_WAITING_FOR_SCORE_ACK,
     
     /* This is the "quiescent" state.  The hello has been retrieved and scores
         have been downloaded at least once.  This is the only state where a
@@ -145,9 +146,10 @@ tScoresResponse highScoreResponse = {
         { { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0'}, { 'A', 'A', 'A' }, 0}
     }
 };
-
 Word globalScoreAge = 0;
 
+tSetHighScoreRequestWithHash setHighScoreRequest;
+tStatusResponse setHighScoreResponse;
 
 // Extern from assembly code
 
@@ -155,17 +157,6 @@ extern void waitForVbl(void);
 
 
 // Implementation
-
-#if 0
-Word blah(void)
-{
-    // This is how to read the 50 or 60 Hz indicator:
-    //      0 is 60 Hz
-    //      1 is 50 Hz
-    return ReadBParam(hrtz50or60);
-}
-#endif
-
 
 void initNetwork(void)
 {
@@ -208,6 +199,8 @@ void initNetwork(void)
     } else {
         gameNetworkState = GAME_NETWORK_UNCONNECTED;
     }
+    
+    setHighScoreRequest.setHighScoreRequest.is60Hz = !ReadBParam(hrtz50or60);
 }
 
 
@@ -405,9 +398,84 @@ void pollNetwork(void)
             hasGlobalHighScores = TRUE;
             break;
             
-        case GLOBAL_SCORE_REFRESH_TIME:
+        case GAME_NETWORK_WAITING_FOR_SCORE_ACK:
+            if (TCPIPReadTCP(ipid, 0, ((uint32_t)(&setHighScoreResponse)) + bytesRead, sizeof(setHighScoreResponse) - bytesRead, &readResponseBuf) != tcperrOK) {
+                TCPIPAbortTCP(ipid);
+                TCPIPLogout(ipid);
+                gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
+            }
+            
+            bytesRead += readResponseBuf.rrBuffCount;
+            if (bytesRead < sizeof(setHighScoreResponse))
+                break;
+            
+            if (bytesRead > sizeof(setHighScoreResponse)) {
+                TCPIPAbortTCP(ipid);
+                TCPIPLogout(ipid);
+                gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+            }
+            
+            if ((setHighScoreResponse.responseType != RESPONSE_TYPE_STATUS) ||
+                (!setHighScoreResponse.success)) {
+                TCPIPAbortTCP(ipid);
+                TCPIPLogout(ipid);
+                gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+            }
+            
+            globalScoreAge = 0;
+            gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
+            break;
+            
+        case GAME_NETWORK_SCORES_RETRIEVED:
             if (globalScoreAge == 0)
                 gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
             break;
+    }
+}
+
+
+void sendHighScore(void)
+{
+    int timeout = 10*60;
+    
+    if (!networkToolsStarted)
+        return;
+    
+    if (gameNetworkState < GAME_NETWORK_WAITING_FOR_TCP)
+        return;
+    
+    while (gameNetworkState != GAME_NETWORK_SCORES_RETRIEVED) {
+        waitForVbl();
+        pollNetwork();
+        timeout--;
+        if (timeout == 0)
+            return;
+    }
+    
+    
+    setHighScoreRequest.setHighScoreRequest.requestType = REQUEST_TYPE_SET_SCORE;
+    setHighScoreRequest.setHighScoreRequest.who[3] = '\0';
+    
+    md5Init(&hashWorkBlock);
+    md5Append(&hashWorkBlock, (Pointer)&secrets, sizeof(secrets));
+    md5Append(&hashWorkBlock, (Pointer)&(setHighScoreRequest.setHighScoreRequest), sizeof(setHighScoreRequest.setHighScoreRequest));
+    md5Finish(&hashWorkBlock, &(setHighScoreRequest.md5Digest[0]));
+    
+    if (TCPIPWriteTCP(ipid, (Pointer)&setHighScoreRequest, sizeof(setHighScoreRequest), FALSE, FALSE) != tcperrOK) {
+        TCPIPAbortTCP(ipid);
+        TCPIPLogout(ipid);
+        gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
+    }
+    
+    gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORE_ACK;
+    bytesRead = 0;
+    
+    timeout = 10*60;
+    while (gameNetworkState != GAME_NETWORK_SCORES_RETRIEVED) {
+        waitForVbl();
+        pollNetwork();
+        timeout--;
+        if (timeout == 0)
+            return;
     }
 }

@@ -248,8 +248,6 @@ void shutdownNetwork(void)
 
 void pollNetwork(void)
 {
-    Word errorCode;
-    
     if (!networkToolsStarted)
         return;
     
@@ -414,13 +412,17 @@ void pollNetwork(void)
                 gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
             }
             
-            if ((setHighScoreResponse.responseType != RESPONSE_TYPE_STATUS) ||
-                (!setHighScoreResponse.success)) {
+            if (setHighScoreResponse.responseType != RESPONSE_TYPE_STATUS) {
                 TCPIPAbortTCP(ipid);
                 TCPIPLogout(ipid);
                 gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
             }
-            // TODO - I don't think we are getting out of this state successfully...
+            
+            if (!setHighScoreResponse.success) {
+                TCPIPAbortTCP(ipid);
+                TCPIPLogout(ipid);
+                gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+            }
             
             globalScoreAge = 0;
             gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
@@ -452,7 +454,6 @@ void sendHighScore(void)
             return;
     }
     
-    
     setHighScoreRequest.setHighScoreRequest.requestType = REQUEST_TYPE_SET_SCORE;
     setHighScoreRequest.setHighScoreRequest.who[3] = '\0';
     
@@ -465,13 +466,14 @@ void sendHighScore(void)
         TCPIPAbortTCP(ipid);
         TCPIPLogout(ipid);
         gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
+        return;
     }
     
     gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORE_ACK;
     bytesRead = 0;
     
     timeout = 10*60;
-    while (gameNetworkState != GAME_NETWORK_SCORES_RETRIEVED) {
+    while (gameNetworkState != GAME_NETWORK_REQUEST_SCORES) {
         waitForVbl();
         pollNetwork();
         timeout--;

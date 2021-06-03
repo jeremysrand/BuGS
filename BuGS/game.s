@@ -121,7 +121,7 @@ gameLoop_skipScoreAgeDec anop
 		
         jsl checkKeyboard
         
-        jsl waitForVbl
+        jsl waitForBeam
         
         lda shouldQuit
         beq gameDone
@@ -1182,15 +1182,28 @@ waitForKey_loop anop
         rtl
 
 
-waitForVbl entry
-vblLoop anop
+waitForBeam entry
+beamLoop anop
         lda >VERTICAL_COUNTER     ; load the counter value
         and #$80ff                ; mask out the VBL bits
         asl a                     ; shift the word around
         adc #0                    ; move MSB -> LSB
         cmp #$1c8
-        bge vblLoop
+        bge beamLoop
         rtl
+
+		
+waitForVbl entry
+vblLoop1 anop
+		short m
+		lda #$fe
+		cmp >READ_VBL
+		bpl vblLoop1
+vblLoop2 anop
+		cmp >READ_VBL
+		bmi vblLoop2
+		long m
+		rtl
         
         
 shouldQuit      dc i2'1'

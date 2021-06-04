@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D0DFAFA2669D85F00BDBD04 /* settings.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DFAF92669D85F00BDBD04 /* settings.c */; };
+		9D0DFB002669DA5700BDBD04 /* loadSounds.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */; };
 		9D17168F2491C49300C83148 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D17168E2491C49300C83148 /* main.c */; };
 		9D1716922491C49300C83148 /* main.rez in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716912491C49300C83148 /* main.rez */; };
 		9D1716942491C49300C83148 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 9D1716932491C49300C83148 /* Makefile */; };
@@ -58,6 +60,10 @@
 		9D0CF94525B554BC0035D329 /* flea_loop_256b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flea_loop_256b.wav; sourceTree = "<group>"; };
 		9D0CF94625B554CE0035D329 /* scorpion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = scorpion.wav; sourceTree = "<group>"; };
 		9D0DC8EF258C715E00DE9E87 /* extralife.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = extralife.raw; sourceTree = "<group>"; };
+		9D0DFAF82669D85F00BDBD04 /* settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
+		9D0DFAF92669D85F00BDBD04 /* settings.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = settings.c; sourceTree = "<group>"; };
+		9D0DFAFE2669DA5700BDBD04 /* loadSounds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loadSounds.h; sourceTree = "<group>"; };
+		9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = loadSounds.c; sourceTree = "<group>"; };
 		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
 		9D1553EA257F3E5200657188 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
@@ -203,6 +209,10 @@
 			children = (
 				9D17168E2491C49300C83148 /* main.c */,
 				9D1716902491C49300C83148 /* main.h */,
+				9D0DFAF82669D85F00BDBD04 /* settings.h */,
+				9D0DFAF92669D85F00BDBD04 /* settings.c */,
+				9D0DFAFE2669DA5700BDBD04 /* loadSounds.h */,
+				9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */,
 				9DB90E7E265AD04A003461C1 /* globalScores.h */,
 				9DB90E7F265AD04A003461C1 /* globalScores.c */,
 				9D8FFC602491CA28005C9327 /* game.s */,
@@ -395,7 +405,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D0DFAFA2669D85F00BDBD04 /* settings.c in Sources */,
 				9DB90E80265AD04A003461C1 /* globalScores.c in Sources */,
+				9D0DFB002669DA5700BDBD04 /* loadSounds.c in Sources */,
 				9D1716942491C49300C83148 /* Makefile in Sources */,
 				9D17168F2491C49300C83148 /* main.c in Sources */,
 			);

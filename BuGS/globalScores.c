@@ -577,5 +577,9 @@ void sendHighScore(void)
         timeout--;
         if (timeout == 0)
             return;
+        
+        // TODO - Provide some feedback that the score is being uploaded here.
+        // TODO - If there is a timeout, or a failure of some kind, perhaps ask the user if they would like to retry.
+        
     } while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED);
 }

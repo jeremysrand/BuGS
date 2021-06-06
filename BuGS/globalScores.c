@@ -13,6 +13,7 @@
 #include <tcpip.h>
 #include <types.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "game.h"
@@ -30,8 +31,8 @@
 #define RESPONSE_TYPE_STATUS 2
 
 #define GLOBAL_SCORE_REFRESH_TIME (15 * 60 * 60)
-#define SET_SCORE_TIMEOUT (20 * 60)
-#define SHUTDOWN_NETWORK_TIMEOUT (60 / 2)
+#define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
+#define READ_NETWORK_TIMEOUT (5 * 60)
 
 
 // Types
@@ -85,6 +86,20 @@ typedef struct tStatusResponse {
 } tStatusResponse;
 
 
+typedef enum tProtocolErrors {
+    HELLO_TIMEOUT_ERROR = 1,
+    HELLO_TOO_BIG_ERROR,
+    HELLO_UNEXPECTED_RESPONSE_ERROR,
+    HIGH_SCORE_TIMEOUT_ERROR,
+    HIGH_SCORE_TOO_BIG_ERROR,
+    HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR,
+    SET_SCORE_TIMEOUT_ERROR,
+    SET_SCORE_TOO_BIG_ERROR,
+    SET_SCORE_UNEXPECTED_RESPONSE_ERROR,
+    SET_SCORE_FAILED_ERROR,
+} tProtocolErrors;
+
+
 typedef enum tGameNetworkState {
     GAME_NETWORK_CONNECT_FAILED = 0,
     GAME_NETWORK_UNCONNECTED,
@@ -119,6 +134,7 @@ typedef enum tGameNetworkState {
     GAME_NETWORK_CLOSING_TCP,
 } tGameNetworkState;
 
+
 typedef struct tGameNetworkGlobals {
     Boolean networkStartedConnected;
     tGameNetworkState gameNetworkState;
@@ -133,6 +149,8 @@ typedef struct tGameNetworkGlobals {
     tHighScoreRequestWithHash highScoreRequest;
     Boolean hasHighScoreToSend;
     tStatusResponse setHighScoreResponse;
+    uint16_t errorCode;
+    uint16_t timeout;
 } tGameNetworkGlobals;
 
 
@@ -217,34 +235,6 @@ void initNetwork(void)
 
 void shutdownNetwork(void)
 {
-    if (networkGlobals == NULL)
-        return;
- 
-    if (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
-        int timeout = SHUTDOWN_NETWORK_TIMEOUT;
-        TCPIPCloseTCP(networkGlobals->ipid);
-        while (timeout > 0) {
-            waitForVbl();
-            
-            TCPIPPoll();
-        
-            if (TCPIPStatusTCP(networkGlobals->ipid, &(networkGlobals->tcpStatus)) != tcperrOK) {
-                timeout = 0;
-                break;
-            }
-            if (networkGlobals->tcpStatus.srState == TCPSCLOSED)
-                break;
-            
-            timeout--;
-        }
-        
-        if (timeout == 0) {
-            TCPIPAbortTCP(networkGlobals->ipid);
-        }
-        
-        TCPIPLogout(networkGlobals->ipid);
-    }
-    
     if ((!networkGlobals->networkStartedConnected) &&
         (networkGlobals->gameNetworkState > GAME_NETWORK_UNCONNECTED)) {
         TCPIPDisconnect(TRUE, NULL);
@@ -256,6 +246,46 @@ void shutdownNetwork(void)
     TCPIPShutDown();
     UnloadOneTool(128);     // Unload the Hash toolset
     UnloadOneTool(54);      // Unload Marinetti
+}
+
+
+static void abortConnection(void)
+{
+    TCPIPAbortTCP(networkGlobals->ipid);
+    TCPIPLogout(networkGlobals->ipid);
+}
+
+
+void disconnectNetwork(void)
+{
+    if (networkGlobals == NULL)
+        return;
+    
+    if (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
+        if (networkGlobals->gameNetworkState < GAME_NETWORK_CLOSING_TCP) {
+            TCPIPCloseTCP(networkGlobals->ipid);
+            networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
+            networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
+        }
+        
+        while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
+            waitForVbl();
+            pollNetwork();
+        }
+    }
+}
+
+
+static char hexDigitToAscii(Word digit)
+{
+    digit &= 0xf;
+    if (digit < 10)
+        return '0' + digit;
+    
+    if (digit > 15)
+        return 'X';
+    
+    return 'A' + digit - 10;
 }
 
 
@@ -290,6 +320,17 @@ static void displayNetworkError(char * line1, char * line2)
     displayString(4, line1);
     displayString(5, line2);
     
+    highScoreResponse.highScores[7].scoreText[0] = 'C';
+    highScoreResponse.highScores[7].scoreText[1] = 'O';
+    highScoreResponse.highScores[7].scoreText[2] = 'D';
+    highScoreResponse.highScores[7].scoreText[3] = 'E';
+    highScoreResponse.highScores[7].scoreText[4] = ':';
+    highScoreResponse.highScores[7].scoreText[5] = ' ';
+    highScoreResponse.highScores[7].scoreText[6] = hexDigitToAscii(networkGlobals->errorCode >> 12);
+    highScoreResponse.highScores[7].scoreText[7] = hexDigitToAscii(networkGlobals->errorCode >> 8);
+    highScoreResponse.highScores[7].scoreText[8] = hexDigitToAscii(networkGlobals->errorCode >> 4);
+    highScoreResponse.highScores[7].scoreText[9] = hexDigitToAscii(networkGlobals->errorCode);
+    
     globalScoreAge = 0;
     hasGlobalHighScores = TRUE;
 }
@@ -316,10 +357,8 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_PROTOCOL_FAILED:
-            TCPIPCloseTCP(networkGlobals->ipid);
+            abortConnection();
             displayNetworkError("PROTOCOL", "FAILED");
-            globalScoreAge = GLOBAL_SCORE_REFRESH_TIME;
-            networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
             break;
             
         case GAME_NETWORK_FAILURE:
@@ -339,9 +378,10 @@ void pollNetwork(void)
             
         case GAME_NETWORK_CONNECTED:
             TCPIPDNRNameToIP("\p" NETWORK_SERVER, &(networkGlobals->domainNameResolution));
-            if (toolerror())
+            if (toolerror()) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_LOOKUP_FAILED;
-            else
+                networkGlobals->errorCode = toolerror();
+            } else
                 networkGlobals->gameNetworkState = GAME_NETWORK_RESOLVING_NAME;
             break;
         
@@ -351,6 +391,7 @@ void pollNetwork(void)
             
             if (networkGlobals->domainNameResolution.DNRstatus != DNR_OK) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_LOOKUP_FAILED;
+                networkGlobals->errorCode = networkGlobals->domainNameResolution.DNRstatus;
                 break;
             }
             
@@ -366,10 +407,12 @@ void pollNetwork(void)
             networkGlobals->ipid = TCPIPLogin(myUserId, networkGlobals->domainNameResolution.DNRIPaddress, NETWORK_SERVERPORT, 0, 64);
             if (toolerror()) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
+                networkGlobals->errorCode = toolerror();
                 break;
             }
             
-            if (TCPIPOpenTCP(networkGlobals->ipid) != tcperrOK) {
+            networkGlobals->errorCode = TCPIPOpenTCP(networkGlobals->ipid);
+            if (networkGlobals->errorCode != tcperrOK) {
                 TCPIPLogout(networkGlobals->ipid);
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
@@ -378,9 +421,9 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_WAITING_FOR_TCP:
-            if (TCPIPStatusTCP(networkGlobals->ipid, &(networkGlobals->tcpStatus)) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPStatusTCP(networkGlobals->ipid, &(networkGlobals->tcpStatus));
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
@@ -389,38 +432,48 @@ void pollNetwork(void)
                 break;
             
             if (networkGlobals->tcpStatus.srState != TCPSESTABLISHED) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+                abortConnection();
+                networkGlobals->errorCode = networkGlobals->tcpStatus.srState | 0x8000;
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_HELLO;
+            networkGlobals->timeout = READ_NETWORK_TIMEOUT;
             networkGlobals->bytesRead = 0;
             break;
             
         case GAME_NETWORK_WAITING_FOR_HELLO:
-            if (TCPIPReadTCP(networkGlobals->ipid, 0,
-                    ((uint32_t)(&(networkGlobals->helloResponse))) + networkGlobals->bytesRead,
-                    sizeof(networkGlobals->helloResponse) - networkGlobals->bytesRead,
-                    &(networkGlobals->readResponseBuf)) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPReadTCP(networkGlobals->ipid, 0,
+                                                     ((uint32_t)(&(networkGlobals->helloResponse))) + networkGlobals->bytesRead,
+                                                     sizeof(networkGlobals->helloResponse) - networkGlobals->bytesRead,
+                                                     &(networkGlobals->readResponseBuf));
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->bytesRead += networkGlobals->readResponseBuf.rrBuffCount;
-            if (networkGlobals->bytesRead < sizeof(networkGlobals->helloResponse))
+            if (networkGlobals->bytesRead < sizeof(networkGlobals->helloResponse)) {
+                if (networkGlobals->timeout > 0) {
+                    networkGlobals->timeout--;
+                } else {
+                    networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                    networkGlobals->errorCode = HELLO_TIMEOUT_ERROR;
+                }
                 break;
+            }
             
             if (networkGlobals->bytesRead > sizeof(networkGlobals->helloResponse)) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = HELLO_TOO_BIG_ERROR;
                 break;
             }
             
             if (networkGlobals->helloResponse.responseType != RESPONSE_TYPE_HELLO) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = HELLO_UNEXPECTED_RESPONSE_ERROR;
                 break;
             }
             
@@ -431,7 +484,9 @@ void pollNetwork(void)
                        (globalScoreAge == 0)) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
             } else {
+                TCPIPCloseTCP(networkGlobals->ipid);
                 networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
+                networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
             }
             break;
             
@@ -443,39 +498,49 @@ void pollNetwork(void)
             md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->highScoreRequest.highScoreRequest), sizeof(networkGlobals->highScoreRequest.highScoreRequest));
             md5Finish(&(networkGlobals->hashWorkBlock), &(networkGlobals->highScoreRequest.md5Digest[0]));
             
-            if (TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&(networkGlobals->highScoreRequest), sizeof(networkGlobals->highScoreRequest), FALSE, FALSE) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&(networkGlobals->highScoreRequest), sizeof(networkGlobals->highScoreRequest), FALSE, FALSE);
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORES;
+            networkGlobals->timeout = READ_NETWORK_TIMEOUT;
             networkGlobals->bytesRead = 0;
             break;
             
         case GAME_NETWORK_WAITING_FOR_SCORES:
-            if (TCPIPReadTCP(networkGlobals->ipid, 0,
-                    ((uint32_t)(&highScoreResponse)) + networkGlobals->bytesRead,
-                    sizeof(highScoreResponse) - networkGlobals->bytesRead,
-                    &(networkGlobals->readResponseBuf)) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPReadTCP(networkGlobals->ipid, 0,
+                                                     ((uint32_t)(&highScoreResponse)) + networkGlobals->bytesRead,
+                                                     sizeof(highScoreResponse) - networkGlobals->bytesRead,
+                                                     &(networkGlobals->readResponseBuf));
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->bytesRead += networkGlobals->readResponseBuf.rrBuffCount;
-            if (networkGlobals->bytesRead < sizeof(highScoreResponse))
+            if (networkGlobals->bytesRead < sizeof(highScoreResponse)) {
+                if (networkGlobals->timeout > 0) {
+                    networkGlobals->timeout--;
+                } else {
+                    networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                    networkGlobals->errorCode = HIGH_SCORE_TIMEOUT_ERROR;
+                }
                 break;
+            }
             
             if (networkGlobals->bytesRead > sizeof(highScoreResponse)) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = HIGH_SCORE_TOO_BIG_ERROR;
                 break;
             }
             
             if (highScoreResponse.responseType != RESPONSE_TYPE_SCORES) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR;
                 break;
             }
             
@@ -484,6 +549,7 @@ void pollNetwork(void)
             
             TCPIPCloseTCP(networkGlobals->ipid);
             networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
+            networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
             break;
             
         case GAME_NETWORK_SET_HIGH_SCORE:
@@ -495,44 +561,55 @@ void pollNetwork(void)
             md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(setHighScoreRequest.setHighScoreRequest), sizeof(setHighScoreRequest.setHighScoreRequest));
             md5Finish(&(networkGlobals->hashWorkBlock), &(setHighScoreRequest.md5Digest[0]));
             
-            if (TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&setHighScoreRequest, sizeof(setHighScoreRequest), FALSE, FALSE) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&setHighScoreRequest, sizeof(setHighScoreRequest), FALSE, FALSE);
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORE_ACK;
+            networkGlobals->timeout = READ_NETWORK_TIMEOUT;
             networkGlobals->bytesRead = 0;
             break;
             
         case GAME_NETWORK_WAITING_FOR_SCORE_ACK:
-            if (TCPIPReadTCP(networkGlobals->ipid, 0,
-                    ((uint32_t)(&(networkGlobals->setHighScoreResponse))) + networkGlobals->bytesRead,
-                    sizeof(networkGlobals->setHighScoreResponse) - networkGlobals->bytesRead,
-                    &(networkGlobals->readResponseBuf)) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
+            networkGlobals->errorCode = TCPIPReadTCP(networkGlobals->ipid, 0,
+                                                     ((uint32_t)(&(networkGlobals->setHighScoreResponse))) + networkGlobals->bytesRead,
+                                                     sizeof(networkGlobals->setHighScoreResponse) - networkGlobals->bytesRead,
+                                                     &(networkGlobals->readResponseBuf));
+            if (networkGlobals->errorCode != tcperrOK) {
+                abortConnection();
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 break;
             }
             
             networkGlobals->bytesRead += networkGlobals->readResponseBuf.rrBuffCount;
-            if (networkGlobals->bytesRead < sizeof(networkGlobals->setHighScoreResponse))
+            if (networkGlobals->bytesRead < sizeof(networkGlobals->setHighScoreResponse)) {
+                if (networkGlobals->timeout > 0) {
+                    networkGlobals->timeout--;
+                } else {
+                    networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                    networkGlobals->errorCode = SET_SCORE_TIMEOUT_ERROR;
+                }
                 break;
+            }
             
             if (networkGlobals->bytesRead > sizeof(networkGlobals->setHighScoreResponse)) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = SET_SCORE_TOO_BIG_ERROR;
                 break;
             }
             
             if (networkGlobals->setHighScoreResponse.responseType != RESPONSE_TYPE_STATUS) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = SET_SCORE_UNEXPECTED_RESPONSE_ERROR;
                 break;
             }
             
             if (!networkGlobals->setHighScoreResponse.success) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                networkGlobals->errorCode = SET_SCORE_FAILED_ERROR;
                 break;
             }
             
@@ -542,15 +619,17 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_CLOSING_TCP:
-            if (TCPIPStatusTCP(networkGlobals->ipid, &(networkGlobals->tcpStatus)) != tcperrOK) {
-                TCPIPAbortTCP(networkGlobals->ipid);
-                TCPIPLogout(networkGlobals->ipid);
-                networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
+            networkGlobals->errorCode = TCPIPStatusTCP(networkGlobals->ipid, &(networkGlobals->tcpStatus));
+            if ((networkGlobals->tcpStatus.srState != TCPSCLOSED) &&
+                (networkGlobals->tcpStatus.srState != TCPSTIMEWAIT)) {
+                if (networkGlobals->timeout > 0) {
+                    networkGlobals->timeout--;
+                } else {
+                    abortConnection();
+                    networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
+                }
                 break;
             }
-            if ((networkGlobals->tcpStatus.srState != TCPSCLOSED) &&
-                (networkGlobals->tcpStatus.srState != TCPSTIMEWAIT))
-                break;
             
             TCPIPLogout(networkGlobals->ipid);
             networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
@@ -561,8 +640,6 @@ void pollNetwork(void)
 
 void sendHighScore(void)
 {
-    int timeout = SET_SCORE_TIMEOUT;
-    
     if (networkGlobals == NULL)
         return;
     
@@ -574,12 +651,7 @@ void sendHighScore(void)
     do {
         waitForVbl();
         pollNetwork();
-        timeout--;
-        if (timeout == 0)
-            return;
-        
         // TODO - Provide some feedback that the score is being uploaded here.
         // TODO - If there is a timeout, or a failure of some kind, perhaps ask the user if they would like to retry.
-        
     } while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED);
 }

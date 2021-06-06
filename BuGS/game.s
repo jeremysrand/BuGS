@@ -246,6 +246,7 @@ startGame_singlePlayer anop
 		jsl spiderInitGame
 		jsl levelInit
 		jsl soundInit
+		jsl disconnectNetwork
 ; Fall through intentionally here...
 startLevel entry
 		jsl segmentsInitLevel

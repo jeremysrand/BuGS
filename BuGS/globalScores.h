@@ -20,6 +20,7 @@ typedef struct tHighScore
 extern unsigned int myUserId;
 
 extern void initNetwork(void);
+extern void disconnectNetwork(void);
 extern void pollNetwork(void);
 extern void shutdownNetwork(void);
 

@@ -64,6 +64,8 @@
 		9D0DFAF92669D85F00BDBD04 /* settings.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = settings.c; sourceTree = "<group>"; };
 		9D0DFAFE2669DA5700BDBD04 /* loadSounds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loadSounds.h; sourceTree = "<group>"; };
 		9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = loadSounds.c; sourceTree = "<group>"; };
+		9D0DFB0A266DBD9000BDBD04 /* md2teach */ = {isa = PBXFileReference; lastKnownFileType = file; path = md2teach; sourceTree = "<group>"; };
+		9D0DFB11266DC03E00BDBD04 /* Read.Me.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Read.Me.md; sourceTree = "<group>"; };
 		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
 		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
 		9D1553EA257F3E5200657188 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				9DB1505224C7495400558B87 /* globals.s */,
 				9DB1505524D3BFCE00558B87 /* global.macros */,
 				9D47CCBA25525C1A00CDA5CB /* genData.pl */,
+				9D0DFB11266DC03E00BDBD04 /* Read.Me.md */,
 				9D1553E8257F3DC600657188 /* sound */,
 				9D3396F324AECACC003222B3 /* sprites */,
 				9D1716912491C49300C83148 /* main.rez */,
@@ -251,6 +254,7 @@
 				9D17169A2491C49300C83148 /* head.mk */,
 				9D4EF43E25D7006A001BEDB0 /* tar */,
 				9D17169C2491C49300C83148 /* launchEmulator */,
+				9D0DFB0A266DBD9000BDBD04 /* md2teach */,
 				9D6DB18625A411DA00CDBF05 /* BuGS.2mg */,
 				9D17169E2491C49300C83148 /* orca-asm */,
 				9D1716A02491C49300C83148 /* orca-cc */,

@@ -62,6 +62,8 @@ ASMFLAGS+=
 # Add any arguments you want passed to the linker to this variable:
 LDFLAGS+=
 
+MD_SRCS=Read.Me.md
+
 # Uncomment the following line if you want to build against the GNO libraries
 # export ORCA=$(ORCA_BINDIR)/gno
 
@@ -78,7 +80,7 @@ LDFLAGS+=
 # Then, during the copy phase, mySystemFile will be copied into the System
 # folder and a folder newDir will be created and anotherFile will be copied
 # into there.
-COPYDIRS=
+COPYDIRS=$(GENDIR)/Teach
 
 # By default, the build expects that you have GSplus in the path:
 # 	/Applications/GSplus.app/Contents/MacOS/gsplus

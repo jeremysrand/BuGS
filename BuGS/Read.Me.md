@@ -12,7 +12,7 @@ At the beginning of the game, the field will be populated with a random set of m
 
 From the first level, a spider will appear randomly on the right edge of the play area and move towards the left or vice versa.  The spider moves jerkily up, down or on diagonals in an unpredictable way.  Best to stay behind a spider because they never backtrack.  You get 300, 600 or 900 points for shooting a spider depending on how close they were to you when you shot it.  At higher scores, the spider will restrict its movement to fewer rows at the bottom of the screen making it more likely to collide with you.  You do not need to shoot spiders to clear levels and you can choose to just avoid them.
 
-From the second level, a flea may appear and drop from the top of the screen down to the bottom, depositing mushrooms randomly behind it.  A flea appears if the number of mushrooms in the bottom part of the screen drops below a particular threshold and they will continue to drop until enough mushrooms exist there.  If you shoot a flea once, it accelerates and drops at you extra quickly.  You must shoot them twice to destry them.  At higher scores, the flea is always fast but only takes one shot to destroy.  Also at higher scores, the number of mushrooms required at the bottom of the screen goes up leading to more fleas.  A flea adds 200 points to your score but as with spiders, you can choose to just avoid them.
+From the second level, a flea may appear and drop from the top of the screen down to the bottom, depositing mushrooms randomly behind it.  A flea appears if the number of mushrooms in the bottom part of the screen drops below a particular threshold and they will continue to drop until enough mushrooms exist there.  If you shoot a flea once, it accelerates and drops at you extra quickly.  You must shoot them twice to destroy them.  At higher scores, the flea is always fast but only takes one shot to destroy.  Also at higher scores, the number of mushrooms required at the bottom of the screen goes up leading to more fleas.  A flea adds 200 points to your score but as with spiders, you can choose to just avoid them.
 
 From the third level, a scorpion may appear on the right side of the screen and move to the left or vice versa.  The scorpion only ever travels across a single row on the screen and always on the upper part of the game play area so you never need to worry about colliding with a scorpion.  But a scorpion poisons any mushroom it passes over.  A poisoned mushroom changes colour and whenever a centipede touches a poisoned mushroom, it will just drop straight down towards the bottom of the screen, passing through mushrooms which may in the way.  In order to "heal" the centipede, you must shoot the head segment.  If you do not, it will reach the bottom of the screen and then move up row by row and down again like a normal centipede.  Note that a poisoned centipede that reaches the bottom of the screen does not trigger the addition of random single centipede segments.  It is not a bad idea to try to destroy poisoned mushrooms.  Shooting a scorpion awares 1000 points.  At higher scores, the scorpion will sometimes cross the screen twice as quickly making it harder to hit.
 
@@ -20,38 +20,29 @@ From the third level, a scorpion may appear on the right side of the screen and 
 
 Unfortunately, not all GS emulators work well with BuGS.  I recommend mame or KeGS based on my testing.  Some notes about specific emulators are below:
 
-### mame:
-This emulator is not very friendly but is probably the best for playing BuGS.  The mouse is handled well and the sound and graphics look good.  If you are on a Mac, I highly recommend Kelvin Sherlock's Ample which makes running mame much easier.  You can find it at - http://github.com/ksherlock/ample
+**mame:** This emulator is not very friendly but is probably the best for playing BuGS.  The mouse is handled well and the sound and graphics look good.  If you are on a Mac, I highly recommend Kelvin Sherlock's Ample which makes running mame much easier.  You can find it at - http://github.com/ksherlock/ample
 
-### KeGS:
-Kent has released some updates for this emulator recently and v1.05 seems to work well with BuGS.  You will want to press F8 to constrain the mouse to the emulator.  You can find the latest version at kegs.sourceforge.net.
+**KeGS:** Kent has released some updates for this emulator recently and v1.05 seems to work well with BuGS.  You will want to press F8 to constrain the mouse to the emulator.  You can find the latest version at kegs.sourceforge.net.
 
-### GSPlus:
-This emulator is based on KeGS and I generally find it to be a good emulator but it does not work well with BuGS.  The main problem is related to mouse handling.  GSPlus tries to map the host's mouse position to the corresponding position on the emulator's screen.  When they do this, the emulator often stops updating the mouse position when it reaches the side of the emulated screen.  With a game like BuGS (or Arkanoid for a similar example), the mouse is used as an analog input to the game.  So when the mouse reaches a screen edge, you will no longer be able to move the player in that direction.  Other than this mouse input problem, everything else seems to work but I suspect you will find the game frustrating because of these "virtual barriers" due to mouse input.
+**GSPlus:** This emulator is based on KeGS and I generally find it to be a good emulator but it does not work well with BuGS.  The main problem is related to mouse handling.  GSPlus tries to map the host's mouse position to the corresponding position on the emulator's screen.  When they do this, the emulator often stops updating the mouse position when it reaches the side of the emulated screen.  With a game like BuGS (or Arkanoid for a similar example), the mouse is used as an analog input to the game.  So when the mouse reaches a screen edge, you will no longer be able to move the player in that direction.  Other than this mouse input problem, everything else seems to work but I suspect you will find the game frustrating because of these "virtual barriers" due to mouse input.
 
-### GSPort:
-This is another KeGS based emulator.  I can no longer test with this emulator on my Mac so I don't know how well BuGS works with GSPort.  My guess is that the sound and graphics will probably be good but it may suffer from the same mouse input problem as GSPlus.  Feedback welcome.
+**GSPort:** This is another KeGS based emulator.  I can no longer test with this emulator on my Mac so I don't know how well BuGS works with GSPort.  My guess is that the sound and graphics will probably be good but it may suffer from the same mouse input problem as GSPlus.  Feedback welcome.
 
-### Sweet16:
-This is another emulator I cannot test any longer on my Mac.  But I do have feedback from others who say it suffers from the same kind of mouse input problems as GSPlus.  Worse, there are graphics problems related to handling vertical blanking.  BuGS will not work well under Sweet16 unfortunately.
+**Sweet16:** This is another emulator I cannot test any longer on my Mac.  But I do have feedback from others who say it suffers from the same kind of mouse input problems as GSPlus.  Worse, there are graphics problems related to handling vertical blanking.  BuGS will not work well under Sweet16 unfortunately.
 
 ## Trackballs:
 
 The original arcade game is played using a trackball so for the best experience, I would recommend using an ADB trackball if you have one.  Below is a list of trackballs for which I have some feedback saying they work:
 
-### Kensington Turbo Mouse Version 5.0 (Model Number 64210):
-This is the trackball I am using on my GS and it works great for me.
+**Kensington Turbo Mouse Version 5.0 (Model Number 64210):** This is the trackball I am using on my GS and it works great for me.
 
-### Kensington Turbo Mouse Version 3.0:
-This trackball is known to work well with the GS and should work with BuGS but I have no direct feedback at this time.
+**Kensington Turbo Mouse Version 3.0:** This trackball is known to work well with the GS and should work with BuGS but I have no direct feedback at this time.
 
-### Logitech TrackMan Mouse (Model Number T-AA1-4MD):
-This trackball was tested during WozFest in March 2021 and the feedback is that it worked with BuGS.
+**Logitech TrackMan Mouse (Model Number T-AA1-4MD):** This trackball was tested during WozFest in March 2021 and the feedback is that it worked with BuGS.
 
 Some ADB trackballs will not work.  The root problem seems to be whether it behaves like a regular ADB mouse or whether it might need some custom driver.  Custom drivers were only written for the Mac for these trackballs so they probably don't work well with the GS, nor with BuGS.  This is a list of the trackballs for which I have some feedback saying they do not work:
 
-### Kensington Turbo Mouse Version 4.0:
-Apparently Version 4.0 of the Turbo Mouse required a driver on the Mac and due to that, it is not likely to work well for BuGS.  It has been tested and it did not work well.
+**Kensington Turbo Mouse Version 4.0:** Apparently Version 4.0 of the Turbo Mouse required a driver on the Mac and due to that, it is not likely to work well for BuGS.  It has been tested and it did not work well.
 
 I don't have any more recommendations for trackballs.  If you have a trackball that does or does not work, let me know and we can continue to build a list of which are good and which to avoid.
 

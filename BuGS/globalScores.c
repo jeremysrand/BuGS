@@ -83,6 +83,8 @@ typedef struct tScoresResponse {
 typedef struct tStatusResponse {
     uint16_t responseType;
     Boolean success;
+    uint16_t position;
+    uint16_t numberOfScores;
 } tStatusResponse;
 
 

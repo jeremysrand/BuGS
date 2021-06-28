@@ -1123,6 +1123,36 @@ staticGameBoard_cont anop
 		rtl
 		
 
+displayConnectionString entry
+		ldx #GAME_NUM_TILES_WIDE*2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_W
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_K
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		rtl
+		
+		
 checkKeyboard entry
 checkKey_loop2 anop
         short i,m

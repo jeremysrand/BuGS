@@ -33,6 +33,7 @@
 #define GLOBAL_SCORE_REFRESH_TIME (15 * 60 * 60)
 #define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
 #define READ_NETWORK_TIMEOUT (5 * 60)
+#define NETWORK_RETRY_TIMEOUT (3 * 60 * 60)
 
 
 // Types
@@ -348,6 +349,7 @@ void pollNetwork(void)
     switch (networkGlobals->gameNetworkState) {
         case GAME_NETWORK_SOCKET_ERROR:
             displayNetworkError("SOCKET", "ERROR");
+            networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
             break;
             
         case GAME_NETWORK_LOOKUP_FAILED:
@@ -356,20 +358,28 @@ void pollNetwork(void)
             
         case GAME_NETWORK_CONNECT_FAILED:
             displayNetworkError("CONNECT", "FAILED");
+            networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
             break;
             
         case GAME_NETWORK_PROTOCOL_FAILED:
             abortConnection();
             displayNetworkError("PROTOCOL", "FAILED");
+            networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
             break;
             
         case GAME_NETWORK_FAILURE:
             // All of the different failure modes except protocol failure above end up here ultimately.  And the state
             // machine stays here once it arrives here.
+            if (networkGlobals->timeout > 0) {
+                networkGlobals->timeout--;
+                if (networkGlobals->timeout == 0)
+                    networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
+            }
             break;
             
         case GAME_NETWORK_UNCONNECTED:
-            TCPIPConnect(NULL);     // TODO - Perhaps some feedback here would be a better user experience so maybe I should provide some kind of display function.
+            displayConnectionString();
+            TCPIPConnect(NULL);
             if ((!toolerror()) &&
                 (TCPIPGetConnectStatus())) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_CONNECTED;
@@ -640,20 +650,56 @@ void pollNetwork(void)
 }
 
 
-void sendHighScore(void)
+BOOLEAN canSendHighScore(void)
 {
     if (networkGlobals == NULL)
-        return;
+        return FALSE;
     
-    if (networkGlobals->gameNetworkState < GAME_NETWORK_TCP_UNCONNECTED)
-        return;
+    if (networkGlobals->gameNetworkState < GAME_NETWORK_TCP_UNCONNECTED) {
+        if ((networkGlobals->gameNetworkState == GAME_NETWORK_FAILURE) &&
+            (networkGlobals->timeout > 0))
+            return TRUE;
+        
+        return FALSE;
+    }
+    
+    return TRUE;
+}
+
+BOOLEAN sendHighScore(void)
+{
+    uint16_t cycleCount = 0;
     
     networkGlobals->hasHighScoreToSend = TRUE;
+    
+    if (networkGlobals->gameNetworkState < GAME_NETWORK_TCP_UNCONNECTED)
+        networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
     
     do {
         waitForVbl();
         pollNetwork();
-        // TODO - Provide some feedback that the score is being uploaded here.
-        // TODO - If there is a timeout, or a failure of some kind, perhaps ask the user if they would like to retry.
+        cycleCount++;
+        
+        if ((cycleCount & 0x7) == 0) {
+            switch (cycleCount & 0x18) {
+                case 0x00:
+                    uploadSpin1();
+                    break;
+                    
+                case 0x08:
+                    uploadSpin2();
+                    break;
+                    
+                case 0x10:
+                    uploadSpin1();
+                    break;
+                    
+                case 0x18:
+                    uploadSpin2();
+                    break;
+            }
+        }
     } while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED);
+    
+    return (networkGlobals->gameNetworkState == GAME_NETWORK_TCP_UNCONNECTED);
 }

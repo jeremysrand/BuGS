@@ -773,9 +773,98 @@ checkHighScore_doneInitials anop
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-1,y
 		sta setHighScoreRequest+4
 		jsl saveSettings
+		jsl canSendHighScore
+		bne checkHighScore_retry
+		brl checkHighScore_doneNetwork
+
+checkHighScore_retry anop
+		ldx #GAME_NUM_TILES_WIDE*22+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_D
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_SOLID1
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
 		jsl sendHighScore
+		beq checkHighScore_retryPrompt
+		brl checkHighScore_doneNetwork
+		
+checkHighScore_retryPrompt anop
+		ldx #GAME_NUM_TILES_WIDE*22+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_F
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_D
+		_overwriteGameTile TILE_SYMBOL_COLON
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_LETTER_T
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_SYMBOL_COLON
+		_overwriteGameTile TILE_LETTER_N
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		
+		jsl waitForKey
+		and #$df
+		cmp #'N'
+		beq checkHighScore_doneNetwork
+		cmp #'Y'
+		bne checkHighScore_doRetry
+		brl checkHighScore_retry
+checkHighScore_doRetry anop
+		brl checkHighScore_retryPrompt
+		
+checkHighScore_doneNetwork anop
 		jsl updateHighScore
 		sec
+		rtl
+		
+		
+uploadSpin1 entry
+		ldx #GAME_NUM_TILES_WIDE*22+36
+		_overwriteGameTile TILE_SOLID1
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		rtl
+		
+		
+uploadSpin2 entry
+		ldx #GAME_NUM_TILES_WIDE*22+36
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_SOLID1
+		_overwriteGameTile TILE_EMPTY
+		rtl
+		
+		
+uploadSpin3 entry
+		ldx #GAME_NUM_TILES_WIDE*22+36
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_SOLID1
 		rtl
 		
 

@@ -781,6 +781,7 @@ checkHighScore_isInvalid anop
 		bra checkHighScore_nextKey
 		  
 checkHighScore_doneInitials anop
+		_overwriteGameTile TILE_EMPTY
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-3,y
 		sta setHighScoreRequest+2
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-1,y
@@ -878,6 +879,49 @@ uploadSpin3 entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_SOLID1
+		rtl
+		
+		
+displayScorePosition entry
+		ldx #GAME_NUM_TILES_WIDE*22
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_G
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_B
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_Y
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_I
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_SYMBOL_COLON
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*24
+		ldy #0
+displayScorePosition_loop anop
+		lda globalScoreInfo,y
+		and #$ff
+		beq displayScorePosition_done
+		jsl asciiToTileType
+		jsl overwriteGameTile
+		iny
+		bra displayScorePosition_loop
+		
+displayScorePosition_done anop
 		rtl
 		  
 		end

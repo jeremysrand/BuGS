@@ -12,6 +12,7 @@
 
 #include <types.h>
 
+#include "tileData.h"
 
 typedef struct tHighScore
 {
@@ -19,6 +20,8 @@ typedef struct tHighScore
     char who[4];
     unsigned long score;
 } tHighScore;
+
+extern char globalScoreInfo[GAME_NUM_TILES_WIDE + 1];
 
 extern unsigned int myUserId;
 
@@ -34,6 +37,7 @@ extern void uploadSpin1(void);
 extern void uploadSpin2(void);
 extern void uploadSpin3(void);
 extern void displayConnectionString(void);
+extern void displayScorePosition(void);
 
 
 #endif /* define _GUARD_PROJECTBuGS_FILEglobalScores_ */

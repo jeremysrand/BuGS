@@ -170,6 +170,7 @@ Boolean hasGlobalHighScores = FALSE;
 tScoresResponse highScoreResponse;
 Word globalScoreAge = 0;
 tSetHighScoreRequestWithHash setHighScoreRequest;
+char globalScoreInfo[GAME_NUM_TILES_WIDE + 1];
 
 
 // Implementation
@@ -691,7 +692,7 @@ BOOLEAN sendHighScore(void)
                     break;
                     
                 case 0x10:
-                    uploadSpin1();
+                    uploadSpin3();
                     break;
                     
                 case 0x18:
@@ -701,5 +702,19 @@ BOOLEAN sendHighScore(void)
         }
     } while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED);
     
-    return (networkGlobals->gameNetworkState == GAME_NETWORK_TCP_UNCONNECTED);
+    if (networkGlobals->gameNetworkState != GAME_NETWORK_TCP_UNCONNECTED)
+        return FALSE;
+    
+    sprintf(globalScoreInfo, "  %u OF %u SCORES", networkGlobals->setHighScoreResponse.position, networkGlobals->setHighScoreResponse.numberOfScores);
+    for (cycleCount = strlen(globalScoreInfo); cycleCount < sizeof(globalScoreInfo); cycleCount++) {
+        globalScoreInfo[cycleCount] = ' ';
+    }
+    globalScoreInfo[GAME_NUM_TILES_WIDE] = '\0';
+    displayScorePosition();
+    
+    for (cycleCount = 4 * 60; cycleCount > 0; cycleCount--) {
+        waitForVbl();
+    }
+    
+    return TRUE;
 }

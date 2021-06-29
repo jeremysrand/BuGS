@@ -137,14 +137,14 @@ _dirtyNonGameTile_skip&SYSCNT anop
         macro
         _overwriteGameTile &type
         lda #&type
-        jsr overwriteGameTile
+        jsl overwriteGameTile
         mend
         
         
         macro
         _setGameTile &type
         lda #&type
-        jsr setGameTile
+        jsl setGameTile
         mend
         
         
@@ -153,70 +153,70 @@ _dirtyNonGameTile_skip&SYSCNT anop
         ldy #SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+&nthScore*SETTINGS_HIGH_SCORE_SIZE
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
         
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         lda #TILE_EMPTY
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda settings,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
         mend
         
         
@@ -225,70 +225,70 @@ _dirtyNonGameTile_skip&SYSCNT anop
         ldy #2+&nthScore*SETTINGS_HIGH_SCORE_SIZE
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
         
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         lda #TILE_EMPTY
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
 
         iny
         lda highScoreResponse,y
         jsl asciiToTileType
-        jsr setGameTile
+        jsl setGameTile
         mend
 
 

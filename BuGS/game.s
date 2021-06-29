@@ -18,6 +18,7 @@
 ; more on-screen action.
 
         case on
+		datachk off
         mcopy game.macros
         keep game
 
@@ -344,7 +345,7 @@ updateGameState_doneBonus anop
 		stz isSinglePlayer
 		bra updateGameState_twoPlayer
 updateGameState_isSinglePlayer anop
-		jmp setGameNotRunning
+		jmp >setGameNotRunning
 updateGameState_notHighScore anop
 		lda isSinglePlayer
 		beq updateGameState_isSinglePlayer
@@ -512,8 +513,96 @@ copyFromPlayer2Tiles_skip anop
 		cpx #RHS_FIRST_TILE_OFFSET
 		blt copyFromPlayer2Tiles_loop
 		rtl
-		
 
+		
+checkKeyboard entry
+checkKey_loop2 anop
+        short i,m
+        lda >KEYBOARD
+        bpl checkKey_done
+        sta >KEYBOARD_STROBE
+        long i,m
+        and #$007f
+		
+		ldx gameState
+		bne checkKey_pause
+        
+        cmp #'q'
+        beq checkKey_quit
+        cmp #'Q'
+        beq checkKey_quit
+
+		cmp #'1'
+		beq checkKey_game
+		
+		cmp #'2'
+		beq checkKey_game
+		
+		cmp #'s'
+		beq checkKey_swapStereo
+		cmp #'S'
+		beq checkKey_swapStereo
+        
+checkKey_done anop
+		long i,m
+        rtl
+		
+checkKey_pause anop
+		jmp >pauseGame
+                
+checkKey_quit anop
+        stz shouldQuit
+        rtl
+
+checkKey_game anop
+		sec
+		sbc #'1'
+		jmp startGame
+		
+checkKey_swapStereo anop
+		jsl swapStereoSettings
+		jmp >staticGameBoard
+
+
+
+waitForBeam entry
+beamLoop anop
+        lda >VERTICAL_COUNTER     ; load the counter value
+        and #$80ff                ; mask out the VBL bits
+        asl a                     ; shift the word around
+        adc #0                    ; move MSB -> LSB
+        cmp #$1c8
+        bge beamLoop
+        rtl
+
+		
+waitForVbl entry
+vblLoop1 anop
+		short m
+		lda #$fe
+		cmp >READ_VBL
+		bpl vblLoop1
+vblLoop2 anop
+		cmp >READ_VBL
+		bmi vblLoop2
+		long m
+		rtl
+        
+
+borderColour    dc i2'0'
+frameCount 		dc i2'0'
+shouldPreloadSound	dc i2'0'
+highScoreCountdown dc i2'0'
+
+        end
+
+
+gameExtras start extraSeg
+		using globalData
+		using tileData
+		using playerData
+
+		
 overwriteGameTile entry
 		phy
 		tay
@@ -527,12 +616,11 @@ overwriteGameTile entry
 		inx
 		inx
 		ply
-		rts
-		
+		rtl
 
 pauseGame entry
 		jsl pauseSound
-		
+
 		ldx #GAME_NUM_TILES_WIDE*4+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -555,7 +643,7 @@ pauseGame entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*6+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -578,7 +666,7 @@ pauseGame entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*8+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -601,7 +689,7 @@ pauseGame entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*10+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -624,7 +712,7 @@ pauseGame entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*12+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_O
@@ -647,7 +735,7 @@ pauseGame entry
 		_overwriteGameTile TILE_LETTER_M
 		_overwriteGameTile TILE_LETTER_E
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*14+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -670,7 +758,7 @@ pauseGame entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		short i,m
 pauseGame_loop anop
 		lda >KEYBOARD
@@ -688,7 +776,7 @@ pauseGame_quit anop
 		stz shouldQuit
 		rtl
 		
-		
+	
 setGameTile entry
 		cmp tileType,x
 		beq setGameTile_skip
@@ -698,9 +786,9 @@ setGameTile entry
 setGameTile_skip anop
 		inx
 		inx
-		rts
-		
-		
+		rtl
+	
+; This must come before staticGameBoard because it falls into it.
 setGameNotRunning entry
 		lda #GAME_STATE_NOT_RUNNING
 		sta gameState
@@ -710,15 +798,13 @@ setGameNotRunning entry
 		jsl fleaInitLevel
 		jsl addRandomMushrooms
 		stz displayGlobalHighScores
-		jmp staticGameBoard
-		
-		
+; Fall through into staticGameBoard...
 staticGameBoard entry
 		lda #TILE_PLAYER
 		sta tileType+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
 		lda #TILE_STATE_DIRTY
 		sta tileDirty+RHS_FIRST_TILE_OFFSET-GAME_NUM_TILES_WIDE-1
-		
+
 		lda displayGlobalHighScores
 		beq staticGameBoard_localHighScores
 		jmp staticGameBoard_globalHighScores
@@ -746,7 +832,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*10+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 0
@@ -756,7 +842,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*12+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 1
@@ -766,7 +852,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*14+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 2
@@ -776,7 +862,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*16+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 3
@@ -786,7 +872,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*18+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 4
@@ -796,7 +882,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*20+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 5
@@ -806,7 +892,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*22+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 6
@@ -816,7 +902,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*24+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 7
@@ -826,7 +912,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*26+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 8
@@ -836,7 +922,7 @@ staticGameBoard_localHighScores anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*28+2
 		_setGameTile TILE_EMPTY
 		_highScoreRow 9
@@ -995,7 +1081,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*32+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_LETTER_P
@@ -1018,7 +1104,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*34+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -1041,7 +1127,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*36+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -1064,7 +1150,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*38+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -1082,7 +1168,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_LETTER_E
 		_setGameTile TILE_LETTER_O
 		_setGameTile TILE_EMPTY
-		
+
 		lda settings+SETTINGS_SWAP_STEREO_OFFSET
 		bne staticGameBoard_swapped
 		_setGameTile TILE_LETTER_L
@@ -1096,7 +1182,7 @@ staticGameBoard_swapped anop
 staticGameBoard_cont anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*40+2
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
@@ -1119,7 +1205,7 @@ staticGameBoard_cont anop
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
 		_setGameTile TILE_EMPTY
-		
+
 		rtl
 		
 
@@ -1151,97 +1237,17 @@ displayConnectionString entry
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		rtl
-		
-		
-checkKeyboard entry
-checkKey_loop2 anop
-        short i,m
-        lda >KEYBOARD
-        bpl checkKey_done
-        sta >KEYBOARD_STROBE
-        long i,m
-        and #$007f
-		
-		ldx gameState
-		bne checkKey_pause
-        
-        cmp #'q'
-        beq checkKey_quit
-        cmp #'Q'
-        beq checkKey_quit
 
-		cmp #'1'
-		beq checkKey_game
-		
-		cmp #'2'
-		beq checkKey_game
-		
-		cmp #'s'
-		beq checkKey_swapStereo
-		cmp #'S'
-		beq checkKey_swapStereo
-        
-checkKey_done anop
-		long i,m
-        rtl
-		
-checkKey_pause anop
-		jmp pauseGame
-                
-checkKey_quit anop
-        stz shouldQuit
-        rtl
-
-checkKey_game anop
-		sec
-		sbc #'1'
-		jmp startGame
-		
-checkKey_swapStereo anop
-		jsl swapStereoSettings
-		jmp staticGameBoard
-
-
+	
 waitForKey entry
-        short m
+		short m
 waitForKey_loop anop
-        lda >KEYBOARD
-        bpl waitForKey_loop
-        sta >KEYBOARD_STROBE
-        long m
+		lda >KEYBOARD
+		bpl waitForKey_loop
+		sta >KEYBOARD_STROBE
+		long m
 		and #$7f
-        rtl
-
-
-waitForBeam entry
-beamLoop anop
-        lda >VERTICAL_COUNTER     ; load the counter value
-        and #$80ff                ; mask out the VBL bits
-        asl a                     ; shift the word around
-        adc #0                    ; move MSB -> LSB
-        cmp #$1c8
-        bge beamLoop
-        rtl
+		rtl
 
 		
-waitForVbl entry
-vblLoop1 anop
-		short m
-		lda #$fe
-		cmp >READ_VBL
-		bpl vblLoop1
-vblLoop2 anop
-		cmp >READ_VBL
-		bmi vblLoop2
-		long m
-		rtl
-        
-        
-shouldQuit      dc i2'1'
-borderColour    dc i2'0'
-frameCount 		dc i2'0'
-shouldPreloadSound	dc i2'0'
-displayGlobalHighScores dc i2'0'
-highScoreCountdown dc i2'0'
-
-        end
+		end

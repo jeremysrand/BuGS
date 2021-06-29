@@ -8,84 +8,13 @@
 
 
 		case on
+		datachk off
         mcopy score.macros
         keep score
 
 score start
 		using globalData
 		using tileData
-		
-		
-updateHighScore entry
-		ldx #HIGH_SCORE_ONES_OFFSET
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+8
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+7
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+6
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+5
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+4
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+3
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+2
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+1
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		
-		dex
-		dex
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET
-		jsl asciiToTileType
-		sta tileType,x
-		_dirtyNonGameTile
-		rtl
 		
 
 scoreStartGame entry
@@ -380,6 +309,90 @@ scoreAddOneThousand_skipZeroHundreds anop
 		jmp scoreAddOneToTile
 		
 
+		
+
+		
+        end
+
+
+scoreExtras start extraSeg
+		using globalData
+		using tileData
+		using playerData
+	
+
+updateHighScore entry
+		ldx #HIGH_SCORE_ONES_OFFSET
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+8
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+7
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+6
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+5
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+4
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+3
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+2
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+1
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		
+		dex
+		dex
+		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET
+		jsl asciiToTileType
+		sta tileType,x
+		_dirtyNonGameTile
+		rtl
+		
+		
 checkHighScore entry
 		ldy #0
 checkHighScore_loop anop
@@ -429,7 +442,7 @@ checkHighScore_doneCopy anop
 		lda gameScore+2,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
 		sta setHighScoreRequest+8
-		
+
 		lda playerNum
 		cmp #PLAYER_ONE
 		beq checkHighScore_isPlayer1
@@ -441,61 +454,61 @@ checkHighScore_saveHighScore anop
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+1,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+2,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+3,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+4,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+5,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+6,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+7,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+8,y
-		
+
 		inx
 		inx
 		lda tileType,x
 		jsl tileTypeToAscii
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_TEXT_OFFSET+9,y
-		
+
 		ldx #GAME_NUM_TILES_WIDE*4+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -518,7 +531,7 @@ checkHighScore_saveHighScore anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*6+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -541,7 +554,7 @@ checkHighScore_saveHighScore anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*8+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -570,7 +583,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*10+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -593,7 +606,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*12+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -616,7 +629,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*14+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_E
@@ -639,7 +652,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_LETTER_L
 		_overwriteGameTile TILE_LETTER_S
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*16+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -662,7 +675,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*18+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -685,7 +698,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*20+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
@@ -708,7 +721,7 @@ checkHighScore_donePrintingPlayer anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		ldx #GAME_NUM_TILES_WIDE*18+20
 checkHighScore_nextKey anop
 		jsl waitForKey
@@ -733,14 +746,14 @@ checkHighScore_skipToUpperCase anop
 		blt checkHighScore_isInvalid
 		cmp #'Z'+1
 		bge checkHighScore_isInvalid
-		
+		  
 checkHighScore_isValid anop
 		cpx #GAME_NUM_TILES_WIDE*18+26
 		bge checkHighScore_isInvalid
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET,y
 		iny
 		jsl asciiToTileType
-		jsr overwriteGameTile
+		jsl overwriteGameTile
 		_overwriteGameTile TILE_SOLID2
 		dex
 		dex
@@ -759,14 +772,14 @@ checkHighScore_backspace anop
 		dex
 		dex
 		bra checkHighScore_nextKey
-		
+		  
 checkHighScore_isEnter anop
 		cpx #GAME_NUM_TILES_WIDE*18+26
 		blt checkHighScore_isInvalid
 		bra checkHighScore_doneInitials
 checkHighScore_isInvalid anop
 		bra checkHighScore_nextKey
-		
+		  
 checkHighScore_doneInitials anop
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-3,y
 		sta setHighScoreRequest+2
@@ -803,7 +816,7 @@ checkHighScore_retry anop
 		jsl sendHighScore
 		beq checkHighScore_retryPrompt
 		brl checkHighScore_doneNetwork
-		
+		  
 checkHighScore_retryPrompt anop
 		ldx #GAME_NUM_TILES_WIDE*22+2
 		_overwriteGameTile TILE_EMPTY
@@ -827,7 +840,7 @@ checkHighScore_retryPrompt anop
 		_overwriteGameTile TILE_LETTER_N
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		
+
 		jsl waitForKey
 		and #$df
 		cmp #'N'
@@ -837,37 +850,34 @@ checkHighScore_retryPrompt anop
 		brl checkHighScore_retry
 checkHighScore_doRetry anop
 		brl checkHighScore_retryPrompt
-		
+		  
 checkHighScore_doneNetwork anop
 		jsl updateHighScore
 		sec
 		rtl
-		
-		
+		  
+		  
 uploadSpin1 entry
 		ldx #GAME_NUM_TILES_WIDE*22+36
 		_overwriteGameTile TILE_SOLID1
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		rtl
-		
-		
+		  
+		  
 uploadSpin2 entry
 		ldx #GAME_NUM_TILES_WIDE*22+36
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_SOLID1
 		_overwriteGameTile TILE_EMPTY
 		rtl
-		
-		
+		  
+		  
 uploadSpin3 entry
 		ldx #GAME_NUM_TILES_WIDE*22+36
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_SOLID1
 		rtl
-		
-
-scoreIndex dc i2'0'
-		
-        end
+		  
+		end

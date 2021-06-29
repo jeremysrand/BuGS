@@ -1,8 +1,8 @@
 #  BuGS:
 
-This game represents my attempt to reproduce my favourite arcade game from when I was growing up.  It should work on any Apple //gs, with or without an accelerator and should run at a fixed 60 (or 50) frames per second.
+This game represents my attempt to reproduce my favourite arcade game from when I was growing up.  It should work on any Apple //gs, with or without an accelerator and should run at a fixed 60 (or 50) frames per second.  Starting with v2.0 of BuGS, if you have Internet access on your GS using an Uthernet II card or similar, then you can see the top scores by the community and upload your own high scores into the database.
 
-See below for information about game play.  There are also a number of caveats related to emulators, trackballs and sound cards which are described in subsequent sections.  Finally, there is a section of acknowledgements and information on how to contact me.
+See below for information about game play.  There are also a number of caveats related to emulators, networking, trackballs and sound cards which are described in subsequent sections.  Finally, there is a section of acknowledgements and information on how to contact me.
 
 ## Game Play:
 
@@ -20,7 +20,7 @@ From the third level, a scorpion may appear on the right side of the screen and 
 
 Unfortunately, not all GS emulators work well with BuGS.  I recommend mame or KeGS based on my testing.  Some notes about specific emulators are below:
 
-**mame:** This emulator is not very friendly but is probably the best for playing BuGS.  The mouse is handled well and the sound and graphics look good.  If you are on a Mac, I highly recommend Kelvin Sherlock's Ample which makes running mame much easier.  You can find it at - http://github.com/ksherlock/ample
+**mame:** This emulator is not very friendly but is probably the best for playing BuGS.  The mouse is handled well and the sound and graphics look good.  If you are on a Mac, I highly recommend Kelvin Sherlock's Ample which makes running mame much easier.  There was a problem with versions 0.231 and 0.232 of mame when playing BuGS.  I recommend using a newer or older version of mame.  You can find Ample at - http://github.com/ksherlock/ample
 
 **KeGS:** Kent has released some updates for this emulator recently and v1.05 seems to work well with BuGS.  You will want to press F8 to constrain the mouse to the emulator.  You can find the latest version at kegs.sourceforge.net.
 
@@ -29,6 +29,24 @@ Unfortunately, not all GS emulators work well with BuGS.  I recommend mame or Ke
 **GSPort:** This is another KeGS based emulator.  I can no longer test with this emulator on my Mac so I don't know how well BuGS works with GSPort.  My guess is that the sound and graphics will probably be good but it may suffer from the same mouse input problem as GSPlus.  Feedback welcome.
 
 **Sweet16:** This is another emulator I cannot test any longer on my Mac.  But I do have feedback from others who say it suffers from the same kind of mouse input problems as GSPlus.  Worse, there are graphics problems related to handling vertical blanking.  BuGS will not work well under Sweet16 unfortunately.
+
+## Network Support:
+
+With v2.0 of BuGS, network support has been added to the game.  When the game is launched on a machine that has a network connection, a request is made to get the top 10 high scores from the online database.  These are shown as "Global High Scores" in the game.  And when a game is over, if your score gets onto your own local high score list, then it is also uploaded to the server.  Even if you do not have a GS with a network connection, you can see the global high scores in a web browser here:
+
+http://scores.rand-emonium.com/
+
+If you have the necessary hardware to support a network connection on your GS, then make sure you have the latest version of Marinetti installed as available from here:
+
+http://www.apple2.org/marinetti/
+
+My testing was done with Marinetti v3.0b11.  Also, make sure you have the correct link layer installed for your network connection.  If you have network applications like Webber working, then networking should work with BuGS also.
+
+Make sure that Tool128, the hash tool, is installed on your machine.  Hashing is used to provide a bit of security to the online score database.  This tool is distributed with BuGS.  Drag it to your System folder and the Finder should offer to put it in the right place for you.  You do *not* need to install Tool128 if you plan to play the game offline but installing it shouldn't cause a problem.  But if you do not have both Marinetti and Tool128 installed when you launch BuGS, then no attempt will be made to make network requests from the game.  If you do not see the global high score list, then that likely indicates that something isn't configured correctly.
+
+If something goes wrong with the network connection, you may see a network error instead of the global high score list.  Feel free to contact me if you are seeing errors and I will try to help find the problem.
+
+Finally, the only scores that will be posted in the online database are those that get onto your local high score list.  If you are upgrading to v2.0 of BuGS and already have 10 high scores that you cannot easily beat, then you may find the game doesn't send any of your new scores to the server.  If you want to reset your local high score list to make it easier to submit high scores to the server, delete the BuGS.settings file.  This will clear your local high score list and your next ten games will be guaranteed to make your local high score list and therefore get posted to the online database.
 
 ## Trackballs:
 
@@ -74,6 +92,7 @@ This project would not have been a success without help from the Apple // commun
 * Ken Gagne and Juiced.GS for making tools like ORCA and GoldenGate available.
 * Stephen Heumann for NetDisk which I used to transfer my latest build to my real GS for testing.
 * Ewen Wannop (Speccie) for his great network tools, especially Versions which I am using to assist in pushing out fixes and new versions of BuGS.  I had a problem with the Check File Finder extension but very quickly he found the problem.  I very much appreciate his support getting that problem fixed.
+* Stefan Wessels for his extensive testing leading up to v2.0 of BuGS.  At the time of updating this document, he is trying very hard to beat my high score online and is very close to doing so (his scores are posted as SQW).  Thanks so much for your help and enthusiasm and I am sure you will beat my score soon.
 
 ## Contact:
 
@@ -87,7 +106,11 @@ http://rand-emonium.com/
 
 My website also seems to work in Speccie's incredible "Webber" web browser for the GS so you can browse and download my projects there.
 
-If you want to see how the game works, check out:
+The latest high scores in BuGS posted to the online database can be found here:
+
+http://scores.rand-emonium.com/
+
+If you want to see how BuGS works, check out:
 
 http://github.com/jeremysrand/BuGS
 

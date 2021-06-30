@@ -14,3 +14,5 @@ This game runs at 60 frames per second on a standard Apple //gs without an accel
 [Download a disk image](https://github.com/jeremysrand/BuGS/releases/download/1.0/BuGS_100.2mg)
 
 [Download a SHK archive](https://github.com/jeremysrand/BuGS/releases/download/1.0/BuGS100.shk)
+
+[BuGS Readme from the SW distribution](/BuGS/Read.Me.md)

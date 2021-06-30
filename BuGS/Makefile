@@ -80,7 +80,7 @@ MD_SRCS=Read.Me.md
 # Then, during the copy phase, mySystemFile will be copied into the System
 # folder and a folder newDir will be created and anotherFile will be copied
 # into there.
-COPYDIRS=$(GENDIR)/Teach
+COPYDIRS=
 
 # By default, the build expects that you have GSplus in the path:
 # 	/Applications/GSplus.app/Contents/MacOS/gsplus

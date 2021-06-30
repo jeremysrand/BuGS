@@ -72,6 +72,9 @@ REZ_DEPS=$(patsubst %.rez, $(OBJDIR)/%.rez.d, $(REZ_SRCS))
 REZ_OBJS=$(patsubst %.rez, $(OBJDIR)/%.r, $(REZ_SRCS))
 
 TEACH_FILES=$(patsubst %.md, $(GENDIR)/Teach/%, $(MD_SRCS))
+ifneq ($(TEACH_FILES),)
+    COPYDIRS+=$(GENDIR)/Teach
+endif
 
 ifneq ($(firstword $(REZ_SRCS)), $(lastword $(REZ_SRCS)))
     $(error Only a single resource file supported, found $(REZ_SRCS))

@@ -92,7 +92,7 @@ This project would not have been a success without help from the Apple // commun
 * Ken Gagne and Juiced.GS for making tools like ORCA and GoldenGate available.
 * Stephen Heumann for NetDisk which I used to transfer my latest build to my real GS for testing.
 * Ewen Wannop (Speccie) for his great network tools, especially Versions which I am using to assist in pushing out fixes and new versions of BuGS.  I had a problem with the Check File Finder extension but very quickly he found the problem.  I very much appreciate his support getting that problem fixed.
-* Stefan Wessels for his extensive testing leading up to v2.0 of BuGS.  At the time of updating this document, he is trying very hard to beat my high score online and is very close to doing so (his scores are posted as SQW).  Thanks so much for your help and enthusiasm and I am sure you will beat my score soon.
+* Stefan Wessels for his extensive testing leading up to v2.0 of BuGS.  He identified a problem which could lead to waves of scorpions appearing over and over again due to the behaviour of the random number generator and also found a problem with timeouts not working when trying to upload a score.  At the time of updating this document, he is trying very hard to beat my high score online and is very close to doing so (his scores are posted as SQW).  Thanks so much for your help and enthusiasm and I am sure you will beat my score soon.
 
 ## Contact:
 

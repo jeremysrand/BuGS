@@ -32,6 +32,7 @@
 
 #define GLOBAL_SCORE_REFRESH_TIME (15 * 60 * 60)
 #define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
+#define TCP_CONNECT_TIMEOUT (8 * 60)
 #define READ_NETWORK_TIMEOUT (5 * 60)
 #define NETWORK_RETRY_TIMEOUT (3 * 60 * 60)
 
@@ -90,7 +91,8 @@ typedef struct tStatusResponse {
 
 
 typedef enum tProtocolErrors {
-    HELLO_TIMEOUT_ERROR = 1,
+    TCP_CONNECT_TIMEOUT_ERROR = 1,
+    HELLO_TIMEOUT_ERROR,
     HELLO_TOO_BIG_ERROR,
     HELLO_UNEXPECTED_RESPONSE_ERROR,
     HIGH_SCORE_TIMEOUT_ERROR,
@@ -431,6 +433,7 @@ void pollNetwork(void)
                 break;
             }
             networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_TCP;
+            networkGlobals->timeout = TCP_CONNECT_TIMEOUT;
             break;
             
         case GAME_NETWORK_WAITING_FOR_TCP:
@@ -441,8 +444,15 @@ void pollNetwork(void)
                 break;
             }
             if ((networkGlobals->tcpStatus.srState == TCPSSYNSENT) ||
-                (networkGlobals->tcpStatus.srState == TCPSSYNRCVD))
+                (networkGlobals->tcpStatus.srState == TCPSSYNRCVD)) {
+                    if (networkGlobals->timeout > 0) {
+                        networkGlobals->timeout--;
+                    } else {
+                        networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
+                        networkGlobals->errorCode = TCP_CONNECT_TIMEOUT_ERROR;
+                    }
                 break;
+            }
             
             if (networkGlobals->tcpStatus.srState != TCPSESTABLISHED) {
                 abortConnection();

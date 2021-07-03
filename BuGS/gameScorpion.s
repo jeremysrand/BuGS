@@ -96,6 +96,11 @@ updateScorpion_playerOnscreen anop
 		blt updateScorpion_doNotAdd
 		jsl rand0_to_65534
 		and #$3ff
+; This used to just do an AND and add a scorpion when zero.  But because of the nature of the
+; random number generator, if you get 0 once after the mask, chances are good you will get 0
+; again on the next call to the random number generator.  Better to just look for some non-zero
+; value.  I picked $20 which has a nice distribution when I checked the random number generator.
+		cmp #$0020
 		bne updateScorpion_doNotAdd
 		jmp addScorpion
 updateScorpion_doNotAdd anop

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9D1716822491C49300C83148"
+               BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
                BuildableName = "BuGS"
                BlueprintName = "BuGS"
                ReferencedContainer = "container:BuGS.xcodeproj">
@@ -29,6 +29,8 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -47,7 +49,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D1716822491C49300C83148"
+            BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
             BuildableName = "BuGS"
             BlueprintName = "BuGS"
             ReferencedContainer = "container:BuGS.xcodeproj">
@@ -59,7 +61,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "$PROJECT_DIR/BuGS"
+            argument = "&quot;$PROJECT_DIR/BuGS&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -79,6 +81,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -89,7 +93,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D1716822491C49300C83148"
+            BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
             BuildableName = "BuGS"
             BlueprintName = "BuGS"
             ReferencedContainer = "container:BuGS.xcodeproj">

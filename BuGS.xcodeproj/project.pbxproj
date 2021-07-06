@@ -7,138 +7,169 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D0DFAFA2669D85F00BDBD04 /* settings.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DFAF92669D85F00BDBD04 /* settings.c */; };
-		9D0DFB002669DA5700BDBD04 /* loadSounds.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */; };
-		9D17168F2491C49300C83148 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D17168E2491C49300C83148 /* main.c */; };
-		9D1716922491C49300C83148 /* main.rez in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716912491C49300C83148 /* main.rez */; };
-		9D1716942491C49300C83148 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 9D1716932491C49300C83148 /* Makefile */; };
-		9D1716972491C49300C83148 /* config.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716962491C49300C83148 /* config.txt */; };
-		9D1716992491C49300C83148 /* createDiskImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716982491C49300C83148 /* createDiskImage */; };
-		9D17169B2491C49300C83148 /* head.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D17169A2491C49300C83148 /* head.mk */; };
-		9D17169D2491C49300C83148 /* launchEmulator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D17169C2491C49300C83148 /* launchEmulator */; };
-		9D17169F2491C49300C83148 /* orca-asm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D17169E2491C49300C83148 /* orca-asm */; };
-		9D1716A12491C49300C83148 /* orca-cc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A02491C49300C83148 /* orca-cc */; };
-		9D1716A32491C49300C83148 /* orca-rez in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A22491C49300C83148 /* orca-rez */; };
-		9D1716A52491C49300C83148 /* system601.2mg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A42491C49300C83148 /* system601.2mg */; };
-		9D1716A72491C49300C83148 /* tail.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A62491C49300C83148 /* tail.mk */; };
-		9D1716AA2491C49300C83148 /* BuGS.xcscheme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D1716A92491C49300C83148 /* BuGS.xcscheme */; };
-		9DB90E80265AD04A003461C1 /* globalScores.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DB90E7F265AD04A003461C1 /* globalScores.c */; };
+		9DE37AF72694E070005FC562 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37AF62694E070005FC562 /* Makefile */; };
+		9DE37AFA2694E070005FC562 /* config.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37AF92694E070005FC562 /* config.txt */; };
+		9DE37AFC2694E070005FC562 /* createDiskImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37AFB2694E070005FC562 /* createDiskImage */; };
+		9DE37AFE2694E070005FC562 /* head.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37AFD2694E070005FC562 /* head.mk */; };
+		9DE37B002694E070005FC562 /* launchEmulator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37AFF2694E070005FC562 /* launchEmulator */; };
+		9DE37B022694E070005FC562 /* md2teach in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B012694E070005FC562 /* md2teach */; };
+		9DE37B042694E070005FC562 /* orca-asm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B032694E070005FC562 /* orca-asm */; };
+		9DE37B062694E070005FC562 /* orca-cc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B052694E070005FC562 /* orca-cc */; };
+		9DE37B082694E070005FC562 /* orca-rez in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B072694E070005FC562 /* orca-rez */; };
+		9DE37B0A2694E070005FC562 /* system601.2mg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B092694E070005FC562 /* system601.2mg */; };
+		9DE37B0E2694E070005FC562 /* tar in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B0D2694E070005FC562 /* tar */; };
+		9DE37B102694E070005FC562 /* tail.mk in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B0F2694E070005FC562 /* tail.mk */; };
+		9DE37B132694E070005FC562 /* BuGS.xcscheme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9DE37B122694E070005FC562 /* BuGS.xcscheme */; };
+		9DE37B742694E0B0005FC562 /* level.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B332694E0B0005FC562 /* level.s */; };
+		9DE37B752694E0B0005FC562 /* tileConvert.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B342694E0B0005FC562 /* tileConvert.s */; };
+		9DE37B762694E0B0005FC562 /* gameSpider.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B362694E0B0005FC562 /* gameSpider.s */; };
+		9DE37B772694E0B0005FC562 /* globalScores.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B372694E0B0005FC562 /* globalScores.c */; };
+		9DE37B782694E0B0005FC562 /* game.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B382694E0B0005FC562 /* game.s */; };
+		9DE37B792694E0B0005FC562 /* gameShot.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3A2694E0B0005FC562 /* gameShot.s */; };
+		9DE37B7A2694E0B0005FC562 /* loadSounds.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3B2694E0B0005FC562 /* loadSounds.c */; };
+		9DE37B7B2694E0B0005FC562 /* gameMushroom.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3D2694E0B0005FC562 /* gameMushroom.s */; };
+		9DE37B7C2694E0B0005FC562 /* globals.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3F2694E0B0005FC562 /* globals.s */; };
+		9DE37B7D2694E0B0005FC562 /* gameSegments.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B402694E0B0005FC562 /* gameSegments.s */; };
+		9DE37B7E2694E0B0005FC562 /* score.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B412694E0B0005FC562 /* score.s */; };
+		9DE37B7F2694E0B0005FC562 /* gamePlayer.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B422694E0B0005FC562 /* gamePlayer.s */; };
+		9DE37B802694E0B0005FC562 /* gameFlea.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B452694E0B0005FC562 /* gameFlea.s */; };
+		9DE37B812694E0B0005FC562 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B472694E0B0005FC562 /* main.c */; };
+		9DE37B822694E0B0005FC562 /* settings.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B482694E0B0005FC562 /* settings.c */; };
+		9DE37B832694E0B0005FC562 /* colour.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B492694E0B0005FC562 /* colour.s */; };
+		9DE37B842694E0B0005FC562 /* ship.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B4B2694E0B0005FC562 /* ship.s */; };
+		9DE37B852694E0B0005FC562 /* solid.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B4C2694E0B0005FC562 /* solid.s */; };
+		9DE37B862694E0B0005FC562 /* numbers.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B4D2694E0B0005FC562 /* numbers.s */; };
+		9DE37B872694E0B0005FC562 /* symbols.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B4E2694E0B0005FC562 /* symbols.s */; };
+		9DE37B882694E0B0005FC562 /* segments.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B502694E0B0005FC562 /* segments.s */; };
+		9DE37B892694E0B0005FC562 /* fleas.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B512694E0B0005FC562 /* fleas.s */; };
+		9DE37B8A2694E0B0005FC562 /* spiders.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B522694E0B0005FC562 /* spiders.s */; };
+		9DE37B8B2694E0B0005FC562 /* scores.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B532694E0B0005FC562 /* scores.s */; };
+		9DE37B8C2694E0B0005FC562 /* explosions.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B542694E0B0005FC562 /* explosions.s */; };
+		9DE37B8D2694E0B0005FC562 /* scorpions.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B552694E0B0005FC562 /* scorpions.s */; };
+		9DE37B8E2694E0B0005FC562 /* shot.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B562694E0B0005FC562 /* shot.s */; };
+		9DE37B8F2694E0B0005FC562 /* letters.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B582694E0B0005FC562 /* letters.s */; };
+		9DE37B902694E0B0005FC562 /* mushrooms.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B592694E0B0005FC562 /* mushrooms.s */; };
+		9DE37B912694E0B0005FC562 /* random.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B5A2694E0B0005FC562 /* random.s */; };
+		9DE37B922694E0B0005FC562 /* gameScorpion.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B5B2694E0B0005FC562 /* gameScorpion.s */; };
+		9DE37B932694E0B0005FC562 /* gameSound.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B722694E0B0005FC562 /* gameSound.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9D17168A2491C49300C83148 /* CopyFiles */ = {
+		9DE37AED2694E070005FC562 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				9D17169D2491C49300C83148 /* launchEmulator in CopyFiles */,
-				9D1716AA2491C49300C83148 /* BuGS.xcscheme in CopyFiles */,
-				9D1716A12491C49300C83148 /* orca-cc in CopyFiles */,
-				9D1716992491C49300C83148 /* createDiskImage in CopyFiles */,
-				9D1716A32491C49300C83148 /* orca-rez in CopyFiles */,
-				9D1716972491C49300C83148 /* config.txt in CopyFiles */,
-				9D1716A52491C49300C83148 /* system601.2mg in CopyFiles */,
-				9D17169F2491C49300C83148 /* orca-asm in CopyFiles */,
-				9D1716922491C49300C83148 /* main.rez in CopyFiles */,
-				9D17169B2491C49300C83148 /* head.mk in CopyFiles */,
-				9D1716A72491C49300C83148 /* tail.mk in CopyFiles */,
+				9DE37B022694E070005FC562 /* md2teach in CopyFiles */,
+				9DE37B082694E070005FC562 /* orca-rez in CopyFiles */,
+				9DE37B102694E070005FC562 /* tail.mk in CopyFiles */,
+				9DE37B002694E070005FC562 /* launchEmulator in CopyFiles */,
+				9DE37B042694E070005FC562 /* orca-asm in CopyFiles */,
+				9DE37B132694E070005FC562 /* BuGS.xcscheme in CopyFiles */,
+				9DE37AFC2694E070005FC562 /* createDiskImage in CopyFiles */,
+				9DE37B0E2694E070005FC562 /* tar in CopyFiles */,
+				9DE37AFA2694E070005FC562 /* config.txt in CopyFiles */,
+				9DE37AFE2694E070005FC562 /* head.mk in CopyFiles */,
+				9DE37B062694E070005FC562 /* orca-cc in CopyFiles */,
+				9DE37B0A2694E070005FC562 /* system601.2mg in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9D0CF93D25B553430035D329 /* createRaw */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createRaw; sourceTree = "<group>"; };
-		9D0CF93E25B553CB0035D329 /* segments.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = segments.wav; sourceTree = "<group>"; };
-		9D0CF93F25B553DE0035D329 /* bonus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bonus.wav; sourceTree = "<group>"; };
-		9D0CF94025B553FE0035D329 /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = death.wav; sourceTree = "<group>"; };
-		9D0CF94125B554490035D329 /* fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fire.wav; sourceTree = "<group>"; };
-		9D0CF94225B5547B0035D329 /* kill.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kill.wav; sourceTree = "<group>"; };
-		9D0CF94325B554910035D329 /* spider.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spider.wav; sourceTree = "<group>"; };
-		9D0CF94425B554A10035D329 /* extralife.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = extralife.wav; sourceTree = "<group>"; };
-		9D0CF94525B554BC0035D329 /* flea_loop_256b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flea_loop_256b.wav; sourceTree = "<group>"; };
-		9D0CF94625B554CE0035D329 /* scorpion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = scorpion.wav; sourceTree = "<group>"; };
-		9D0DC8EF258C715E00DE9E87 /* extralife.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = extralife.raw; sourceTree = "<group>"; };
-		9D0DFAF82669D85F00BDBD04 /* settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
-		9D0DFAF92669D85F00BDBD04 /* settings.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = settings.c; sourceTree = "<group>"; };
-		9D0DFAFE2669DA5700BDBD04 /* loadSounds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loadSounds.h; sourceTree = "<group>"; };
-		9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = loadSounds.c; sourceTree = "<group>"; };
-		9D0DFB0A266DBD9000BDBD04 /* md2teach */ = {isa = PBXFileReference; lastKnownFileType = file; path = md2teach; sourceTree = "<group>"; };
-		9D0DFB11266DC03E00BDBD04 /* Read.Me.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Read.Me.md; sourceTree = "<group>"; };
-		9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
-		9D1553E9257F3E5200657188 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
-		9D1553EA257F3E5200657188 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
-		9D1553EB257F3E5200657188 /* death.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = death.raw; sourceTree = "<group>"; };
-		9D1553EC257F3E5200657188 /* kill.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = kill.raw; sourceTree = "<group>"; };
-		9D1553ED257F3E5200657188 /* segments.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = segments.raw; sourceTree = "<group>"; };
-		9D1553EE257F3E5200657188 /* spider.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = spider.raw; sourceTree = "<group>"; };
-		9D159805258A6BCB00BA42DF /* gameSound.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSound.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D1716842491C49300C83148 /* BuGS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D1716872491C49300C83148 /* BuGS.2mg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS.2mg; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D17168C2491C49300C83148 /* doNotBuild */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = doNotBuild; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D17168E2491C49300C83148 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		9D1716902491C49300C83148 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		9D1716912491C49300C83148 /* main.rez */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = main.rez; sourceTree = "<group>"; };
-		9D1716932491C49300C83148 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		9D1716962491C49300C83148 /* config.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.txt; sourceTree = "<group>"; };
-		9D1716982491C49300C83148 /* createDiskImage */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createDiskImage; sourceTree = "<group>"; };
-		9D17169A2491C49300C83148 /* head.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = head.mk; sourceTree = "<group>"; };
-		9D17169C2491C49300C83148 /* launchEmulator */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = launchEmulator; sourceTree = "<group>"; };
-		9D17169E2491C49300C83148 /* orca-asm */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-asm"; sourceTree = "<group>"; };
-		9D1716A02491C49300C83148 /* orca-cc */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-cc"; sourceTree = "<group>"; };
-		9D1716A22491C49300C83148 /* orca-rez */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-rez"; sourceTree = "<group>"; };
-		9D1716A42491C49300C83148 /* system601.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601.2mg; sourceTree = "<group>"; };
-		9D1716A62491C49300C83148 /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = tail.mk; sourceTree = "<group>"; };
-		9D1716A92491C49300C83148 /* BuGS.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = BuGS.xcscheme; path = ../../BuGS.xcodeproj/xcshareddata/xcschemes/BuGS.xcscheme; sourceTree = "<group>"; };
-		9D2FF6DA24C4C79A000181E5 /* random.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = random.s; sourceTree = "<group>"; };
-		9D3396F424AECB1D003222B3 /* explosions.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = explosions.s; sourceTree = "<group>"; };
-		9D3396F524AECBB1003222B3 /* spiders.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = spiders.s; sourceTree = "<group>"; };
-		9D3396F624AECC40003222B3 /* scorpions.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = scorpions.s; sourceTree = "<group>"; };
-		9D3396F724AECCAC003222B3 /* scores.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = scores.s; sourceTree = "<group>"; };
-		9D3396F824AECD11003222B3 /* fleas.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = fleas.s; sourceTree = "<group>"; };
-		9D3396F924AECD7A003222B3 /* numbers.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = numbers.s; sourceTree = "<group>"; };
-		9D3396FA24AECDE9003222B3 /* solid.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = solid.s; sourceTree = "<group>"; };
-		9D3396FB24AECF7C003222B3 /* symbols.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = symbols.s; sourceTree = "<group>"; };
-		9D3396FC24AECFBB003222B3 /* letters.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = letters.s; sourceTree = "<group>"; };
-		9D3396FD24AECFF5003222B3 /* mushrooms.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = mushrooms.s; sourceTree = "<group>"; };
-		9D3396FF24AED09D003222B3 /* sprites.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = sprites.md; sourceTree = "<group>"; };
-		9D33970024AEFBF2003222B3 /* segments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
-		9D33970124AF9D55003222B3 /* sprites.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
-		9D40049726575A8100478FB2 /* system601_net.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601_net.2mg; sourceTree = "<group>"; };
-		9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D47CC14254A698900CDA5CB /* gamePlayer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D47CCBA25525C1A00CDA5CB /* genData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.perl; };
-		9D4EF43E25D7006A001BEDB0 /* tar */ = {isa = PBXFileReference; lastKnownFileType = file; path = tar; sourceTree = "<group>"; };
-		9D4EF46925D9D171001BEDB0 /* BuGS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuGS.png; sourceTree = "<group>"; };
-		9D53E5B32562320300E10169 /* gameShot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; };
-		9D53E6472565939300E10169 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
-		9D62AF3B249871A300348F45 /* colour.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
-		9D62AF3F2499CD1E00348F45 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		9D62AF402499CD3A00348F45 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		9D6DB0AE2591A67700CDBF05 /* flea.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = flea.raw; sourceTree = "<group>"; };
-		9D6DB0B825932CA600CDBF05 /* scorpion.raw */ = {isa = PBXFileReference; lastKnownFileType = text; path = scorpion.raw; sourceTree = "<group>"; };
-		9D6DB164259D759C00CDBF05 /* tileConvert.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = tileConvert.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D6DB18625A411DA00CDBF05 /* BuGS.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = BuGS.2mg; sourceTree = "<group>"; };
-		9D8AF0B72535542400C10E3C /* level.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D8AF0B82535543000C10E3C /* score.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D8FFC602491CA28005C9327 /* game.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9D8FFC612491CAF0005C9327 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
-		9D9F07F92553AB3800875B29 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
-		9DB1505024C3801100558B87 /* gameFlea.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameFlea.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9DB1505124C6875C00558B87 /* gameScorpion.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameScorpion.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9DB1505224C7495400558B87 /* globals.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
-		9DB1505324C9E54C00558B87 /* gameSpider.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSpider.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9DB1505424D3BF6C00558B87 /* gameSegments.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = gameSegments.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
-		9DB1505524D3BFCE00558B87 /* global.macros */ = {isa = PBXFileReference; lastKnownFileType = text; path = global.macros; sourceTree = "<group>"; };
-		9DB90E7E265AD04A003461C1 /* globalScores.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalScores.h; sourceTree = "<group>"; };
-		9DB90E7F265AD04A003461C1 /* globalScores.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = globalScores.c; sourceTree = "<group>"; };
-		9DC4D7BD24B7652100BACF4B /* ship.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
-		9DC4D7BE24B80C9600BACF4B /* shot.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
+		9DE37AE52694E070005FC562 /* BuGS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE37AE82694E070005FC562 /* BuGS.2mg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS.2mg; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE37AEA2694E070005FC562 /* BuGS.shk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BuGS.shk; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE37AEF2694E070005FC562 /* doNotBuild */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = doNotBuild; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE37AF62694E070005FC562 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		9DE37AF92694E070005FC562 /* config.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.txt; sourceTree = "<group>"; };
+		9DE37AFB2694E070005FC562 /* createDiskImage */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createDiskImage; sourceTree = "<group>"; };
+		9DE37AFD2694E070005FC562 /* head.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = head.mk; sourceTree = "<group>"; };
+		9DE37AFF2694E070005FC562 /* launchEmulator */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = launchEmulator; sourceTree = "<group>"; };
+		9DE37B012694E070005FC562 /* md2teach */ = {isa = PBXFileReference; lastKnownFileType = file; path = md2teach; sourceTree = "<group>"; };
+		9DE37B032694E070005FC562 /* orca-asm */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-asm"; sourceTree = "<group>"; };
+		9DE37B052694E070005FC562 /* orca-cc */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-cc"; sourceTree = "<group>"; };
+		9DE37B072694E070005FC562 /* orca-rez */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "orca-rez"; sourceTree = "<group>"; };
+		9DE37B092694E070005FC562 /* system601.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601.2mg; sourceTree = "<group>"; };
+		9DE37B0D2694E070005FC562 /* tar */ = {isa = PBXFileReference; lastKnownFileType = file; path = tar; sourceTree = "<group>"; };
+		9DE37B0F2694E070005FC562 /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = tail.mk; sourceTree = "<group>"; };
+		9DE37B122694E070005FC562 /* BuGS.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = BuGS.xcscheme; path = ../../BuGS.xcodeproj/xcshareddata/xcschemes/BuGS.xcscheme; sourceTree = "<group>"; };
+		9DE37B292694E088005FC562 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		9DE37B2A2694E088005FC562 /* BuGS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuGS.png; sourceTree = "<group>"; };
+		9DE37B2B2694E088005FC562 /* BUGS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUGS.md; sourceTree = "<group>"; };
+		9DE37B2C2694E088005FC562 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9DE37B2D2694E088005FC562 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		9DE37B2E2694E088005FC562 /* ACKNOWLEDGEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ACKNOWLEDGEMENTS.md; sourceTree = "<group>"; };
+		9DE37B332694E0B0005FC562 /* level.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = level.s; sourceTree = "<group>"; };
+		9DE37B342694E0B0005FC562 /* tileConvert.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = tileConvert.s; sourceTree = "<group>"; };
+		9DE37B352694E0B0005FC562 /* main.rez */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = main.rez; sourceTree = "<group>"; };
+		9DE37B362694E0B0005FC562 /* gameSpider.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSpider.s; sourceTree = "<group>"; };
+		9DE37B372694E0B0005FC562 /* globalScores.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = globalScores.c; sourceTree = "<group>"; };
+		9DE37B382694E0B0005FC562 /* game.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
+		9DE37B392694E0B0005FC562 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		9DE37B3A2694E0B0005FC562 /* gameShot.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; };
+		9DE37B3B2694E0B0005FC562 /* loadSounds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadSounds.c; sourceTree = "<group>"; };
+		9DE37B3C2694E0B0005FC562 /* loadSounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loadSounds.h; sourceTree = "<group>"; };
+		9DE37B3D2694E0B0005FC562 /* gameMushroom.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
+		9DE37B3E2694E0B0005FC562 /* globalScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globalScores.h; sourceTree = "<group>"; };
+		9DE37B3F2694E0B0005FC562 /* globals.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
+		9DE37B402694E0B0005FC562 /* gameSegments.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSegments.s; sourceTree = "<group>"; };
+		9DE37B412694E0B0005FC562 /* score.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; };
+		9DE37B422694E0B0005FC562 /* gamePlayer.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; };
+		9DE37B432694E0B0005FC562 /* Read.Me.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Read.Me.md; sourceTree = "<group>"; };
+		9DE37B442694E0B0005FC562 /* global.macros */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = global.macros; sourceTree = "<group>"; };
+		9DE37B452694E0B0005FC562 /* gameFlea.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameFlea.s; sourceTree = "<group>"; };
+		9DE37B462694E0B0005FC562 /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
+		9DE37B472694E0B0005FC562 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		9DE37B482694E0B0005FC562 /* settings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = settings.c; sourceTree = "<group>"; };
+		9DE37B492694E0B0005FC562 /* colour.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = colour.s; sourceTree = "<group>"; };
+		9DE37B4B2694E0B0005FC562 /* ship.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = ship.s; sourceTree = "<group>"; };
+		9DE37B4C2694E0B0005FC562 /* solid.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = solid.s; sourceTree = "<group>"; };
+		9DE37B4D2694E0B0005FC562 /* numbers.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = numbers.s; sourceTree = "<group>"; };
+		9DE37B4E2694E0B0005FC562 /* symbols.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = symbols.s; sourceTree = "<group>"; };
+		9DE37B4F2694E0B0005FC562 /* sprites.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = sprites.md; sourceTree = "<group>"; };
+		9DE37B502694E0B0005FC562 /* segments.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = segments.s; sourceTree = "<group>"; };
+		9DE37B512694E0B0005FC562 /* fleas.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = fleas.s; sourceTree = "<group>"; };
+		9DE37B522694E0B0005FC562 /* spiders.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = spiders.s; sourceTree = "<group>"; };
+		9DE37B532694E0B0005FC562 /* scores.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = scores.s; sourceTree = "<group>"; };
+		9DE37B542694E0B0005FC562 /* explosions.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = explosions.s; sourceTree = "<group>"; };
+		9DE37B552694E0B0005FC562 /* scorpions.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = scorpions.s; sourceTree = "<group>"; };
+		9DE37B562694E0B0005FC562 /* shot.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = shot.s; sourceTree = "<group>"; };
+		9DE37B572694E0B0005FC562 /* sprites.macros */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sprites.macros; sourceTree = "<group>"; };
+		9DE37B582694E0B0005FC562 /* letters.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = letters.s; sourceTree = "<group>"; };
+		9DE37B592694E0B0005FC562 /* mushrooms.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = mushrooms.s; sourceTree = "<group>"; };
+		9DE37B5A2694E0B0005FC562 /* random.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = random.s; sourceTree = "<group>"; };
+		9DE37B5B2694E0B0005FC562 /* gameScorpion.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameScorpion.s; sourceTree = "<group>"; };
+		9DE37B5D2694E0B0005FC562 /* flea.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = flea.raw; sourceTree = "<group>"; };
+		9DE37B5E2694E0B0005FC562 /* segments.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = segments.raw; sourceTree = "<group>"; };
+		9DE37B5F2694E0B0005FC562 /* scorpion.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scorpion.raw; sourceTree = "<group>"; };
+		9DE37B602694E0B0005FC562 /* death.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = death.raw; sourceTree = "<group>"; };
+		9DE37B612694E0B0005FC562 /* kill.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kill.raw; sourceTree = "<group>"; };
+		9DE37B622694E0B0005FC562 /* spider.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spider.raw; sourceTree = "<group>"; };
+		9DE37B632694E0B0005FC562 /* fire.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.raw; sourceTree = "<group>"; };
+		9DE37B652694E0B0005FC562 /* extralife.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = extralife.wav; sourceTree = "<group>"; };
+		9DE37B662694E0B0005FC562 /* bonus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bonus.wav; sourceTree = "<group>"; };
+		9DE37B672694E0B0005FC562 /* kill.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kill.wav; sourceTree = "<group>"; };
+		9DE37B682694E0B0005FC562 /* spider.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spider.wav; sourceTree = "<group>"; };
+		9DE37B692694E0B0005FC562 /* fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fire.wav; sourceTree = "<group>"; };
+		9DE37B6A2694E0B0005FC562 /* segments.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = segments.wav; sourceTree = "<group>"; };
+		9DE37B6B2694E0B0005FC562 /* scorpion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = scorpion.wav; sourceTree = "<group>"; };
+		9DE37B6C2694E0B0005FC562 /* createRaw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = createRaw; sourceTree = "<group>"; };
+		9DE37B6D2694E0B0005FC562 /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = death.wav; sourceTree = "<group>"; };
+		9DE37B6E2694E0B0005FC562 /* flea_loop_256b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flea_loop_256b.wav; sourceTree = "<group>"; };
+		9DE37B6F2694E0B0005FC562 /* extralife.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = extralife.raw; sourceTree = "<group>"; };
+		9DE37B702694E0B0005FC562 /* bonus.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonus.raw; sourceTree = "<group>"; };
+		9DE37B712694E0B0005FC562 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		9DE37B722694E0B0005FC562 /* gameSound.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSound.s; sourceTree = "<group>"; };
+		9DE37B732694E0B0005FC562 /* genData.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = genData.pl; sourceTree = "<group>"; };
+		9DE37B982694E0DF005FC562 /* system601_net.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = system601_net.2mg; sourceTree = "<group>"; };
+		9DE37B9D2694E105005FC562 /* empty.2mg */ = {isa = PBXFileReference; lastKnownFileType = file; path = empty.2mg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9D1716892491C49300C83148 /* Frameworks */ = {
+		9DE37AEC2694E070005FC562 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -148,161 +179,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D0CF93C25B5531F0035D329 /* sources */ = {
+		9DE37ADE2694E070005FC562 = {
 			isa = PBXGroup;
 			children = (
-				9D0CF93E25B553CB0035D329 /* segments.wav */,
-				9D0CF93F25B553DE0035D329 /* bonus.wav */,
-				9D0CF94025B553FE0035D329 /* death.wav */,
-				9D0CF94125B554490035D329 /* fire.wav */,
-				9D0CF94225B5547B0035D329 /* kill.wav */,
-				9D0CF94325B554910035D329 /* spider.wav */,
-				9D0CF94425B554A10035D329 /* extralife.wav */,
-				9D0CF94525B554BC0035D329 /* flea_loop_256b.wav */,
-				9D0CF94625B554CE0035D329 /* scorpion.wav */,
-				9D0CF93D25B553430035D329 /* createRaw */,
-			);
-			path = sources;
-			sourceTree = "<group>";
-		};
-		9D1553E8257F3DC600657188 /* sound */ = {
-			isa = PBXGroup;
-			children = (
-				9D0CF93C25B5531F0035D329 /* sources */,
-				9D1553EA257F3E5200657188 /* bonus.raw */,
-				9D6DB0AE2591A67700CDBF05 /* flea.raw */,
-				9D0DC8EF258C715E00DE9E87 /* extralife.raw */,
-				9D1553EB257F3E5200657188 /* death.raw */,
-				9D6DB0B825932CA600CDBF05 /* scorpion.raw */,
-				9D1553E9257F3E5200657188 /* fire.raw */,
-				9D1553EC257F3E5200657188 /* kill.raw */,
-				9D1553ED257F3E5200657188 /* segments.raw */,
-				9D1553EE257F3E5200657188 /* spider.raw */,
-			);
-			path = sound;
-			sourceTree = "<group>";
-		};
-		9D17167D2491C49300C83148 = {
-			isa = PBXGroup;
-			children = (
-				9D62AF3F2499CD1E00348F45 /* LICENSE */,
-				9D62AF402499CD3A00348F45 /* README.md */,
-				9D9F07F92553AB3800875B29 /* TODO.md */,
-				9D53E6472565939300E10169 /* BUGS.md */,
-				9D4EF46925D9D171001BEDB0 /* BuGS.png */,
-				9D1553DE257ACA1800657188 /* ACKNOWLEDGEMENTS.md */,
-				9D17168D2491C49300C83148 /* BuGS */,
-				9D1716852491C49300C83148 /* Products */,
+				9DE37B2E2694E088005FC562 /* ACKNOWLEDGEMENTS.md */,
+				9DE37B2B2694E088005FC562 /* BUGS.md */,
+				9DE37B2A2694E088005FC562 /* BuGS.png */,
+				9DE37B292694E088005FC562 /* LICENSE */,
+				9DE37B2C2694E088005FC562 /* README.md */,
+				9DE37B2D2694E088005FC562 /* TODO.md */,
+				9DE37AF02694E070005FC562 /* BuGS */,
+				9DE37AE62694E070005FC562 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9D1716852491C49300C83148 /* Products */ = {
+		9DE37AE62694E070005FC562 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9D1716842491C49300C83148 /* BuGS */,
-				9D1716872491C49300C83148 /* BuGS.2mg */,
-				9D17168C2491C49300C83148 /* doNotBuild */,
+				9DE37AE52694E070005FC562 /* BuGS */,
+				9DE37AE82694E070005FC562 /* BuGS.2mg */,
+				9DE37AEA2694E070005FC562 /* BuGS.shk */,
+				9DE37AEF2694E070005FC562 /* doNotBuild */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9D17168D2491C49300C83148 /* BuGS */ = {
+		9DE37AF02694E070005FC562 /* BuGS */ = {
 			isa = PBXGroup;
 			children = (
-				9D17168E2491C49300C83148 /* main.c */,
-				9D1716902491C49300C83148 /* main.h */,
-				9D0DFAF82669D85F00BDBD04 /* settings.h */,
-				9D0DFAF92669D85F00BDBD04 /* settings.c */,
-				9D0DFAFE2669DA5700BDBD04 /* loadSounds.h */,
-				9D0DFAFF2669DA5700BDBD04 /* loadSounds.c */,
-				9DB90E7E265AD04A003461C1 /* globalScores.h */,
-				9DB90E7F265AD04A003461C1 /* globalScores.c */,
-				9D8FFC602491CA28005C9327 /* game.s */,
-				9D8FFC612491CAF0005C9327 /* game.h */,
-				9DB1505024C3801100558B87 /* gameFlea.s */,
-				9DB1505124C6875C00558B87 /* gameScorpion.s */,
-				9DB1505324C9E54C00558B87 /* gameSpider.s */,
-				9DB1505424D3BF6C00558B87 /* gameSegments.s */,
-				9D47CBE02547BEDB00CDA5CB /* gameMushroom.s */,
-				9D47CC14254A698900CDA5CB /* gamePlayer.s */,
-				9D53E5B32562320300E10169 /* gameShot.s */,
-				9D159805258A6BCB00BA42DF /* gameSound.s */,
-				9D6DB164259D759C00CDBF05 /* tileConvert.s */,
-				9D8AF0B72535542400C10E3C /* level.s */,
-				9D8AF0B82535543000C10E3C /* score.s */,
-				9D62AF3B249871A300348F45 /* colour.s */,
-				9D2FF6DA24C4C79A000181E5 /* random.s */,
-				9DB1505224C7495400558B87 /* globals.s */,
-				9DB1505524D3BFCE00558B87 /* global.macros */,
-				9D47CCBA25525C1A00CDA5CB /* genData.pl */,
-				9D0DFB11266DC03E00BDBD04 /* Read.Me.md */,
-				9D1553E8257F3DC600657188 /* sound */,
-				9D3396F324AECACC003222B3 /* sprites */,
-				9D1716912491C49300C83148 /* main.rez */,
-				9D1716932491C49300C83148 /* Makefile */,
-				9D1716952491C49300C83148 /* make */,
-				9D1716A82491C49300C83148 /* Supporting Files */,
+				9DE37B492694E0B0005FC562 /* colour.s */,
+				9DE37B712694E0B0005FC562 /* game.h */,
+				9DE37B382694E0B0005FC562 /* game.s */,
+				9DE37B452694E0B0005FC562 /* gameFlea.s */,
+				9DE37B3D2694E0B0005FC562 /* gameMushroom.s */,
+				9DE37B422694E0B0005FC562 /* gamePlayer.s */,
+				9DE37B5B2694E0B0005FC562 /* gameScorpion.s */,
+				9DE37B402694E0B0005FC562 /* gameSegments.s */,
+				9DE37B3A2694E0B0005FC562 /* gameShot.s */,
+				9DE37B722694E0B0005FC562 /* gameSound.s */,
+				9DE37B362694E0B0005FC562 /* gameSpider.s */,
+				9DE37B732694E0B0005FC562 /* genData.pl */,
+				9DE37B442694E0B0005FC562 /* global.macros */,
+				9DE37B3F2694E0B0005FC562 /* globals.s */,
+				9DE37B372694E0B0005FC562 /* globalScores.c */,
+				9DE37B3E2694E0B0005FC562 /* globalScores.h */,
+				9DE37B332694E0B0005FC562 /* level.s */,
+				9DE37B3B2694E0B0005FC562 /* loadSounds.c */,
+				9DE37B3C2694E0B0005FC562 /* loadSounds.h */,
+				9DE37B472694E0B0005FC562 /* main.c */,
+				9DE37B392694E0B0005FC562 /* main.h */,
+				9DE37B352694E0B0005FC562 /* main.rez */,
+				9DE37B5A2694E0B0005FC562 /* random.s */,
+				9DE37B432694E0B0005FC562 /* Read.Me.md */,
+				9DE37B412694E0B0005FC562 /* score.s */,
+				9DE37B482694E0B0005FC562 /* settings.c */,
+				9DE37B462694E0B0005FC562 /* settings.h */,
+				9DE37B5C2694E0B0005FC562 /* sound */,
+				9DE37B4A2694E0B0005FC562 /* sprites */,
+				9DE37B342694E0B0005FC562 /* tileConvert.s */,
+				9DE37AF62694E070005FC562 /* Makefile */,
+				9DE37AF82694E070005FC562 /* make */,
+				9DE37B112694E070005FC562 /* Supporting Files */,
 			);
 			path = BuGS;
 			sourceTree = "<group>";
 		};
-		9D1716952491C49300C83148 /* make */ = {
+		9DE37AF82694E070005FC562 /* make */ = {
 			isa = PBXGroup;
 			children = (
-				9D1716962491C49300C83148 /* config.txt */,
-				9D1716982491C49300C83148 /* createDiskImage */,
-				9D17169A2491C49300C83148 /* head.mk */,
-				9D4EF43E25D7006A001BEDB0 /* tar */,
-				9D17169C2491C49300C83148 /* launchEmulator */,
-				9D0DFB0A266DBD9000BDBD04 /* md2teach */,
-				9D6DB18625A411DA00CDBF05 /* BuGS.2mg */,
-				9D17169E2491C49300C83148 /* orca-asm */,
-				9D1716A02491C49300C83148 /* orca-cc */,
-				9D1716A22491C49300C83148 /* orca-rez */,
-				9D1716A42491C49300C83148 /* system601.2mg */,
-				9D40049726575A8100478FB2 /* system601_net.2mg */,
-				9D1716A62491C49300C83148 /* tail.mk */,
+				9DE37AF92694E070005FC562 /* config.txt */,
+				9DE37AFB2694E070005FC562 /* createDiskImage */,
+				9DE37AFD2694E070005FC562 /* head.mk */,
+				9DE37AFF2694E070005FC562 /* launchEmulator */,
+				9DE37B012694E070005FC562 /* md2teach */,
+				9DE37B032694E070005FC562 /* orca-asm */,
+				9DE37B052694E070005FC562 /* orca-cc */,
+				9DE37B072694E070005FC562 /* orca-rez */,
+				9DE37B9D2694E105005FC562 /* empty.2mg */,
+				9DE37B092694E070005FC562 /* system601.2mg */,
+				9DE37B982694E0DF005FC562 /* system601_net.2mg */,
+				9DE37B0D2694E070005FC562 /* tar */,
+				9DE37B0F2694E070005FC562 /* tail.mk */,
 			);
 			path = make;
 			sourceTree = "<group>";
 		};
-		9D1716A82491C49300C83148 /* Supporting Files */ = {
+		9DE37B112694E070005FC562 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9D1716A92491C49300C83148 /* BuGS.xcscheme */,
+				9DE37B122694E070005FC562 /* BuGS.xcscheme */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9D3396F324AECACC003222B3 /* sprites */ = {
+		9DE37B4A2694E0B0005FC562 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
-				9D3396FF24AED09D003222B3 /* sprites.md */,
-				9D33970124AF9D55003222B3 /* sprites.macros */,
-				9D3396F424AECB1D003222B3 /* explosions.s */,
-				9D3396F524AECBB1003222B3 /* spiders.s */,
-				9D3396F624AECC40003222B3 /* scorpions.s */,
-				9D3396F724AECCAC003222B3 /* scores.s */,
-				9D3396F824AECD11003222B3 /* fleas.s */,
-				9D3396F924AECD7A003222B3 /* numbers.s */,
-				9D3396FA24AECDE9003222B3 /* solid.s */,
-				9D3396FB24AECF7C003222B3 /* symbols.s */,
-				9D3396FC24AECFBB003222B3 /* letters.s */,
-				9D3396FD24AECFF5003222B3 /* mushrooms.s */,
-				9D33970024AEFBF2003222B3 /* segments.s */,
-				9DC4D7BD24B7652100BACF4B /* ship.s */,
-				9DC4D7BE24B80C9600BACF4B /* shot.s */,
+				9DE37B4B2694E0B0005FC562 /* ship.s */,
+				9DE37B4C2694E0B0005FC562 /* solid.s */,
+				9DE37B4D2694E0B0005FC562 /* numbers.s */,
+				9DE37B4E2694E0B0005FC562 /* symbols.s */,
+				9DE37B4F2694E0B0005FC562 /* sprites.md */,
+				9DE37B502694E0B0005FC562 /* segments.s */,
+				9DE37B512694E0B0005FC562 /* fleas.s */,
+				9DE37B522694E0B0005FC562 /* spiders.s */,
+				9DE37B532694E0B0005FC562 /* scores.s */,
+				9DE37B542694E0B0005FC562 /* explosions.s */,
+				9DE37B552694E0B0005FC562 /* scorpions.s */,
+				9DE37B562694E0B0005FC562 /* shot.s */,
+				9DE37B572694E0B0005FC562 /* sprites.macros */,
+				9DE37B582694E0B0005FC562 /* letters.s */,
+				9DE37B592694E0B0005FC562 /* mushrooms.s */,
 			);
 			path = sprites;
+			sourceTree = "<group>";
+		};
+		9DE37B5C2694E0B0005FC562 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				9DE37B5D2694E0B0005FC562 /* flea.raw */,
+				9DE37B5E2694E0B0005FC562 /* segments.raw */,
+				9DE37B5F2694E0B0005FC562 /* scorpion.raw */,
+				9DE37B602694E0B0005FC562 /* death.raw */,
+				9DE37B612694E0B0005FC562 /* kill.raw */,
+				9DE37B622694E0B0005FC562 /* spider.raw */,
+				9DE37B632694E0B0005FC562 /* fire.raw */,
+				9DE37B642694E0B0005FC562 /* sources */,
+				9DE37B6F2694E0B0005FC562 /* extralife.raw */,
+				9DE37B702694E0B0005FC562 /* bonus.raw */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
+		9DE37B642694E0B0005FC562 /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				9DE37B652694E0B0005FC562 /* extralife.wav */,
+				9DE37B662694E0B0005FC562 /* bonus.wav */,
+				9DE37B672694E0B0005FC562 /* kill.wav */,
+				9DE37B682694E0B0005FC562 /* spider.wav */,
+				9DE37B692694E0B0005FC562 /* fire.wav */,
+				9DE37B6A2694E0B0005FC562 /* segments.wav */,
+				9DE37B6B2694E0B0005FC562 /* scorpion.wav */,
+				9DE37B6C2694E0B0005FC562 /* createRaw */,
+				9DE37B6D2694E0B0005FC562 /* death.wav */,
+				9DE37B6E2694E0B0005FC562 /* flea_loop_256b.wav */,
+			);
+			path = sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		9D1716822491C49300C83148 /* BuGS */ = {
+		9DE37AE32694E070005FC562 /* BuGS */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "-C BuGS $(ACTION)";
-			buildConfigurationList = 9D1716AD2491C49300C83148 /* Build configuration list for PBXLegacyTarget "BuGS" */;
+			buildConfigurationList = 9DE37B162694E070005FC562 /* Build configuration list for PBXLegacyTarget "BuGS" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
@@ -315,9 +347,9 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		9D1716832491C49300C83148 /* Binary */ = {
+		9DE37AE42694E070005FC562 /* Binary */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9D1716B02491C49300C83148 /* Build configuration list for PBXNativeTarget "Binary" */;
+			buildConfigurationList = 9DE37B192694E070005FC562 /* Build configuration list for PBXNativeTarget "Binary" */;
 			buildPhases = (
 			);
 			buildRules = (
@@ -326,12 +358,12 @@
 			);
 			name = Binary;
 			productName = Binary;
-			productReference = 9D1716842491C49300C83148 /* BuGS */;
+			productReference = 9DE37AE52694E070005FC562 /* BuGS */;
 			productType = "com.apple.product-type.tool";
 		};
-		9D1716862491C49300C83148 /* DiskImage */ = {
+		9DE37AE72694E070005FC562 /* DiskImage */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9D1716B32491C49300C83148 /* Build configuration list for PBXNativeTarget "DiskImage" */;
+			buildConfigurationList = 9DE37B1C2694E070005FC562 /* Build configuration list for PBXNativeTarget "DiskImage" */;
 			buildPhases = (
 			);
 			buildRules = (
@@ -340,16 +372,30 @@
 			);
 			name = DiskImage;
 			productName = DiskImage;
-			productReference = 9D1716872491C49300C83148 /* BuGS.2mg */;
+			productReference = 9DE37AE82694E070005FC562 /* BuGS.2mg */;
 			productType = "com.apple.product-type.tool";
 		};
-		9D17168B2491C49300C83148 /* doNotBuild */ = {
+		9DE37AE92694E070005FC562 /* Archive */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9D1716B62491C49300C83148 /* Build configuration list for PBXNativeTarget "doNotBuild" */;
+			buildConfigurationList = 9DE37B1F2694E070005FC562 /* Build configuration list for PBXNativeTarget "Archive" */;
 			buildPhases = (
-				9D1716882491C49300C83148 /* Sources */,
-				9D1716892491C49300C83148 /* Frameworks */,
-				9D17168A2491C49300C83148 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Archive;
+			productName = Archive;
+			productReference = 9DE37AEA2694E070005FC562 /* BuGS.shk */;
+			productType = "com.apple.product-type.tool";
+		};
+		9DE37AEE2694E070005FC562 /* doNotBuild */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DE37B222694E070005FC562 /* Build configuration list for PBXNativeTarget "doNotBuild" */;
+			buildPhases = (
+				9DE37AEB2694E070005FC562 /* Sources */,
+				9DE37AEC2694E070005FC562 /* Frameworks */,
+				9DE37AED2694E070005FC562 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -357,33 +403,35 @@
 			);
 			name = doNotBuild;
 			productName = doNotBuild;
-			productReference = 9D17168C2491C49300C83148 /* doNotBuild */;
+			productReference = 9DE37AEF2694E070005FC562 /* doNotBuild */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9D17167E2491C49300C83148 /* Project object */ = {
+		9DE37ADF2694E070005FC562 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = "Jeremy Rand";
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					9D1716822491C49300C83148 = {
-						CreatedOnToolsVersion = 11.3.1;
+					9DE37AE32694E070005FC562 = {
+						CreatedOnToolsVersion = 12.4;
 					};
-					9D1716832491C49300C83148 = {
-						CreatedOnToolsVersion = 11.3.1;
+					9DE37AE42694E070005FC562 = {
+						CreatedOnToolsVersion = 12.4;
 					};
-					9D1716862491C49300C83148 = {
-						CreatedOnToolsVersion = 11.3.1;
+					9DE37AE72694E070005FC562 = {
+						CreatedOnToolsVersion = 12.4;
 					};
-					9D17168B2491C49300C83148 = {
-						CreatedOnToolsVersion = 11.3.1;
+					9DE37AE92694E070005FC562 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					9DE37AEE2694E070005FC562 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = 9D1716812491C49300C83148 /* Build configuration list for PBXProject "BuGS" */;
+			buildConfigurationList = 9DE37AE22694E070005FC562 /* Build configuration list for PBXProject "BuGS" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -391,36 +439,65 @@
 				en,
 				Base,
 			);
-			mainGroup = 9D17167D2491C49300C83148;
-			productRefGroup = 9D1716852491C49300C83148 /* Products */;
+			mainGroup = 9DE37ADE2694E070005FC562;
+			productRefGroup = 9DE37AE62694E070005FC562 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9D1716822491C49300C83148 /* BuGS */,
-				9D1716832491C49300C83148 /* Binary */,
-				9D1716862491C49300C83148 /* DiskImage */,
-				9D17168B2491C49300C83148 /* doNotBuild */,
+				9DE37AE32694E070005FC562 /* BuGS */,
+				9DE37AE42694E070005FC562 /* Binary */,
+				9DE37AE72694E070005FC562 /* DiskImage */,
+				9DE37AE92694E070005FC562 /* Archive */,
+				9DE37AEE2694E070005FC562 /* doNotBuild */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9D1716882491C49300C83148 /* Sources */ = {
+		9DE37AEB2694E070005FC562 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0DFAFA2669D85F00BDBD04 /* settings.c in Sources */,
-				9DB90E80265AD04A003461C1 /* globalScores.c in Sources */,
-				9D0DFB002669DA5700BDBD04 /* loadSounds.c in Sources */,
-				9D1716942491C49300C83148 /* Makefile in Sources */,
-				9D17168F2491C49300C83148 /* main.c in Sources */,
+				9DE37B892694E0B0005FC562 /* fleas.s in Sources */,
+				9DE37B912694E0B0005FC562 /* random.s in Sources */,
+				9DE37B832694E0B0005FC562 /* colour.s in Sources */,
+				9DE37B842694E0B0005FC562 /* ship.s in Sources */,
+				9DE37B8F2694E0B0005FC562 /* letters.s in Sources */,
+				9DE37B7E2694E0B0005FC562 /* score.s in Sources */,
+				9DE37B8A2694E0B0005FC562 /* spiders.s in Sources */,
+				9DE37B8E2694E0B0005FC562 /* shot.s in Sources */,
+				9DE37B802694E0B0005FC562 /* gameFlea.s in Sources */,
+				9DE37B7F2694E0B0005FC562 /* gamePlayer.s in Sources */,
+				9DE37B882694E0B0005FC562 /* segments.s in Sources */,
+				9DE37B7B2694E0B0005FC562 /* gameMushroom.s in Sources */,
+				9DE37B742694E0B0005FC562 /* level.s in Sources */,
+				9DE37B812694E0B0005FC562 /* main.c in Sources */,
+				9DE37B7D2694E0B0005FC562 /* gameSegments.s in Sources */,
+				9DE37B7A2694E0B0005FC562 /* loadSounds.c in Sources */,
+				9DE37AF72694E070005FC562 /* Makefile in Sources */,
+				9DE37B852694E0B0005FC562 /* solid.s in Sources */,
+				9DE37B7C2694E0B0005FC562 /* globals.s in Sources */,
+				9DE37B872694E0B0005FC562 /* symbols.s in Sources */,
+				9DE37B772694E0B0005FC562 /* globalScores.c in Sources */,
+				9DE37B8B2694E0B0005FC562 /* scores.s in Sources */,
+				9DE37B932694E0B0005FC562 /* gameSound.s in Sources */,
+				9DE37B922694E0B0005FC562 /* gameScorpion.s in Sources */,
+				9DE37B762694E0B0005FC562 /* gameSpider.s in Sources */,
+				9DE37B822694E0B0005FC562 /* settings.c in Sources */,
+				9DE37B902694E0B0005FC562 /* mushrooms.s in Sources */,
+				9DE37B8C2694E0B0005FC562 /* explosions.s in Sources */,
+				9DE37B8D2694E0B0005FC562 /* scorpions.s in Sources */,
+				9DE37B752694E0B0005FC562 /* tileConvert.s in Sources */,
+				9DE37B792694E0B0005FC562 /* gameShot.s in Sources */,
+				9DE37B862694E0B0005FC562 /* numbers.s in Sources */,
+				9DE37B782694E0B0005FC562 /* game.s in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9D1716AB2491C49300C83148 /* Debug */ = {
+		9DE37B142694E070005FC562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -446,6 +523,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -476,7 +554,7 @@
 			};
 			name = Debug;
 		};
-		9D1716AC2491C49300C83148 /* Release */ = {
+		9DE37B152694E070005FC562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -502,6 +580,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -525,7 +604,7 @@
 			};
 			name = Release;
 		};
-		9D1716AE2491C49300C83148 /* Debug */ = {
+		9DE37B172694E070005FC562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -540,7 +619,7 @@
 			};
 			name = Debug;
 		};
-		9D1716AF2491C49300C83148 /* Release */ = {
+		9DE37B182694E070005FC562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -552,7 +631,7 @@
 			};
 			name = Release;
 		};
-		9D1716B12491C49300C83148 /* Debug */ = {
+		9DE37B1A2694E070005FC562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -562,7 +641,7 @@
 			};
 			name = Debug;
 		};
-		9D1716B22491C49300C83148 /* Release */ = {
+		9DE37B1B2694E070005FC562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -572,7 +651,7 @@
 			};
 			name = Release;
 		};
-		9D1716B42491C49300C83148 /* Debug */ = {
+		9DE37B1D2694E070005FC562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -582,7 +661,7 @@
 			};
 			name = Debug;
 		};
-		9D1716B52491C49300C83148 /* Release */ = {
+		9DE37B1E2694E070005FC562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -592,7 +671,27 @@
 			};
 			name = Release;
 		};
-		9D1716B72491C49300C83148 /* Debug */ = {
+		9DE37B202694E070005FC562 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VD9FGCW36C;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = BuGS.shk;
+			};
+			name = Debug;
+		};
+		9DE37B212694E070005FC562 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VD9FGCW36C;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = BuGS.shk;
+			};
+			name = Release;
+		};
+		9DE37B232694E070005FC562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -614,7 +713,7 @@
 			};
 			name = Debug;
 		};
-		9D1716B82491C49300C83148 /* Release */ = {
+		9DE37B242694E070005FC562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -639,52 +738,61 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D1716812491C49300C83148 /* Build configuration list for PBXProject "BuGS" */ = {
+		9DE37AE22694E070005FC562 /* Build configuration list for PBXProject "BuGS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D1716AB2491C49300C83148 /* Debug */,
-				9D1716AC2491C49300C83148 /* Release */,
+				9DE37B142694E070005FC562 /* Debug */,
+				9DE37B152694E070005FC562 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D1716AD2491C49300C83148 /* Build configuration list for PBXLegacyTarget "BuGS" */ = {
+		9DE37B162694E070005FC562 /* Build configuration list for PBXLegacyTarget "BuGS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D1716AE2491C49300C83148 /* Debug */,
-				9D1716AF2491C49300C83148 /* Release */,
+				9DE37B172694E070005FC562 /* Debug */,
+				9DE37B182694E070005FC562 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D1716B02491C49300C83148 /* Build configuration list for PBXNativeTarget "Binary" */ = {
+		9DE37B192694E070005FC562 /* Build configuration list for PBXNativeTarget "Binary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D1716B12491C49300C83148 /* Debug */,
-				9D1716B22491C49300C83148 /* Release */,
+				9DE37B1A2694E070005FC562 /* Debug */,
+				9DE37B1B2694E070005FC562 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D1716B32491C49300C83148 /* Build configuration list for PBXNativeTarget "DiskImage" */ = {
+		9DE37B1C2694E070005FC562 /* Build configuration list for PBXNativeTarget "DiskImage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D1716B42491C49300C83148 /* Debug */,
-				9D1716B52491C49300C83148 /* Release */,
+				9DE37B1D2694E070005FC562 /* Debug */,
+				9DE37B1E2694E070005FC562 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D1716B62491C49300C83148 /* Build configuration list for PBXNativeTarget "doNotBuild" */ = {
+		9DE37B1F2694E070005FC562 /* Build configuration list for PBXNativeTarget "Archive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D1716B72491C49300C83148 /* Debug */,
-				9D1716B82491C49300C83148 /* Release */,
+				9DE37B202694E070005FC562 /* Debug */,
+				9DE37B212694E070005FC562 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DE37B222694E070005FC562 /* Build configuration list for PBXNativeTarget "doNotBuild" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DE37B232694E070005FC562 /* Debug */,
+				9DE37B242694E070005FC562 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9D17167E2491C49300C83148 /* Project object */;
+	rootObject = 9DE37ADF2694E070005FC562 /* Project object */;
 }

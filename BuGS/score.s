@@ -821,6 +821,18 @@ checkHighScore_retry anop
 checkHighScore_retryPrompt anop
 		ldx #GAME_NUM_TILES_WIDE*22+2
 		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_S
+		_overwriteGameTile TILE_LETTER_C
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_R
+		_overwriteGameTile TILE_LETTER_E
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_D
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_F
 		_overwriteGameTile TILE_LETTER_A
@@ -828,7 +840,9 @@ checkHighScore_retryPrompt anop
 		_overwriteGameTile TILE_LETTER_L
 		_overwriteGameTile TILE_LETTER_E
 		_overwriteGameTile TILE_LETTER_D
-		_overwriteGameTile TILE_SYMBOL_COLON
+		_overwriteGameTile TILE_EMPTY
+		
+		ldx #GAME_NUM_TILES_WIDE*24+2
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_R
 		_overwriteGameTile TILE_LETTER_E
@@ -836,10 +850,19 @@ checkHighScore_retryPrompt anop
 		_overwriteGameTile TILE_LETTER_R
 		_overwriteGameTile TILE_LETTER_Y
 		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_LETTER_U
+		_overwriteGameTile TILE_LETTER_P
+		_overwriteGameTile TILE_LETTER_L
+		_overwriteGameTile TILE_LETTER_O
+		_overwriteGameTile TILE_LETTER_A
+		_overwriteGameTile TILE_LETTER_D
+		_overwriteGameTile TILE_SYMBOL_COLON
+		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_LETTER_Y
 		_overwriteGameTile TILE_SYMBOL_COLON
 		_overwriteGameTile TILE_LETTER_N
 		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_SOLID2
 		_overwriteGameTile TILE_EMPTY
 
 		jsl waitForKey
@@ -847,15 +870,37 @@ checkHighScore_retryPrompt anop
 		cmp #'N'
 		beq checkHighScore_doneNetwork
 		cmp #'Y'
-		bne checkHighScore_doRetry
-		brl checkHighScore_retry
-checkHighScore_doRetry anop
+		beq checkHighScore_doRetry
 		brl checkHighScore_retryPrompt
 		  
 checkHighScore_doneNetwork anop
 		jsl updateHighScore
 		sec
 		rtl
+checkHighScore_doRetry anop
+		ldx #GAME_NUM_TILES_WIDE*24+2
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		_overwriteGameTile TILE_EMPTY
+		brl checkHighScore_retry
 		  
 		  
 uploadSpin1 entry

@@ -116,7 +116,7 @@
 		9DE37B3E2694E0B0005FC562 /* globalScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globalScores.h; sourceTree = "<group>"; };
 		9DE37B3F2694E0B0005FC562 /* globals.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
 		9DE37B402694E0B0005FC562 /* gameSegments.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSegments.s; sourceTree = "<group>"; };
-		9DE37B412694E0B0005FC562 /* score.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; };
+		9DE37B412694E0B0005FC562 /* score.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.asm.orcam; };
 		9DE37B422694E0B0005FC562 /* gamePlayer.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gamePlayer.s; sourceTree = "<group>"; };
 		9DE37B432694E0B0005FC562 /* Read.Me.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Read.Me.md; sourceTree = "<group>"; };
 		9DE37B442694E0B0005FC562 /* global.macros */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = global.macros; sourceTree = "<group>"; };

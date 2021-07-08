@@ -361,7 +361,6 @@ void pollNetwork(void)
             
         case GAME_NETWORK_CONNECT_FAILED:
             displayNetworkError("CONNECT", "FAILED");
-            networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
             break;
             
         case GAME_NETWORK_PROTOCOL_FAILED:

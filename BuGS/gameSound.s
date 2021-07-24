@@ -33,8 +33,11 @@ SOUND_ONE_SHOT_MODE	equ 2
 ; $10 should be the left.  But based on GSPlus and mame, I see the opposite.  Still need
 ; to check on my HW.  But in the end, it could be that some HW demultiplexed them backwards
 ; so there could be either out there in the wild.
-SOUND_RIGHT_SPEAKER	equ $10
-SOUND_LEFT_SPEAKER	equ $00
+;
+; Now I am changing my mind about this.  mame has been fixed.  I think the 4soniq and GSplus
+; are the only ones which are wrong.  So, going with the Apple standard here.
+SOUND_RIGHT_SPEAKER	equ $00
+SOUND_LEFT_SPEAKER	equ $10
 
 ; OSC 16 - 19 for L/R channels in swap mode
 SPIDER_SOUND_ADDR	equ $0000

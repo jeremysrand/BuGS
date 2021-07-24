@@ -1170,7 +1170,7 @@ staticGameBoard_Options anop
 		_setGameTile TILE_EMPTY
 
 		lda settings+SETTINGS_SWAP_STEREO_OFFSET
-		bne staticGameBoard_swapped
+		beq staticGameBoard_swapped
 		_setGameTile TILE_LETTER_L
 		_setGameTile TILE_SYMBOL_COLON
 		_setGameTile TILE_LETTER_R

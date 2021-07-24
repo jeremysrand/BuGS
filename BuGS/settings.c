@@ -26,7 +26,7 @@ typedef struct tSettingsData
 {
     char magic[4];
     int version;
-    Boolean swapStereo;
+    Boolean stereoCorrect;
     tHighScore highScores[NUM_HIGH_SCORES];
 } tSettingsData;
 
@@ -36,7 +36,7 @@ typedef struct tSettingsData
 tSettingsData settings = {
     { 'B', 'u', 'G', 'S' },
     0,
-    FALSE,
+    TRUE,
     {
         { { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0'}, { 'A', 'A', 'A' }, 0},
         { { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0'}, { 'A', 'A', 'A' }, 0},
@@ -183,7 +183,7 @@ BOOLEAN loadSettings(void)
     
     if (success)
     {
-        if (settings.swapStereo)
+        if (!settings.stereoCorrect)
         {
             swapStereoChannels();
         }
@@ -196,6 +196,6 @@ BOOLEAN loadSettings(void)
 void swapStereoSettings(void)
 {
     swapStereoChannels();
-    settings.swapStereo = !settings.swapStereo;
+    settings.stereoCorrect = !settings.stereoCorrect;
     saveSettings();
 }

@@ -12,6 +12,8 @@
 #include <types.h>
 
 
+extern unsigned int myUserId;
+
 extern void saveSettings(void);
 BOOLEAN loadSettings(void);
 extern void swapStereoSettings(void);

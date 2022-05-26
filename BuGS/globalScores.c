@@ -16,9 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "game.h"
 #include "globalScores.h"
-#include "tileData.h"
 
 
 // Defines
@@ -154,6 +152,7 @@ typedef struct tGameNetworkGlobals {
     tHighScoreRequestWithHash highScoreRequest;
     Boolean hasHighScoreToSend;
     tStatusResponse setHighScoreResponse;
+    tHighScoreInitParams initParams;
     uint16_t errorCode;
     uint16_t timeout;
 } tGameNetworkGlobals;
@@ -172,7 +171,7 @@ Boolean hasGlobalHighScores = FALSE;
 tScoresResponse highScoreResponse;
 Word globalScoreAge = 0;
 tSetHighScoreRequestWithHash setHighScoreRequest;
-char globalScoreInfo[GAME_NUM_TILES_WIDE + 1];
+char globalScoreInfo[26];
 
 
 // Implementation
@@ -180,12 +179,13 @@ char globalScoreInfo[GAME_NUM_TILES_WIDE + 1];
 
 segment "highscores";
 
-void initNetwork(void)
+void initNetwork(tHighScoreInitParams * params)
 {
     networkGlobals = NULL;
     
-    if ((NETWORK_SERVER == NULL) ||
-        (NETWORK_SERVERPORT == 0))
+    if ((params->scoreServer == NULL) ||
+        (params->scorePort == 0) ||
+        (params->waitForVbl == NULL))
         return;
     
     LoadOneTool(54, 0x200);     // Load Marinetti
@@ -223,6 +223,8 @@ void initNetwork(void)
         
     }
     
+    memcpy(&(networkGlobals->initParams), params, sizeof(networkGlobals->initParams));
+    
     networkGlobals->networkStartedConnected = TCPIPGetConnectStatus();
     if (networkGlobals->networkStartedConnected) {
         networkGlobals->gameNetworkState = GAME_NETWORK_CONNECTED;
@@ -230,8 +232,8 @@ void initNetwork(void)
         networkGlobals->gameNetworkState = GAME_NETWORK_UNCONNECTED;
     }
     
-    networkGlobals->secrets[0] = NETWORK_SERVERSECRET1;
-    networkGlobals->secrets[1] = NETWORK_SERVERSECRET2;
+    networkGlobals->secrets[0] = params->secret1;
+    networkGlobals->secrets[1] = params->secret2;
     
     networkGlobals->hasHighScoreToSend = FALSE;
     
@@ -275,7 +277,7 @@ void disconnectNetwork(void)
         }
         
         while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
-            waitForVbl();
+            networkGlobals->initParams.waitForVbl();
             pollNetwork();
         }
     }
@@ -380,7 +382,8 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_UNCONNECTED:
-            displayConnectionString();
+            if (networkGlobals->initParams.displayConnectionString != NULL)
+                networkGlobals->initParams.displayConnectionString();
             TCPIPConnect(NULL);
             if ((!toolerror()) &&
                 (TCPIPGetConnectStatus())) {
@@ -391,7 +394,7 @@ void pollNetwork(void)
             break;
             
         case GAME_NETWORK_CONNECTED:
-            TCPIPDNRNameToIP("\p" NETWORK_SERVER, &(networkGlobals->domainNameResolution));
+            TCPIPDNRNameToIP(networkGlobals->initParams.scoreServer, &(networkGlobals->domainNameResolution));
             if (toolerror()) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_LOOKUP_FAILED;
                 networkGlobals->errorCode = toolerror();
@@ -418,7 +421,7 @@ void pollNetwork(void)
                 (!networkGlobals->hasHighScoreToSend))
                 break;
             
-            networkGlobals->ipid = TCPIPLogin(myUserId, networkGlobals->domainNameResolution.DNRIPaddress, NETWORK_SERVERPORT, 0, 64);
+            networkGlobals->ipid = TCPIPLogin(networkGlobals->initParams.userId, networkGlobals->domainNameResolution.DNRIPaddress, networkGlobals->initParams.scorePort, 0, 64);
             if (toolerror()) {
                 networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
                 networkGlobals->errorCode = toolerror();
@@ -686,26 +689,30 @@ BOOLEAN sendHighScore(void)
         networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
     
     do {
-        waitForVbl();
+        networkGlobals->initParams.waitForVbl();
         pollNetwork();
         cycleCount++;
         
         if ((cycleCount & 0x7) == 0) {
             switch (cycleCount & 0x18) {
                 case 0x00:
-                    uploadSpin1();
+                    if (networkGlobals->initParams.uploadSpin != NULL)
+                        networkGlobals->initParams.uploadSpin(0);
                     break;
                     
                 case 0x08:
-                    uploadSpin2();
+                    if (networkGlobals->initParams.uploadSpin != NULL)
+                        networkGlobals->initParams.uploadSpin(1);
                     break;
                     
                 case 0x10:
-                    uploadSpin3();
+                    if (networkGlobals->initParams.uploadSpin != NULL)
+                        networkGlobals->initParams.uploadSpin(2);
                     break;
                     
                 case 0x18:
-                    uploadSpin2();
+                    if (networkGlobals->initParams.uploadSpin != NULL)
+                        networkGlobals->initParams.uploadSpin(3);
                     break;
             }
         }
@@ -718,11 +725,11 @@ BOOLEAN sendHighScore(void)
     for (cycleCount = strlen(globalScoreInfo); cycleCount < sizeof(globalScoreInfo); cycleCount++) {
         globalScoreInfo[cycleCount] = ' ';
     }
-    globalScoreInfo[GAME_NUM_TILES_WIDE] = '\0';
+    globalScoreInfo[25] = '\0'; // TODO - Get rid of hard coded value...
     displayScorePosition();
     
     for (cycleCount = 4 * 60; cycleCount > 0; cycleCount--) {
-        waitForVbl();
+        networkGlobals->initParams.waitForVbl();
     }
     
     return TRUE;

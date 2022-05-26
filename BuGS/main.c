@@ -43,9 +43,32 @@ word randomMushroomOffset(void)
 }
 
 
+void uploadSpin(int val)
+{
+    switch (val)
+    {
+        case 0:
+            uploadSpin1();
+            break;
+            
+        case 1:
+            uploadSpin2();
+            break;
+            
+        case 2:
+            uploadSpin3();
+            break;
+            
+        case 3:
+            uploadSpin2();
+            break;
+    }
+}
+
 
 int main(void)
 {
+    static tHighScoreInitParams highScoreInitParams;
     int event;
     Ref toolStartupRef;
     
@@ -73,7 +96,17 @@ int main(void)
     InitMouse(0);
     SetMouse(transparent);
     
-    initNetwork();
+    highScoreInitParams.userId = myUserId;
+    highScoreInitParams.scoreServer = "\p" NETWORK_SERVER;
+    highScoreInitParams.scorePort = NETWORK_SERVERPORT;
+    highScoreInitParams.secret1 = NETWORK_SERVERSECRET1;
+    highScoreInitParams.secret2 = NETWORK_SERVERSECRET2;
+    
+    highScoreInitParams.displayConnectionString = displayConnectionString;
+    highScoreInitParams.waitForVbl = waitForVbl;
+    highScoreInitParams.uploadSpin = uploadSpin;
+    
+    initNetwork(&highScoreInitParams);
     
     if (!loadSettings())
         saveSettings();

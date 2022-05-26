@@ -14,6 +14,10 @@
 extern void game(void);
 extern void randInit(void);
 extern void waitForVbl(void);
+extern void uploadSpin1(void);
+extern void uploadSpin2(void);
+extern void uploadSpin3(void);
+extern void displayConnectionString(void);
 extern void swapStereoChannels(void);
 
 

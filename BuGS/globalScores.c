@@ -140,6 +140,7 @@ typedef enum tGameNetworkState {
 
 typedef struct tGameNetworkGlobals {
     Boolean networkStartedConnected;
+    tHighScoreInitParams initParams;
     tGameNetworkState gameNetworkState;
     dnrBuffer domainNameResolution;
     srBuff tcpStatus;
@@ -152,7 +153,6 @@ typedef struct tGameNetworkGlobals {
     tHighScoreRequestWithHash highScoreRequest;
     Boolean hasHighScoreToSend;
     tStatusResponse setHighScoreResponse;
-    tHighScoreInitParams initParams;
     uint16_t errorCode;
     uint16_t timeout;
 } tGameNetworkGlobals;
@@ -167,11 +167,11 @@ static tGameNetworkGlobals * networkGlobals = NULL;
 
 // The following globals are accessed by name from assembly so are not in the
 // tGameNetworkGlobals structure.
+// TODO - Make real interfaces for these things.
 Boolean hasGlobalHighScores = FALSE;
 tScoresResponse highScoreResponse;
-Word globalScoreAge = 0;
+Word globalScoreAge = 0;  // TODO - Replace this with a call to a MiscTool function?
 tSetHighScoreRequestWithHash setHighScoreRequest;
-char globalScoreInfo[26];
 
 
 // Implementation
@@ -383,7 +383,7 @@ void pollNetwork(void)
             
         case GAME_NETWORK_UNCONNECTED:
             if (networkGlobals->initParams.displayConnectionString != NULL)
-                networkGlobals->initParams.displayConnectionString();
+                networkGlobals->initParams.displayConnectionString(TRUE);
             TCPIPConnect(NULL);
             if ((!toolerror()) &&
                 (TCPIPGetConnectStatus())) {
@@ -391,6 +391,8 @@ void pollNetwork(void)
             } else {
                 networkGlobals->gameNetworkState = GAME_NETWORK_CONNECT_FAILED;
             }
+            if (networkGlobals->initParams.displayConnectionString != NULL)
+                networkGlobals->initParams.displayConnectionString(FALSE);
             break;
             
         case GAME_NETWORK_CONNECTED:
@@ -721,16 +723,9 @@ BOOLEAN sendHighScore(void)
     if (networkGlobals->gameNetworkState != GAME_NETWORK_TCP_UNCONNECTED)
         return FALSE;
     
-    sprintf(globalScoreInfo, "  %u OF %u SCORES", networkGlobals->setHighScoreResponse.position, networkGlobals->setHighScoreResponse.numberOfScores);
-    for (cycleCount = strlen(globalScoreInfo); cycleCount < sizeof(globalScoreInfo); cycleCount++) {
-        globalScoreInfo[cycleCount] = ' ';
-    }
-    globalScoreInfo[25] = '\0'; // TODO - Get rid of hard coded value...
-    displayScorePosition();
-    
-    for (cycleCount = 4 * 60; cycleCount > 0; cycleCount--) {
-        networkGlobals->initParams.waitForVbl();
-    }
+    if (networkGlobals->initParams.scorePosition != NULL)
+        networkGlobals->initParams.scorePosition(networkGlobals->setHighScoreResponse.position,
+                                                networkGlobals->setHighScoreResponse.numberOfScores);
     
     return TRUE;
 }

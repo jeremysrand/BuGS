@@ -223,7 +223,6 @@ updateScorpion_explosionDone anop
         
         
 setScorpionSpeed entry
-; TODO - Call this code with each level to set the scorpion speed
         cmp #SPRITE_SPEED_FAST
         beq setScorpionSpeed_fast
         

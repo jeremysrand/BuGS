@@ -31,6 +31,9 @@
 unsigned int myUserId;
 unsigned int randomSeed;
 
+// This symbol is used also from assembly directly so be careful with it...
+char globalScoreInfo[GAME_NUM_TILES_WIDE + 1];
+
 
 /* Implementation */
 
@@ -63,6 +66,30 @@ void uploadSpin(int val)
             uploadSpin2();
             break;
     }
+}
+
+
+void scorePosition(unsigned int position, unsigned int numberOfScores)
+{
+    int i;
+    
+    sprintf(globalScoreInfo, "  %u OF %u SCORES", position, numberOfScores);
+    for (i = strlen(globalScoreInfo); i < sizeof(globalScoreInfo); i++) {
+        globalScoreInfo[i] = ' ';
+    }
+    globalScoreInfo[GAME_NUM_TILES_WIDE] = '\0';
+    displayScorePosition();
+    
+    for (i = 6 * 60; i > 0; i--) {
+        waitForVbl();
+    }
+}
+
+
+void showConnectionString(BOOLEAN display)
+{
+    if (display)
+        displayConnectionString();
 }
 
 
@@ -102,9 +129,10 @@ int main(void)
     highScoreInitParams.secret1 = NETWORK_SERVERSECRET1;
     highScoreInitParams.secret2 = NETWORK_SERVERSECRET2;
     
-    highScoreInitParams.displayConnectionString = displayConnectionString;
+    highScoreInitParams.displayConnectionString = showConnectionString;
     highScoreInitParams.waitForVbl = waitForVbl;
     highScoreInitParams.uploadSpin = uploadSpin;
+    highScoreInitParams.scorePosition = scorePosition;
     
     initNetwork(&highScoreInitParams);
     

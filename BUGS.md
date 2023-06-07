@@ -2,6 +2,7 @@ BUGS
 =======
 
 This is a list of the software bugs (as opposed to the bugs in the game that you shoot) that still need attention:
+* Should detect when running on system 5 or lower and quit gracefully.  Today, the game crashes.
 
 
 FIXED

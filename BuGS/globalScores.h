@@ -20,6 +20,10 @@ typedef struct tHighScore
     unsigned long score;
 } tHighScore;
 
+typedef struct tHighScores
+{
+    tHighScore score[10];
+} tHighScores;
 
 typedef struct tHighScoreInitParams
 {

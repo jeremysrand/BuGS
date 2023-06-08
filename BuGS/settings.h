@@ -9,7 +9,7 @@
 #ifndef _GUARD_PROJECTBuGS_FILEsettings_
 #define _GUARD_PROJECTBuGS_FILEsettings_
 
-#include <types.h>
+#include <TYPES.h>
 
 
 extern unsigned int myUserId;

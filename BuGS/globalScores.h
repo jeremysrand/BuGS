@@ -10,7 +10,7 @@
 #define _GUARD_PROJECTBuGS_FILEglobalScores_
 
 
-#include <types.h>
+#include <TYPES.h>
 
 
 typedef struct tHighScore

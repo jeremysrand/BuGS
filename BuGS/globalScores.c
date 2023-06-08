@@ -6,15 +6,16 @@
  * Copyright © 2021 Jeremy Rand. All rights reserved.
  */
 
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include <Hash.h>
 #include <locator.h>
 #include <misctool.h>
-#include <stdint.h>
+#include <orca.h>
 #include <tcpip.h>
-#include <types.h>
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "globalScores.h"
 
@@ -181,6 +182,10 @@ static void handleClosingTcp(void);
 
 // Globals
 
+#if __ORCAC__
+segment "highscores";
+#endif
+
 static tGameNetworkStateHandler handlers[NUM_GAME_NETWORK_STATES] = {
     handleConnectFailed,
     handleUnconnected,
@@ -221,9 +226,6 @@ tSetHighScoreRequestWithHash setHighScoreRequest;
 
 
 // Implementation
-
-
-segment "highscores";
 
 void initNetwork(tHighScoreInitParams * params)
 {
@@ -411,7 +413,7 @@ static void handleUnconnected(void)
 
 static void handleConnected(void)
 {
-    TCPIPDNRNameToIP(networkGlobals->initParams.scoreServer, &(networkGlobals->domainNameResolution));
+    TCPIPDNRNameToIP((char *)networkGlobals->initParams.scoreServer, &(networkGlobals->domainNameResolution));
     if (toolerror()) {
         networkGlobals->gameNetworkState = GAME_NETWORK_LOOKUP_FAILED;
         networkGlobals->errorCode = toolerror();
@@ -572,7 +574,7 @@ static void handleRequestScores(void)
     md5Init(&(networkGlobals->hashWorkBlock));
     md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->secrets), sizeof(networkGlobals->secrets));
     md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->highScoreRequest.highScoreRequest), sizeof(networkGlobals->highScoreRequest.highScoreRequest));
-    md5Finish(&(networkGlobals->hashWorkBlock), &(networkGlobals->highScoreRequest.md5Digest[0]));
+    md5Finish(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->highScoreRequest.md5Digest[0]));
     
     networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&(networkGlobals->highScoreRequest), sizeof(networkGlobals->highScoreRequest), FALSE, FALSE);
     if (networkGlobals->errorCode != tcperrOK) {
@@ -637,7 +639,7 @@ static void handleSetHighScore(void)
     md5Init(&(networkGlobals->hashWorkBlock));
     md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->secrets), sizeof(networkGlobals->secrets));
     md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(setHighScoreRequest.setHighScoreRequest), sizeof(setHighScoreRequest.setHighScoreRequest));
-    md5Finish(&(networkGlobals->hashWorkBlock), &(setHighScoreRequest.md5Digest[0]));
+    md5Finish(&(networkGlobals->hashWorkBlock), (Pointer)&(setHighScoreRequest.md5Digest[0]));
     
     networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&setHighScoreRequest, sizeof(setHighScoreRequest), FALSE, FALSE);
     if (networkGlobals->errorCode != tcperrOK) {

@@ -6,10 +6,13 @@
  * Copyright © 2021 Jeremy Rand. All rights reserved.
  */
 
+#include <string.h>
 
 #include <gsos.h>
+#include <orca.h>
 #include <Memory.h>
 
+#include "game.h"
 #include "globalScores.h"
 #include "settings.h"
 #include "tileData.h"
@@ -62,8 +65,9 @@ static Handle filenameHandle = NULL;
 
 // Implementation
 
+#if __ORCAC__
 segment "settings";
-
+#endif
 
 static void allocateFilenameHandle(void)
 {

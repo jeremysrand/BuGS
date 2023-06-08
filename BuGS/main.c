@@ -7,9 +7,12 @@
  *
  */
 
-
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
+#include <orca.h>
 #include <Memory.h>
 #include <Locator.h>
 #include <MiscTool.h>
@@ -17,13 +20,14 @@
 #include "main.h"
 #include "game.h"
 #include "globalScores.h"
+#include "settings.h"
 #include "tileData.h"
 
 
 /* Defines and macros */
 
 #define TOOLFAIL(string) \
-    if (toolerror()) SysFailMgr(toolerror(), "\p" string "\n\r    Error Code -> $");
+    if (toolerror()) SysFailMgr(toolerror(), (Pointer)"\p" string "\n\r    Error Code -> $");
 
 
 /* Globals */
@@ -74,7 +78,7 @@ void scorePosition(unsigned int position, unsigned int numberOfScores)
     int i;
     
     sprintf(globalScoreInfo, "  %u OF %u SCORES", position, numberOfScores);
-    for (i = strlen(globalScoreInfo); i < sizeof(globalScoreInfo); i++) {
+    for (i = (int)strlen(globalScoreInfo); i < sizeof(globalScoreInfo); i++) {
         globalScoreInfo[i] = ' ';
     }
     globalScoreInfo[GAME_NUM_TILES_WIDE] = '\0';
@@ -124,7 +128,7 @@ int main(void)
     SetMouse(transparent);
     
     highScoreInitParams.userId = myUserId;
-    highScoreInitParams.scoreServer = "\p" NETWORK_SERVER;
+    highScoreInitParams.scoreServer = (const char *)"\p" NETWORK_SERVER;
     highScoreInitParams.scorePort = NETWORK_SERVERPORT;
     highScoreInitParams.secret1 = NETWORK_SERVERSECRET1;
     highScoreInitParams.secret2 = NETWORK_SERVERSECRET2;

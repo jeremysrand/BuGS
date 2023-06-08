@@ -10,7 +10,7 @@
 #define _GUARD_PROJECTBuGS_FILEloadSounds_
 
 
-#include <types.h>
+#include <TYPES.h>
 
 
 extern void loadSpiderSound(Word addr);

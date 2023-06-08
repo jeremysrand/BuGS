@@ -14,13 +14,16 @@
 #include "main.h"
 
 
+
+#if __ORCAC__
 segment "loadSounds";
+#endif
 
 static void loadSound(Word addr, Word soundNum)
 {
     Handle handle = LoadResource(rRawSound, soundNum);
     HLock(handle);
-    WriteRamBlock(*handle, addr, GetHandleSize(handle));
+    WriteRamBlock(*handle, addr, (Word)GetHandleSize(handle));
     HUnlock(handle);
 }
 

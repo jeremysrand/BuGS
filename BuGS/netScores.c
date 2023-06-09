@@ -1,6 +1,6 @@
 /*
- *  globalScores.c
- *  BuGS
+ *  netScores.c
+ *  NetScoresGS
  *
  * Created by Jeremy Rand on 2021-05-23.
  * Copyright © 2021 Jeremy Rand. All rights reserved.
@@ -17,7 +17,7 @@
 #include <orca.h>
 #include <tcpip.h>
 
-#include "globalScores.h"
+#include "netScores.h"
 
 
 // Defines
@@ -77,7 +77,7 @@ typedef struct tHelloResponse {
 
 typedef struct tScoresResponse {
     uint16_t responseType;
-    tHighScores highScores;
+    tNSGSHighScores highScores;
 } tScoresResponse;
 
 
@@ -144,7 +144,7 @@ typedef void (*tGameNetworkStateHandler)(void);
 
 typedef struct tGameNetworkGlobals {
     Boolean networkStartedConnected;
-    tHighScoreInitParams initParams;
+    tNSGSHighScoreInitParams initParams;
     tGameNetworkState gameNetworkState;
     dnrBuffer domainNameResolution;
     srBuff tcpStatus;
@@ -227,7 +227,7 @@ tSetHighScoreRequestWithHash setHighScoreRequest;
 
 // Implementation
 
-void initNetwork(tHighScoreInitParams * params)
+void NSGS_InitNetwork(tNSGSHighScoreInitParams * params)
 {
     networkGlobals = NULL;
     
@@ -289,7 +289,7 @@ void initNetwork(tHighScoreInitParams * params)
 }
 
 
-void shutdownNetwork(void)
+void NSGS_ShutdownNetwork(void)
 {
     if ((!networkGlobals->networkStartedConnected) &&
         (networkGlobals->gameNetworkState > GAME_NETWORK_UNCONNECTED)) {
@@ -312,7 +312,7 @@ static void abortConnection(void)
 }
 
 
-void disconnectNetwork(void)
+void NSGS_DisconnectNetwork(void)
 {
     if (networkGlobals == NULL)
         return;
@@ -326,7 +326,7 @@ void disconnectNetwork(void)
         
         while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
             networkGlobals->initParams.waitForVbl();
-            pollNetwork();
+            NSGS_PollNetwork();
         }
     }
 }
@@ -717,7 +717,7 @@ static void handleClosingTcp(void)
     networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;
 }
 
-void pollNetwork(void)
+void NSGS_PollNetwork(void)
 {
     if (networkGlobals == NULL)
         return;
@@ -728,7 +728,7 @@ void pollNetwork(void)
 }
 
 
-BOOLEAN canSendHighScore(void)
+BOOLEAN NSGS_CanSendHighScore(void)
 {
     if (networkGlobals == NULL)
         return FALSE;
@@ -744,7 +744,7 @@ BOOLEAN canSendHighScore(void)
     return TRUE;
 }
 
-BOOLEAN sendHighScore(void)
+BOOLEAN NSGS_SendHighScore(void)
 {
     uint16_t cycleCount = 0;
     
@@ -755,7 +755,7 @@ BOOLEAN sendHighScore(void)
     
     do {
         networkGlobals->initParams.waitForVbl();
-        pollNetwork();
+        NSGS_PollNetwork();
         cycleCount++;
         
         if ((cycleCount & 0x7) == 0) {

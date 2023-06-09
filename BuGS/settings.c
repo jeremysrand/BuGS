@@ -13,7 +13,7 @@
 #include <Memory.h>
 
 #include "game.h"
-#include "globalScores.h"
+#include "netScores.h"
 #include "settings.h"
 #include "tileData.h"
 
@@ -30,7 +30,7 @@ typedef struct tSettingsData
     char magic[4];
     int version;
     Boolean stereoCorrect;
-    tHighScore highScores[NUM_HIGH_SCORES];
+    tNSGSHighScore highScores[NUM_HIGH_SCORES];
 } tSettingsData;
 
 

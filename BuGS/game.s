@@ -97,7 +97,7 @@ gameLoop_skipPreload anop
 ; The following is the network poll code which runs when not playing a game
 		lda gameState
 		bne gameLoop_skipNetwork
-		jsl pollNetwork
+		jsl NSGS_PollNetwork
 		lda hasGlobalHighScores
 		beq gameLoop_skipNetwork
 		lda highScoreCountdown
@@ -247,7 +247,7 @@ startGame_singlePlayer anop
 		jsl spiderInitGame
 		jsl levelInit
 		jsl soundInit
-		jsl disconnectNetwork
+		jsl NSGS_DisconnectNetwork
 ; Fall through intentionally here...
 startLevel entry
 		jsl segmentsInitLevel

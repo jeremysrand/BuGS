@@ -19,7 +19,7 @@
 
 #include "main.h"
 #include "game.h"
-#include "globalScores.h"
+#include "netScores.h"
 #include "settings.h"
 #include "tileData.h"
 
@@ -99,7 +99,7 @@ void showConnectionString(BOOLEAN display)
 
 int main(void)
 {
-    static tHighScoreInitParams highScoreInitParams;
+    static tNSGSHighScoreInitParams highScoreInitParams;
     int event;
     Ref toolStartupRef;
     
@@ -138,14 +138,14 @@ int main(void)
     highScoreInitParams.uploadSpin = uploadSpin;
     highScoreInitParams.scorePosition = scorePosition;
     
-    initNetwork(&highScoreInitParams);
+    NSGS_InitNetwork(&highScoreInitParams);
     
     if (!loadSettings())
         saveSettings();
 
     game();
     
-    shutdownNetwork();
+    NSGS_ShutdownNetwork();
     
     ShutDownTools(refIsHandle, toolStartupRef);
     TOOLFAIL("Unable to shutdown tools");

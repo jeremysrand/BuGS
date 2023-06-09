@@ -787,7 +787,7 @@ checkHighScore_doneInitials anop
 		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-1,y
 		sta setHighScoreRequest+4
 		jsl saveSettings
-		jsl canSendHighScore
+		jsl NSGS_CanSendHighScore
 		bne checkHighScore_retry
 		brl checkHighScore_doneNetwork
 
@@ -814,7 +814,7 @@ checkHighScore_retry anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		jsl sendHighScore
+		jsl NSGS_SendHighScore
 		beq checkHighScore_retryPrompt
 		brl checkHighScore_doneNetwork
 		  

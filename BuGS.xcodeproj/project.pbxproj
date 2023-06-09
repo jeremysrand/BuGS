@@ -23,7 +23,7 @@
 		9DE37B742694E0B0005FC562 /* level.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B332694E0B0005FC562 /* level.s */; };
 		9DE37B752694E0B0005FC562 /* tileConvert.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B342694E0B0005FC562 /* tileConvert.s */; };
 		9DE37B762694E0B0005FC562 /* gameSpider.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B362694E0B0005FC562 /* gameSpider.s */; };
-		9DE37B772694E0B0005FC562 /* globalScores.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B372694E0B0005FC562 /* globalScores.c */; };
+		9DE37B772694E0B0005FC562 /* netScores.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B372694E0B0005FC562 /* netScores.c */; };
 		9DE37B782694E0B0005FC562 /* game.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B382694E0B0005FC562 /* game.s */; };
 		9DE37B792694E0B0005FC562 /* gameShot.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3A2694E0B0005FC562 /* gameShot.s */; };
 		9DE37B7A2694E0B0005FC562 /* loadSounds.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DE37B3B2694E0B0005FC562 /* loadSounds.c */; };
@@ -106,14 +106,14 @@
 		9DE37B342694E0B0005FC562 /* tileConvert.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = tileConvert.s; sourceTree = "<group>"; };
 		9DE37B352694E0B0005FC562 /* main.rez */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = main.rez; sourceTree = "<group>"; };
 		9DE37B362694E0B0005FC562 /* gameSpider.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSpider.s; sourceTree = "<group>"; };
-		9DE37B372694E0B0005FC562 /* globalScores.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = globalScores.c; sourceTree = "<group>"; };
+		9DE37B372694E0B0005FC562 /* netScores.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = netScores.c; sourceTree = "<group>"; };
 		9DE37B382694E0B0005FC562 /* game.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = game.s; sourceTree = "<group>"; };
 		9DE37B392694E0B0005FC562 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		9DE37B3A2694E0B0005FC562 /* gameShot.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameShot.s; sourceTree = "<group>"; };
 		9DE37B3B2694E0B0005FC562 /* loadSounds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadSounds.c; sourceTree = "<group>"; };
 		9DE37B3C2694E0B0005FC562 /* loadSounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loadSounds.h; sourceTree = "<group>"; };
 		9DE37B3D2694E0B0005FC562 /* gameMushroom.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameMushroom.s; sourceTree = "<group>"; };
-		9DE37B3E2694E0B0005FC562 /* globalScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globalScores.h; sourceTree = "<group>"; };
+		9DE37B3E2694E0B0005FC562 /* netScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = netScores.h; sourceTree = "<group>"; };
 		9DE37B3F2694E0B0005FC562 /* globals.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = globals.s; sourceTree = "<group>"; };
 		9DE37B402694E0B0005FC562 /* gameSegments.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = gameSegments.s; sourceTree = "<group>"; };
 		9DE37B412694E0B0005FC562 /* score.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = score.s; sourceTree = "<group>"; };
@@ -221,8 +221,8 @@
 				9DE37B732694E0B0005FC562 /* genData.pl */,
 				9DE37B442694E0B0005FC562 /* global.macros */,
 				9DE37B3F2694E0B0005FC562 /* globals.s */,
-				9DE37B372694E0B0005FC562 /* globalScores.c */,
-				9DE37B3E2694E0B0005FC562 /* globalScores.h */,
+				9DE37B372694E0B0005FC562 /* netScores.c */,
+				9DE37B3E2694E0B0005FC562 /* netScores.h */,
 				9DE37B332694E0B0005FC562 /* level.s */,
 				9DE37B3B2694E0B0005FC562 /* loadSounds.c */,
 				9DE37B3C2694E0B0005FC562 /* loadSounds.h */,
@@ -478,7 +478,7 @@
 				9DE37B852694E0B0005FC562 /* solid.s in Sources */,
 				9DE37B7C2694E0B0005FC562 /* globals.s in Sources */,
 				9DE37B872694E0B0005FC562 /* symbols.s in Sources */,
-				9DE37B772694E0B0005FC562 /* globalScores.c in Sources */,
+				9DE37B772694E0B0005FC562 /* netScores.c in Sources */,
 				9DE37B8B2694E0B0005FC562 /* scores.s in Sources */,
 				9DE37B932694E0B0005FC562 /* gameSound.s in Sources */,
 				9DE37B922694E0B0005FC562 /* gameScorpion.s in Sources */,

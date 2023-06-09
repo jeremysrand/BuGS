@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "1430"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
+               BlueprintIdentifier = "9DE37AE32694E070005FC562"
                BuildableName = "BuGS"
                BlueprintName = "BuGS"
                ReferencedContainer = "container:BuGS.xcodeproj">
@@ -29,8 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -49,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
+            BlueprintIdentifier = "9DE37AE32694E070005FC562"
             BuildableName = "BuGS"
             BlueprintName = "BuGS"
             ReferencedContainer = "container:BuGS.xcodeproj">
@@ -81,8 +79,6 @@
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -93,7 +89,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D0B917C1F526C2D004D7E0B"
+            BlueprintIdentifier = "9DE37AE32694E070005FC562"
             BuildableName = "BuGS"
             BlueprintName = "BuGS"
             ReferencedContainer = "container:BuGS.xcodeproj">

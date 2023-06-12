@@ -27,6 +27,10 @@
 /* Defines and macros */
 
 #define GLOBAL_SCORE_REFRESH_TIME (15 * 60 * 60)
+#define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
+#define TCP_CONNECT_TIMEOUT (8 * 60)
+#define READ_NETWORK_TIMEOUT (5 * 60)
+#define NETWORK_RETRY_TIMEOUT (3 * 60 * 60)
 
 #define TOOLFAIL(string) \
     if (toolerror()) SysFailMgr(toolerror(), (Pointer)"\p" string "\n\r    Error Code -> $");
@@ -241,6 +245,10 @@ int main(void)
     highScoreInitParams.scorePort = NETWORK_SERVERPORT;
     highScoreInitParams.secret1 = NETWORK_SERVERSECRET1;
     highScoreInitParams.secret2 = NETWORK_SERVERSECRET2;
+    highScoreInitParams.shutdownTimeout = SHUTDOWN_NETWORK_TIMEOUT;
+    highScoreInitParams.connectTimeout = TCP_CONNECT_TIMEOUT;
+    highScoreInitParams.readTimeout = READ_NETWORK_TIMEOUT;
+    highScoreInitParams.retryTimeout = NETWORK_RETRY_TIMEOUT;
     
     highScoreInitParams.displayConnectionString = showConnectionString;
     highScoreInitParams.waitForVbl = waitForVbl;

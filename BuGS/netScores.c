@@ -29,10 +29,10 @@
 #define RESPONSE_TYPE_SCORES 1
 #define RESPONSE_TYPE_STATUS 2
 
-#define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
-#define TCP_CONNECT_TIMEOUT (8 * 60)
-#define READ_NETWORK_TIMEOUT (5 * 60)
-#define NETWORK_RETRY_TIMEOUT (3 * 60 * 60)
+#define DEFAULT_SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
+#define DEFAULT_TCP_CONNECT_TIMEOUT (8 * 60)
+#define DEFAULT_READ_NETWORK_TIMEOUT (5 * 60)
+#define DEFAULT_NETWORK_RETRY_TIMEOUT (3 * 60 * 60)
 
 
 // Types
@@ -252,6 +252,15 @@ void NSGS_InitNetwork(tNSGSHighScoreInitParams * params)
     
     memcpy(&(networkGlobals->initParams), params, sizeof(networkGlobals->initParams));
     
+    if (networkGlobals->initParams.shutdownTimeout == 0)
+        networkGlobals->initParams.shutdownTimeout = DEFAULT_SHUTDOWN_NETWORK_TIMEOUT;
+    if (networkGlobals->initParams.connectTimeout == 0)
+        networkGlobals->initParams.connectTimeout = DEFAULT_TCP_CONNECT_TIMEOUT;
+    if (networkGlobals->initParams.readTimeout == 0)
+        networkGlobals->initParams.readTimeout = DEFAULT_READ_NETWORK_TIMEOUT;
+    if (networkGlobals->initParams.retryTimeout == 0)
+        networkGlobals->initParams.retryTimeout = DEFAULT_NETWORK_RETRY_TIMEOUT;
+    
     networkGlobals->networkStartedConnected = TCPIPGetConnectStatus();
     if (networkGlobals->networkStartedConnected) {
         networkGlobals->gameNetworkState = GAME_NETWORK_CONNECTED;
@@ -301,7 +310,7 @@ void NSGS_DisconnectNetwork(void)
         if (networkGlobals->gameNetworkState < GAME_NETWORK_CLOSING_TCP) {
             TCPIPCloseTCP(networkGlobals->ipid);
             networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
-            networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
+            networkGlobals->timeout = networkGlobals->initParams.shutdownTimeout;
         }
         
     }
@@ -373,7 +382,7 @@ static void handleSocketError(void)
     if (networkGlobals->initParams.displayError != NULL)
         networkGlobals->initParams.displayError(NSGS_SOCKET_ERROR, networkGlobals->errorCode);
     networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
-    networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.retryTimeout;
 }
 
 static void handleProtocolFailed(void)
@@ -382,7 +391,7 @@ static void handleProtocolFailed(void)
     if (networkGlobals->initParams.displayError != NULL)
         networkGlobals->initParams.displayError(NSGS_PROTOCOL_ERROR, networkGlobals->errorCode);
     networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
-    networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.retryTimeout;
 }
 
 static void handleFailure(void)
@@ -421,7 +430,7 @@ static void handleTcpUnconnected(void)
         return;
     }
     networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_TCP;
-    networkGlobals->timeout = TCP_CONNECT_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.connectTimeout;
 }
 
 static void handleWaitingForTcp(void)
@@ -451,7 +460,7 @@ static void handleWaitingForTcp(void)
     }
     
     networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_HELLO;
-    networkGlobals->timeout = READ_NETWORK_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.readTimeout;
     networkGlobals->bytesRead = 0;
 }
 
@@ -500,7 +509,7 @@ static void handleWaitingForHello(void)
     } else {
         TCPIPCloseTCP(networkGlobals->ipid);
         networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
-        networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
+        networkGlobals->timeout = networkGlobals->initParams.shutdownTimeout;
     }
 }
 
@@ -521,7 +530,7 @@ static void handleRequestScores(void)
     }
     
     networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORES;
-    networkGlobals->timeout = READ_NETWORK_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.readTimeout;
     networkGlobals->bytesRead = 0;
 }
 
@@ -566,7 +575,7 @@ static void handleWaitingForScores(void)
     
     TCPIPCloseTCP(networkGlobals->ipid);
     networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
-    networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.shutdownTimeout;
 }
 
 static void handleSetHighScore(void)
@@ -587,7 +596,7 @@ static void handleSetHighScore(void)
     }
     
     networkGlobals->gameNetworkState = GAME_NETWORK_WAITING_FOR_SCORE_ACK;
-    networkGlobals->timeout = READ_NETWORK_TIMEOUT;
+    networkGlobals->timeout = networkGlobals->initParams.readTimeout;
     networkGlobals->bytesRead = 0;
 }
 

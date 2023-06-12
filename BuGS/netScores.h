@@ -69,6 +69,26 @@ typedef struct tNSGSHighScoreInitParams
     unsigned long secret1;
     unsigned long secret2;
     
+    /* Each of these timeouts are measured in poll periods.  So, if you call NSGS_PollNetwork() every 60th of a
+       second, then you would use 60 to set the timeout to 1 second.  If these are zero, then the "good value"
+       in the comment will be used as a default.
+     
+       The shutdown timeout controls how long we wait for a clean TCP disconnection before forcing an abort of
+       the connection.  Two seconds is a good value for this timeout. */
+    unsigned int shutdownTimeout;
+    
+    /* The connect timeout is the amount of time we wait for a TCP connection to come up before declaring a
+       timeout protocol error.  Eight seconds is a good value for this timeout. */
+    unsigned int connectTimeout;
+    
+    /* The read timeout is the amount of time we wait for a response from the server after we have made a
+       request of it, whether that is getting the high score list or setting a new high score.  Five seconds
+       is a good value for this timeout. */
+    unsigned int readTimeout;
+    
+    /* The retry timeout is the amount of time we wait in an error state before retrying.  This only happens
+       for "soft" errors where a retry is worthwhile.  Three minutes is a good value for this timeout. */
+    unsigned int retryTimeout;
     
     /* This function should display a message to the user that the network is being brought up and they should
        be patient when the argument is TRUE and when the argument is FALSE, it should clear that message.  This

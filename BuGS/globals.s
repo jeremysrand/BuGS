@@ -195,7 +195,6 @@ collisionAddr	dc i2'0'
 numSegments 	dc i2'0'
 displayGlobalHighScores dc i2'0'
 shouldQuit      dc i2'1'
-scoreIndex 		dc i2'0'
 
 
 tileJumpTable dc a4'solid0'

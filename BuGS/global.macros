@@ -224,53 +224,53 @@ _dirtyNonGameTile_skip&SYSCNT anop
         
         macro
         _globalHighScoreRow &nthScore
-        ldy #2+&nthScore*SETTINGS_HIGH_SCORE_SIZE
-        lda highScoreResponse,y
+        ldy #&nthScore*SETTINGS_HIGH_SCORE_SIZE
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
         
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
@@ -278,17 +278,17 @@ _dirtyNonGameTile_skip&SYSCNT anop
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
 
         iny
-        lda highScoreResponse,y
+        lda globalHighScores,y
         jsl asciiToTileType
         jsl setGameTile
         mend

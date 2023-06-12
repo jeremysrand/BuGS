@@ -29,7 +29,6 @@
 #define RESPONSE_TYPE_SCORES 1
 #define RESPONSE_TYPE_STATUS 2
 
-#define GLOBAL_SCORE_REFRESH_TIME (15 * 60 * 60)
 #define SHUTDOWN_NETWORK_TIMEOUT (2 * 60)
 #define TCP_CONNECT_TIMEOUT (8 * 60)
 #define READ_NETWORK_TIMEOUT (5 * 60)
@@ -89,21 +88,6 @@ typedef struct tStatusResponse {
 } tStatusResponse;
 
 
-typedef enum tProtocolErrors {
-    TCP_CONNECT_TIMEOUT_ERROR = 1,
-    HELLO_TIMEOUT_ERROR,
-    HELLO_TOO_BIG_ERROR,
-    HELLO_UNEXPECTED_RESPONSE_ERROR,
-    HIGH_SCORE_TIMEOUT_ERROR,
-    HIGH_SCORE_TOO_BIG_ERROR,
-    HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR,
-    SET_SCORE_TIMEOUT_ERROR,
-    SET_SCORE_TOO_BIG_ERROR,
-    SET_SCORE_UNEXPECTED_RESPONSE_ERROR,
-    SET_SCORE_FAILED_ERROR,
-} tProtocolErrors;
-
-
 typedef enum tGameNetworkState {
     GAME_NETWORK_CONNECT_FAILED = 0,
     GAME_NETWORK_UNCONNECTED,
@@ -155,10 +139,13 @@ typedef struct tGameNetworkGlobals {
     md5WorkBlock hashWorkBlock;
     uint32_t secrets[3];
     tHighScoreRequestWithHash highScoreRequest;
+    tScoresResponse highScoreResponse;
     Boolean hasHighScoreToSend;
+    tSetHighScoreRequestWithHash setHighScoreRequest;
     tStatusResponse setHighScoreResponse;
     uint16_t errorCode;
     uint16_t timeout;
+    Boolean hasGlobalHighScores;
 } tGameNetworkGlobals;
 
 // Forward declarations
@@ -215,14 +202,6 @@ static tGameNetworkStateHandler handlers[NUM_GAME_NETWORK_STATES] = {
 // a dynamically allocated struct.  It is only allocated if network capabilities are
 // detected.
 static tGameNetworkGlobals * networkGlobals = NULL;
-
-// The following globals are accessed by name from assembly so are not in the
-// tGameNetworkGlobals structure.
-// TODO - Make real interfaces for these things.
-Boolean hasGlobalHighScores = FALSE;
-tScoresResponse highScoreResponse;
-Word globalScoreAge = 0;  // TODO - Replace this with a call to a MiscTool function?
-tSetHighScoreRequestWithHash setHighScoreRequest;
 
 
 // Implementation
@@ -284,8 +263,9 @@ void NSGS_InitNetwork(tNSGSHighScoreInitParams * params)
     networkGlobals->secrets[1] = params->secret2;
     
     networkGlobals->hasHighScoreToSend = FALSE;
+    networkGlobals->hasGlobalHighScores = FALSE;
     
-    setHighScoreRequest.setHighScoreRequest.is60Hz = !ReadBParam(hrtz50or60);
+    networkGlobals->setHighScoreRequest.setHighScoreRequest.is60Hz = !ReadBParam(hrtz50or60);
 }
 
 
@@ -324,76 +304,21 @@ void NSGS_DisconnectNetwork(void)
             networkGlobals->timeout = SHUTDOWN_NETWORK_TIMEOUT;
         }
         
-        while (networkGlobals->gameNetworkState > GAME_NETWORK_TCP_UNCONNECTED) {
-            networkGlobals->initParams.waitForVbl();
-            NSGS_PollNetwork();
-        }
+    }
+    
+    while ((networkGlobals->gameNetworkState != GAME_NETWORK_TCP_UNCONNECTED) &&
+           (networkGlobals->gameNetworkState != GAME_NETWORK_FAILURE)) {
+        networkGlobals->initParams.waitForVbl();
+        NSGS_PollNetwork();
     }
 }
 
-
-static char hexDigitToAscii(Word digit)
-{
-    digit &= 0xf;
-    if (digit < 10)
-        return '0' + digit;
-    
-    if (digit > 15)
-        return 'X';
-    
-    return 'A' + digit - 10;
-}
-
-
-static void displayString(Word row, char * string)
-{
-    strcpy(&(highScoreResponse.highScores.score[row].scoreText[2]), string);
-}
-
-static void displayNetworkError(char * line1, char * line2)
-{
-    Word row;
-    Word column;
-    
-    networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
-    
-    for (row = 0; row < sizeof(highScoreResponse.highScores) / sizeof(highScoreResponse.highScores.score[0]); row++) {
-        for (column = 0;
-             column < sizeof(highScoreResponse.highScores.score[0].scoreText) / sizeof(highScoreResponse.highScores.score[0].scoreText[0]);
-             column++) {
-            highScoreResponse.highScores.score[row].scoreText[column] = ' ';
-        }
-        for (column = 0;
-             column < sizeof(highScoreResponse.highScores.score[0].who) / sizeof(highScoreResponse.highScores.score[0].who[0]);
-             column++) {
-            highScoreResponse.highScores.score[row].who[column] = ' ';
-        }
-    }
-    
-    displayString(1, "NETWORK");
-    displayString(2, "PROBLEM");
-    
-    displayString(4, line1);
-    displayString(5, line2);
-    
-    highScoreResponse.highScores.score[7].scoreText[0] = 'C';
-    highScoreResponse.highScores.score[7].scoreText[1] = 'O';
-    highScoreResponse.highScores.score[7].scoreText[2] = 'D';
-    highScoreResponse.highScores.score[7].scoreText[3] = 'E';
-    highScoreResponse.highScores.score[7].scoreText[4] = ':';
-    highScoreResponse.highScores.score[7].scoreText[5] = ' ';
-    highScoreResponse.highScores.score[7].scoreText[6] = hexDigitToAscii(networkGlobals->errorCode >> 12);
-    highScoreResponse.highScores.score[7].scoreText[7] = hexDigitToAscii(networkGlobals->errorCode >> 8);
-    highScoreResponse.highScores.score[7].scoreText[8] = hexDigitToAscii(networkGlobals->errorCode >> 4);
-    highScoreResponse.highScores.score[7].scoreText[9] = hexDigitToAscii(networkGlobals->errorCode);
-    
-    globalScoreAge = 0;
-    hasGlobalHighScores = TRUE;
-}
 
 static void handleConnectFailed(void)
 {
-    displayNetworkError("CONNECT", "FAILED");
+    if (networkGlobals->initParams.displayError != NULL)
+        networkGlobals->initParams.displayError(NSGS_CONNECT_ERROR, networkGlobals->errorCode);
+    networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
 }
 
 static void handleUnconnected(void)
@@ -406,6 +331,7 @@ static void handleUnconnected(void)
         networkGlobals->gameNetworkState = GAME_NETWORK_CONNECTED;
     } else {
         networkGlobals->gameNetworkState = GAME_NETWORK_CONNECT_FAILED;
+        networkGlobals->errorCode = toolerror();
     }
     if (networkGlobals->initParams.displayConnectionString != NULL)
         networkGlobals->initParams.displayConnectionString(FALSE);
@@ -437,19 +363,25 @@ static void handleResolvingName(void)
 
 static void handleLookupFailed(void)
 {
-    displayNetworkError("LOOKUP", "FAILED");
+    if (networkGlobals->initParams.displayError != NULL)
+        networkGlobals->initParams.displayError(NSGS_LOOKUP_ERROR, networkGlobals->errorCode);
+    networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
 }
 
 static void handleSocketError(void)
 {
-    displayNetworkError("SOCKET", "ERROR");
+    if (networkGlobals->initParams.displayError != NULL)
+        networkGlobals->initParams.displayError(NSGS_SOCKET_ERROR, networkGlobals->errorCode);
+    networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
     networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
 }
 
 static void handleProtocolFailed(void)
 {
     abortConnection();
-    displayNetworkError("PROTOCOL", "FAILED");
+    if (networkGlobals->initParams.displayError != NULL)
+        networkGlobals->initParams.displayError(NSGS_PROTOCOL_ERROR, networkGlobals->errorCode);
+    networkGlobals->gameNetworkState = GAME_NETWORK_FAILURE;
     networkGlobals->timeout = NETWORK_RETRY_TIMEOUT;
 }
 
@@ -466,10 +398,14 @@ static void handleFailure(void)
 
 static void handleTcpUnconnected(void)
 {
-    if ((hasGlobalHighScores) &&
-        (globalScoreAge > 0) &&
-        (!networkGlobals->hasHighScoreToSend))
-        return;
+    if ((networkGlobals->hasGlobalHighScores) &&
+        (!networkGlobals->hasHighScoreToSend)) {
+        if (networkGlobals->initParams.shouldRefreshHighScores == NULL)
+            return;
+        
+        if (!networkGlobals->initParams.shouldRefreshHighScores())
+            return;
+    }
     
     networkGlobals->ipid = TCPIPLogin(networkGlobals->initParams.userId, networkGlobals->domainNameResolution.DNRIPaddress, networkGlobals->initParams.scorePort, 0, 64);
     if (toolerror()) {
@@ -502,7 +438,7 @@ static void handleWaitingForTcp(void)
                 networkGlobals->timeout--;
             } else {
                 networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-                networkGlobals->errorCode = TCP_CONNECT_TIMEOUT_ERROR;
+                networkGlobals->errorCode = NSGS_TCP_CONNECT_TIMEOUT_ERROR;
             }
         return;
     }
@@ -537,28 +473,29 @@ static void handleWaitingForHello(void)
             networkGlobals->timeout--;
         } else {
             networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-            networkGlobals->errorCode = HELLO_TIMEOUT_ERROR;
+            networkGlobals->errorCode = NSGS_HELLO_TIMEOUT_ERROR;
         }
         return;
     }
     
     if (networkGlobals->bytesRead > sizeof(networkGlobals->helloResponse)) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = HELLO_TOO_BIG_ERROR;
+        networkGlobals->errorCode = NSGS_HELLO_TOO_BIG_ERROR;
         return;
     }
     
     if (networkGlobals->helloResponse.responseType != RESPONSE_TYPE_HELLO) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = HELLO_UNEXPECTED_RESPONSE_ERROR;
+        networkGlobals->errorCode = NSGS_HELLO_UNEXPECTED_RESPONSE_ERROR;
         return;
     }
     
     networkGlobals->secrets[2] = networkGlobals->helloResponse.nonce;
     if (networkGlobals->hasHighScoreToSend) {
         networkGlobals->gameNetworkState = GAME_NETWORK_SET_HIGH_SCORE;
-    } else if ((!hasGlobalHighScores) ||
-               (globalScoreAge == 0)) {
+    } else if ((!networkGlobals->hasGlobalHighScores) ||
+               ((networkGlobals->initParams.shouldRefreshHighScores != NULL) &&
+                (networkGlobals->initParams.shouldRefreshHighScores()))) {
         networkGlobals->gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
     } else {
         TCPIPCloseTCP(networkGlobals->ipid);
@@ -591,8 +528,8 @@ static void handleRequestScores(void)
 static void handleWaitingForScores(void)
 {
     networkGlobals->errorCode = TCPIPReadTCP(networkGlobals->ipid, 0,
-                                             ((uint32_t)(&highScoreResponse)) + networkGlobals->bytesRead,
-                                             sizeof(highScoreResponse) - networkGlobals->bytesRead,
+                                             ((uint32_t)(&networkGlobals->highScoreResponse)) + networkGlobals->bytesRead,
+                                             sizeof(networkGlobals->highScoreResponse) - networkGlobals->bytesRead,
                                              &(networkGlobals->readResponseBuf));
     if (networkGlobals->errorCode != tcperrOK) {
         abortConnection();
@@ -601,30 +538,31 @@ static void handleWaitingForScores(void)
     }
     
     networkGlobals->bytesRead += networkGlobals->readResponseBuf.rrBuffCount;
-    if (networkGlobals->bytesRead < sizeof(highScoreResponse)) {
+    if (networkGlobals->bytesRead < sizeof(networkGlobals->highScoreResponse)) {
         if (networkGlobals->timeout > 0) {
             networkGlobals->timeout--;
         } else {
             networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-            networkGlobals->errorCode = HIGH_SCORE_TIMEOUT_ERROR;
+            networkGlobals->errorCode = NSGS_HIGH_SCORE_TIMEOUT_ERROR;
         }
         return;
     }
     
-    if (networkGlobals->bytesRead > sizeof(highScoreResponse)) {
+    if (networkGlobals->bytesRead > sizeof(networkGlobals->highScoreResponse)) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = HIGH_SCORE_TOO_BIG_ERROR;
+        networkGlobals->errorCode = NSGS_HIGH_SCORE_TOO_BIG_ERROR;
         return;
     }
     
-    if (highScoreResponse.responseType != RESPONSE_TYPE_SCORES) {
+    if (networkGlobals->highScoreResponse.responseType != RESPONSE_TYPE_SCORES) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR;
+        networkGlobals->errorCode = NSGS_HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR;
         return;
     }
     
-    globalScoreAge = GLOBAL_SCORE_REFRESH_TIME;
-    hasGlobalHighScores = TRUE;
+    networkGlobals->hasGlobalHighScores = TRUE;
+    if (networkGlobals->initParams.setHighScores != NULL)
+        networkGlobals->initParams.setHighScores(&(networkGlobals->highScoreResponse.highScores));
     
     TCPIPCloseTCP(networkGlobals->ipid);
     networkGlobals->gameNetworkState = GAME_NETWORK_CLOSING_TCP;
@@ -633,15 +571,15 @@ static void handleWaitingForScores(void)
 
 static void handleSetHighScore(void)
 {
-    setHighScoreRequest.setHighScoreRequest.requestType = REQUEST_TYPE_SET_SCORE;
-    setHighScoreRequest.setHighScoreRequest.who[3] = '\0';
+    networkGlobals->setHighScoreRequest.setHighScoreRequest.requestType = REQUEST_TYPE_SET_SCORE;
+    networkGlobals->setHighScoreRequest.setHighScoreRequest.who[3] = '\0';
     
     md5Init(&(networkGlobals->hashWorkBlock));
     md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->secrets), sizeof(networkGlobals->secrets));
-    md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(setHighScoreRequest.setHighScoreRequest), sizeof(setHighScoreRequest.setHighScoreRequest));
-    md5Finish(&(networkGlobals->hashWorkBlock), (Pointer)&(setHighScoreRequest.md5Digest[0]));
+    md5Append(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->setHighScoreRequest.setHighScoreRequest), sizeof(networkGlobals->setHighScoreRequest.setHighScoreRequest));
+    md5Finish(&(networkGlobals->hashWorkBlock), (Pointer)&(networkGlobals->setHighScoreRequest.md5Digest[0]));
     
-    networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&setHighScoreRequest, sizeof(setHighScoreRequest), FALSE, FALSE);
+    networkGlobals->errorCode = TCPIPWriteTCP(networkGlobals->ipid, (Pointer)&(networkGlobals->setHighScoreRequest), sizeof(networkGlobals->setHighScoreRequest), FALSE, FALSE);
     if (networkGlobals->errorCode != tcperrOK) {
         abortConnection();
         networkGlobals->gameNetworkState = GAME_NETWORK_SOCKET_ERROR;
@@ -671,31 +609,30 @@ static void handleWaitingForScoreAck(void)
             networkGlobals->timeout--;
         } else {
             networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-            networkGlobals->errorCode = SET_SCORE_TIMEOUT_ERROR;
+            networkGlobals->errorCode = NSGS_SET_SCORE_TIMEOUT_ERROR;
         }
         return;
     }
     
     if (networkGlobals->bytesRead > sizeof(networkGlobals->setHighScoreResponse)) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = SET_SCORE_TOO_BIG_ERROR;
+        networkGlobals->errorCode = NSGS_SET_SCORE_TOO_BIG_ERROR;
         return;
     }
     
     if (networkGlobals->setHighScoreResponse.responseType != RESPONSE_TYPE_STATUS) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = SET_SCORE_UNEXPECTED_RESPONSE_ERROR;
+        networkGlobals->errorCode = NSGS_SET_SCORE_UNEXPECTED_RESPONSE_ERROR;
         return;
     }
     
     if (!networkGlobals->setHighScoreResponse.success) {
         networkGlobals->gameNetworkState = GAME_NETWORK_PROTOCOL_FAILED;
-        networkGlobals->errorCode = SET_SCORE_FAILED_ERROR;
+        networkGlobals->errorCode = NSGS_SET_SCORE_FAILED_ERROR;
         return;
     }
     
     networkGlobals->hasHighScoreToSend = FALSE;
-    globalScoreAge = 0;
     networkGlobals->gameNetworkState = GAME_NETWORK_REQUEST_SCORES;
 }
 
@@ -744,11 +681,16 @@ BOOLEAN NSGS_CanSendHighScore(void)
     return TRUE;
 }
 
-BOOLEAN NSGS_SendHighScore(void)
+BOOLEAN NSGS_SendHighScore(const char * who, unsigned long score)
 {
     uint16_t cycleCount = 0;
     
+    if (strlen(who) != 3)
+        return FALSE;
+    
     networkGlobals->hasHighScoreToSend = TRUE;
+    memcpy(networkGlobals->setHighScoreRequest.setHighScoreRequest.who, who, sizeof(networkGlobals->setHighScoreRequest.setHighScoreRequest.who));
+    networkGlobals->setHighScoreRequest.setHighScoreRequest.score = score;
     
     if (networkGlobals->gameNetworkState < GAME_NETWORK_TCP_UNCONNECTED)
         networkGlobals->gameNetworkState = GAME_NETWORK_TCP_UNCONNECTED;

@@ -69,6 +69,14 @@ static Handle filenameHandle = NULL;
 segment "settings";
 #endif
 
+const tNSGSHighScore * getHighScore(unsigned int index)
+{
+    if (index >= NUM_HIGH_SCORES)
+        return NULL;
+    
+    return &(settings.highScores[index]);
+}
+
 static void allocateFilenameHandle(void)
 {
     if (filenameHandle == NULL)

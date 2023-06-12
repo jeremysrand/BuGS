@@ -438,10 +438,8 @@ checkHighScore_doneCopy anop
 		tax
 		lda gameScore,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET,y
-		sta setHighScoreRequest+6
 		lda gameScore+2,x
 		sta settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_SCORE_OFFSET+2,y
-		sta setHighScoreRequest+8
 
 		lda playerNum
 		cmp #PLAYER_ONE
@@ -782,10 +780,6 @@ checkHighScore_isInvalid anop
 		  
 checkHighScore_doneInitials anop
 		_overwriteGameTile TILE_EMPTY
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-3,y
-		sta setHighScoreRequest+2
-		lda settings+SETTINGS_HIGH_SCORE_OFFSET+HIGH_SCORE_WHO_OFFSET-1,y
-		sta setHighScoreRequest+4
 		jsl saveSettings
 		jsl NSGS_CanSendHighScore
 		bne checkHighScore_retry
@@ -814,7 +808,7 @@ checkHighScore_retry anop
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
 		_overwriteGameTile TILE_EMPTY
-		jsl NSGS_SendHighScore
+		jsl sendHighScore
 		beq checkHighScore_retryPrompt
 		brl checkHighScore_doneNetwork
 		  

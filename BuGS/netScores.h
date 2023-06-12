@@ -12,6 +12,29 @@
 
 #include <TYPES.h>
 
+typedef enum tNSGSErrorType
+{
+    NSGS_CONNECT_ERROR,
+    NSGS_LOOKUP_ERROR,
+    NSGS_SOCKET_ERROR,
+    NSGS_PROTOCOL_ERROR
+} tNSGSErrorType;
+
+
+typedef enum ttNSGSProtocolErrors {
+    NSGS_TCP_CONNECT_TIMEOUT_ERROR = 1,
+    NSGS_HELLO_TIMEOUT_ERROR,
+    NSGS_HELLO_TOO_BIG_ERROR,
+    NSGS_HELLO_UNEXPECTED_RESPONSE_ERROR,
+    NSGS_HIGH_SCORE_TIMEOUT_ERROR,
+    NSGS_HIGH_SCORE_TOO_BIG_ERROR,
+    NSGS_HIGH_SCORE_UNEXPECTED_RESPONSE_ERROR,
+    NSGS_SET_SCORE_TIMEOUT_ERROR,
+    NSGS_SET_SCORE_TOO_BIG_ERROR,
+    NSGS_SET_SCORE_UNEXPECTED_RESPONSE_ERROR,
+    NSGS_SET_SCORE_FAILED_ERROR,
+} ttNSGSProtocolErrors;
+
 
 typedef struct tNSGSHighScore
 {
@@ -75,6 +98,22 @@ typedef struct tNSGSHighScoreInitParams
        called by NSGS_SendHighScore().
      */
     void (*scorePosition)(unsigned int position, unsigned int numberOfScores);
+    
+    /* This function is only called from NSGS_PollNetwork() when something unexpected has occurred.
+       The meaning of the error code depends on the error type.  For a protocol error, the error code
+       is one of tNSGSProtocolErrors.  For other error codes, they come from Marinetti error codes.
+       if the error code > $8000, then the error code is the socket state or-ed with $8000. */
+    void (*displayError)(tNSGSErrorType errorType, unsigned int errorCode);
+    
+    /* This function is only called from NSGS_PollNetwork() when new scores have been downloaded.
+       The scores passed should be copied because the pointer is not guaranteed to be valid after
+       the callback returns. */
+    void (*setHighScores)(const tNSGSHighScores * scores);
+    
+    /* This function is called to ask if it is time to refresh the global high score list.  This should
+       be based on watching the elapsed time and it should return true if say 5 minutes has elapsed
+       since high scores have been updated. */
+    BOOLEAN (*shouldRefreshHighScores)(void);
 } tNSGSHighScoreInitParams;
 
 
@@ -117,7 +156,7 @@ extern BOOLEAN NSGS_CanSendHighScore(void);
  
    TODO - Pass the score as an argument rather than through globals.
  */
-extern BOOLEAN NSGS_SendHighScore(void);
+extern BOOLEAN NSGS_SendHighScore(const char * who, unsigned long score);
 
 
 #endif /* define _GUARD_PROJECTNetScoresGS_FILEnetScores_ */

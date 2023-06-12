@@ -12,11 +12,15 @@
 #include <TYPES.h>
 
 
+typedef struct tNSGSHighScore tNSGSHighScore;
+
 extern unsigned int myUserId;
 
 extern void saveSettings(void);
-BOOLEAN loadSettings(void);
+extern BOOLEAN loadSettings(void);
 extern void swapStereoSettings(void);
+
+extern const tNSGSHighScore * getHighScore(unsigned int index);
 
 
 #endif /* define _GUARD_PROJECTBuGS_FILEsettings_ */
